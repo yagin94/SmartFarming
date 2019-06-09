@@ -1,0 +1,19 @@
+<h3>Articles</h3>
+<div>
+  <label>Article name:
+    <input #articleName/>
+  </label>
+<button>add</button>
+  <button (click)="searchArticle(articleName.value)">search</button>
+
+</div>
+<ul class="heroes">
+  <li *ngFor="let article of article$">
+    <a>
+      <span class="badge">{{ article.id || -1 }}</span>
+      <span>{{article.title}}</span>
+    </a>
+    <button class="delete" title="delete hero" (click)="deleteArticle(article)">x</button>
+  </li>
+</ul>
+<h1>HTML WORK FINE !!!</h1>

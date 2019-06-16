@@ -1,15 +1,15 @@
 <h3>Articles</h3>
 <div>
-  <label>Article name:
-    <input #articleName/>
+  <label>Article title:
+    <input #articleTitle/>
   </label>
-<button>add</button>
-  <button (click)="searchArticle(articleName.value)">search</button>
-
+  <button (click)="searchArticle(articleTitle.value)">search</button>
+  <br>
+  <button (click)="add()">add</button>
 </div>
 <ul class="heroes">
   <li *ngFor="let article of article$">
-    <a>
+    <a (click)="editArticle(article)">
       <span class="badge">{{ article.id || -1 }}</span>
       <span>{{article.title}}</span>
     </a>
@@ -17,3 +17,27 @@
   </li>
 </ul>
 <h1>HTML WORK FINE !!!</h1>
+<div *ngIf="checkAdd$ == 1">
+  <label>Article title:
+    <input #articleTitle/>
+  </label>
+  <label>Article content:
+    <textarea #articleContent></textarea>
+  </label>
+  <label>Article category:
+    <input #articleCategory/>
+  </label>
+  <button (click)="addArticle(articleTitle.value, articleContent.value, articleCategory.value); articleTitle.value='';articleContent.value='';articleCategory.value=''">add</button>
+</div>
+<div *ngIf="checkAdd$ == 2">
+  <label>Article title:
+    <input #articleTitle [(ngModel)]="editArticle$.title" />
+  </label>
+  <label>Article content:
+    <textarea #articleContent [(ngModel)]="editArticle$.content"></textarea>
+  </label>
+  <label>Article category:
+    <input #articleCategory [(ngModel)]="editArticle$.category" [disabled]="true"/>
+  </label>
+  <button (click)="updateArticle()">update</button>
+</div>

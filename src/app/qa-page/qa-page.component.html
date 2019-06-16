@@ -1,0 +1,57 @@
+<h3>Question-Answer</h3>
+<div>
+  <label>Question title:
+    <input #questionTitle/>
+  </label>
+  <button (click)="searchQa(questionTitle.value)">search</button>
+  <br>
+  <button (click)="add()">add</button>
+</div>
+<ul class="heroes">
+  <li *ngFor="let qa of qa$">
+    <a (click)="edit(qa)">
+      <span class="badge">{{ qa.id || -1 }}</span>
+      <span>{{qa.title}}</span>
+    </a>
+    <button class="delete" title="delete hero" (click)="deleteQa(qa)">x</button>
+  </li>
+</ul>
+<h1>HTML WORK FINE !!!</h1>
+
+<!--###########################################################################################################################-->
+
+<div *ngIf="checkAdd$ == 1">
+  <label>Question title:
+    <input #questionTitle/>
+  </label>
+  <label>Question content:
+    <textarea #questionContent></textarea>
+  </label>
+  <button (click)="addQa(questionTitle.value, questionContent.value); questionTitle.value='';questionContent.value=''">add</button>
+</div>
+
+<!--###########################################################################################################################-->
+
+<div *ngIf="checkAdd$ == 2">
+  <button (click)="addAnswer()">Add Answer</button>
+  <br>
+  <button (click)="editAnswer()">Edit Answer</button>
+  <label>Question title:
+    <input *ngIf="checkAddAnswer$ == 0" #questionTitle [(ngModel)]="editQuestion$.title" />
+    <input *ngIf="checkAddAnswer$ == 1 || checkEditAnswer$ ==1" #questionTitle [(ngModel)]="editQuestion$.title" disabled/>
+  </label>
+  <label>Question content:
+    <textarea *ngIf="checkAddAnswer$ == 0" #questionContent [(ngModel)]="editQuestion$.content">{{editQuestion$.content}}</textarea>
+    <textarea *ngIf="checkAddAnswer$ == 1 || checkEditAnswer$ ==1" #questionContent disabled>{{editQuestion$.content}}</textarea>
+  </label>
+  <label *ngIf="checkAddAnswer$ == 1 || checkAddAnswer$ == 3 ">Answer:</label>
+  <label *ngFor="let answer of editQuestion$.answers" >
+    <button *ngIf="checkAddAnswer$ == 1 || checkAddAnswer$ == 3" title="delete this answer" (click)="deleteAnswer(answer)">X</button>
+    <textarea *ngIf="checkAddAnswer$ == 1" [value]="answer.content" disabled class="answer"></textarea>
+    <textarea *ngIf="checkAddAnswer$ == 3" class="answer" [(ngModel)]= "answer.content" (click)="editAnswers(answer)" (keyup.enter)="updateAnswer()"></textarea>
+  </label>
+  <label *ngIf="checkAddAnswer$ == 1">
+    <textarea class="answer" #answerContent (keyup.enter)="addAnswers(answerContent.value)"></textarea>
+  </label>
+  <button *ngIf="checkAddAnswer$ == 0" (click)="updateQuestion()">update</button>
+</div>

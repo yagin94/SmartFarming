@@ -4,24 +4,29 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ArticlePageComponent } from './article-page/article-page.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
-
+import { QaPageComponent } from './qa-page/qa-page.component';
+import { FormsModule } from '@angular/forms';
+import {Router} from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     ArticlePageComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    QaPageComponent
   ],
   imports: [
     AngularFontAwesomeModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(router: Router) {}
+}

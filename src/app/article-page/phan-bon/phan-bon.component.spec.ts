@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailPageComponent } from './detail-page.component';
+import { PhanBonComponent } from './phan-bon.component';
 
-describe('DetailPageComponent', () => {
-  let component: DetailPageComponent;
-  let fixture: ComponentFixture<DetailPageComponent>;
+describe('PhanBonComponent', () => {
+  let component: PhanBonComponent;
+  let fixture: ComponentFixture<PhanBonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailPageComponent ]
+      declarations: [ PhanBonComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DetailPageComponent);
+    fixture = TestBed.createComponent(PhanBonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

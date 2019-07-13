@@ -1,0 +1,310 @@
+<div class="wrapper row0" style="height: 35px">
+  <div id="topbar" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <ul style="margin-top: -7px;">
+      <li><i class="fa fa-clock-o"></i> Mon. - Fri. 8am - 5pm</li>
+      <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
+      <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+      <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
+      <li><a href="#" title="Login"><i class="fa fa-lg fa-sign-in"></i></a></li>
+      <li><a href="#" title="Sign Up"><i class="fa fa-lg fa-edit"></i></a></li>
+    </ul>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+<!-- Phan Link dia chi lien ket hoi dap ... -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- Phan trang chu hien thi thong tin, background ....-->
+<div class="bgded overlay" style="background: #f2f2f2 !important;">
+  <!-- ################################################################################################ -->
+  <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
+    <header id="header" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1><a href="index.html">FPT developer Team</a></h1>
+      </div>
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+          <li><input #questionTitle (keyup.enter)="searchQa(questionTitle.value)" style="color: black"></li>
+          <li class="active"><a href="index.html">Home</a></li>
+          <li><a class="drop" href="/article-page">Kiến thức</a>
+            <ul>
+              <li><a href="">Kiến thức</a></li>
+              <li><a href="">Kiến thức</a></li>
+              <li><a href="">Kiến thức</a></li>
+              <li><a href="">Kiến thức</a></li>
+              <li><a href="">Kiến thức</a></li>
+              <li><a href="">Basic Grid</a></li>
+
+            </ul>
+          </li>
+
+          <li><a routerLink="/qa-page" routerLinkActive="active">Hỏi đáp</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </nav>
+      <!-- ################################################################################################ -->
+    </header>
+  </div>
+</div>
+<div class="wrapper row3">
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <div id="pageintro" class="hoc clear" style="background-color: #f2f2f2">
+
+    <!--menu left side -->
+    <nav class="menu-left-qa">
+      <div class="div-menu-left">
+        <ul>
+          <li><a href="#"><i class="fa fa-hacker-news"></i>Home</a></li>
+          <li><a href="#"><i class="fa fa-hacker-news"></i>Kiến thức</a>
+            <ul>
+              <li><a href="">Kỹ thuật trồng</a></li>
+              <li><a href="">Thu hái và bảo quản</a></li>
+              <li><a href="">Phân bón</a></li>
+              <li><a href="">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="">Sâu bệnh</a></li>
+              <li><a href="">Giống cây</a></li>
+            </ul>
+          </li>
+          <li><a href="#"><i class="fa fa-hacker-news"></i>Hỏi-đáp</a></li>
+          <li><a href="#"><i class="fa fa-hacker-news"></i>Liên hệ</a></li>
+        </ul>
+      </div>
+    </nav>
+
+
+    <div class="content-right">
+      <!-- menu right side -->
+      <nav class="menu-right-qa">
+
+        <div class="div-menu-right">
+          <div class="ask-place" onclick="">
+            <a href="#" class="ask-button">Đặt câu hỏi</a>
+          </div>
+        </div>
+
+        <div class="sdb_holder">
+          <article class="top-article">
+            <ul class="title-menu-right">
+              <li id="li-article"><button id="bt-article" onclick="showTopArticle()" style="background-color: gainsboro;">
+                Top kiến thức</button></li>
+              <li id="li-question"><button id="bt-question" onclick="showTopQuestion()" style="color: green;">Top câu hỏi</button></li>
+            </ul>
+
+            <!--Top article -->
+            <ul id="top-articles" style="padding-top: 15px;padding-left: 5px;" class="panel-before">
+              <li>
+                <span><a href="/qa-detail-page"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
+                  and</a></div>
+                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
+                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
+                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+              </li>
+              <li>
+                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
+                  and</a></div>
+                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
+                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
+                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+              </li>
+              <li style="border-bottom: none">
+                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
+                  and</a></div>
+                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
+                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
+                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+              </li>
+            </ul>
+            <!--Top question -->
+            <ul id="top-question" style="padding-top: 15px;padding-left: 5px;display: none;" >
+              <li>
+                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
+                  and</a></div>
+                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
+                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
+                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+              </li>
+              <li>
+                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
+                  and</a></div>
+                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
+                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
+                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+              </li>
+              <li style="border-bottom: none">
+                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
+                  and</a></div>
+                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
+                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
+                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="top-tag">
+            <p class="title-menu-right">Top tags</p>
+            <div class="question-tag">
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+              <span><a href="#">tag</a></span>
+            </div>
+
+        </div>
+
+        <!--Top user -->
+        <div>
+          <p class="title-menu-right">Top người dùng</p>
+          <ul  class="top-user" >
+            <li>
+              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <div class="title-article"><a href="#">Tên user</a></div>
+              <span  style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
+            </li>
+            <li>
+              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <div class="title-article"><a href="#"> Teeb user</a></div>
+              <span  style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
+
+            </li>
+            <li>
+              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <div class="title-article"><a href="#"> Tên user</a></div>
+              <span  style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!--Content -->
+      <nav id="comments" style="margin-left: 19%;width: 60%;margin-top: -26.5% !important;float: left;">
+        <div id="menu-sap-xep">
+          <ul class="clear sap-xep" style="display: flex;margin: 0;padding: 0;resize: none">
+
+            <li style="color: black;">Sắp xếp theo</li>
+            <li><a href="#">Người trả lời</a></li>
+            <li><a href="#">Lượt xem</a></li>
+            <li><a href="#">Lượt thích &nbsp;</a></li>
+            <li><a href="#">Ngày &nbsp;</a></li>
+            <li><a href="#">Tháng &nbsp;</a></li>
+            <li><a href="#"> &nbsp;Năm &nbsp;</a></li>
+            <!--<li><a href="index.html">Năm </a></li>-->
+          </ul>
+        </div>
+        <ul style="margin-top: -7px;">
+
+          <!--QA -->
+          <li *ngFor="let qa of qa$.content" style="color: black;margin-bottom: 0px;border-bottom: groove;">
+            <article>
+              <header>
+                <figure class="avatar" style="float: left;margin-left: -13%;"><img
+                  src="../../assets/images/demo/avatar.png" alt=""></figure>
+                <address style="text-align: left;font-size: 12px;color: dodgerblue">
+                  <a href="#">A Name </a>
+                  <time style="font-size: 9px; "><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{qa.utilTimestamp | date: 'yyyy-MM-dd'}}
+                  </time>
+                </address>
+                <h3 style="font-family: 'Times New Roman';text-align: left;margin: 0px;padding-top: 8px;
+                  font-weight: bold;font-size: 19px;    overflow: hidden;white-space: pre-wrap;">
+                  <a class="title-qa" href="qa-page-detail">{{qa.title}}</a>
+                </h3>
+              </header>
+              <div class="comcont">
+                <p style="max-width: 100% !important;text-align: left;color: grey"></p>
+              </div>
+              <div class="question-tag">
+
+                <span *ngFor="let tag of qa.tags"><a href="#">{{tag.name}}</a></span>
+
+              </div>
+
+              <footer class="question-footer">
+                <div><i class="fa fa-li"></i><a href="#">10 Like</a></div>
+                <div><a href="#">10 Lượt trả lời</a></div>
+                <div><a href="#">10 Lượt xem</a></div>
+                <div class="btn-answer"><a href="#">Trả lời</a></div>
+              </footer>
+            </article>
+          </li>
+
+
+          <div class="phan-trang clear">
+            <div class="pagination">
+              <a href="#">&laquo;</a>
+              <a *ngFor="let page of arrayPage(numberOfPage$) let i = index" (click)="getQa(i)">{{i}}</a>
+              <a href="#">&raquo;</a>
+            </div>
+          </div>
+
+        </ul>
+      </nav>
+
+    </div>
+
+    <!-- chia trang -->
+  </div>
+
+</div>
+<!-- ################################################################################################ -->
+<!-- footer-->
+<div class="wrapper row4 bgded overlay"
+     style="background-image:url('../../assets/images/demo/backgrounds/04.png')!important; ;">
+  <footer id="footer" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <div class="one_third first">
+      <h6 class="heading">Commodo et blandit quis</h6>
+      <ul class="nospace btmspace-30 linklist contact">
+        <li><i class="fa fa-map-marker"></i>
+          <address>
+            Street Name &amp; Number, Town, Postcode/Zip
+          </address>
+        </li>
+        <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
+        <li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
+        <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+      </ul>
+    </div>
+    <div class="one_third">
+      <h6 class="heading">Neque phasellus fermentum</h6>
+      <p class="nospace btmspace-30">Ac ante ipsum tincidunt dui eget lorem egestas ut ultricies felis suscipit.</p>
+      <form method="post" action="#">
+        <fieldset>
+          <legend>Newsletter:</legend>
+          <input class="btmspace-15" type="text" value="" placeholder="Name">
+          <input class="btmspace-15" type="text" value="" placeholder="Email">
+          <button type="submit" value="submit">Submit</button>
+        </fieldset>
+      </form>
+    </div>
+    <div class="one_third">
+      <h6 class="heading">Sem ipsum auctor dignissim</h6>
+      <figure><a href="#"><img class="borderedbox inspace-10 btmspace-15" src="../images/demo/320x168.png" alt=""></a>
+        <figcaption>
+          <h6 class="nospace font-x1"><a href="#">Tortor congue quis arcu</a></h6>
+          <time class="font-xs block btmspace-10" datetime="2045-04-06">Friday, 6<sup>th</sup> April 2045</time>
+        </figcaption>
+      </figure>
+    </div>
+    <!-- ################################################################################################ -->
+  </footer>
+</div>
+

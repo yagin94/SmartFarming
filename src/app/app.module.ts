@@ -25,6 +25,7 @@ import {
 import { KiThuatTrongComponent } from './article-page/ki-thuat-trong/ki-thuat-trong.component';
 import { PhanBonComponent } from './article-page/phan-bon/phan-bon.component';
 import { TrangChinhComponent } from './article-page/trang-chinh/trang-chinh.component';
+import { ArticlePostPageComponent } from './article-page/article-post-page/article-post-page.component';
 // Configs
 const config = new AuthServiceConfig([
   {
@@ -56,7 +57,8 @@ export function provideConfig() {
     UserInformationComponent,
     KiThuatTrongComponent,
     PhanBonComponent,
-    TrangChinhComponent
+    TrangChinhComponent,
+    ArticlePostPageComponent
   ],
   imports: [
     AngularFontAwesomeModule,

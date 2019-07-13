@@ -66,7 +66,7 @@ export class QaPageComponent implements OnInit {
     console.log('=========================', searchTerm);
     if (searchTerm) {
       this.qaService.searchQa(searchTerm).subscribe(qa => {
-        // this.qa$.content = qa;
+          this.qa$ = qa;
       });
     }
   }

@@ -1,0 +1,126 @@
+#menu-sap-xep ul li:hover::after {
+  width: 100%;
+}
+
+.sap-xep {
+  min-width: 100%;
+}
+
+#menu-sap-xep ul li::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #000;
+  /*transition: width .3s;*/
+}
+
+#pageintro {
+  padding: 0px !important;
+  max-width: 75%;
+}
+
+.title-qa {
+  color: #000000 !important;
+  -webkit-transition: background-color 1s;
+  -moz-transition: background-color 1s;
+  -o-transition: background-color 1s;
+  transition: background-color 1s;
+  text-transform: none !important;
+}
+
+.title-qa:hover {
+  color: blue !important;
+}
+
+
+
+.question-tag ul {
+  margin: 0px !important;
+}
+
+.question-tag span {
+  /*margin-right: 5px;*/
+  overflow: hidden;
+  /*border-style: groove;*/
+  /*border-color: #A8A7A6;*/
+  /*border-width: 0.5px;*/
+  text-align: center;
+  font-size: 12px;
+  padding: 5px;
+  border: 0.4px solid #9E9E9E;
+  border-radius: 3px;
+  margin: auto 5px;
+}
+
+.question-tag span a:hover {
+  background: #404e8e !important;
+  transition: border .20s linear, color .20s linear, background-color .20s linear;
+}
+
+.question-tag ul li {
+  margin: 5px !important;
+  padding: 0px !important;
+}
+
+/* question-footer*/
+.question-footer {
+  margin: 15px 0 0 0 !important;
+  background-color: #f5f5f5;
+  clear: both;
+  padding: 10px;
+  display: -webkit-box;
+
+}
+
+.question-footer div {
+  padding: 0 10px;
+  border: 1px solid #9E9E9E;
+  margin: 6px 5px 5px 5px;
+  font-size: 13px;
+
+}
+
+.question-footer div a {
+  color: #7c7f85;
+}
+
+
+
+/*left side*/
+.menu-left-qa {
+  /*background: rgba(0,0,0,.6); !**!*/
+  width: 20%;
+  /*margin-top: -100%;*/
+  /*position: fixed;*/
+  overflow: visible;
+  float: left;
+}
+
+.div-menu-left {
+  padding: 30px 10px 30px 20px !important;
+}
+
+.div-menu-left i {
+  padding: 10px 10px 10px 0;
+}
+
+.div-menu-left ul li ul li a {
+  padding: 5px 0px 0px 30px;
+  font-size: 13px;
+  font-family: "Open Sans", Arial, sans-serif;
+  color: #7c7f85 !important;
+}
+
+.div-menu-left ul li a {
+  font-weight: bold;
+  color: #26333b;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 15px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*xep hang start*/
+
+
+

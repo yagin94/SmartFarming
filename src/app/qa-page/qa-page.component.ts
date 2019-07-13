@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {QaService} from './qa.service';
-import {AddAnsObj, Answers, Q, Qa} from './qa.model';
+import {AddAnsObj, Answers, Q, Qa, TextSearch} from './qa.model';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-qa-page',
@@ -16,13 +17,27 @@ export class QaPageComponent implements OnInit {
   editQuestion$: Qa;
   editAnswer$: Answers;
   answer$: any;
+  pageIndex$ = 0;
+  numberOfPage$: any;
+  textSearch$: TextSearch;
+
   constructor(private qaService: QaService) { }
 
   ngOnInit() {
-    this.getQa();
+    this.getnumberPages();
+    this.getQa(this.pageIndex$);
   }
-  getQa(): void {
-    this.qaService.getQa().subscribe(qa => this.qa$ = qa);
+  arrayPage(numberOfPage: number): any[] {
+    return Array(numberOfPage);
+  }
+  getnumberPages() {
+    this.qaService.getNumberOfPages().subscribe(qa => this.numberOfPage$ = qa);
+  }
+  getQa(pageIndex: number): void {
+    this.qaService.getQa(pageIndex).subscribe(qa => this.qa$ = qa);
+  }
+  abc() {
+    console.log('here', this.qa$);
   }
   addQa(title, content: string): void {
     title = title.trim();
@@ -48,8 +63,11 @@ export class QaPageComponent implements OnInit {
     }
   }
   searchQa(searchTerm: string) {
+    console.log('=========================', searchTerm);
     if (searchTerm) {
-      this.qaService.searchQa(searchTerm).subscribe(qa => this.qa$ = qa);
+      this.qaService.searchQa(searchTerm).subscribe(qa => {
+        // this.qa$.content = qa;
+      });
     }
   }
   addAnswers(content: string): void {

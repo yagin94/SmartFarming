@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import {AddAnsObj, Answers, Qa} from './qa.model';
+import {AddAnsObj, Answers, Qa, TextSearch} from './qa.model';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
@@ -7,11 +7,14 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 
 export class QaService {
-  QaUrl = 'http://localhost:8080/forum/searchQuestions';
+  QaUrl = 'http://localhost:8080/question/searchQuestions';
   constructor(private http: HttpClient) {}
   /** GET question from the server */
-  getQa(): Observable<Qa[]> {
-    return this.http.get<Qa[]>('http://localhost:8080/forum/viewAllQuestions');
+  getNumberOfPages() {
+    return this.http.get('http://localhost:8080/question/viewNumberOfPages');
+  }
+  getQa(pageIndex: number): Observable<Qa[]> {
+    return this.http.get<Qa[]>(`http://localhost:8080/question/viewQuestions/${pageIndex}`);
   }
   /** POST: add a new article to the database */
   addQa(qa: Qa): Observable<Qa> {
@@ -23,9 +26,10 @@ export class QaService {
     return this.http.delete(url);
   }
   /** GET question whose name contains search term */
-  searchQa(term: string): Observable<Qa[]> {
-    term = term.trim();
-    return this.http.get<Qa[]>(`${this.QaUrl}/${term}`);
+  searchQa(textSearch: string): Observable<Qa[]> {
+    const params = { textSearch }
+
+    return this.http.post<Qa[]>(`${this.QaUrl}`, params);
   }
   /** PUT: update the question on the server. Returns the updated article upon success. */
   updateQuestion(id: number, question: Qa): Observable<Qa> {

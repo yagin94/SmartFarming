@@ -2,12 +2,13 @@
   <div id="topbar" class="hoc clear">
     <!-- ################################################################################################ -->
     <ul>
-      <li><i class="fa fa-clock-o"></i> Mon. - Fri. 8am - 5pm</li>
-      <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
-      <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+      <li><i class="fa fa-clock-o"></i> Làm việc 24/7</li>
+      <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
+      <li><i class="fa fa-envelope-o"></i> smartfarming@gmail.com</li>
       <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
-      <li><a href="#" title="Login"><i class="fa fa-lg fa-sign-in"></i></a></li>
-      <li><a href="#" title="Sign Up"><i class="fa fa-lg fa-edit"></i></a></li>
+      <li><div title="Đăng nhập bằng facebook" ><i class="fa fa-lg fa-facebook-square"></i></div></li>
+      <li><div  title="Đăng nhập bằng google" (click)="signInWithGoogle()"><i class="fa fa-lg fa-google-plus-square"></i></div></li>
+
     </ul>
     <!-- ################################################################################################ -->
   </div>
@@ -23,35 +24,25 @@
     <header id="header" class="hoc clear">
       <!-- ################################################################################################ -->
       <div id="logo" class="fl_left">
-        <h1><a href="index.html">FPT developer Team</a></h1>
+        <h1><a style="font-size: 17px; color: #F7AF9D;letter-spacing: 5px; font-family: 'Open Sans Condensed', sans-serif; font-weight: 700;  text-align: center; text-transform: uppercase;" href="index.html">FPT developer Team</a></h1>
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear">
-          <li class="active"><a href="index.html">Home</a></li>
-          <li><a class="drop" href="#">Pages</a>
+          <li class="active"><a href="index.html">Trang chủ</a></li>
+          <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
             <ul>
-              <li><a href="pages/gallery.html">Gallery</a></li>
-              <li><a href="pages/full-width.html">Full Width</a></li>
-              <li><a href="pages/sidebar-left.html">Sidebar Left</a></li>
-              <li><a href="pages/sidebar-right.html">Sidebar Right</a></li>
-              <li><a href="pages/basic-grid.html">Basic Grid</a></li>
+              <li><a href="">Kỹ thuật trồng</a></li>
+              <li><a href="">Thu hoạch & Bảo quản</a></li>
+              <li><a href="">Phân bón</a></li>
+              <li><a href="">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="">Sâu bệnh</a></li>
+              <li><a href="">Kỹ thuật nhân giống</a></li>
+              <li><a href="">Giống cây</a></li>
             </ul>
           </li>
-          <li><a class="drop" href="#">Dropdown</a>
-            <ul>
-              <li><a href="#">Level 2</a></li>
-              <li><a class="drop" href="#">Level 2 + Drop</a>
-                <ul>
-                  <li><a href="#">Level 3</a></li>
-                  <li><a href="#">Level 3</a></li>
-                  <li><a href="#">Level 3</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Level 2</a></li>
-            </ul>
-          </li>
-          <li><a routerLink="/article-page" routerLinkActive="active">Link Text</a></li>
-          <li><a href="#">Link Text</a></li>
+          <li><a  routerLink="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
+          <li><a  href="#">Liên hệ</a></li>
+
         </ul>
       </nav>
       <!-- ################################################################################################ -->
@@ -68,70 +59,131 @@
       <p class="font-x1 uppercase bold">Cùng nhau phát triển nghề nông</p>
       <footer>
         <ul class="nospace inline pushright">
-          <li><a class="btn" href="#">Kiến Thức</a></li>
-          <li><a class="btn inverse" href="#">Hỏi Đáp</a></li>
+          <li><a class="btn inverse" [ngx-scroll-to]="topView">Danh mục đáng chú ý</a></li>
+          <li><a class="btn inverse" [ngx-scroll-to]="aboutUs">Đội ngũ phát triển</a></li>
         </ul>
       </footer>
       <!-- ################################################################################################ -->
     </article>
   </div>
   <!-- ################################################################################################ -->
+  <div class="wrapper row3" #topView>
+    <section class="hoc container clear">
+      <!-- ################################################################################################ -->
+      <div class="sectiontitle">
+        <h6 class="heading">Danh mục đáng chú ý</h6>
+      </div>
+      <div class="group testimonials">
+        <div class="one_half first">
+          <p class="customP">Top 5 Kiến thức</p>
+          <div class="topFive">
+            <!--##################################################3-->
+            <div class="arcticle">
+              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
+              <a class="articleTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
+              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <div class="arcticle">
+              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
+              <a class="articleTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
+              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <div class="arcticle">
+              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
+              <a class="articleTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
+              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <div class="arcticle">
+              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
+              <a class="articleTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
+              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <div class="arcticle">
+              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
+              <a class="clickTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
+              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <!--##################################################3-->
+          </div>
+        </div>
+        <div class="one_half">
+          <p class="customP"> Top 5 Hỏi đáp</p>
+          <div class="topFive">
+            <div class="question">
+              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <div class="question">
+              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <div class="question">
+              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <div class="question">
+              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+            <div class="question">
+              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
+              <p>--------------------------------------------------------------------------</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ################################################################################################ -->
+    </section>
+  </div>
+  <!-- ########################################################################################-->
 </div>
   <!-- Phan trang chu hien thi thong tin, background ....-->
   <!-- ################################################################################################ -->
-<div class="wrapper row4 bgded overlay" style="background-image:url('images/demo/backgrounds/04.png');">
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row4 bgded overlay" style="background-image:url('https://storage.googleapis.com/sonson-1-bucket/images.jpg');" #aboutUs>
   <footer id="footer" class="hoc clear">
     <!-- ################################################################################################ -->
     <div class="one_third first">
-      <h6 class="heading">Commodo et blandit quis</h6>
+      <h6 class="heading">FPT DEVELOPER TEAM</h6>
       <ul class="nospace btmspace-30 linklist contact">
         <li><i class="fa fa-map-marker"></i>
           <address>
-            Street Name &amp; Number, Town, Postcode/Zip
+            FPT UNIVERSITY
           </address>
         </li>
-        <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
+        <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
         <li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
-        <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+        <li><i class="fa fa-envelope-o"></i> smartfarming@gmail.com</li>
       </ul>
     </div>
     <div class="one_third">
-      <h6 class="heading">Neque phasellus fermentum</h6>
-      <p class="nospace btmspace-30">Ac ante ipsum tincidunt dui eget lorem egestas ut ultricies felis suscipit.</p>
-      <form method="post" action="#">
-        <fieldset>
-          <legend>Newsletter:</legend>
-          <input class="btmspace-15" type="text" value="" placeholder="Name">
-          <input class="btmspace-15" type="text" value="" placeholder="Email">
-          <button type="submit" value="submit">Submit</button>
-        </fieldset>
-      </form>
+      <h6 class="heading tittFooter">THÀNH VIÊN</h6>
+      <ul>
+        <li class="space_line">  Lê Thu Hà</li>
+        <li class="space_line">  Nguyễn Phúc Minh Sơn</li>
+        <li class="space_line">  Nguyễn Duy Hiển</li>
+        <li class="space_line">  Trần Hồng Quỳnh</li>
+        <li class="space_line">  Ngô Xuân Tính</li>
+      </ul>
     </div>
     <div class="one_third">
-      <h6 class="heading">Sem ipsum auctor dignissim</h6>
+      <h6 class="heading">SMART FARMING</h6>
       <figure><a href="#"><img class="borderedbox inspace-10 btmspace-15" src="images/demo/320x168.png" alt=""></a>
         <figcaption>
-          <h6 class="nospace font-x1"><a href="#">Tortor congue quis arcu</a></h6>
-          <time class="font-xs block btmspace-10" datetime="2045-04-06">Friday, 6<sup>th</sup> April 2045</time>
+          <h6 class="nospace font-x1"><a href="#">Ngày phát hành</a></h6>
+          <time class="font-xs block btmspace-10" datetime="2019-04-06">Friday, 6<sup>th</sup> April 2019</time>
         </figcaption>
       </figure>
     </div>
     <!-- ################################################################################################ -->
   </footer>
 </div>
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<div class="wrapper row5">
-  <div id="copyright" class="hoc clear">
-    <!-- ################################################################################################ -->
-    <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Domain Name</a></p>
-    <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+
 

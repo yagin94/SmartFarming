@@ -1,0 +1,14 @@
+.customP {
+  font-size: 1.5em;
+  text-align: center;
+}
+.arcticleImage {
+  float: left;
+  padding-right: 15px;
+}
+.clickTitle {
+  cursor: pointer;
+}
+a {
+  cursor: pointer;
+}

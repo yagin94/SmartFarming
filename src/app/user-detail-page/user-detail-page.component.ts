@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import * as CanvasJS from '../../app/manager-page/http_canvasjs.com_assets_script_canvasjs.min';
-
 
 @Component({
-  selector: 'app-manager-page',
-  templateUrl: './manager-page.component.html',
-  styleUrls: ['./manager-page.component.css']
+  selector: 'app-user-detail-page',
+  templateUrl: './user-detail-page.component.html',
+  styleUrls: ['./user-detail-page.component.css']
 })
-export class ManagerPageComponent implements OnInit {
+export class UserDetailPageComponent implements OnInit {
 
   init() {
     this.drawChart();
@@ -15,11 +13,11 @@ export class ManagerPageComponent implements OnInit {
   constructor() { }
 
   drawChart() {
-    var chart = new CanvasJS.Chart("chartContainer", {
+    var chart = new CanvasJS.Chart("chartContainerUser", {
       theme: "light1", // "light2", "dark1", "dark2"
       animationEnabled: true, // change to true
       title: {
-        text: "Views, articles, questions statistics"
+        text: "Thông số tài khoản"
       },
       data: [
         {
@@ -70,8 +68,8 @@ export class ManagerPageComponent implements OnInit {
     });
     chart.render();
   }
-
   ngOnInit() {
     this.init();
   }
+
 }

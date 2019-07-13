@@ -66,8 +66,8 @@
   margin: auto 5px;
 }
 
-.question-tag span a:hover {
-  background: #404e8e !important;
+.question-tag span:hover {
+  background: #486d8e !important;
   transition: border .20s linear, color .20s linear, background-color .20s linear;
 }
 

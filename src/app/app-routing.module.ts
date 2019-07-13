@@ -14,6 +14,7 @@ import {UserInformationComponent} from './user-information/user-information.comp
 import {KiThuatTrongComponent} from './article-page/ki-thuat-trong/ki-thuat-trong.component';
 import {PhanBonComponent} from './article-page/phan-bon/phan-bon.component';
 import {TrangChinhComponent} from './article-page/trang-chinh/trang-chinh.component';
+import {UserDetailPageComponent} from './user-detail-page/user-detail-page.component';
 
 
 
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'manage-page',
     component: ManagerPageComponent
+  },
+  {
+    path: 'user-detail-page',
+    component: UserDetailPageComponent
   },
   // { path: '',   redirectTo: '/home-page', pathMatch: 'full' },
   {

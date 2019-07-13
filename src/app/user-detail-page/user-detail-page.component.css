@@ -33,8 +33,6 @@
   color: blue !important;
 }
 
-
-
 .question-tag ul {
   margin: 0px !important;
 }
@@ -84,8 +82,6 @@
 .question-footer div a {
   color: #7c7f85;
 }
-
-
 
 /*left side*/
 .menu-left-qa {
@@ -98,15 +94,15 @@
 }
 
 .div-menu-left {
-  padding: 30px 10px 30px 20px !important;
-  position: fixed;
+  padding: 10px 10px 10px 10px !important;
+  /*position: fixed;*/
 }
 
 .div-menu-left i {
   padding: 10px 10px 10px 0;
 }
 
-.div-menu-left ul li ul li{
+.div-menu-left ul li ul li {
   padding: 5px 0px 0px 30px;
   font-size: 13px;
   font-family: "Open Sans", Arial, sans-serif;
@@ -123,23 +119,26 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*xep hang start*/
 
-table{
+table {
   max-height: 300px !important;
   padding: 5px;
 }
-#table-wrapper {
-  height: 300px;
-  padding: 0px;
-  margin: 0px auto 0px auto;
-  overflow: auto;
 
+.table-user {
+  margin-top: 1%;
+  text-align: center;
 }
-#report{
+
+#report-question {
   /*height: 300px;*/
   padding: 0px;
   margin: 0px auto 0px auto;
   overflow: auto;
+  max-height: 1000px;
+  border-bottom: 2px solid #b53f3f2e;
+
 }
+
 table > tbody > tr:first-child {
   font-size: 16px;
   color: #454545;
@@ -148,12 +147,62 @@ table > tbody > tr:first-child {
   text-align: center;
 }
 
-.table-report{
+#table-report {
   border-color: #F4F4F4;
+  background-color: aliceblue;
+  width: 98%;
 
 }
 
-.table-report-first{
+#table-report tr {
+  border-bottom: 0.5px inset #A8A7A6;
+  height: 50px;
+  background-color: aliceblue;
+}
+
+#table-report td {
+  padding-top: 15px;
+}
+
+#table-report tr td a {
+  margin-left: 4%;
+}
+
+/*#table-report tr:nth-child(n + 4) {*/
+/*visibility: revert;*/
+/*}*/
+
+.icon {
+  height: 50px;
+  width: 50px;
+  border-color: #5fba7d;
+  background: #5fba7d;
+  color: #FFFFFF;
+  padding: 2%;
+}
+
+.time-user-detail {
+  float: right;
+}
+
+svg {
+  padding: 10px 15px;
+}
+
+.status-report {
+  width: auto !important;
+  margin-bottom: 0px !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-transform: none !important;
+}
+
+#comments div {
+  margin-bottom: 0px !important;
+}
+
+.table-report-first {
   /*border: none !important;*/
   font-size: 14px !important;
   color: #474747 !important;
@@ -161,135 +210,114 @@ table > tbody > tr:first-child {
   background: none !important;
   text-align: left !important;
 }
-.label-report{
-  width: 17%;
-  text-align: center !important;
-  background-color: lavender;
-  border-bottom: 1px inset #3f51b5;
-}
-#menu-sap-xep ul li:hover::after {
-  width: 100%;
-}
 
-.sap-xep {
-  min-width: 100%;
+#report-answer {
+  /*height: 300px;*/
+  padding: 0px;
+  margin: 0px auto 0px auto;
+  overflow: auto;
+  max-height: 1000px;
+  border-bottom: 2px solid #b53f3f2e;
+
 }
 
-#menu-sap-xep ul li::after {
-  content: '';
-  display: block;
-  width: 0;
-  height: 2px;
-  background: #000;
-  /*transition: width .3s;*/
+#table-report-answer {
+  border-color: #F4F4F4;
+  background-color: aliceblue;
+  width: 98%;
+
 }
 
-#pageintro {
-  padding: 0px !important;
-  max-width: 75%;
+#table-report-answer tr {
+  border-bottom: 0.5px inset #A8A7A6;
+  height: 50px;
+  background-color: aliceblue;
 }
 
-.title-qa {
-  color: #000000 !important;
-  -webkit-transition: background-color 1s;
-  -moz-transition: background-color 1s;
-  -o-transition: background-color 1s;
-  transition: background-color 1s;
-  text-transform: none !important;
+#table-report-answer td {
+  padding-top: 15px;
 }
 
-.title-qa:hover {
-  color: blue !important;
+#table-report-answer tr td a {
+  margin-left: 4%;
 }
 
+#report-tags {
+  /*height: 300px;*/
 
-
-.question-tag ul {
-  margin: 0px !important;
+  margin: 0px auto 0px auto;
+  overflow: auto;
+  max-height: 1000px;
+  border-bottom: 2px solid #b53f3f2e;
+  padding-bottom: 5%;
 }
 
-.question-tag span {
-  /*margin-right: 5px;*/
+.tag-infor {
   overflow: hidden;
-  /*border-style: groove;*/
-  /*border-color: #A8A7A6;*/
-  /*border-width: 0.5px;*/
   text-align: center;
-  font-size: 12px;
-  padding: 5px;
-  border: 0.4px solid #9E9E9E;
+  font-size: 15px;
+  padding: 1.5%;
   border-radius: 3px;
   margin: auto 5px;
+  background-color: #E1ECF4;
+  border: none;
+  font-weight: bold;
+
 }
 
-.question-tag span a:hover {
-  background: #404e8e !important;
+.tag-infor a {
+  margin-right: 2%;
+}
+
+.name-tag {
+  padding: 0.5%;
+
+}
+
+.name-tag:hover {
+  background: #ff816d !important;
   transition: border .20s linear, color .20s linear, background-color .20s linear;
 }
 
-.question-tag ul li {
-  margin: 5px !important;
-  padding: 0px !important;
+.infor-tag {
+  font-weight: normal;
+  font-size: 14px;
 }
 
-/* question-footer*/
-.question-footer {
-  margin: 15px 0 0 0 !important;
-  background-color: #f5f5f5;
-  clear: both;
-  padding: 10px;
-  display: -webkit-box;
-
-}
-
-.question-footer div {
-  padding: 0 10px;
-  border: 1px solid #9E9E9E;
-  margin: 6px 5px 5px 5px;
-  font-size: 13px;
-
-}
-
-.question-footer div a {
-  color: #7c7f85;
-}
-
-
-
-/*left side*/
-.menu-left-qa {
-  /*background: rgba(0,0,0,.6); !**!*/
-  width: 20%;
-  /*margin-top: -100%;*/
-  /*position: fixed;*/
-  overflow: visible;
-  float: left;
-}
-
-.div-menu-left {
-  padding: 30px 10px 30px 20px !important;
-}
-
-.div-menu-left i {
-  padding: 10px 10px 10px 0;
-}
-
-.div-menu-left ul li ul li a {
-  padding: 5px 0px 0px 30px;
-  font-size: 13px;
-  font-family: "Open Sans", Arial, sans-serif;
-  color: #7c7f85 !important;
-}
-
-.div-menu-left ul li a {
+.number-user {
+  text-align: center;
   font-weight: bold;
-  color: #26333b;
-  font-family: "Roboto", Arial, sans-serif;
-  font-size: 15px;
 }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
-/*xep hang start*/
+.buttin-logout {
+  float: right;
+  margin: 5% !important;
+}
 
+#report-edit {
+  padding: 0px;
+  margin: 0px auto 0px auto;
+  overflow: auto;
+  max-height: 1000px;
+  border-bottom: 2px solid #b53f3f2e;
+}
+#table-report-edit {
+  border-color: #F4F4F4;
+  background-color: aliceblue;
+  width: 98%;
 
+}
 
+#table-report-edit tr {
+  border-bottom: 0.5px inset #A8A7A6;
+  height: 50px;
+  background-color: aliceblue;
+}
+
+#table-report-edit td {
+  padding-top: 15px;
+}
+
+#table-report-edit tr td a {
+  margin-left: 4%;
+}

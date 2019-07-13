@@ -16,6 +16,7 @@ import { ArticleDetailPageComponent } from './article-page/article-detail-page/a
 import { QaPageDetailComponent } from './qa-page/qa-page-detail/qa-page-detail.component';
 import { QaPagePostComponent } from './qa-page/qa-page-post/qa-page-post.component';
 import { UserInformationComponent } from './user-information/user-information.component';
+import {UserDetailPageComponent} from './user-detail-page/user-detail-page.component';
 import {
   SocialLoginModule,
   AuthServiceConfig,
@@ -58,7 +59,8 @@ export function provideConfig() {
     KiThuatTrongComponent,
     PhanBonComponent,
     TrangChinhComponent,
-    ArticlePostPageComponent
+    ArticlePostPageComponent,
+    UserDetailPageComponent
   ],
   imports: [
     AngularFontAwesomeModule,

@@ -27,6 +27,16 @@ import { KiThuatTrongComponent } from './article-page/ki-thuat-trong/ki-thuat-tr
 import { PhanBonComponent } from './article-page/phan-bon/phan-bon.component';
 import { TrangChinhComponent } from './article-page/trang-chinh/trang-chinh.component';
 import { ArticlePostPageComponent } from './article-page/article-post-page/article-post-page.component';
+import { HeaderComponent } from './common/header/header.component';
+import { CKEditorModule } from 'ckeditor4-angular';
+import { NgxSocialButtonModule,
+  SocialServiceConfig} from 'ngx-social-button';
+export function getAuthServiceConfigs() {
+  let configs = new SocialServiceConfig()
+    .addFacebook('760042107748144')
+    .addGoogle('37814627490-8elc70ljgrbo34n0tn205o2afhrpef6h.apps.googleusercontent.com');
+  return configs;
+}
 // Configs
 const config = new AuthServiceConfig([
   {
@@ -38,7 +48,6 @@ const config = new AuthServiceConfig([
     provider: new FacebookLoginProvider('760042107748144')
   }
 ]);
-
 export function provideConfig() {
   return config;
 }
@@ -60,9 +69,12 @@ export function provideConfig() {
     PhanBonComponent,
     TrangChinhComponent,
     ArticlePostPageComponent,
-    UserDetailPageComponent
+    UserDetailPageComponent,
+    HeaderComponent
   ],
   imports: [
+    CKEditorModule,
+    NgxSocialButtonModule,
     AngularFontAwesomeModule,
     BrowserModule,
     AppRoutingModule,
@@ -74,8 +86,13 @@ export function provideConfig() {
   providers: [
     {
       provide: AuthServiceConfig,
-      useFactory: provideConfig
-    }
+      useFactory: provideConfig,
+
+    },
+    {
+      provide: SocialServiceConfig,
+      useFactory: getAuthServiceConfigs
+    },
   ],
   bootstrap: [AppComponent]
 })

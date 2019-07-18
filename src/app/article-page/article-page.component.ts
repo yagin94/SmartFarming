@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Article} from './article.model';
 import {ArticleService} from './article.service';
+import {HeaderComponent} from '../common/header/header.component';
 
 @Component({
   selector: 'app-article-page',
   templateUrl: './article-page.component.html',
-  providers: [ArticleService],
+  providers: [ArticleService, HeaderComponent],
   styleUrls: ['./article-page.component.css']
 })
 export class ArticlePageComponent implements OnInit {

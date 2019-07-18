@@ -1,17 +1,4 @@
-<div class="wrapper row0" style="height: 35px">
-  <div id="topbar" class="hoc clear">
-    <!-- ################################################################################################ -->
-    <ul style="margin-top: -7px;">
-      <li><i class="fa fa-clock-o"></i> Mon. - Fri. 8am - 5pm</li>
-      <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
-      <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
-      <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
-      <li><a href="#" title="Login"><i class="fa fa-lg fa-sign-in"></i></a></li>
-      <li><a href="#" title="Sign Up"><i class="fa fa-lg fa-edit"></i></a></li>
-    </ul>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
+<app-header></app-header>
 <!-- Phan Link dia chi lien ket hoi dap ... -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -27,22 +14,21 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear">
-          <li><input #questionTitle (keyup.enter)="searchQa(questionTitle.value)" style="color: black"></li>
-          <li class="active"><a href="index.html">Home</a></li>
-          <li><a class="drop" href="/article-page">Kiến thức</a>
+          <li><input #questionTitle (keyup.enter)="searchQa(questionTitle.value, pageIndex$)" style="color: black"></li>
+          <li class="active"><a href="index.html">Trang chủ</a></li>
+          <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
             <ul>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Basic Grid</a></li>
-
+              <li><a href="">Kỹ thuật trồng</a></li>
+              <li><a href="">Thu hoạch & Bảo quản</a></li>
+              <li><a href="">Phân bón</a></li>
+              <li><a href="">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="">Sâu bệnh</a></li>
+              <li><a href="">Kỹ thuật nhân giống</a></li>
+              <li><a href="">Giống cây</a></li>
             </ul>
           </li>
-
-          <li><a routerLink="/qa-page" routerLinkActive="active">Hỏi đáp</a></li>
-          <li><a href="#">Liên hệ</a></li>
+          <li><a  routerLink="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
+          <li><a  href="#">Liên hệ</a></li>
         </ul>
       </nav>
       <!-- ################################################################################################ -->
@@ -76,97 +62,37 @@
       </div>
     </nav>
 
-
     <div class="content-right">
       <!-- menu right side -->
       <nav class="menu-right-qa">
 
         <div class="div-menu-right">
           <div class="ask-place" onclick="">
-            <a href="#" class="ask-button">Đặt câu hỏi</a>
+            <a href="/qa-page-post" class="ask-button">Đặt câu hỏi</a>
           </div>
         </div>
 
         <div class="sdb_holder">
           <article class="top-article">
             <ul class="title-menu-right">
-              <li id="li-article"><button id="bt-article" onclick="showTopArticle()" style="background-color: gainsboro;">
-                Top kiến thức</button></li>
-              <li id="li-question"><button id="bt-question" onclick="showTopQuestion()" style="color: green;">Top câu hỏi</button></li>
-            </ul>
 
-            <!--Top article -->
-            <ul id="top-articles" style="padding-top: 15px;padding-left: 5px;" class="panel-before">
-              <li>
-                <span><a href="/qa-detail-page"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
-              <li>
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
-              <li style="border-bottom: none">
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
             </ul>
             <!--Top question -->
-            <ul id="top-question" style="padding-top: 15px;padding-left: 5px;display: none;" >
+            <p class="title-menu-right">Top Questions</p>
+            <ul *ngFor="let item of topQa$" id="top-question" style="padding-top: 25px;padding-left: 5px;" >
               <li>
                 <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
-              <li>
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
-              <li style="border-bottom: none">
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
+                <div class="title-article"><a href="#"> {{item.title}}</a></div>
                 <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
                 <span class="top-article-view"><a href="#">100 lượt xem</a></span>
               </li>
             </ul>
           </article>
         </div>
-
         <div class="top-tag">
             <p class="title-menu-right">Top tags</p>
             <div class="question-tag">
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
-              <span><a href="#">tag</a></span>
+              <span *ngFor="let tag of topTag$"><a href="#">{{tag.name}}</a></span>
             </div>
 
         </div>
@@ -213,19 +139,21 @@
         <ul style="margin-top: -7px;">
 
           <!--QA -->
-          <li *ngFor="let qa of qa$" style="color: black;margin-bottom: 0px;border-bottom: groove;">
+          <li *ngFor="let object of getObject$.qa" style="color: black;margin-bottom: 0px;border-bottom: groove;" >
             <article>
               <header>
                 <figure class="avatar" style="float: left;margin-left: -13%;"><img
                   src="../../assets/images/demo/avatar.png" alt=""></figure>
                 <address style="text-align: left;font-size: 12px;color: dodgerblue">
-                  <a href="#">A Name </a>
-                  <time style="font-size: 9px; "><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{qa.utilTimestamp | date: 'yyyy-MM-dd'}}
+                  <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
+                  <a href="#" *ngIf="object.appUser==null">anonymous </a>
+                  <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==false">{{object.appUser.socialUser.name}}</a>
+                  <time style="font-size: 9px; "><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{object.utilTimestamp | date: 'yyyy-MM-dd'}}
                   </time>
                 </address>
                 <h3 style="font-family: 'Times New Roman';text-align: left;margin: 0px;padding-top: 8px;
                   font-weight: bold;font-size: 19px;    overflow: hidden;white-space: pre-wrap;">
-                  <a class="title-qa" href="qa-page-detail">{{qa.title}}</a>
+                  <a class="title-qa" (click)="edit(object)" >{{object.title}}</a>
                 </h3>
               </header>
               <div class="comcont">
@@ -233,24 +161,20 @@
               </div>
               <div class="question-tag">
 
-                <span *ngFor="let tag of qa.tags"><a href="#">{{tag.name}}</a></span>
+                <span *ngFor="let tag of object.tags"><a href="#">{{tag.name}}</a></span>
 
               </div>
-
               <footer class="question-footer">
                 <div><i class="fa fa-li"></i><a href="#">10 Like</a></div>
                 <div><a href="#">10 Lượt trả lời</a></div>
                 <div><a href="#">10 Lượt xem</a></div>
-                <div class="btn-answer"><a href="#">Trả lời</a></div>
               </footer>
             </article>
           </li>
-
-
           <div class="phan-trang clear">
             <div class="pagination">
               <a href="#">&laquo;</a>
-              <a *ngFor="let page of arrayPage(numberOfPage$) let i = index" (click)="getQa(i)">{{i}}</a>
+              <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(i)">{{i}}</a>
               <a href="#">&raquo;</a>
             </div>
           </div>
@@ -307,4 +231,5 @@
     <!-- ################################################################################################ -->
   </footer>
 </div>
+
 

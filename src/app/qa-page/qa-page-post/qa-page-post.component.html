@@ -1,17 +1,4 @@
-<div class="wrapper row0" style="height: 35px">
-  <div id="topbar" class="hoc clear">
-    <!-- ################################################################################################ -->
-    <ul style="margin-top: -7px;">
-      <li><i class="fa fa-clock-o"></i> Mon. - Fri. 8am - 5pm</li>
-      <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
-      <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
-      <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
-      <li><a href="#" title="Login"><i class="fa fa-lg fa-sign-in"></i></a></li>
-      <li><a href="#" title="Sign Up"><i class="fa fa-lg fa-edit"></i></a></li>
-    </ul>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
+<app-header></app-header>
 <!-- Phan Link dia chi lien ket hoi dap ... -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -27,21 +14,20 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear">
-          <li class="active"><a href="index.html">Home</a></li>
-          <li><a class="drop" href="#">Kiến thức</a>
+          <li class="active"><a href="index.html">Trang chủ</a></li>
+          <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
             <ul>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Kiến thức</a></li>
-              <li><a href="">Basic Grid</a></li>
-
+              <li><a href="">Kỹ thuật trồng</a></li>
+              <li><a href="">Thu hoạch & Bảo quản</a></li>
+              <li><a href="">Phân bón</a></li>
+              <li><a href="">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="">Sâu bệnh</a></li>
+              <li><a href="">Kỹ thuật nhân giống</a></li>
+              <li><a href="">Giống cây</a></li>
             </ul>
           </li>
-
-          <li><a routerLink="/article-page" routerLinkActive="active">Link Text</a></li>
-          <li><a href="#">Link Text</a></li>
+          <li><a  routerLink="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
+          <li><a  href="#">Liên hệ</a></li>
         </ul>
       </nav>
       <!-- ################################################################################################ -->
@@ -82,73 +68,20 @@
 
         <div class="div-menu-right">
           <div class="ask-place" onclick="">
-            <a href="#" class="ask-button">Đặt câu hỏi</a>
+            <a href="/qa-page-post" class="ask-button">Đặt câu hỏi</a>
           </div>
         </div>
-
         <div class="sdb_holder">
           <article class="top-article">
             <ul class="title-menu-right">
-              <li id="li-article">
-                <button id="bt-article" onclick="showTopArticle()" style="background-color: gainsboro;">
-                  Top kiến thức
-                </button>
-              </li>
-              <li id="li-question">
-                <button id="bt-question" onclick="showTopQuestion()" style="color: green;">Top câu hỏi</button>
-              </li>
-            </ul>
 
-            <!--Top article -->
-            <ul id="top-articles" style="padding-top: 15px;padding-left: 5px;" class="panel-before">
-              <li>
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
-              <li>
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
-              <li style="border-bottom: none">
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
             </ul>
             <!--Top question -->
-            <ul id="top-question" style="padding-top: 15px;padding-left: 5px;display: none;">
+            <p class="title-menu-right">Top Questions</p>
+            <ul *ngFor="let item of topQa$" id="top-question" style="padding-top: 25px;padding-left: 5px;" >
               <li>
                 <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
-              <li>
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
-              </li>
-              <li style="border-bottom: none">
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> How to handle personal stress caused by utterly incompetent
-                  and</a></div>
-                <i><img src="../../assets/b.jpg" style="height: 15px;width: 15px;clear: bottom;"></i>
+                <div class="title-article"><a href="#"> {{item.title}}</a></div>
                 <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
                 <span class="top-article-view"><a href="#">100 lượt xem</a></span>
               </li>
@@ -206,34 +139,19 @@
           <form action="#" method="post">
             <div class="one_third first">
               <label for="name">Tên hiển thị <span>*</span></label>
-              <input type="text" name="name" id="name" value="" size="22" required>
-            </div>
-            <div class="one_third">
-              <label for="email">Gmail </label>
-              <input type="email" name="email" id="email" value="" size="22">
-            </div>
-            <div class="one_third">
-              <label for="url">Facebook</label>
-              <input type="url" name="url" id="url" value="" size="22">
-            </div>
-            <div class="block clear">
-              <label for="comment">Nội dung câu hỏi</label>
-              <textarea name="comment" id="comment" cols="25" rows="10" style=" resize: vertical;"></textarea>
-            </div>
-            <div class="block clear">
-              <label for="comment">Chọn ảnh minh họa</label>
-              <input type="file" name="imageQuestion" size="50" style="width: auto;padding-bottom: 40px;" id="fileupload">
+              <input type="text" name="name" id="name" value="" size="22" #inputTitle required>
             </div>
             <div class="block clear" style="">
-              <label for="comment">Chọn từ khóa</label>
+              <ckeditor [(ngModel)]="model.editorData" [ngModelOptions]="{standalone: true}"></ckeditor>
+              <label >Chọn từ khóa</label>
               <div>
-                <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi">
+                <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
               </div>
 
               <div class="button" style="position: relative;overflow: auto;">
-                <input type="submit" name="submit" value="Đăng câu hỏi">
-                &nbsp;
-                <input type="reset" name="reset" value="Viết lại">
+                <input type="submit"  name="submit" value="Đăng câu hỏi" (click)="addQa(inputTitle.value,tagInput.value)">
+                <input type="submit"  name="submit" value="Cập nhật câu hỏi" (click)="updateQuestion(inputTitle.value,tagInput.value)">
+                <input type="button" name="reset" value="Viết lại">
               </div>
             </div>
           </form>

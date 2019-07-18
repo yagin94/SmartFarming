@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+.image-user-icon {
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+}

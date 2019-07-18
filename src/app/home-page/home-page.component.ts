@@ -3,8 +3,11 @@ import {AuthService} from 'angularx-social-login';
 import {SocialUser} from 'angularx-social-login';
 import {GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from 'angularx-social-login';
 import {HttpClient} from '@angular/common/http';
+import {LoginService} from '../login/login.service';
+import {HeaderComponent} from '../common/header/header.component';
 
 @Component({
+  providers: [LoginService, HeaderComponent],
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
@@ -35,7 +38,6 @@ export class HomePageComponent implements OnInit {
 
   sendToRestApiMethod(token: string): void {
     try {
-      console.log('123331');
       this.http.post('http://localhost:8080/login',
         {
           provider: this.user.provider,
@@ -50,16 +52,9 @@ export class HomePageComponent implements OnInit {
           authorizationCode: this.user.authorizationCode
         }).subscribe(
         onSuccess => {
-          alert('can login !!!');
           localStorage.setItem('currentUser', JSON.stringify(this.user));
-          console.group();
-          console.log('123');
-          console.log('user', this.user);
-          console.log('response', onSuccess);
-          console.groupEnd();
         }, onFail => {
           console.log(onFail);
-          alert('can not login !!!');
         }
       );
     } catch (err) {

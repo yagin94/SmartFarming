@@ -100,6 +100,7 @@ export class QaPageComponent implements OnInit {
   searchQa(searchTerm: string, pageIndex: number) {
     console.log('=========================', searchTerm);
     if (searchTerm) {
+      searchTerm.trim();
       this.qaService.searchQa(searchTerm, pageIndex).subscribe(getObject => {
         this.getObject$ = getObject;
       });

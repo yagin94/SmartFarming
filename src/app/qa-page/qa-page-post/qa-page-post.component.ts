@@ -23,6 +23,7 @@ export class QaPagePostComponent implements OnInit {
   editorData: string;
   data: any;
   topQa$: Qa[];
+  topTag$: Tag[];
   public model = {
     editorData: '<p>Hello, world!</p>'
   };
@@ -35,6 +36,7 @@ export class QaPagePostComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.getTopQa();
+    this.getTopTag();
   }
 
   public onChange(event: CKEditor4.EventInfo) {
@@ -46,6 +48,9 @@ export class QaPagePostComponent implements OnInit {
   }
   getTopQa(): void {
     this.qaService.getTopQa().subscribe(qa => this.topQa$ = qa);
+  }
+  getTopTag(): void {
+    this.qaService.getTopTag().subscribe(tag => this.topTag$ = tag);
   }
   addQa(title: string, array: string): void {
     this.userName$ = '';

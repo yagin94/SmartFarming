@@ -94,18 +94,7 @@
         <div class="top-tag">
           <p class="title-menu-right">Top tags</p>
           <div class="question-tag">
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
+            <span *ngFor="let tag of topTag$"><a href="#">{{tag.name}}</a></span>
           </div>
 
         </div>
@@ -167,8 +156,8 @@
                 <div style="padding-top: 3px;"><i class="fa fa-google"></i><a (click)="facebookSharing(shareObj)">Chia sẻ</a></div>
               </div>
               <div class="report-delete">
-                <div *ngIf="checkAuthen()" style="border: none;"><i class="fa fa-google"></i><a (click)="edit(qa$)">Chỉnh sửa câu hỏi</a></div>
-                <div *ngIf="checkAuthen()" style="border: none;"><i class="fa fa-google"></i><a (click)="deleteQa(qa$.questionId)">Xóa câu hỏi</a></div>
+                <div  style="border: none;"><i class="fa fa-google"></i><a (click)="edit(qa$)">Chỉnh sửa câu hỏi</a></div>
+                <div  style="border: none;"><i class="fa fa-google"></i><a (click)="deleteQa(qa$.questionId)">Xóa câu hỏi</a></div>
               </div>
             </article>
           </li>
@@ -187,12 +176,10 @@
                     <figure class="avatar" style="float: left;margin-left: -13%;"><img
                       src="../../assets/images/demo/avatar.png" alt=""></figure>
                     <address style="text-align: left;font-size: 12px;color: dodgerblue">
-                      <a href="#">A Name </a> <!--Name of user -->
+                      <a href="#">Anonymous</a> <!--Name of user -->
                       <p style="max-width: 100%;">
                         <time style="font-size: 9px; "><span style="color: #7c7f85 !important;">Ngày đăng:</span>
-                          Friday,
-                          6<sup>th</sup>
-                          April 2045 @08:15:00
+                          {{answer.utilTimestamp | date: 'yyyy-MM-dd'}}
                         </time>
                       </p>
                     </address>
@@ -207,8 +194,8 @@
                     <!--<div style="padding-top: 3px;"><i class="fa fa-google"></i><a href="#">Share</a></div>-->
                   <!--</div>-->
                   <div class="report-delete">
-                    <div *ngIf="checkAuthen()" style="border: none;"><i class="fa fa-google"></i><a (click)="edit(qa$)">Chỉnh sửa câu trả lời</a></div>
-                    <div *ngIf="checkAuthen()" style="border: none;"><i class="fa fa-google"></i><a (click)="deleteQa(qa$.questionId)">Xóa câu tả lời</a></div>
+                    <div  style="border: none;"><i class="fa fa-google"></i><a (click)="edit(qa$)">Chỉnh sửa câu trả lời</a></div>
+                    <div  style="border: none;"><i class="fa fa-google"></i><a (click)="deleteQa(qa$.questionId)">Xóa câu tả lời</a></div>
                   </div>
                 </article>
               </li>

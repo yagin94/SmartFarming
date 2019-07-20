@@ -1,6 +1,6 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {QaPageComponent} from '../qa-page.component';
-import {AddAnsObj, Answers, AppUser, Q, Qa} from '../qa.model';
+import {AddAnsObj, Answers, AppUser, Q, Qa, Tag} from '../qa.model';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {HeaderComponent} from '../../common/header/header.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -18,6 +18,7 @@ import {
 
 export class QaPageDetailComponent implements OnInit {
   qa$: Qa;
+  topTag$: Tag[];
   topQa$: Qa[];
   editQuestion$: Qa;
   qaDelete$: Qa[];
@@ -42,6 +43,7 @@ export class QaPageDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getTopQa();
+    this.getTopTag();
     // this.dataShareService.currentMessage.subscribe(message => this.message = message);
     //STILL ERROR HERE!!!!
     this.route.queryParams.subscribe(params => this.data = params.id);
@@ -67,6 +69,9 @@ export class QaPageDetailComponent implements OnInit {
   }
   getTopQa(): void {
     this.qaService.getTopQa().subscribe(qa => this.topQa$ = qa);
+  }
+  getTopTag(): void {
+    this.qaService.getTopTag().subscribe(tag => this.topTag$ = tag);
   }
   checkAuthen() {
     if (JSON.parse(localStorage.getItem('currentAppUser')) == null) {

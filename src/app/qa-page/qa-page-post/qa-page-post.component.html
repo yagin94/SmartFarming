@@ -92,18 +92,7 @@
         <div class="top-tag">
           <p class="title-menu-right">Top tags</p>
           <div class="question-tag">
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
-            <span><a href="#">tag</a></span>
+            <span *ngFor="let tag of topTag$"><a href="#">{{tag.name}}</a></span>
           </div>
 
         </div>
@@ -119,7 +108,7 @@
             </li>
             <li>
               <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a href="#"> Teeb user</a></div>
+              <div class="title-article"><a href="#"> Tên user</a></div>
               <span style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
 
             </li>
@@ -138,7 +127,7 @@
           <h2 style="text-transform: none;">Đăng câu hỏi</h2>
           <form action="#" method="post">
             <div class="one_third first">
-              <label for="name">Tên hiển thị <span>*</span></label>
+              <label for="name">Tiêu đề câu hỏi <span>*</span></label>
               <input type="text" name="name" id="name" value="" size="22" #inputTitle required>
             </div>
             <div class="block clear" style="">

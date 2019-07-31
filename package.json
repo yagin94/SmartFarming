@@ -28,6 +28,7 @@
     "ckeditor4-angular": "^1.0.0-beta.2",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "ngx-loading": "^3.0.1",
     "ngx-social-button": "^1.0.4",
     "rxjs": "6.0.0",
     "zone.js": "^0.8.26"

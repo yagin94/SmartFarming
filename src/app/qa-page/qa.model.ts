@@ -4,6 +4,22 @@ export class GetObject {
   qa: Qa;
   numberOfPages: number;
 }
+export class GetObjectTopTag {
+  tagsByPageIndex: Tag;
+  numbetOfPages: number;
+}
+export class GetObjectTopUser {
+  appUsersByPageIndex: AppUser;
+  numberOfPages: number;
+}
+export class GetObjectTopQa {
+  qa: Qa;
+  numberOfPages: number;
+}
+export class GetObjectQaByTag {
+  qa: Qa;
+  numberOfPages: number;
+}
 
 export class Qa {
   questionId: number;
@@ -14,6 +30,7 @@ export class Qa {
   fileDownloadUris: string[];
   tags: Tag[];
   appUser: AppUser;
+  upvotedUserIds: number[];
   utilTimestamp: string;
   userName: string;
 
@@ -90,6 +107,12 @@ export class AddAnsObj {
     this.content = content;
     this.appUser = appUser;
     this.question = question;
+  }
+}
+export class AddupvoteQa {
+  userId: number;
+  constructor(id: number) {
+    this.userId = id;
   }
 }
 

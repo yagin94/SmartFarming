@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!--<app-header></app-header>-->
 <!-- Phan Link dia chi lien ket hoi dap ... -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -15,7 +15,7 @@
       <nav id="mainav" class="fl_right">
         <ul class="clear">
           <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
+          <li><a class="drop" href="/article-page" routerLinkActive="active">Kiến thức</a>
             <ul>
               <li><a href="">Kỹ thuật trồng</a></li>
               <li><a href="">Thu hoạch & Bảo quản</a></li>
@@ -26,8 +26,8 @@
               <li><a href="">Giống cây</a></li>
             </ul>
           </li>
-          <li><a  routerLink="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
-          <li><a  href="#">Liên hệ</a></li>
+          <li><a href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
+          <li><a href="#">Liên hệ</a></li>
         </ul>
       </nav>
       <!-- ################################################################################################ -->
@@ -39,28 +39,6 @@
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
   <div id="pageintro" class="hoc clear" style="background-color: #f2f2f2">
-
-    <!--menu left side -->
-    <nav class="menu-left-qa">
-      <div class="div-menu-left">
-        <ul>
-          <li><a href="#"><i class="fa fa-hacker-news"></i>Home</a></li>
-          <li><a href="#"><i class="fa fa-hacker-news"></i>Kiến thức</a>
-            <ul>
-              <li><a href="">Kỹ thuật trồng</a></li>
-              <li><a href="">Thu hái và bảo quản</a></li>
-              <li><a href="">Phân bón</a></li>
-              <li><a href="">Thuốc bảo vệ thực vật</a></li>
-              <li><a href="">Sâu bệnh</a></li>
-              <li><a href="">Giống cây</a></li>
-            </ul>
-          </li>
-          <li><a href="#"><i class="fa fa-hacker-news"></i>Hỏi-đáp</a></li>
-          <li><a href="#"><i class="fa fa-hacker-news"></i>Liên hệ</a></li>
-        </ul>
-      </div>
-    </nav>
-
 
     <div class="content-right">
       <!-- menu right side -->
@@ -77,13 +55,15 @@
 
             </ul>
             <!--Top question -->
-            <p class="title-menu-right">Top Questions</p>
-            <ul *ngFor="let item of topQa$" id="top-question" style="padding-top: 25px;padding-left: 5px;" >
+            <p class="title-menu-right">Top Câu hỏi</p>
+            <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
               <li>
                 <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
                 <div class="title-article"><a href="#"> {{item.title}}</a></div>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+                <div>
+                  <span class="top-article-view"><a href="#">{{getNumber(item.answers)}} trả lời</a></span>
+                  <span class="top-article-view"><a href="#">{{item.viewCount}} lượt xem</a></span>
+                </div>
               </li>
             </ul>
           </article>
@@ -92,7 +72,7 @@
         <div class="top-tag">
           <p class="title-menu-right">Top tags</p>
           <div class="question-tag">
-            <span *ngFor="let tag of topTag$"><a href="#">{{tag.name}}</a></span>
+            <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;">{{tag.name}}</p>
           </div>
 
         </div>
@@ -122,25 +102,28 @@
       </nav>
 
       <!--Content -->
-      <nav id="comments" style="margin-left: 19%;width: 60%;margin-top: -26.5% !important;float: left;">
+      <nav id="comments" style="width: 80%;float: left;padding: 0 1%">
         <div class="">
-          <h2 style="text-transform: none;">Đăng câu hỏi</h2>
+          <h2 style="text-transform: none;text-align: center">Đăng câu hỏi</h2>
           <form action="#" method="post">
             <div class="one_third first">
-              <label for="name">Tiêu đề câu hỏi <span>*</span></label>
-              <input type="text" name="name" id="name" value="" size="22" #inputTitle required>
+              <label  for="name">Tiêu đề câu hỏi <span>*</span></label>
+              <input type="text" name="name" id="name" value="" size="22" #inputTitle required style="border: 1px solid #d1d1d1;">
             </div>
             <div class="block clear" style="">
-              <ckeditor [(ngModel)]="model.editorData" [ngModelOptions]="{standalone: true}"></ckeditor>
-              <label >Chọn từ khóa</label>
+              <label>Nội dung <span>*</span></label>
+              <ckeditor [(ngModel)]="model.editorData" [ngModelOptions]="{standalone: true}" [config]="{extraPlugins : 'uploadimage'}" ></ckeditor>
+              <label>Chọn từ khóa</label>
               <div>
                 <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
               </div>
 
+
               <div class="button" style="position: relative;overflow: auto;">
-                <input type="submit"  name="submit" value="Đăng câu hỏi" (click)="addQa(inputTitle.value,tagInput.value)">
-                <input type="submit"  name="submit" value="Cập nhật câu hỏi" (click)="updateQuestion(inputTitle.value,tagInput.value)">
-                <input type="button" name="reset" value="Viết lại">
+                <input type="submit" name="submit" value="Đăng câu hỏi"
+                       (click)="addQa(inputTitle.value,tagInput.value)">
+                <input type="submit" name="submit" value="Cập nhật câu hỏi"
+                       (click)="updateQuestion(inputTitle.value,tagInput.value)">
               </div>
             </div>
           </form>

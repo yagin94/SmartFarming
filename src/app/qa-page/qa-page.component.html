@@ -1,9 +1,10 @@
-<app-header></app-header>
+<!--<app-header></app-header>-->
 <!-- Phan Link dia chi lien ket hoi dap ... -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- Phan trang chu hien thi thong tin, background ....-->
+<div>
 <div class="bgded overlay" style="background: #f2f2f2 !important;">
   <!-- ################################################################################################ -->
   <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
@@ -15,8 +16,8 @@
       <nav id="mainav" class="fl_right">
         <ul class="clear">
           <li><input #questionTitle (keyup.enter)="searchQa(questionTitle.value, pageIndex$)" style="color: black"></li>
-          <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a class="drop" href="/article-page" routerLinkActive="active">Kiến thức</a>
             <ul>
               <li><a href="">Kỹ thuật trồng</a></li>
               <li><a href="">Thu hoạch & Bảo quản</a></li>
@@ -27,8 +28,8 @@
               <li><a href="">Giống cây</a></li>
             </ul>
           </li>
-          <li><a  routerLink="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
-          <li><a  href="#">Liên hệ</a></li>
+          <li class="active"><a href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
+          <li><a href="#">Liên hệ</a></li>
         </ul>
       </nav>
       <!-- ################################################################################################ -->
@@ -41,26 +42,6 @@
   <!-- ################################################################################################ -->
   <div id="pageintro" class="hoc clear" style="background-color: #f2f2f2">
 
-    <!--menu left side -->
-    <nav class="menu-left-qa">
-      <div class="div-menu-left">
-        <ul>
-          <li><a href="#"><i class="fa fa-hacker-news"></i>Home</a></li>
-          <li><a href="#"><i class="fa fa-hacker-news"></i>Kiến thức</a>
-            <ul>
-              <li><a href="">Kỹ thuật trồng</a></li>
-              <li><a href="">Thu hái và bảo quản</a></li>
-              <li><a href="">Phân bón</a></li>
-              <li><a href="">Thuốc bảo vệ thực vật</a></li>
-              <li><a href="">Sâu bệnh</a></li>
-              <li><a href="">Giống cây</a></li>
-            </ul>
-          </li>
-          <li><a href="#"><i class="fa fa-hacker-news"></i>Hỏi-đáp</a></li>
-          <li><a href="#"><i class="fa fa-hacker-news"></i>Liên hệ</a></li>
-        </ul>
-      </div>
-    </nav>
 
     <div class="content-right">
       <!-- menu right side -->
@@ -78,108 +59,95 @@
 
             </ul>
             <!--Top question -->
-            <p class="title-menu-right">Top Questions</p>
-            <ul *ngFor="let item of topQa$" id="top-question" style="padding-top: 25px;padding-left: 5px;" >
+            <p class="title-menu-right">Top Câu hỏi</p>
+            <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
               <li>
                 <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
                 <div class="title-article"><a href="#"> {{item.title}}</a></div>
-                <span style="padding: 0px 10px" class="top-article-view"><a href="#">100 trả lời</a></span>
-                <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+                <div>
+                  <span class="top-article-view"><a href="#">{{getNumber(item.answers)}} trả lời</a></span>
+                  <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+                </div>
               </li>
             </ul>
           </article>
         </div>
         <div class="top-tag">
-            <p class="title-menu-right">Top tags</p>
-            <div class="question-tag">
-              <span *ngFor="let tag of topTag$"><a href="#">{{tag.name}}</a></span>
-            </div>
+          <p class="title-menu-right">Top tags</p>
+          <div class="question-tag">
+            <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;">{{tag.name}}</p>
+          </div>
 
         </div>
 
         <!--Top user -->
         <div>
           <p class="title-menu-right">Top người dùng</p>
-          <ul  class="top-user" >
-            <li>
+          <ul class="top-user">
+            <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex">
               <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a href="#">Tên user</a></div>
-              <span  style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
-            </li>
-            <li>
-              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a href="#"> Teeb user</a></div>
-              <span  style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
-
-            </li>
-            <li>
-              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a href="#"> Tên user</a></div>
-              <span  style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
+              <div class="title-article"><a href="#">{{item.socialUser.firstName}}</a></div>
+              <span style="padding: 0 35px;"><a href="#">{{item.reputation}} điểm</a></span>
             </li>
           </ul>
         </div>
       </nav>
 
       <!--Content -->
-      <nav id="comments" style="margin-left: 19%;width: 60%;margin-top: -26.5% !important;float: left;">
-        <div id="menu-sap-xep">
-          <ul class="clear sap-xep" style="display: flex;margin: 0;padding: 0;resize: none">
-
-            <li style="color: black;">Sắp xếp theo</li>
-            <li><a href="#">Người trả lời</a></li>
-            <li><a href="#">Lượt xem</a></li>
-            <li><a href="#">Lượt thích &nbsp;</a></li>
-            <li><a href="#">Ngày &nbsp;</a></li>
-            <li><a href="#">Tháng &nbsp;</a></li>
-            <li><a href="#"> &nbsp;Năm &nbsp;</a></li>
-            <!--<li><a href="index.html">Năm </a></li>-->
-          </ul>
-        </div>
-        <ul style="margin-top: -7px;">
-
-          <!--QA -->
-          <li *ngFor="let object of getObject$.qa" style="color: black;margin-bottom: 0px;border-bottom: groove;" >
-            <article>
-              <header>
-                <figure class="avatar" style="float: left;margin-left: -13%;"><img
-                  src="../../assets/images/demo/avatar.png" alt=""></figure>
-                <address style="text-align: left;font-size: 12px;color: dodgerblue">
-                  <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
-                  <a href="#" *ngIf="object.appUser==null">anonymous </a>
-                  <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==false">{{object.appUser.socialUser.name}}</a>
-                  <time style="font-size: 9px; "><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{object.utilTimestamp | date: 'yyyy-MM-dd'}}
-                  </time>
-                </address>
-                <h3 style="font-family: 'Times New Roman';text-align: left;margin: 0px;padding-top: 8px;
-                  font-weight: bold;font-size: 19px;    overflow: hidden;white-space: pre-wrap;">
-                  <a class="title-qa" (click)="edit(object)" >{{object.title}}</a>
-                </h3>
-              </header>
-              <div class="comcont">
-                <p style="max-width: 100% !important;text-align: left;color: grey"></p>
-              </div>
-              <div class="question-tag">
-
-                <span *ngFor="let tag of object.tags"><a href="#">{{tag.name}}</a></span>
-
-              </div>
-              <footer class="question-footer">
-                <div><i class="fa fa-li"></i><a href="#">10 Like</a></div>
-                <div><a href="#">10 Lượt trả lời</a></div>
-                <div><a href="#">10 Lượt xem</a></div>
-              </footer>
-            </article>
-          </li>
-          <div class="phan-trang clear">
-            <div class="pagination">
-              <a href="#">&laquo;</a>
-              <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(i)">{{i}}</a>
-              <a href="#">&raquo;</a>
-            </div>
+      <nav id="comments" style="width: 80%;float: left;">
+        <div style="display: grid;">
+          <div id="menu-sap-xep">
+            <span id="sort-qa-like" onclick="sortQA_like()" (click)="sortByView()" style="background-color: #FBFBFB;cursor: pointer;">Nhiều lượt xem</span>
+            <span id="sort-qa-time" onclick="sortQA_time()"(click)="sortByDate()" style="background-color: gainsboro;cursor: pointer;">Thời gian đăng</span>
           </div>
+          <div>
+            <ul>
 
-        </ul>
+              <!--QA -->
+              <li *ngFor="let object of getObject$.qa" style="color: black;margin-bottom: 0px;border-bottom: groove;">
+                <article>
+                  <header>
+                    <figure class="avatar" style="float: left;margin-left: -13%;"><img
+                      src="../../assets/images/demo/avatar.png" alt=""></figure>
+                    <address style="text-align: left;font-size: 12px;color: dodgerblue">
+                      <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
+                      <a href="#" *ngIf="object.appUser==null">anonymous </a>
+                      <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==false">{{object.appUser.socialUser.name}}</a>
+                      <time style="font-size: 9px; "><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{object.utilTimestamp
+                        | date: 'yyyy-MM-dd'}}
+                      </time>
+                    </address>
+                    <h3 style="font-family: 'Times New Roman';text-align: left;margin: 0px;padding-top: 8px;
+                  font-weight: bold;font-size: 19px;    overflow: hidden;white-space: pre-wrap;">
+                      <a class="title-qa" (click)="edit(object)">{{object.title}}</a>
+                    </h3>
+                  </header>
+                  <div class="comcont">
+                    <p innerHTML="{{object.content}}" style="max-width: 100% !important;text-align: left;color: grey"></p>
+                  </div>
+                  <div class="question-tag">
+
+                    <p *ngFor="let tag of object.tags" style="padding: 1% !important;" (click)="getQaByTag(sortBy$, tag.tagId, pageIndex$)">{{tag.name}}</p>
+
+                  </div>
+                  <footer class="question-footer">
+                    <div><i class="fa fa-li"></i><a href="#">10 Like</a></div>
+                    <div><a href="#">{{getNumber(object.answers)}} Lượt trả lời</a></div>
+                    <div><a href="#">{{object.viewCount}} Lượt xem</a></div>
+                  </footer>
+                </article>
+              </li>
+              <div class="phan-trang clear">
+                <div class="pagination">
+                  <a href="#">&laquo;</a>
+                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(sortBy$,i)">{{i}}</a>
+                  <a href="#">&raquo;</a>
+                </div>
+              </div>
+
+            </ul>
+          </div>
+        </div>
       </nav>
 
     </div>
@@ -231,5 +199,5 @@
     <!-- ################################################################################################ -->
   </footer>
 </div>
-
+</div>
 

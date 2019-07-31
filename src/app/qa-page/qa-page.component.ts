@@ -1,12 +1,25 @@
-import {Component, Injectable, OnInit, Output} from '@angular/core';
+import {Component, Injectable, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {QaService} from './qa.service';
-import {AddAnsObj, Answers, Q, Qa, TextSearch, GetObject, Tag} from './qa.model';
+import {
+  AddAnsObj,
+  Answers,
+  Q,
+  Qa,
+  TextSearch,
+  GetObject,
+  Tag,
+  GetObjectTopTag,
+  GetObjectTopUser,
+  GetObjectTopQa,
+  GetObjectQaByTag
+} from './qa.model';
 import {SocialUser} from 'angularx-social-login';
 import {HeaderComponent} from '../common/header/header.component';
 import {AuthService} from 'angularx-social-login';
 import {QaPageDetailComponent} from './qa-page-detail/qa-page-detail.component';
 import {DataShareService} from '../share-data-service/date-share-service';
 import {Router} from '@angular/router';
+import {NgxLoadingComponent} from 'ngx-loading';
 
 @Component({
   selector: 'app-qa-page',
@@ -17,6 +30,10 @@ import {Router} from '@angular/router';
 
 export class QaPageComponent implements OnInit {
   getObject$: GetObject;
+  getObjectTopTag$: GetObjectTopTag;
+  getObjectTopUser$: GetObjectTopUser;
+  getObjectTopQa$: GetObjectTopQa
+  getObjectQaByTag$: GetObjectQaByTag;
   qa$: Qa[];
   checkAdd$ = 0;
   checkEditAnswer$ = 0;
@@ -25,6 +42,7 @@ export class QaPageComponent implements OnInit {
   editAnswer$: Answers;
   answer$: any;
   pageIndex$ = 0;
+  sortBy$ = 'viewCount';
   user: SocialUser;
   topQa$: Qa[];
   topTag$: Tag[];
@@ -33,9 +51,10 @@ export class QaPageComponent implements OnInit {
 
   ngOnInit() {
     this.getObject$ = new GetObject();
-    this.getQa(this.pageIndex$);
+    this.getQa(this.sortBy$, this.pageIndex$);
     this.getTopQa();
     this.getTopTag();
+    this.getTopUser();
     // const authToken1 = localStorage.getItem('currentUser');
     // const authToken2 = localStorage.getItem('currentAppUser');
     // console.log('======', authToken1);
@@ -50,15 +69,34 @@ export class QaPageComponent implements OnInit {
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
   }
+/** view questions */
+  getQa(sortBy: string, pageIndex: number): void {
+    this.qaService.getQa(sortBy, pageIndex).subscribe(getObject => {
 
-  getQa(pageIndex: number): void {
-    this.qaService.getQa(pageIndex).subscribe(getObject => this.getObject$ = getObject);
+      this.getObject$ = getObject;
+    });
   }
+  getQaByTag(sortBy: string, tagId: number, pageIndex: number): void {
+    this.qaService.getQaByTag(sortBy, tagId, pageIndex).subscribe(getObjectQaByTag => this.getObject$ = getObjectQaByTag);
+  }
+  /**=======================================================================*/
+  sortByView() {
+    this.sortBy$ = 'viewCount';
+    this.getQa(this.sortBy$, this.pageIndex$);
+  }
+  sortByDate() {
+    this.sortBy$ = 'date';
+    this.getQa(this.sortBy$, this.pageIndex$);
+  }
+  /**==========================================================================================*/
   getTopQa(): void {
-    this.qaService.getTopQa().subscribe(qa => this.topQa$ = qa);
+    this.qaService.getTopQa().subscribe(getObjectTopQa => this.getObjectTopQa$ = getObjectTopQa);
   }
   getTopTag(): void {
-    this.qaService.getTopTag().subscribe(tag => this.topTag$ = tag);
+    this.qaService.getTopTag().subscribe(getObjectTopTag => this.getObjectTopTag$ = getObjectTopTag);
+  }
+  getTopUser(): void {
+    this.qaService.getTopUser().subscribe(getObjectTopUser => this.getObjectTopUser$ = getObjectTopUser);
   }
   isLoggedIn() {
     if (localStorage.getItem('currentUser')) {
@@ -147,21 +185,24 @@ export class QaPageComponent implements OnInit {
     this.checkAddAnswer$ = 3;
   }
 
-  updateAnswer() {
-    if (this.editAnswer$) {
-      this.qaService.updateAnswer(this.editAnswer$.answerId, this.editAnswer$).subscribe(answer => {
-        const ix = answer ? this.answer$.findIndex(h => h.id === answer.answerId) : -1;
-        if (ix > -1) {
-          this.answer$[ix] = answer;
-        }
-      });
-    }
-  }
+  // updateAnswer() {
+  //   if (this.editAnswer$) {
+  //     this.qaService.updateAnswer(this.editAnswer$.answerId, this.editAnswer$).subscribe(answer => {
+  //       const ix = answer ? this.answer$.findIndex(h => h.id === answer.answerId) : -1;
+  //       if (ix > -1) {
+  //         this.answer$[ix] = answer;
+  //       }
+  //     });
+  //   }
+  // }
 
   deleteAnswer(answer: Answers): void {
     if (confirm('are you sure to delete this answer')) {
       this.answer$ = this.answer$.filter(h => h !== answer);
       this.qaService.deleteAnswer(answer.answerId).subscribe();
     }
+  }
+  getNumber(object: Answers) {
+    return Object.keys(object).length;
   }
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../common/header/header.component';
 import {QaService} from '../qa.service';
-import {AppUser, Qa, Tag} from '../qa.model';
+import {Answers, AppUser, GetObject, GetObjectTopQa, GetObjectTopTag, GetObjectTopUser, Qa, Tag} from '../qa.model';
 import {forEach} from '@angular/router/src/utils/collection';
 import {CKEditor4} from 'ckeditor4-angular';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -13,6 +13,10 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./qa-page-post.component.css']
 })
 export class QaPagePostComponent implements OnInit {
+  getObject$: GetObject;
+  getObjectTopTag$: GetObjectTopTag;
+  getObjectTopUser$: GetObjectTopUser;
+  getObjectTopQa$: GetObjectTopQa;
   qa$: Qa[];
   appUser$: AppUser;
   tags: Tag[];
@@ -25,9 +29,8 @@ export class QaPagePostComponent implements OnInit {
   topQa$: Qa[];
   topTag$: Tag[];
   public model = {
-    editorData: '<p>Hello, world!</p>'
+    editorData: ''
   };
-
   constructor(private qaService: QaService,
               private route: ActivatedRoute,
               private router: Router) {
@@ -47,10 +50,10 @@ export class QaPagePostComponent implements OnInit {
     console.log('=====', this.data);
   }
   getTopQa(): void {
-    this.qaService.getTopQa().subscribe(qa => this.topQa$ = qa);
+    this.qaService.getTopQa().subscribe(getObjectTopQa => this.getObjectTopQa$ = getObjectTopQa);
   }
   getTopTag(): void {
-    this.qaService.getTopTag().subscribe(tag => this.topTag$ = tag);
+    this.qaService.getTopTag().subscribe(getObjectTopTag => this.getObjectTopTag$ = getObjectTopTag);
   }
   addQa(title: string, array: string): void {
     this.userName$ = '';
@@ -83,6 +86,7 @@ export class QaPagePostComponent implements OnInit {
     console.log(this.appUser$);
     const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n);
     console.log(newQa);
+    console.log(this.model.editorData) ;
     this.qaService.addQa(newQa).subscribe(
       onSuccess => {
         alert('added');
@@ -139,5 +143,8 @@ export class QaPagePostComponent implements OnInit {
       return true;
     }
     return false;
+  }
+  getNumber(object: Answers) {
+    return Object.keys(object).length;
   }
 }

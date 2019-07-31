@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!--<app-header></app-header>-->
 <!-- Phan Link dia chi lien ket hoi dap ... -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -15,7 +15,7 @@
       <nav id="mainav" class="fl_right">
         <ul class="clear">
           <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
+          <li><a class="drop" href="/article-page" routerLinkActive="active">Kiến thức</a>
             <ul>
               <li><a href="">Kỹ thuật trồng</a></li>
               <li><a href="">Thu hoạch & Bảo quản</a></li>
@@ -199,42 +199,36 @@
                   </div>
                 </article>
               </li>
+<!--========================================================================================================================-->
+              <!--<li id="showAnswer" style="-->
+              <!--display: none;color: black;margin-bottom: 0px;border-bottom: groove;margin-top: 10px;padding: 15px 15px 0 15px;">-->
+                <!--<article>-->
+                  <!--<header>-->
+                    <!--<figure class="avatar" style="float: left;margin-left: -13%;"><img-->
+                      <!--src="../../assets/images/demo/avatar.png" alt=""></figure>-->
+                    <!--<address style="text-align: left;font-size: 12px;color: dodgerblue">-->
+                      <!--<a href="#" id="nameAnswer">A Name </a> &lt;!&ndash;Name of user &ndash;&gt;-->
+                      <!--<p style="max-width: 100%;">-->
+                        <!--<span style="color: #7c7f85 !important;">Ngày đăng:</span>-->
+                        <!--<span style="" id="timeAnswer"> {{answer$.utilTimestamp | date: 'yyyy-MM-dd'}}</span>-->
+                      <!--</p>-->
+                    <!--</address>-->
 
-              <li id="showAnswer" style="
-              display: none;color: black;margin-bottom: 0px;border-bottom: groove;margin-top: 10px;padding: 15px 15px 0 15px;">
-                <article>
-                  <header>
-                    <figure class="avatar" style="float: left;margin-left: -13%;"><img
-                      src="../../assets/images/demo/avatar.png" alt=""></figure>
-                    <address style="text-align: left;font-size: 12px;color: dodgerblue">
-                      <a href="#" id="nameAnswer" >A Name </a> <!--Name of user -->
-                      <p style="max-width: 100%;">
-                        <span style="color: #7c7f85 !important;">Ngày đăng:</span>
-                        <span style="" id="timeAnswer"> </span>
-                      </p>
-                    </address>
+                  <!--</header>-->
+                  <!--<div class="comcont" id="contentAnswer" style="text-align: left !important;">-->
+                    <!--<p style="max-width: 100% !important;color: grey">{{answer$.content}}</p>-->
+                  <!--</div>-->
 
-                  </header>
-                  <div class="comcont" id="contentAnswer" style="text-align: left !important;">
-                    <p style="max-width: 100% !important;color: grey">This is an example of a comment
-                      made
-                      on
-                      a post.
-                      You can either edit the comment, delete the comment or
-                      reply to the comment. Use this as a place to respond to the post or to share what you are
-                      thinking.</p>
-                  </div>
-
-                  <div class="question-footer">
-                    <div style="padding-top: 3px;"><i class="fa fa-google"></i><a href="#">Like</a></div>
-                    <div style="padding-top: 3px;"><i class="fa fa-google"></i><a href="#">Share</a></div>
-                  </div>
-                  <div class="report-delete">
-                    <div style="border: none;"><i class="fa fa-google"></i><a href="#">Báo cáo</a></div>
-                    <div style="border: none;"><i class="fa fa-google"></i><a href="#">Xóa câu hỏi</a></div>
-                  </div>
-                </article>
-              </li>
+                  <!--<div class="question-footer">-->
+                    <!--<div style="padding-top: 3px;"><i class="fa fa-google"></i><a href="#">Like</a></div>-->
+                    <!--<div style="padding-top: 3px;"><i class="fa fa-google"></i><a href="#">Share</a></div>-->
+                  <!--</div>-->
+                  <!--<div class="report-delete">-->
+                    <!--<div style="border: none;"><i class="fa fa-google"></i><a href="#">Báo cáo</a></div>-->
+                    <!--<div style="border: none;"><i class="fa fa-google"></i><a href="#">Xóa câu hỏi</a></div>-->
+                  <!--</div>-->
+                <!--</article>-->
+              <!--</li>-->
 
             </ul>
           </div>

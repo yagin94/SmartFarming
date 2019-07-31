@@ -31,6 +31,7 @@ import { HeaderComponent } from './common/header/header.component';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { NgxSocialButtonModule,
   SocialServiceConfig} from 'ngx-social-button';
+import {ngxLoadingAnimationTypes, NgxLoadingModule} from 'ngx-loading';
 export function getAuthServiceConfigs() {
   let configs = new SocialServiceConfig()
     .addFacebook('760042107748144')
@@ -81,6 +82,7 @@ export function provideConfig() {
     HttpClientModule,
     FormsModule,
     SocialLoginModule,
+    NgxLoadingModule.forRoot({}),
     ScrollToModule.forRoot()
   ],
   providers: [

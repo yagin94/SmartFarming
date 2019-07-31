@@ -6,10 +6,10 @@
       <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
       <li><i class="fa fa-envelope-o"></i> smartfarming@gmail.com</li>
       <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
-      <li *ngIf="!user"><div title="Đăng nhập bằng facebook" (click)="signInWithFB()"><i class="fa fa-lg fa-facebook-square"></i></div></li>
-      <li *ngIf="!user"><div title="Đăng nhập bằng google" (click)="signInWithGoogle()"><i class="fa fa-lg fa-google-plus-square"></i></div></li>
-      <li *ngIf="user"><div><i><img class="image-user-icon" src="{{ user.photoUrl }}"></i></div></li>
-      <li *ngIf="user"><div title="Đăng xuất" (click)="signOut()"><i class="fa fa-lg fa-sign-out"></i></div></li>
+      <li *ngIf="!user"><div title="Đăng nhập bằng facebook" (click)="signInWithFB()" style="cursor: pointer"><i class="fa fa-lg fa-facebook-square"></i></div></li>
+      <li *ngIf="!user"><div title="Đăng nhập bằng google" (click)="signInWithGoogle()" style="cursor: pointer"><i class="fa fa-lg fa-google-plus-square"></i></div></li>
+      <li *ngIf="user"><div><i><a href="/user-detail-page"><img class="image-user-icon" src="{{ user.photoUrl }}"style="cursor: pointer"></a></i></div></li>
+      <li *ngIf="user"><div title="Đăng xuất" (click)="signOut()" style="cursor: pointer"><i class="fa fa-lg fa-sign-out"></i></div></li>
     </ul>
     <!-- ################################################################################################ -->
   </div>

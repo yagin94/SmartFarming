@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!--<app-header></app-header>-->
 <!-- Phan Link dia chi lien ket hoi dap ... -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -12,10 +12,11 @@
       <div id="logo" class="fl_left">
         <h1><a style="font-size: 17px; color: #F7AF9D;letter-spacing: 5px; font-family: 'Open Sans Condensed', sans-serif; font-weight: 700;  text-align: center; text-transform: uppercase;" href="index.html">FPT developer Team</a></h1>
       </div>
+
       <nav id="mainav" class="fl_right">
-        <ul class="clear">
+        <ul class="clear" style="margin-top: 3%;font-size: 17px">
           <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
+          <li><a class="drop" href="/article-page" routerLinkActive="active">Kiến thức</a>
             <ul>
               <li><a href="">Kỹ thuật trồng</a></li>
               <li><a href="">Thu hoạch & Bảo quản</a></li>
@@ -26,10 +27,11 @@
               <li><a href="">Giống cây</a></li>
             </ul>
           </li>
-          <li><a  routerLink="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
+          <li><a  href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
           <li><a  href="#">Liên hệ</a></li>
 
         </ul>
+
       </nav>
       <!-- ################################################################################################ -->
     </header>
@@ -37,24 +39,53 @@
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
+
+
   <div id="pageintro" class="hoc clear">
     <article>
+      <!-- search -->
+      <div class="inner-form">
+        <div class="input-field">
+          <button class="btn-search" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+            </svg>
+          </button>
+          <input id="search" type="text" placeholder="" value="" />
+        </div>
+      </div>
+
+
       <!-- ################################################################################################ -->
       <h3 class="heading">NÔNG TRẠI THÔNG THÁI</h3>
       <p>Nơi chia sẻ những kinh nghiệm quý báu về cây nông nghiệp</p>
       <p class="font-x1 uppercase bold">Cùng nhau phát triển nghề nông</p>
       <footer>
         <ul class="nospace inline pushright">
-          <li><a class="btn inverse" [ngx-scroll-to]="topView">Danh mục đáng chú ý</a></li>
-          <li><a class="btn inverse" [ngx-scroll-to]="aboutUs">Đội ngũ phát triển</a></li>
+          <li><a style="" class="btn inverse button-home" [ngx-scroll-to]="topView">Danh mục đáng chú ý</a></li>
+          <li><a class="btn inverse button-home" [ngx-scroll-to]="benefit">Lợi ích người dùng</a></li>
         </ul>
       </footer>
+
+
+
+      <div style="display: -webkit-inline-box;padding-top: 2%">
+        <button class="loginBtn loginBtn--facebook" *ngIf="!user">
+          Đăng nhập bằng Facebook
+        </button>
+
+        <button class="loginBtn loginBtn--google" *ngIf="!user">
+          Đăng nhập bằng Google
+        </button>
+      </div>
+
+
       <!-- ################################################################################################ -->
     </article>
   </div>
   <!-- ################################################################################################ -->
   <div class="wrapper row3" #topView>
-    <section class="hoc container clear">
+    <section class="hoc container clear" style="padding-bottom: 0%;">
       <!-- ################################################################################################ -->
       <div class="sectiontitle">
         <h6 class="heading">Danh mục đáng chú ý</h6>
@@ -126,10 +157,54 @@
       <!-- ################################################################################################ -->
     </section>
   </div>
+
+  <!--/*For developer*/-->
+  <div class="wrapper row3" #benefit>
+    <section class="hoc container clear">
+      <div class="sectiontitle">
+        <h6 class="heading">Lợi ích người dùng</h6>
+      </div>
+      <div class="group testimonials">
+        <div class="one_half first">
+          <p class="customP">Người dùng phổ thông</p>
+          <div class="benefit">
+            <img src="../../assets/images/point.png" style="height: 20px">
+            <span>Nhà nông thông thái là một cộng đồng mở cho tất cả mọi người</span>
+          </div>
+          <div class="benefit">
+            <img src="../../assets/images/point.png" style="height: 20px">
+            <span>Chúng tôi đồng hành cùng bạn tìm kiếm, chia sẻ những giải đáp cũng như kiến thức liên quan đến nông nghiệp</span>
+          </div>
+          <div class="benefit">
+            <img src="../../assets/images/point.png" style="height: 20px">
+            <span>Với mỗi đóng góp được đánh giá từ cộng đồng, chúng tôi giúp bạn xây dựng bảng thành tích đẹp đẽ nhất để chinh phục nhà tuyển dụng</span>
+          </div>
+        </div>
+
+        <div class="one_half">
+          <p class="customP"> Nhà tuyển dụng</p>
+          <div class="benefit">
+            <img src="../../assets/images/point.png" style="height: 20px">
+            <span>Nhiệm vụ của chúng tôi là giúp bạn tìm kiếm "chuyên gia" và trở thành "chuyên gia"</span>
+          </div>
+          <div class="benefit">
+            <img src="../../assets/images/point.png" style="height: 20px">
+            <span>Điều này có nghĩa là chúng tôi sẽ giúp bạn tìm kiếm những người thực sự tài giỏi trong lĩnh vực mà doanh nghiệp của bạn cần</span>
+          </div>
+          <div class="benefit">
+            <img src="../../assets/images/point.png" style="height: 20px">
+            <span>Hơn thế nữa, cung cấp cho họ môi trường để chia sẻ kiến thức, học hỏi và cải tiến năng suất làm việc</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
   <!-- ########################################################################################-->
 </div>
-  <!-- Phan trang chu hien thi thong tin, background ....-->
-  <!-- ################################################################################################ -->
+<!-- Phan trang chu hien thi thong tin, background ....-->
+<!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->

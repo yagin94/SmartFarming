@@ -134,12 +134,7 @@ table{
   overflow: auto;
 
 }
-#report{
-  /*height: 300px;*/
-  padding: 0px;
-  margin: 0px auto 0px auto;
-  overflow: auto;
-}
+
 table > tbody > tr:first-child {
   font-size: 16px;
   color: #454545;
@@ -148,25 +143,7 @@ table > tbody > tr:first-child {
   text-align: center;
 }
 
-.table-report{
-  border-color: #F4F4F4;
 
-}
-
-.table-report-first{
-  /*border: none !important;*/
-  font-size: 14px !important;
-  color: #474747 !important;
-  outline: none !important;
-  background: none !important;
-  text-align: left !important;
-}
-.label-report{
-  width: 17%;
-  text-align: center !important;
-  background-color: lavender;
-  border-bottom: 1px inset #3f51b5;
-}
 #menu-sap-xep ul li:hover::after {
   width: 100%;
 }
@@ -255,26 +232,16 @@ table > tbody > tr:first-child {
 }
 
 
-
-/*left side*/
-.menu-left-qa {
-  /*background: rgba(0,0,0,.6); !**!*/
-  width: 20%;
-  /*margin-top: -100%;*/
-  /*position: fixed;*/
-  overflow: visible;
-  float: left;
-}
-
 .div-menu-left {
   padding: 30px 10px 30px 20px !important;
+  position: fixed;
 }
 
 .div-menu-left i {
   padding: 10px 10px 10px 0;
 }
 
-.div-menu-left ul li ul li a {
+.div-menu-left ul li ul li{
   padding: 5px 0px 0px 30px;
   font-size: 13px;
   font-family: "Open Sans", Arial, sans-serif;
@@ -291,5 +258,67 @@ table > tbody > tr:first-child {
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*xep hang start*/
 
+table{
+  max-height: 300px !important;
+  padding: 5px;
+}
+#table-wrapper {
+  height: 300px;
+  padding: 0px;
+  margin: 0px auto 0px auto;
+  overflow: auto;
 
+}
+#report{
+  /*height: 300px;*/
+  padding: 0px;
+  margin: 0px auto 0px auto;
+  overflow: auto;
+}
+table > tbody > tr:first-child {
+  font-size: 16px;
+  color: #454545;
+  outline: 1px solid #6A6A6A;
+  background: linear-gradient(to top, #8e9eab, #eef2f3);
+  text-align: center;
+}
 
+.table-report{
+  border-color: #694eff;
+
+}
+.table-report tr{
+  border-color: #694eff;
+}
+.table-report tr td{
+  border-color: #694eff;
+  padding: 1%;
+  cursor: pointer;
+}
+
+.table-report-first{
+  /*border: none !important;*/
+  font-size: 14px !important;
+  color: #474747 !important;
+  outline: none !important;
+  background: none !important;
+  text-align: left !important;
+}
+.label-report{
+  width: 17%;
+  text-align: center !important;
+  background-color: lavender;
+  border-bottom: 1px inset #3f51b5;
+}
+
+.title{
+  text-align: center;
+  margin-top: 1%;
+}
+svg {
+  padding: 10px 15px;
+}
+
+.col-account .col-date .col-gg{
+  min-width: 10rem;
+}

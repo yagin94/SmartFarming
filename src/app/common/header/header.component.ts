@@ -3,9 +3,11 @@ import {LoginService} from '../../login/login.service';
 import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedInLoginProvider, SocialUser} from 'angularx-social-login';
 import {HttpClient} from '@angular/common/http';
 import {AppUser} from '../../qa-page/qa.model';
+import {Local} from 'protractor/built/driverProviders'
+import {Globals} from '../globalVariables';
 
 @Component({
-  providers: [LoginService],
+  providers: [LoginService, Globals],
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
@@ -14,10 +16,12 @@ export class HeaderComponent implements OnInit {
   appUser$: AppUser;
   user: SocialUser;
 
-  constructor(private authService: AuthService, private http: HttpClient) {
+  constructor(private authService: AuthService, private http: HttpClient, private globals: Globals ) {
   }
 
   ngOnInit() {
+    this.globals.loading = true;
+    console.log('loading', this.globals.loading);
     this.authService.authState.subscribe((user) => {
       this.user = user;
     });
@@ -37,7 +41,11 @@ export class HeaderComponent implements OnInit {
         authToken: this.user.authToken,
         idToken: this.user.idToken,
         authorizationCode: this.user.authorizationCode
-      }).subscribe(app => localStorage.setItem('currentAppUser', JSON.stringify(app)) );
+      }).subscribe(app => {
+      localStorage.setItem('currentAppUser', JSON.stringify(app)) ;
+      console.log('HienND', localStorage.getItem('currentAppUser'));
+    }
+  );
   }
 
   signInWithGoogle(): void {
@@ -45,11 +53,7 @@ export class HeaderComponent implements OnInit {
       .then((x) => {
         this.user = x;
         this.sendToRestApiMethod(this.user.idToken);
-        this.getResponse(this.user.idToken);
-        console.log(this.user);
-        console.log(this.appUser$);
       }).catch((x) => {
-      console.log('here!!!!:');
     });
   }
 
@@ -74,7 +78,10 @@ export class HeaderComponent implements OnInit {
           authorizationCode: this.user.authorizationCode
         }).subscribe(
         onSuccess => {
+          this.getResponse(this.user.idToken);
+
           localStorage.setItem('currentUser', JSON.stringify(this.user));
+          // console.log('DuyNk', localStorage.getItem('currentUser'));
         }, onFail => {
           console.log(onFail);
         }
@@ -95,7 +102,16 @@ export class HeaderComponent implements OnInit {
   signOut(): void {
     this.authService.signOut();
     localStorage.removeItem('currentAppUser');
-    localStorage.removeItem('currentUser');
+    // localStorage.removeItem('currentUser');
+    // console.log(localStorage.getItem('currentAppUser'));
+    location.replace(window.location.href);
+
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentUser')) {
+      return true;
+    }
+    return false;
   }
 
 }

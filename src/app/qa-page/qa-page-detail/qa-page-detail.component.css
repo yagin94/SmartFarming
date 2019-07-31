@@ -1,5 +1,7 @@
-
-
+img {
+  width: 64px;
+  height: 64px;
+}
 .sap-xep {
   min-width: 100%;
 }

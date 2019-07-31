@@ -27,7 +27,7 @@
             </ul>
           </li>
           <li><a href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
-          <li><a href="#">Liên hệ</a></li>
+          <li><a>Liên hệ</a></li>
         </ul>
       </nav>
       <!-- ################################################################################################ -->
@@ -58,11 +58,11 @@
             <p class="title-menu-right">Top Câu hỏi</p>
             <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
               <li>
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> {{item.title}}</a></div>
+                <span><a ><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+                <div class="title-article"><a (click)="edit(item)" style="cursor: pointer"> {{item.title}}</a></div>
                 <div>
-                  <span class="top-article-view"><a href="#">{{getNumber(item.answers)}} trả lời</a></span>
-                  <span class="top-article-view"><a href="#">{{item.viewCount}} lượt xem</a></span>
+                  <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
+                  <span class="top-article-view"><a>{{item.viewCount}} lượt xem</a></span>
                 </div>
               </li>
             </ul>
@@ -81,21 +81,10 @@
         <div>
           <p class="title-menu-right">Top người dùng</p>
           <ul class="top-user">
-            <li>
-              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a href="#">Tên user</a></div>
-              <span style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
-            </li>
-            <li>
-              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a href="#"> Tên user</a></div>
-              <span style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
-
-            </li>
-            <li>
-              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a href="#"> Tên user</a></div>
-              <span style="padding: 0 35px;"><a href="#">100 Điểm</a></span>
+            <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex">
+              <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <div class="title-article"><a>{{item.socialUser.firstName}}</a></div>
+              <span style="padding: 0 35px;"><a>{{item.reputation}} điểm</a></span>
             </li>
           </ul>
         </div>
@@ -170,9 +159,9 @@
     </div>
     <div class="one_third">
       <h6 class="heading">Sem ipsum auctor dignissim</h6>
-      <figure><a href="#"><img class="borderedbox inspace-10 btmspace-15" src="../images/demo/320x168.png" alt=""></a>
+      <figure><a><img class="borderedbox inspace-10 btmspace-15" src="../images/demo/320x168.png" alt=""></a>
         <figcaption>
-          <h6 class="nospace font-x1"><a href="#">Tortor congue quis arcu</a></h6>
+          <h6 class="nospace font-x1"><a>Tortor congue quis arcu</a></h6>
           <time class="font-xs block btmspace-10" datetime="2045-04-06">Friday, 6<sup>th</sup> April 2045</time>
         </figcaption>
       </figure>

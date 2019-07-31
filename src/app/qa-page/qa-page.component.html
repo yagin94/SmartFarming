@@ -29,7 +29,7 @@
             </ul>
           </li>
           <li class="active"><a href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
-          <li><a href="#">Liên hệ</a></li>
+          <li><a>Liên hệ</a></li>
         </ul>
       </nav>
       <!-- ################################################################################################ -->
@@ -62,11 +62,11 @@
             <p class="title-menu-right">Top Câu hỏi</p>
             <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
               <li>
-                <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a href="#"> {{item.title}}</a></div>
+                <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+                <div class="title-article"><a (click)="edit(item)" style="cursor: pointer"> {{item.title}}</a></div>
                 <div>
-                  <span class="top-article-view"><a href="#">{{getNumber(item.answers)}} trả lời</a></span>
-                  <span class="top-article-view"><a href="#">100 lượt xem</a></span>
+                  <span class="top-article-view"><a >{{getNumber(item.answers)}} trả lời</a></span>
+                  <span class="top-article-view"><a >100 lượt xem</a></span>
                 </div>
               </li>
             </ul>
@@ -85,9 +85,9 @@
           <p class="title-menu-right">Top người dùng</p>
           <ul class="top-user">
             <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex">
-              <span><a href="#"><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a href="#">{{item.socialUser.firstName}}</a></div>
-              <span style="padding: 0 35px;"><a href="#">{{item.reputation}} điểm</a></span>
+              <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <div class="title-article"><a>{{item.socialUser.firstName}}</a></div>
+              <span style="padding: 0 35px;"><a>{{item.reputation}} điểm</a></span>
             </li>
           </ul>
         </div>
@@ -110,9 +110,9 @@
                     <figure class="avatar" style="float: left;margin-left: -13%;"><img
                       src="../../assets/images/demo/avatar.png" alt=""></figure>
                     <address style="text-align: left;font-size: 12px;color: dodgerblue">
-                      <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
-                      <a href="#" *ngIf="object.appUser==null">anonymous </a>
-                      <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==false">{{object.appUser.socialUser.name}}</a>
+                      <a *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
+                      <a *ngIf="object.appUser==null">anonymous </a>
+                      <a *ngIf="object.appUser!=null&&object.appUser.anonymous==false">{{object.appUser.socialUser.name}}</a>
                       <time style="font-size: 9px; "><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{object.utilTimestamp
                         | date: 'yyyy-MM-dd'}}
                       </time>
@@ -131,17 +131,17 @@
 
                   </div>
                   <footer class="question-footer">
-                    <div><i class="fa fa-li"></i><a href="#">10 Like</a></div>
-                    <div><a href="#">{{getNumber(object.answers)}} Lượt trả lời</a></div>
-                    <div><a href="#">{{object.viewCount}} Lượt xem</a></div>
+                    <div><i class="fa fa-li"></i><a>10 Like</a></div>
+                    <div><a>{{getNumber(object.answers)}} Lượt trả lời</a></div>
+                    <div><a>{{object.viewCount}} Lượt xem</a></div>
                   </footer>
                 </article>
               </li>
               <div class="phan-trang clear">
                 <div class="pagination">
-                  <a href="#">&laquo;</a>
+                  <a>&laquo;</a>
                   <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(sortBy$,i)">{{i}}</a>
-                  <a href="#">&raquo;</a>
+                  <a>&raquo;</a>
                 </div>
               </div>
 
@@ -189,9 +189,9 @@
     </div>
     <div class="one_third">
       <h6 class="heading">Sem ipsum auctor dignissim</h6>
-      <figure><a href="#"><img class="borderedbox inspace-10 btmspace-15" src="../images/demo/320x168.png" alt=""></a>
+      <figure><a><img class="borderedbox inspace-10 btmspace-15" src="../images/demo/320x168.png" alt=""></a>
         <figcaption>
-          <h6 class="nospace font-x1"><a href="#">Tortor congue quis arcu</a></h6>
+          <h6 class="nospace font-x1"><a>Tortor congue quis arcu</a></h6>
           <time class="font-xs block btmspace-10" datetime="2045-04-06">Friday, 6<sup>th</sup> April 2045</time>
         </figcaption>
       </figure>

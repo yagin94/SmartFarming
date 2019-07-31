@@ -5,9 +5,10 @@ import {Answers, AppUser, GetObject, GetObjectTopQa, GetObjectTopTag, GetObjectT
 import {forEach} from '@angular/router/src/utils/collection';
 import {CKEditor4} from 'ckeditor4-angular';
 import {ActivatedRoute, Router} from '@angular/router';
+import {DataShareService} from '../../share-data-service/date-share-service';
 
 @Component({
-  providers: [HeaderComponent, QaService],
+  providers: [HeaderComponent, QaService, DataShareService],
   selector: 'app-qa-page-post',
   templateUrl: './qa-page-post.component.html',
   styleUrls: ['./qa-page-post.component.css']
@@ -28,18 +29,22 @@ export class QaPagePostComponent implements OnInit {
   data: any;
   topQa$: Qa[];
   topTag$: Tag[];
+  editQuestion$: Qa;
+  answer$: any;
   public model = {
     editorData: ''
   };
   constructor(private qaService: QaService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private dataShareService: DataShareService) {
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.getTopQa();
     this.getTopTag();
+    this.getTopUser()
   }
 
   public onChange(event: CKEditor4.EventInfo) {
@@ -54,6 +59,9 @@ export class QaPagePostComponent implements OnInit {
   }
   getTopTag(): void {
     this.qaService.getTopTag().subscribe(getObjectTopTag => this.getObjectTopTag$ = getObjectTopTag);
+  }
+  getTopUser(): void {
+    this.qaService.getTopUser().subscribe(getObjectTopUser => this.getObjectTopUser$ = getObjectTopUser);
   }
   addQa(title: string, array: string): void {
     this.userName$ = '';
@@ -146,5 +154,14 @@ export class QaPagePostComponent implements OnInit {
   }
   getNumber(object: Answers) {
     return Object.keys(object).length;
+  }
+  edit(qa: Qa) {
+    this.editQuestion$ = qa;
+    this.answer$ = qa.answers;
+
+    this.dataShareService.setShareData(qa);
+    console.log(qa);
+    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
+    // console.log(this.dataShareService.getShareData());
   }
 }

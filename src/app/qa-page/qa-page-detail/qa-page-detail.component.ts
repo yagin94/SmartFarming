@@ -21,7 +21,7 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class QaPageDetailComponent implements OnInit {
   ansContent: string;
   getObjectTopTag$: GetObjectTopTag;
-  getObjecctTopUser$: GetObjectTopUser;
+  getObjectTopUser$: GetObjectTopUser;
   getObjectTopQa$: GetObjectTopQa;
   qa$: Qa;
   topTag$: Tag[];
@@ -53,6 +53,7 @@ export class QaPageDetailComponent implements OnInit {
     this.ansContent = '';
     this.getTopQa();
     this.getTopTag();
+    this.getTopUser();
     // this.dataShareService.currentMessage.subscribe(message => this.message = message);
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.getQaDetail(this.data);
@@ -73,6 +74,9 @@ console.log(id);
 
   getTopTag(): void {
     this.qaService.getTopTag().subscribe(getObjectTopTag => this.getObjectTopTag$ = getObjectTopTag);
+  }
+  getTopUser(): void {
+    this.qaService.getTopUser().subscribe(getObjectTopUser => this.getObjectTopUser$ = getObjectTopUser);
   }
 
   checkAuthen() {
@@ -138,6 +142,15 @@ console.log(id);
     this.dataShareService.setShareData(qa);
     // console.log(qa);
     this.router.navigate(['./qa-page-post'], {queryParams: {id: qa.questionId}});
+    // console.log(this.dataShareService.getShareData());
+  }
+  navigate(qa: Qa) {
+    this.editQuestion$ = qa;
+    this.answer$ = qa.answers;
+
+    this.dataShareService.setShareData(qa);
+    // console.log(qa);
+    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
     // console.log(this.dataShareService.getShareData());
   }
 

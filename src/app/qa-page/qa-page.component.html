@@ -75,7 +75,7 @@
         <div class="top-tag">
           <p class="title-menu-right">Top tags</p>
           <div class="question-tag">
-            <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;">{{tag.name}}</p>
+            <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;" (click)="getQaByTag(sortBy$, tag.tagId, pageIndex$)">{{tag.name}}</p>
           </div>
 
         </div>
@@ -154,7 +154,7 @@
 
     <!-- chia trang -->
   </div>
-
+<button (click)="abc()">AAAAAAAAAAAAAa</button>
 </div>
 <!-- ################################################################################################ -->
 <!-- footer-->

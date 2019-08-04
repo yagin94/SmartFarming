@@ -9,7 +9,9 @@ import {Globals} from './common/globalVariables';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private globals: Globals) {}
+  constructor(private globals: Globals) {
+    globals.loading = false;
+  }
   @ViewChild('ngxLoading') ngxLoadingComponent: NgxLoadingComponent;
   public loadingTemplate: TemplateRef<any>;
   title = 'app';

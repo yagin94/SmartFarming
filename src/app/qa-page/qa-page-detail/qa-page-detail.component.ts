@@ -10,9 +10,10 @@ import {
 } from 'ngx-social-button';
 import {SocialUser} from 'angularx-social-login';
 import {forEach} from '@angular/router/src/utils/collection';
+import {Globals} from '../../common/globalVariables';
 
 @Component({
-  providers: [HeaderComponent, DataShareService, QaService, SocialService],
+  providers: [HeaderComponent, DataShareService, QaService, SocialService, Globals],
   selector: 'app-qa-page-detail',
   templateUrl: './qa-page-detail.component.html',
   styleUrls: ['./qa-page-detail.component.css']
@@ -46,7 +47,8 @@ export class QaPageDetailComponent implements OnInit {
     private dataShareService: DataShareService,
     private route: ActivatedRoute,
     private socialAuthService: SocialService,
-    private router: Router) {
+    private router: Router,
+    private globals: Globals) {
   }
 
   ngOnInit() {
@@ -60,8 +62,8 @@ export class QaPageDetailComponent implements OnInit {
     // console.log(this.data);
   }
 
-  abc(id: number) {
-console.log(id);
+  abc() {
+console.log(this.globals.test);
   }
 
   getNumber(object: Answers) {

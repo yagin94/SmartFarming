@@ -20,11 +20,12 @@ import {QaPageDetailComponent} from './qa-page-detail/qa-page-detail.component';
 import {DataShareService} from '../share-data-service/date-share-service';
 import {Router} from '@angular/router';
 import {NgxLoadingComponent} from 'ngx-loading';
+import {Globals} from '../common/globalVariables';
 
 @Component({
   selector: 'app-qa-page',
   templateUrl: './qa-page.component.html',
-  providers: [QaService, HeaderComponent, AuthService, QaPageDetailComponent, DataShareService],
+  providers: [QaService, HeaderComponent, AuthService, QaPageDetailComponent, DataShareService, Globals],
   styleUrls: ['./qa-page.component.css']
 })
 
@@ -46,7 +47,9 @@ export class QaPageComponent implements OnInit {
   user: SocialUser;
   topQa$: Qa[];
   topTag$: Tag[];
-  constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router) {
+
+  constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
+              private globals: Globals) {
   }
 
   ngOnInit() {
@@ -60,7 +63,8 @@ export class QaPageComponent implements OnInit {
     // console.log('======', authToken1);
   }
   abc() {
-    console.log('=============', this.getObject$.qa);
+    this.globals.test = 'nonono';
+    console.log(this.globals.test);
   }
   createMessage(message) {
     // this.dataShareService.changeMessage(message);

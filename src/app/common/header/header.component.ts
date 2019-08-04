@@ -20,8 +20,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.globals.loading = true;
-    console.log('loading', this.globals.loading);
     this.authService.authState.subscribe((user) => {
       this.user = user;
     });
@@ -63,6 +61,7 @@ export class HeaderComponent implements OnInit {
   }
 
   sendToRestApiMethod(token: string): void {
+    this.globals.loading = true;
     try {
       this.http.post('http://localhost:8080/login',
         {
@@ -78,6 +77,7 @@ export class HeaderComponent implements OnInit {
           authorizationCode: this.user.authorizationCode
         }).subscribe(
         onSuccess => {
+          this.globals.loading = false;
           this.getResponse(this.user.idToken);
 
           localStorage.setItem('currentUser', JSON.stringify(this.user));

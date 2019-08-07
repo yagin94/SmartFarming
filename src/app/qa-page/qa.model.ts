@@ -21,6 +21,14 @@ export class GetObjectQaByTag {
   numberOfPages: number;
 }
 
+export class Report {
+  reportId: number;
+  appUser: AppUser;
+  message: string;
+  utilTimestamp: string;
+  constructor() {}
+}
+
 export class Qa {
   questionId: number;
   title: string;
@@ -33,6 +41,7 @@ export class Qa {
   upvotedUserIds: number[];
   utilTimestamp: string;
   userName: string;
+  report: Report;
 
   constructor(title: string, content: string, appUser: AppUser, tags: Tag[], fileDownloadUris: string[], userName: string) {
     this.title = title;
@@ -109,13 +118,30 @@ export class AddAnsObj {
     this.question = question;
   }
 }
+
+export class ReportObj {
+  appUser: AppUser;
+  message: string;
+  question: Q;
+
+  constructor(appUser: AppUser, message = 'nội dung không phù hợp', question: Q) {
+    this.appUser = appUser;
+    this.message = message;
+    this.question = question;
+  }
+}
 export class AddupvoteQa {
   userId: number;
   constructor(id: number) {
     this.userId = id;
   }
 }
-
+export class AddupvoteAn {
+  userId: number;
+  constructor(id: number) {
+    this.userId = id;
+  }
+}
 export class Q {
   questionId: number;
 

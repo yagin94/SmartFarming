@@ -11,7 +11,7 @@ import {
   GetObjectTopTag,
   GetObjectTopQa,
   GetObjectQaByTag,
-  AddupvoteQa
+  AddupvoteQa, ReportObj
 } from './qa.model';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
@@ -68,7 +68,10 @@ export class QaService {
 
     return this.http.post<GetObject>(`${this.QaUrl}/${pageIndex}`, params);
   }
-
+  reportQa(id: number, reportObj: ReportObj): Observable<{}> {
+    const url = `http://localhost:8080/question/reportQuestion/${id}`;
+    return this.http.post(url, reportObj);
+  }
   /** PUT: update the question on the server. Returns the updated article upon success. */
   updateQuestion(id: number, question: Qa): Observable<Qa> {
     return this.http.put<Qa>(`http://localhost:8080/question/updateQuestion/${id}`, question);
@@ -80,7 +83,9 @@ export class QaService {
   addAnswer(answer: AddAnsObj): Observable<Answers> {
     return this.http.post<Answers>('http://localhost:8080/answer/addAnswerToQuestion', answer);
   }
-
+  upvoteAnswer(answerId: number, userId: AddupvoteQa): Observable<{}> {
+    return this.http.post<{}>(`http://localhost:8080/upvote/answer/${answerId}`, userId);
+  }
   /** PUT: update the answer on the server. Returns the updated article upon success. */
   updateAnswer(answerId: number, answer: AddAnsObj): Observable<AddAnsObj> {
     console.log('idddd', answerId);

@@ -5,7 +5,27 @@
 .sap-xep {
   min-width: 100%;
 }
+.pagination {
+  display: inline-block;
+  cursor: pointer;
+  width: auto !important;
+}
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  text-align: center;
+  background-color: lightblue !important;
 
+}
+
+.phan-trang {
+  position: inherit;
+  padding: 10px 35px 0 35px;
+  width: 100%;
+  text-align: center;
+}
 #menu-sap-xep ul li::after {
   content: '';
   display: block;

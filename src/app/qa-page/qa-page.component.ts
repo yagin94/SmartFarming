@@ -18,7 +18,7 @@ import {HeaderComponent} from '../common/header/header.component';
 import {AuthService} from 'angularx-social-login';
 import {QaPageDetailComponent} from './qa-page-detail/qa-page-detail.component';
 import {DataShareService} from '../share-data-service/date-share-service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NgxLoadingComponent} from 'ngx-loading';
 import {Globals} from '../common/globalVariables';
 
@@ -33,7 +33,7 @@ export class QaPageComponent implements OnInit {
   getObject$: GetObject;
   getObjectTopTag$: GetObjectTopTag;
   getObjectTopUser$: GetObjectTopUser;
-  getObjectTopQa$: GetObjectTopQa
+  getObjectTopQa$: GetObjectTopQa;
   getObjectQaByTag$: GetObjectQaByTag;
   qa$: Qa[];
   checkAdd$ = 0;
@@ -47,14 +47,24 @@ export class QaPageComponent implements OnInit {
   user: SocialUser;
   topQa$: Qa[];
   topTag$: Tag[];
+  checkPaging$ = 'viewAndDate';
+  tagId: number;
+  data: any;
 
   constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
-              private globals: Globals) {
+              private globals: Globals,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.getObject$ = new GetObject();
-    this.getQa(this.sortBy$, this.pageIndex$);
+    this.route.queryParams.subscribe(params => this.data = params.id);
+    if (this.data == null) {
+      this.getQa(this.sortBy$, this.pageIndex$);
+    } else {
+      this.getQaByTag(this.sortBy$, this.data, this.pageIndex$);
+    }
+
     this.getTopQa();
     this.getTopTag();
     this.getTopUser();
@@ -62,46 +72,70 @@ export class QaPageComponent implements OnInit {
     // const authToken2 = localStorage.getItem('currentAppUser');
     // console.log('======', authToken1);
   }
+
   abc() {
     this.globals.test = 'nonono';
     console.log(this.globals.test);
   }
+
   createMessage(message) {
     // this.dataShareService.changeMessage(message);
     console.log('aaa', message);
   }
+
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
   }
-/** view questions */
+
+  /** view questions */
   getQa(sortBy: string, pageIndex: number): void {
     this.qaService.getQa(sortBy, pageIndex).subscribe(getObject => {
 
       this.getObject$ = getObject;
     });
   }
+
   getQaByTag(sortBy: string, tagId: number, pageIndex: number): void {
+    this.tagId = tagId;
+    this.checkPaging$ = 'tag';
     this.qaService.getQaByTag(sortBy, tagId, pageIndex).subscribe(getObjectQaByTag => this.getObject$ = getObjectQaByTag);
   }
+
   /**=======================================================================*/
   sortByView() {
-    this.sortBy$ = 'viewCount';
-    this.getQa(this.sortBy$, this.pageIndex$);
+    if (this.checkPaging$ == 'viewAndDate') {
+      this.sortBy$ = 'viewCount';
+      this.getQa(this.sortBy$, this.pageIndex$);
+    } else if (this.checkPaging$ == 'tag') {
+      this.sortBy$ = 'viewCount';
+      this.getQaByTag(this.sortBy$, this.tagId, this.pageIndex$);
+    }
+
   }
+
   sortByDate() {
-    this.sortBy$ = 'date';
-    this.getQa(this.sortBy$, this.pageIndex$);
+    if (this.checkPaging$ == 'viewAndDate') {
+      this.sortBy$ = 'date';
+      this.getQa(this.sortBy$, this.pageIndex$);
+    } else if (this.checkPaging$ == 'tag') {
+      this.sortBy$ = 'date';
+      this.getQaByTag(this.sortBy$, this.tagId, this.pageIndex$);
+    }
   }
+
   /**==========================================================================================*/
   getTopQa(): void {
     this.qaService.getTopQa().subscribe(getObjectTopQa => this.getObjectTopQa$ = getObjectTopQa);
   }
+
   getTopTag(): void {
     this.qaService.getTopTag().subscribe(getObjectTopTag => this.getObjectTopTag$ = getObjectTopTag);
   }
+
   getTopUser(): void {
     this.qaService.getTopUser().subscribe(getObjectTopUser => this.getObjectTopUser$ = getObjectTopUser);
   }
+
   isLoggedIn() {
     if (localStorage.getItem('currentUser')) {
       return true;
@@ -206,6 +240,7 @@ export class QaPageComponent implements OnInit {
       this.qaService.deleteAnswer(answer.answerId).subscribe();
     }
   }
+
   getNumber(object: Answers) {
     return Object.keys(object).length;
   }

@@ -3,8 +3,8 @@ import {LoginService} from '../../login/login.service';
 import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedInLoginProvider, SocialUser} from 'angularx-social-login';
 import {HttpClient} from '@angular/common/http';
 import {AppUser} from '../../qa-page/qa.model';
-import {Local} from 'protractor/built/driverProviders'
 import {Globals} from '../globalVariables';
+
 
 @Component({
   providers: [LoginService, Globals],
@@ -15,11 +15,13 @@ import {Globals} from '../globalVariables';
 export class HeaderComponent implements OnInit {
   appUser$: AppUser;
   user: SocialUser;
+  checkAdmin = '';
 
   constructor(private authService: AuthService, private http: HttpClient, private globals: Globals ) {
   }
 
   ngOnInit() {
+    this.checkAdmin = JSON.parse(localStorage.getItem('currentAppUser')).role;
     this.authService.authState.subscribe((user) => {
       this.user = user;
     });
@@ -41,6 +43,7 @@ export class HeaderComponent implements OnInit {
         authorizationCode: this.user.authorizationCode
       }).subscribe(app => {
       localStorage.setItem('currentAppUser', JSON.stringify(app)) ;
+      this.checkAdmin = app.role;
       console.log('HienND', localStorage.getItem('currentAppUser'));
     }
   );

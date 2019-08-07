@@ -232,32 +232,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div>
-                  <h6 style="text-transform: none;"><a href="">Xem tất cả người dùng tại đây</a></h6>
-                </div>
-                <div>
-                  <h5 style="text-transform: none;">Người dùng bị khóa nick</h5>
-                  <div class="scrollable"><!-- -->
-                    <table style="text-align: center;">
-                      <tbody>
-                      <tr class="" style="">
-                        <td style="min-width: 10rem;">Tên tài khoản</td>
-                        <td style="min-width: 10rem;">Email/ Facebook</td>
-                        <td>Lý do</td>
-                        <td style="min-width: 10rem;">Ngày khóa</td>
 
-                      </tr>
-                      <tr class="">
-                        <td>Crit Cardio</td>
-                        <td>tinhnx@gmail.com</td>
-                        <td>100</td>
-                        <td>100</td>
-
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
               </div>
               <!--Thống kê người dùng -->
 
@@ -482,93 +457,34 @@
               <!--Show câu hỏi -->
               <div *ngIf="isFlatShowQuestion" id="question">
                 <h5 style="text-transform: none;">Top 10 câu hỏi theo
-                  <select style="width: fit-content;margin: 0;">
-                    <option>Số like</option>
-                    <option>Ngày đăng</option>
+                  <select style="width: fit-content;margin: 0;" (change)="sortBy($event.target.value)">
+                    <option value="viewCount">Số view</option>
+                    <option value="date">Ngày đăng</option>
                   </select>
                 </h5>
                 <table class="scrollable">
                   <tr style="text-align: center">
                     <td style="min-width: 10rem;">Tiêu đề</td>
                     <td>Người đăng</td>
-                    <td>Số like</td>
+                    <td>Số view</td>
                     <td>Số trả lời</td>
                     <td>Ngày đăng</td>
                   </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
+                  <tr style="text-align: center" *ngFor="let object of getObject$.qa">
+                    <td>{{object.title}}</td>
+                    <td>{{object.appUser.socialUser.name}}</td>
+                    <td>{{object.viewCount}}</td>
+                    <td>{{getNumber(object.answers)}}</td>
+                    <td>{{object.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
                   </tr>
                 </table>
-                <div>
-                  <h6 style="text-transform: none;"><a href="">Xem tất cả câu hỏi tại đây</a></h6>
+                <div class="phan-trang clear">
+                  <div class="pagination">
+                    <a>&laquo;</a>
+                    <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(sortBy$,i)">{{i}}</a>
+                    <a>&raquo;</a>
+                  </div>
                 </div>
-
               </div>
             </div>
           </div>

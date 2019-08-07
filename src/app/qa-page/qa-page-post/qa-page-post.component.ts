@@ -19,6 +19,7 @@ export class QaPagePostComponent implements OnInit {
   getObjectTopUser$: GetObjectTopUser;
   getObjectTopQa$: GetObjectTopQa;
   qa$: Qa[];
+  qa: Qa;
   appUser$: AppUser;
   tags: Tag[];
   tag: Tag;
@@ -32,7 +33,8 @@ export class QaPagePostComponent implements OnInit {
   editQuestion$: Qa;
   answer$: any;
   public model = {
-    editorData: ''
+    editorData: '',
+    default : ''
   };
   constructor(private qaService: QaService,
               private route: ActivatedRoute,
@@ -42,9 +44,10 @@ export class QaPagePostComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => this.data = params.id);
+    this.getQaDetail(this.data);
     this.getTopQa();
     this.getTopTag();
-    this.getTopUser()
+    this.getTopUser();
   }
 
   public onChange(event: CKEditor4.EventInfo) {
@@ -53,6 +56,13 @@ export class QaPagePostComponent implements OnInit {
 
   abcd() {
     console.log('=====', this.data);
+  }
+  getQaDetail(questionId: number): void {
+    this.qaService.getQaDetail(questionId).subscribe(qa => {
+      this.qa = qa;
+      this.model.default = this.qa.content;
+      console.log('=====',qa.tags);
+    });
   }
   getTopQa(): void {
     this.qaService.getTopQa().subscribe(getObjectTopQa => this.getObjectTopQa$ = getObjectTopQa);
@@ -163,5 +173,8 @@ export class QaPagePostComponent implements OnInit {
     console.log(qa);
     this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
     // console.log(this.dataShareService.getShareData());
+  }
+  getQaByTag(tagId: number) {
+    this.router.navigate(['./qa-page'], {queryParams: {id: tagId}});
   }
 }

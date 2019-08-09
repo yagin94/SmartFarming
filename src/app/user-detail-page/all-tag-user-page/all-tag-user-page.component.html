@@ -1,0 +1,171 @@
+<div class="bgded overlay" style="background: #f2f2f2 !important;">
+  <!-- ################################################################################################ -->
+  <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
+    <header id="header" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1><a href="index.html">FPT developer Team</a></h1>
+      </div>
+      <nav id="mainav" class="fl_right">
+        <ul class="clear" style="margin-top: 3%;font-size: 17px">
+          <li class="active"><a href="index.html">Trang chủ</a></li>
+          <li><a class="drop" href="/article-page" routerLinkActive="active">Kiến thức</a>
+            <ul>
+              <li><a href="">Kỹ thuật trồng</a></li>
+              <li><a href="">Thu hoạch & Bảo quản</a></li>
+              <li><a href="">Phân bón</a></li>
+              <li><a href="">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="">Sâu bệnh</a></li>
+              <li><a href="">Kỹ thuật nhân giống</a></li>
+              <li><a href="">Giống cây</a></li>
+            </ul>
+          </li>
+          <li><a href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
+          <li><a href="#">Liên hệ</a></li>
+
+        </ul>
+
+      </nav>
+      <!-- ################################################################################################ -->
+    </header>
+  </div>
+</div>
+<!-- ################################################################################################# -->
+<div class="wrapper row3">
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <main class="hoc container clear all-tag" style="background-color: #f2f2f2;max-width: 75%;width: 100%;min-height: 500px;">
+
+    <!--menu left side -->
+    <!--<nav class="sidebar one_quarter first">-->
+    <!--<div class="div-menu-left">-->
+    <!--<img  src="{{appUser$.socialUser.photoUrl}}" style="border-radius: 50%;" >-->
+    <!--<h5>{{appUser$.socialUser.name}}</h5>-->
+    <!--<h5 style="font-weight: unset;">{{appUser$.socialUser.email}}</h5>-->
+    <!--<h5 style="font-weight: unset;">Tài khoản facebook(Nếu có)</h5>-->
+    <!--</div>-->
+    <!--<div>-->
+    <!--<table class="table-user">-->
+
+    <!--<tbody>-->
+    <!--<tr class="table-report-first" style="">-->
+    <!--<td>Số câu hỏi</td>-->
+    <!--<td class="number-user"> {{totalQuestionOfuser$}}</td>-->
+    <!--</tr>-->
+    <!--<tr class="table-report-first">-->
+    <!--<td>Số câu trả lời</td>-->
+    <!--<td class="number-user">{{totalAnswerOfUser$}}</td>-->
+
+    <!--</tr>-->
+    <!--<tr class="table-report-first">-->
+    <!--<td>Số tags</td>-->
+    <!--<td class="number-user">{{getTotalTagOfUser$}} </td>-->
+
+    <!--</tr>-->
+
+    <!--<tr class="table-report-first">-->
+    <!--<td>Tổng điểm</td>-->
+    <!--<td class="number-user">{{totalScore$}}</td>-->
+
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
+    <!--</div>-->
+
+    <!--<p class="buttin-logout">-->
+    <!--<a class="btn btn-info btn-lg">-->
+    <!--<span class="glyphicon glyphicon-log-out">Chỉnh sửa</span>-->
+    <!--</a>-->
+    <!--</p>-->
+
+    <!--</nav>-->
+
+    <!--Content -->
+    <div class="content three_quarter" style="margin-left: 0%;width: 100%;">
+      <!--Content -->
+      <nav id="comments" style="">
+        <div class="manage-display">
+
+          <!--tags -->
+          <div id="report-tags">
+            <div style="display: -webkit-box;padding-bottom: 1.5%;;">
+              <h3><span style="text-transform: none">Tất cả tags của</span> {{appUser$.socialUser.firstName}}</h3>
+            </div>
+
+            <div class="scrollable">
+              <table class="scrollable">
+                <tr style="text-align: center">
+                  <td>Tên tag</td>
+                  <td>Lượt xem</td>
+                  <td>Tổng điểm</td>
+                </tr>
+                <tr style="text-align: center" *ngFor="let tag of getAllTagOfUser$.tagsByPageIndex">
+                  <td>{{tag.name}}</td>
+                  <td>{{tag.viewCount}}</td>
+                  <td>{{tag.reputation}}</td>
+                </tr>
+              </table>
+              <div class="phan-trang clear" *ngIf="getAllTagOfUser$.numberOfPages == 0">
+                <div class="pagination">
+                  <a>&laquo;</a>
+                  <a *ngFor="let page of arrayPage(getAllTagOfUser$.numberOfPages) let i = index"
+                     (click)="getAllTagOfUser(appUser$.userId,i)">{{i}}</a>
+                  <a>&raquo;</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!--tags -->
+          <!--end số liệu -->
+        </div>
+
+      </nav>
+
+    </div>
+
+    <!-- -->
+    <div class="clear"></div>
+  </main>
+
+</div>
+<div class="wrapper row4 bgded overlay"
+     style=" background-image:url('https://storage.googleapis.com/sonson-1-bucket/images.jpg');" #aboutUs>
+  <footer id="footer" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <div class="one_third first">
+      <h6 class="heading">FPT DEVELOPER TEAM</h6>
+      <ul class="nospace btmspace-30 linklist contact">
+        <li><i class="fa fa-map-marker"></i>
+          <address>
+            FPT UNIVERSITY
+          </address>
+        </li>
+        <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
+        <li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
+        <li><i class="fa fa-envelope-o"></i> smartfarming@gmail.com</li>
+      </ul>
+    </div>
+    <div class="one_third">
+      <h6 class="heading tittFooter">THÀNH VIÊN</h6>
+      <ul>
+        <li class="space_line"> Lê Thu Hà</li>
+        <li class="space_line"> Nguyễn Phúc Minh Sơn</li>
+        <li class="space_line"> Nguyễn Duy Hiển</li>
+        <li class="space_line"> Trần Hồng Quỳnh</li>
+        <li class="space_line"> Ngô Xuân Tính</li>
+      </ul>
+    </div>
+    <div class="one_third">
+      <h6 class="heading">SMART FARMING</h6>
+      <figure><a href="#"><img class="borderedbox inspace-10 btmspace-15" src="images/demo/320x168.png" alt=""></a>
+        <figcaption>
+          <h6 class="nospace font-x1"><a href="#">Ngày phát hành</a></h6>
+          <time class="font-xs block btmspace-10" datetime="2019-04-06">Friday, 6<sup>th</sup> April 2019</time>
+        </figcaption>
+      </figure>
+    </div>
+    <!-- ################################################################################################ -->
+  </footer>
+</div>

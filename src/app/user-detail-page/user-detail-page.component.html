@@ -40,67 +40,65 @@
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
-  <div id="pageintro" class="hoc clear" style="background-color: #f2f2f2">
+  <main id="pageintro" class="hoc container clear" style="background-color: #f2f2f2;max-width: 75%;width: 100%;">
 
     <!--menu left side -->
-    <nav class="menu-left-qa">
+    <nav class="sidebar one_quarter first">
       <div class="div-menu-left">
-        <img src="../../assets/images/demo/backgrounds/02.png">
-        <h5>Tên tài khoản</h5>
-        <h5 style="font-weight: unset;">ngoxuantinh97@gmail.com</h5>
-        <h5 style="font-weight: unset;">Tài khoản facebook(Nếu có)</h5>
+        <img  src="{{appUser$.socialUser.photoUrl}}" style="border-radius: 50%;" >
+        <input *ngIf="!change$" value="{{appUser$.socialUser.firstName}}"   readonly>
+        <input *ngIf="!change$" value="{{appUser$.socialUser.email}}"  style="font-weight: unset;"  readonly>
+        <input *ngIf="!change$" value="{{appUser$.cvUrl}}" style="font-weight: unset;text-align:left" placeholder="Link CV" readonly >
+
+        <input #nameUser *ngIf="change$" value="{{appUser$.socialUser.firstName}}"  >
+        <input #emailUser *ngIf="change$" value="{{appUser$.socialUser.email}}"  style="font-weight: unset;"  >
+        <input #linkCV *ngIf="change$" value="{{appUser$.cvUrl}}" style="font-weight: unset;text-align:left" placeholder="Link CV"  >
+
+        <div class="buttin-logout">
+          <div class="btn btn-info btn-lg">
+            <div *ngIf="!change$" class="glyphicon glyphicon-log-out" (click)="updateUser()">Chỉnh sửa</div>
+
+            <div *ngIf="change$" (click)="saveUserInfo(nameUser.value,emailUser.value,linkCV.value);reUpdateUser()">Lưu</div>
+          </div>
+        </div>
       </div>
+
       <div>
         <table class="table-user">
+
           <tbody>
           <tr class="table-report-first" style="">
             <td>Số câu hỏi</td>
-            <td class="number-user"> 100</td>
+            <td class="number-user"> {{totalQuestionOfuser$}}</td>
           </tr>
           <tr class="table-report-first">
             <td>Số câu trả lời</td>
-            <td class="number-user">100</td>
+            <td class="number-user">{{totalAnswerOfUser$}}</td>
 
           </tr>
           <tr class="table-report-first">
             <td>Số tags</td>
-            <td class="number-user">100</td>
+            <td class="number-user">{{getTotalTagOfUser$}} </td>
 
           </tr>
-          <tr class="table-report-first">
-            <td>Số lượt report</td>
-            <td class="number-user">100</td>
 
-          </tr>
-          <tr class="table-report-first">
-            <td>Yêu cầu chỉnh sửa</td>
-            <td class="number-user">100</td>
-
-          </tr>
           <tr class="table-report-first">
             <td>Tổng điểm</td>
-            <td class="number-user">100</td>
+            <td class="number-user">{{totalScore$}}</td>
 
           </tr>
           </tbody>
         </table>
       </div>
-      <div>
-        <img src="../../assets/images/demo/time-1606153_960_720.png" style="height: 20px;margin: 2%;" >
-        <span style="font-size: 14px;">Là thành viên từ 11/11/2019</span>
-      </div>
-      <p class="buttin-logout">
-        <a class="btn btn-info btn-lg">
-          <span class="glyphicon glyphicon-log-out">Log out</span>
-        </a>
-      </p>
+
+
 
     </nav>
 
-
-    <div class="content-right">
+    <!--Content -->
+    <div class="content three_quarter" style="border-left: 5px solid white;margin-left: 0%;padding-left: 2%;">
       <!--Content -->
-      <nav id="comments" style="width: 80%;float: left !important;margin-left: 20%;">
+      <nav id="comments" style="">
         <div class="manage-display">
           <!--//thống kê-->
 
@@ -109,21 +107,7 @@
             <div id="chartContainerUser" style="height: 370px; width: 100%;">
 
             </div>
-            <div style="display: inline-flex;">
-              <h5 style="text-transform: none;"> * Chú thích</h5>
-              <svg width="50px" height="50px">
-                <line x1="50" y1="10" x2="0" y2="10" style="stroke:#8BC34A;stroke-width:2"></line>
-              </svg>
-              <p style="margin-top: 10px;">Số tags</p>
-              <svg width="50px" height="50px">
-                <rect width="50px" height="25px" style="fill:rgb(99,99,194);stroke-width:3;"/>
-              </svg>
-              <p style="margin-top: 10px;">Số câu hỏi</p>
-              <svg width="50px" height="50px">
-                <rect width="50px" height="25px" style="fill:rgb(161, 62, 55);stroke-width:3;"/>
-              </svg>
-              <p style="margin-top: 10px;">Số câu trả lời</p>
-            </div>
+
           </div>
 
 
@@ -134,12 +118,14 @@
               <h3>Tags</h3>
 
             </div>
-            <div id="span-tags">
-              <span class="tag-infor"><a href="#" class="name-tag">tag</a> <span class="infor-tag">100 Điểm</span></span>
-              <span class="tag-infor"><a href="#" class="name-tag">tag</a> <span class="infor-tag">100 Điểm</span></span>
-              <span class="tag-infor"><a href="#" class="name-tag">tag</a> <span class="infor-tag">100 Điểm</span></span>
-              <span class="tag-infor"><a href="#" class="name-tag">tag</a> <span class="infor-tag">100 Điểm</span></span>
-
+            <div id="span-tags" >
+              <span class="tag-infor" *ngFor="let object of getTopTagOfUser$.tagsByPageIndex" ><a href="" class="name-tag">{{object.name}}</a>
+                <span class="infor-tag">Điểm: {{object.reputation}} </span> <!-- -->
+                <span class="infor-tag">Lượt xem: {{object.viewCount}}</span> <!---->
+              </span>
+            </div>
+            <div>
+              <h5 style="text-transform: none;float: right;"><a href="/all-tag-user">Xem tất cả tags ở đây -></a></h5>
             </div>
           </div>
           <!--tags -->
@@ -147,55 +133,26 @@
           <!--Question -->
           <div id="report-question">
             <div style="display: -webkit-box;">
-              <h3>Câu hỏi (100)</h3>
-              <select style="width: auto;margin: 10%;" >
-                <option>Sắp xếp theo lượt thích</option>
-                <option>Sắp xếp theo thời gian</option>
+              <h3>Câu hỏi ({{totalQuestionOfuser$}})</h3>
+              <select style="width: auto;margin: 10%;" (change)="sortBy($event.target.value)" >
+                <option value="viewCount">Sắp xếp theo lượt xem</option>
+                <option value="upvoteCount ">Sắp xếp theo lượt thích </option>
+                <option value="date">Sắp xếp theo thời gian </option>
               </select>
             </div>
             <table id="table-report">
-              <tr class="table-report-first">
-                <td style="padding-top: 15px;"><span class="icon">100</span><a
-                  href="#">Title câu hỏi</a></td>
-                <td class="time-user-detail">2019-01-01</td>
+              <tr class="table-report-first" *ngFor="let qa of getTopQuestionOfUser$.qa" >
+                <td style="padding-top: 15px;"><span class="icon"> {{qa.viewCount}}</span><a
+                  href="">{{qa.title}}</a></td>
+                <td class="time-user-detail">{{qa.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
               </tr>
-              <tr>
-                <td><span class="icon">100</span><a href="#">Title câu hỏi</a></td>
-                <td class="time-user-detail"> 2019-01-01</td>
-              </tr>
-              <tr>
-                <td><span class="icon">100</span><a href="#">Title câu hỏi</a></td>
-                <td class="time-user-detail">2019-01-01</td>
-              </tr>
+
             </table>
-          </div>
-          <!--Question end -->
-          <!-- Edit bài viết -->
-          <div id="report-edit">
-            <div style="display: -webkit-box;">
-              <h3>Yêu cầu chỉnh sửa (100)</h3>
-              <select style="width: auto;margin: 10%;" >
-                <option>Sắp xếp theo lượt thích</option>
-                <option>Sắp xếp theo thời gian</option>
-              </select>
+            <div>
+              <h5 style="text-transform: none;float: right;"><a href="/all-question-user">Xem tất cả câu hỏi ở đây -></a></h5>
             </div>
-            <table id="table-report-edit">
-              <tr class="table-report-first">
-                <td style="padding-top: 15px;"><span class="icon">100</span><a
-                  href="#">Title câu hỏi</a></td>
-                <td class="time-user-detail">2019-01-01</td>
-              </tr>
-              <tr>
-                <td><span class="icon">100</span><a href="#">Title câu hỏi</a></td>
-                <td class="time-user-detail"> 2019-01-01</td>
-              </tr>
-              <tr>
-                <td><span class="icon">100</span><a href="#">Title câu hỏi</a></td>
-                <td class="time-user-detail">2019-01-01</td>
-              </tr>
-            </table>
           </div>
-          <!-- Edit bài viết -->
+
 
 
           <!--end số liệu -->
@@ -205,47 +162,48 @@
 
     </div>
 
-    <!-- chia trang -->
-  </div>
+    <!-- -->
+    <div class="clear"></div>
+  </main>
 
 </div>
 <!-- ################################################################################################ -->
 <!-- footer-->
+<!-- ################################################################################################ -->
+<!-- footer-->
 <div class="wrapper row4 bgded overlay"
-     style="background-image:url('../../assets/images/demo/backgrounds/04.png')!important; ;">
+     style=" background-image:url('https://storage.googleapis.com/sonson-1-bucket/images.jpg');" #aboutUs>
   <footer id="footer" class="hoc clear">
     <!-- ################################################################################################ -->
     <div class="one_third first">
-      <h6 class="heading">Commodo et blandit quis</h6>
+      <h6 class="heading">FPT DEVELOPER TEAM</h6>
       <ul class="nospace btmspace-30 linklist contact">
         <li><i class="fa fa-map-marker"></i>
           <address>
-            Street Name &amp; Number, Town, Postcode/Zip
+            FPT UNIVERSITY
           </address>
         </li>
-        <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
+        <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
         <li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
-        <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+        <li><i class="fa fa-envelope-o"></i> smartfarming@gmail.com</li>
       </ul>
     </div>
     <div class="one_third">
-      <h6 class="heading">Neque phasellus fermentum</h6>
-      <p class="nospace btmspace-30">Ac ante ipsum tincidunt dui eget lorem egestas ut ultricies felis suscipit.</p>
-      <form method="post" action="#">
-        <fieldset>
-          <legend>Newsletter:</legend>
-          <input class="btmspace-15" type="text" value="" placeholder="Name">
-          <input class="btmspace-15" type="text" value="" placeholder="Email">
-          <button type="submit" value="submit">Submit</button>
-        </fieldset>
-      </form>
+      <h6 class="heading tittFooter">THÀNH VIÊN</h6>
+      <ul>
+        <li class="space_line"> Lê Thu Hà</li>
+        <li class="space_line"> Nguyễn Phúc Minh Sơn</li>
+        <li class="space_line"> Nguyễn Duy Hiển</li>
+        <li class="space_line"> Trần Hồng Quỳnh</li>
+        <li class="space_line"> Ngô Xuân Tính</li>
+      </ul>
     </div>
     <div class="one_third">
-      <h6 class="heading">Sem ipsum auctor dignissim</h6>
-      <figure><a href="#"><img class="borderedbox inspace-10 btmspace-15" src="../images/demo/320x168.png" alt=""></a>
+      <h6 class="heading">SMART FARMING</h6>
+      <figure><a href="#"><img class="borderedbox inspace-10 btmspace-15" src="images/demo/320x168.png" alt=""></a>
         <figcaption>
-          <h6 class="nospace font-x1"><a href="#">Tortor congue quis arcu</a></h6>
-          <time class="font-xs block btmspace-10" datetime="2045-04-06">Friday, 6<sup>th</sup> April 2045</time>
+          <h6 class="nospace font-x1"><a href="#">Ngày phát hành</a></h6>
+          <time class="font-xs block btmspace-10" datetime="2019-04-06">Friday, 6<sup>th</sup> April 2019</time>
         </figcaption>
       </figure>
     </div>

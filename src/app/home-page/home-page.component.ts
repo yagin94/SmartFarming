@@ -5,9 +5,12 @@ import {GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from 
 import {HttpClient} from '@angular/common/http';
 import {LoginService} from '../login/login.service';
 import {HeaderComponent} from '../common/header/header.component';
+import {GetTopArticle, GetTopQuestion} from './home-page.model';
+import {HomePageService} from './home-page.service';
+import {SearchText} from './home-page.model';
 
 @Component({
-  providers: [LoginService, HeaderComponent],
+  providers: [LoginService, HeaderComponent, HomePageService],
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
@@ -15,8 +18,11 @@ import {HeaderComponent} from '../common/header/header.component';
 export class HomePageComponent implements OnInit {
 
   user: SocialUser;
+  showTopSearch$ = false;
+  getTopArticle$: GetTopArticle;
+  getTopQuestion$: GetTopQuestion;
 
-  constructor(private authService: AuthService, private http: HttpClient) {
+  constructor(private authService: AuthService, private http: HttpClient, private homePageService: HomePageService) {
   }
 
   ngOnInit() {
@@ -72,5 +78,24 @@ export class HomePageComponent implements OnInit {
 
   signOut(): void {
     this.authService.signOut();
+  }
+
+  getTop(search: string): void {
+    this.getTopArticle(search);
+    this.getTopQuestion(search);
+  }
+  getTopArticle(search: string): void {
+    this.homePageService.getTopArticle(search).subscribe(getTopArticle => {
+      this.getTopArticle$ = getTopArticle;
+      this.showTopSearch$ = true;
+    });
+  }
+
+
+  getTopQuestion(search: string): void {
+    this.homePageService.getTopQestion(search).subscribe(getTopQuestion => {
+      this.getTopQuestion$ = getTopQuestion;
+      this.showTopSearch$ = true;
+    });
   }
 }

@@ -8,3 +8,15 @@ export class User {
   enable: boolean;
   constructor() {}
 }
+
+export class UserDetail {
+  date: string;
+  numberOfQuestion: number;
+  numberOfAnswer: number;
+  numberOfComment: number;
+  totalQuestionReputation: number;
+  totalAnswerReputation: number;
+  totalCommentReputation: number;
+  totalQuestionViewCount: number;
+  constructor() {}
+}

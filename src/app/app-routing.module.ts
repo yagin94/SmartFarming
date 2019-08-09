@@ -15,6 +15,14 @@ import {KiThuatTrongComponent} from './article-page/ki-thuat-trong/ki-thuat-tron
 import {PhanBonComponent} from './article-page/phan-bon/phan-bon.component';
 import {TrangChinhComponent} from './article-page/trang-chinh/trang-chinh.component';
 import {UserDetailPageComponent} from './user-detail-page/user-detail-page.component';
+import {ThuocBaoVeThucVatComponent} from './article-page/thuoc-bao-ve-thuc-vat/thuoc-bao-ve-thuc-vat.component';
+import {ThuHoachVaBaoQuanComponent} from './article-page/thu-hoach-va-bao-quan/thu-hoach-va-bao-quan.component';
+import {ArticlePostPageComponent} from './article-page/article-post-page/article-post-page.component';
+import {SauBenhComponent} from './article-page/sau-benh/sau-benh.component';
+import {GiongCayComponent} from './article-page/giong-cay/giong-cay.component';
+import {AllTagUserPageComponent} from './user-detail-page/all-tag-user-page/all-tag-user-page.component';
+import {AllQuestionUserPageComponent} from './user-detail-page/all-question-user-page/all-question-user-page.component';
+import {KyThuatNhanGiongComponent} from './article-page/ky-thuat-nhan-giong/ky-thuat-nhan-giong.component';
 
 
 
@@ -30,7 +38,11 @@ const routes: Routes = [
       { path: 'app-ki-thuat-trong', component:  KiThuatTrongComponent },
       { path: 'app-phan-bon', component:  PhanBonComponent },
       { path: 'app-trang-chinh', component:  TrangChinhComponent },
-      { path: '', component:  TrangChinhComponent },
+      { path: 'app-thuoc-bao-ve-thuc-vat', component:  ThuocBaoVeThucVatComponent },
+      { path: 'app-sau-benh', component:  SauBenhComponent },
+      { path: 'app-giong-cay', component: GiongCayComponent },
+      { path: 'app-thu-hoach-va-bao-quan', component: ThuHoachVaBaoQuanComponent},
+      { path: 'app-ky-thuat-nhan-giong', component: KyThuatNhanGiongComponent}
     ]
   },
   {
@@ -63,8 +75,20 @@ const routes: Routes = [
   component: ArticleDetailPageComponent
   },
   {
+    path: 'article-post-page',
+    component: ArticlePostPageComponent
+  },
+  {
     path: 'qa-page',
     component: QaPageComponent,
+  },
+  {
+    path: 'all-tag-user',
+    component: AllTagUserPageComponent,
+  },
+  {
+    path: 'all-question-user',
+    component: AllQuestionUserPageComponent,
   },
   // {
   //   path: 'qa-detail-page',

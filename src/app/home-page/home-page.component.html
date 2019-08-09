@@ -46,12 +46,14 @@
       <!-- search -->
       <div class="inner-form">
         <div class="input-field">
-          <button class="btn-search" type="button">
+          <button class="btn-search" type="button" id="buttonSearch" [ngx-scroll-to]="topView" (click)="getTop(textSearch.value)">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
             </svg>
           </button>
-          <input id="search" type="text" placeholder="" value="" />
+          <input #textSearch id="search" type="text" placeholder="" value=""
+                 (keyup.enter)="getTop(textSearch.value)" [ngx-scroll-to]="topView" onkeypress="enter()" />
+
         </div>
       </div>
 
@@ -62,7 +64,7 @@
       <p class="font-x1 uppercase bold">Cùng nhau phát triển nghề nông</p>
       <footer>
         <ul class="nospace inline pushright">
-          <li><a style="" class="btn inverse button-home" [ngx-scroll-to]="topView">Danh mục đáng chú ý</a></li>
+          <!--<li><a style="" class="btn inverse button-home" [ngx-scroll-to]="topView">Danh mục đáng chú ý</a></li>-->
           <li><a class="btn inverse button-home" [ngx-scroll-to]="benefit">Lợi ích người dùng</a></li>
         </ul>
       </footer>
@@ -84,7 +86,7 @@
     </article>
   </div>
   <!-- ################################################################################################ -->
-  <div class="wrapper row3" #topView>
+  <div class="wrapper row3" #topView id="topView" *ngIf="showTopSearch$">
     <section class="hoc container clear" style="padding-bottom: 0%;">
       <!-- ################################################################################################ -->
       <div class="sectiontitle">
@@ -95,62 +97,27 @@
           <p class="customP">Top 5 Kiến thức</p>
           <div class="topFive">
             <!--##################################################3-->
-            <div class="arcticle">
+            <div class="arcticle" *ngFor="let article of getTopArticle$.articlesByPageIndex">
               <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
-              <a class="articleTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
-              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
-              <p>--------------------------------------------------------------------------</p>
+              <a class="articleTitle">{{article.title}}</a>
+              <p>Danh mục: {{article.category}}</p>
+              <p>Thời gian: {{article.utilTimestamp | date: 'yyyy-MM-dd' }}</p>
+              <p>Lượt xem: {{article.viewCount}}</p>
             </div>
-            <div class="arcticle">
-              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
-              <a class="articleTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
-              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
-              <p>--------------------------------------------------------------------------</p>
-            </div>
-            <div class="arcticle">
-              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
-              <a class="articleTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
-              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
-              <p>--------------------------------------------------------------------------</p>
-            </div>
-            <div class="arcticle">
-              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
-              <a class="articleTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
-              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
-              <p>--------------------------------------------------------------------------</p>
-            </div>
-            <div class="arcticle">
-              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
-              <a class="clickTitle">Tìm hiểu kĩ thuật trồng cây mây nếp</a>
-              <p>Mây nếp là loài cây thân leo, mọc cụm. Cây mây nếp (tên khác: Mây tắt, Mây trắng, Mây ruột già, Mây nhà) có tên khoa học: Calamus ...</p>
-              <p>--------------------------------------------------------------------------</p>
-            </div>
+
             <!--##################################################3-->
           </div>
         </div>
         <div class="one_half">
           <p class="customP"> Top 5 Hỏi đáp</p>
           <div class="topFive">
-            <div class="question">
-              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
-              <p>--------------------------------------------------------------------------</p>
+            <div class="question" *ngFor="let qa of getTopQuestion$.qa">
+              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
+              <a class="clickTitle">{{qa.title}}</a>
+              <p>Thời gian: {{qa.utilTimestamp | date: 'yyyy-MM-dd' }}</p>
+              <p>Lượt xem: {{qa.viewCount}}</p>
             </div>
-            <div class="question">
-              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
-              <p>--------------------------------------------------------------------------</p>
-            </div>
-            <div class="question">
-              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
-              <p>--------------------------------------------------------------------------</p>
-            </div>
-            <div class="question">
-              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
-              <p>--------------------------------------------------------------------------</p>
-            </div>
-            <div class="question">
-              <a class="clickTitle">Đề xuất qui trình bón phân do Viện CAQMN năm 2003 soạn thảo tiêu chuẩn ngành " Qui trình kỹ thuật trồng sầu riêng"</a>
-              <p>--------------------------------------------------------------------------</p>
-            </div>
+
           </div>
         </div>
       </div>

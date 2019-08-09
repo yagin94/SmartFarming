@@ -34,135 +34,157 @@
     </header>
   </div>
 </div>
-<div class="wrapper row3">
+<div class="wrapper row3" style="background: #f2f2f2">
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
-  <div id="pageintro" class="hoc clear" style="background-color: #f2f2f2">
+  <main class="hoc container clear" style="padding-top: 0%;background-color: #FFFFFF;max-width: 75%;width: 100%;">
 
-    <div class="content-right">
-      <!-- menu right side -->
-      <nav class="menu-right-qa">
+    <!--Content -->
+    <div class="content three_quarter first" style=" margin-left: 1.5%;" >
+      <div class="">
+        <h2 style="text-transform: none;text-align: center">Đăng câu hỏi</h2>
+        <form action="#" method="post" *ngIf="!data">
+          <div class="one_third first">
+            <label for="name">Tiêu đề câu hỏi <span>*</span></label>
+            <input type="text" name="name" id="name" value="" size="22" #inputTitle required
+                   style="border: 1px solid #d1d1d1;">
 
-        <div class="div-menu-right">
-          <div class="ask-place" onclick="">
-            <a href="/qa-page-post" class="ask-button">Đặt câu hỏi</a>
           </div>
-        </div>
-        <div class="sdb_holder">
-          <article class="top-article">
-            <ul class="title-menu-right">
+          <div class="block clear" style="">
+            <label>Nội dung <span>*</span></label>
+            <ckeditor [config]="ckeConfig" [(ngModel)]="model.editorData" [ngModelOptions]="{standalone: true}"></ckeditor>
+            <label>Chọn từ khóa</label>
+            <div>
+              <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
+            </div>
 
-            </ul>
-            <!--Top question -->
-            <p class="title-menu-right">Top Câu hỏi</p>
-            <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
-              <li>
-                <span><a ><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-                <div class="title-article"><a (click)="edit(item)" style="cursor: pointer"> {{item.title}}</a></div>
-                <div>
-                  <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
-                  <span class="top-article-view"><a>{{item.viewCount}} lượt xem</a></span>
-                </div>
-              </li>
-            </ul>
-          </article>
-        </div>
 
-        <div class="top-tag">
-          <p class="title-menu-right">Top tags</p>
-          <div class="question-tag">
-            <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;">{{tag.name}}</p>
+            <div class="button" style="">
+              <input  type="submit" name="submit" value="Đăng câu hỏi"
+                     (click)="addQa(inputTitle.value,tagInput.value)">
+            </div>
           </div>
+        </form>
+        <form action="#" method="post" *ngIf="data">
+          <div class="one_third first">
+            <label for="name">Tiêu đề câu hỏi <span>*</span></label>
+            <input type="text" name="name" id="name" value="{{qa.title}}" size="22" #inputTitle required
+                   style="border: 1px solid #d1d1d1;">
 
-        </div>
-
-        <!--Top user -->
-        <div>
-          <p class="title-menu-right">Top người dùng</p>
-          <ul class="top-user">
-            <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex">
-              <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-              <div class="title-article"><a>{{item.socialUser.firstName}}</a></div>
-              <span style="padding: 0 35px;"><a>{{item.reputation}} điểm</a></span>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      <!--Content -->
-      <nav id="comments" style="width: 80%;float: left;padding: 0 1%">
-        <div class="">
-          <h2 style="text-transform: none;text-align: center">Đăng câu hỏi</h2>
-          <form action="#" method="post">
-            <div class="one_third first">
-              <label  for="name">Tiêu đề câu hỏi <span>*</span></label>
-              <input type="text" name="name" id="name" value="" size="22" #inputTitle required style="border: 1px solid #d1d1d1;">
+          </div>
+          <div class="block clear" style="">
+            <label>Nội dung <span>*</span></label>
+            <ckeditor [config]="ckeConfig" [(ngModel)]="model.default" [ngModelOptions]="{standalone: true}"></ckeditor>
+            <label>Chọn từ khóa</label>
+            <div>
+              <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
             </div>
-            <div class="block clear" style="">
-              <label>Nội dung <span>*</span></label>
-              <ckeditor [(ngModel)]="model.editorData" [ngModelOptions]="{standalone: true}" [config]="{extraPlugins : 'uploadimage'}" ></ckeditor>
-              <label>Chọn từ khóa</label>
-              <div>
-                <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
-              </div>
 
 
-              <div class="button" style="position: relative;overflow: auto;">
-                <input type="submit" name="submit" value="Đăng câu hỏi"
-                       (click)="addQa(inputTitle.value,tagInput.value)">
-                <input type="submit" name="submit" value="Cập nhật câu hỏi"
-                       (click)="updateQuestion(inputTitle.value,tagInput.value)">
-              </div>
+            <div class="button" style="">
+              <input  type="submit" name="submit" value="Cập nhật câu hỏi"
+                      (click)="updateQuestion(inputTitle.value,tagInput.value)" style="margin-left: 2%;">
             </div>
-          </form>
-        </div>
-
-      </nav>
+          </div>
+        </form>
+      </div>
 
     </div>
 
-    <!-- chia trang -->
-  </div>
+    <!-- menu right side -->
+    <div class="sidebar one_quarter" style=" margin-left: 1.5%;">
+      <!-- ################################################################################################ -->
+      <div class="div-menu-right">
+        <div class="ask-place" onclick="">
+          <a href="/qa-page-post" class="ask-button">Đặt câu hỏi</a>
+        </div>
+      </div>
+      <div class="sdb_holder" style="margin-bottom: 0px;">
+        <article class="top-article">
+          <ul class="title-menu-right">
+
+          </ul>
+          <!--Top question -->
+          <p class="title-menu-right">
+            <img src="../../assets/images/question_icon.png" style="height: 20px;padding-right: 15px;">Top Questions
+          </p>
+          <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
+            <li>
+              <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <div class="title-article"><a (click)="edit(item)" style="cursor: pointer"> {{item.title}}</a></div>
+              <div>
+                <span class="top-article-view"><a >{{getNumber(item.answers)}} trả lời</a></span>
+                <span class="top-article-view"><a >{{item.viewCount}} lượt xem</a></span>
+              </div>
+            </li>
+          </ul>
+        </article>
+      </div>
+      <div class="top-tag">
+        <p class="title-menu-right">
+          <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top tags
+        </p>
+        <div class="question-tag">
+          <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;" (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
+        </div>
+
+      </div>
+
+      <!--Top user -->
+      <div>
+        <p class="title-menu-right" style="padding-left: 4%;">
+          <img src="../../assets/images/users.png" style="height: 20px;padding-right: 15px;">Top người dùng
+        </p>
+        <ul class="top-user">
+          <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex">
+            <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+            <div class="title-article"><a>{{item.socialUser.firstName}}</a></div>
+            <span style="padding: 0 35px;"><a>{{item.reputation}} điểm</a></span>
+          </li>
+        </ul>
+      </div>
+      <!-- ################################################################################################ -->
+    </div>
+
+    <div class="clear"></div>
+  </main>
 
 </div>
 <!-- ################################################################################################ -->
 <!-- footer-->
-<div class="wrapper row4 bgded overlay"
-     style="background-image:url('../../assets/images/demo/backgrounds/04.png')!important; ;">
+<div class="wrapper row4 bgded overlay" style="background-image:url('https://storage.googleapis.com/sonson-1-bucket/images.jpg');" #aboutUs>
   <footer id="footer" class="hoc clear">
     <!-- ################################################################################################ -->
     <div class="one_third first">
-      <h6 class="heading">Commodo et blandit quis</h6>
+      <h6 class="heading">FPT DEVELOPER TEAM</h6>
       <ul class="nospace btmspace-30 linklist contact">
         <li><i class="fa fa-map-marker"></i>
           <address>
-            Street Name &amp; Number, Town, Postcode/Zip
+            FPT UNIVERSITY
           </address>
         </li>
-        <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
+        <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
         <li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
-        <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+        <li><i class="fa fa-envelope-o"></i> smartfarming@gmail.com</li>
       </ul>
     </div>
     <div class="one_third">
-      <h6 class="heading">Neque phasellus fermentum</h6>
-      <p class="nospace btmspace-30">Ac ante ipsum tincidunt dui eget lorem egestas ut ultricies felis suscipit.</p>
-      <form method="post" action="#">
-        <fieldset>
-          <legend>Newsletter:</legend>
-          <input class="btmspace-15" type="text" value="" placeholder="Name">
-          <input class="btmspace-15" type="text" value="" placeholder="Email">
-          <button type="submit" value="submit">Submit</button>
-        </fieldset>
-      </form>
+      <h6 class="heading tittFooter">THÀNH VIÊN</h6>
+      <ul>
+        <li class="space_line">  Lê Thu Hà</li>
+        <li class="space_line">  Nguyễn Phúc Minh Sơn</li>
+        <li class="space_line">  Nguyễn Duy Hiển</li>
+        <li class="space_line">  Trần Hồng Quỳnh</li>
+        <li class="space_line">  Ngô Xuân Tính</li>
+      </ul>
     </div>
     <div class="one_third">
-      <h6 class="heading">Sem ipsum auctor dignissim</h6>
-      <figure><a><img class="borderedbox inspace-10 btmspace-15" src="../images/demo/320x168.png" alt=""></a>
+      <h6 class="heading">SMART FARMING</h6>
+      <figure><a href="#"><img class="borderedbox inspace-10 btmspace-15" src="images/demo/320x168.png" alt=""></a>
         <figcaption>
-          <h6 class="nospace font-x1"><a>Tortor congue quis arcu</a></h6>
-          <time class="font-xs block btmspace-10" datetime="2045-04-06">Friday, 6<sup>th</sup> April 2045</time>
+          <h6 class="nospace font-x1"><a href="#">Ngày phát hành</a></h6>
+          <time class="font-xs block btmspace-10" datetime="2019-04-06">Friday, 6<sup>th</sup> April 2019</time>
         </figcaption>
       </figure>
     </div>

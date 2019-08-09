@@ -1,7 +1,5 @@
-img {
-  width: 64px;
-  height: 64px;
-}
+
+
 .sap-xep {
   min-width: 100%;
 }
@@ -46,20 +44,20 @@ img {
 }
 .question-tag p:first-of-type{
   margin: 0 10px 10px 0 !important;
-  display: inline !important;
-  padding: 3% !important;
+  display: -webkit-inline-flex !important;
+  padding: 0% 3% 0% 3% !important;
 }
 
 .question-tag p {
   overflow: hidden;
   text-align: center;
   font-size: 11px;
-  padding: 3%;
+  padding: 0% 3% 0% 3%;
   border: 0.4px solid #9E9E9E;
   border-radius: 5px;
   word-break: break-all;
   margin: 0 10px 10px 0 !important;
-  display: inline !important;
+  display: -webkit-inline-flex !important;
 
 }
 
@@ -78,9 +76,10 @@ img {
 /* question-footer*/
 .question-footer {
   margin: 15px 0 0 0 !important;
-  background-color: #f5f5f5;
+  /*background-color: #f5f5f5;*/
   clear: both;
-  display: -webkit-box;
+  display: inline-flex;
+  width: -webkit-fill-available;
 
 }
 
@@ -298,7 +297,7 @@ img {
 
 .numberAns{
   text-transform: none;
-  padding: 20px 20px 0 20px;
+  padding: 20px 20px 20px 0px;
   margin: 0px;
 }
 
@@ -337,10 +336,7 @@ img {
   border-bottom: 2px solid #395665;
 }
 /*top user*/
-.top-user{
-  padding-left: 5px;
-  margin: 0px 7px;
-}
+
 .top-user li{
   padding-bottom: 10px;
 }
@@ -375,3 +371,37 @@ img {
   background-color: #ffee39;
 }
 
+/*button like*/
+
+.like:hover{
+  border: 1px solid #2d6ff7;
+  background: #F9C3B6;
+}
+.icon-like:focus{
+  color: #ff2e59;
+}
+.icon-like{
+
+}
+
+.like a{
+  text-decoration: none;
+}
+
+.share{
+  margin-left: 2%;
+}
+#menu-sap-xep{
+  float: right;
+  width: 17.5rem ;
+  margin-top: 2%;
+}
+#menu-sap-xep span{
+  padding: 5%;
+  margin-right: 1%;
+  font-size: 1rem;
+}
+
+img {
+  border-radius: 50%;
+}

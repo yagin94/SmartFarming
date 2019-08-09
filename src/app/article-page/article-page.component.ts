@@ -14,7 +14,6 @@ export class ArticlePageComponent implements OnInit {
   editArticle$: Article;
   constructor(private articleService: ArticleService) {}
   ngOnInit() {
-    this.getArticle();
   }
 
   getArticle(): void {
@@ -31,7 +30,7 @@ export class ArticlePageComponent implements OnInit {
   deleteArticle(article: Article): void {
     if (confirm ('are you sure to delete this article')) {
       this.article$ = this.article$.filter(h => h !== article);
-      this.articleService.deleteArticle(article.id).subscribe();
+      this.articleService.deleteArticle(article.articleId).subscribe();
     }
   }
   searchArticle(searchTerm: string) {
@@ -51,8 +50,8 @@ export class ArticlePageComponent implements OnInit {
   updateArticle() {
     console.log('title', this.editArticle$.title);
     if (this.editArticle$) {
-      this.articleService.updateArticle(this.editArticle$.id, this.editArticle$).subscribe(article => {
-        const ix = article ? this.article$.findIndex(h => h.id === article.id) : -1;
+      this.articleService.updateArticle(this.editArticle$.articleId, this.editArticle$).subscribe(article => {
+        const ix = article ? this.article$.findIndex(h => h.articleId === article.articleId) : -1;
         if (ix > -1) {this.article$[ix] = article; }
       });
       // this.editArticle$ = undefined;

@@ -39,6 +39,7 @@ export class QaPageComponent implements OnInit {
   checkAdd$ = 0;
   checkEditAnswer$ = 0;
   checkAddAnswer$ = 0;
+  checkSearch = false;
   editQuestion$: Qa;
   editAnswer$: Answers;
   answer$: any;
@@ -174,10 +175,11 @@ export class QaPageComponent implements OnInit {
   }
 
   searchQa(searchTerm: string, pageIndex: number) {
+    this.checkSearch = true;
     console.log('=========================', searchTerm);
     if (searchTerm) {
       searchTerm.trim();
-      this.qaService.searchQa(searchTerm, pageIndex).subscribe(getObject => {
+      this.qaService.searchQa(searchTerm, 'date', pageIndex).subscribe(getObject => {
         this.getObject$ = getObject;
       });
     }

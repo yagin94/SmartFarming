@@ -4,29 +4,37 @@ export class GetObject {
   qa: Qa;
   numberOfPages: number;
 }
+
 export class GetObjectTopTag {
   tagsByPageIndex: Tag;
   numbetOfPages: number;
 }
+
 export class GetObjectTopUser {
   appUsersByPageIndex: AppUser;
   numberOfPages: number;
 }
+
 export class GetObjectTopQa {
   qa: Qa;
   numberOfPages: number;
 }
+
 export class GetObjectQaByTag {
   qa: Qa;
   numberOfPages: number;
 }
 
-export class Report {
+export class ReportsByPageIndex {
   reportId: number;
   appUser: AppUser;
+  reason: string;
   message: string;
+  question: Qa;
   utilTimestamp: string;
-  constructor() {}
+
+  constructor() {
+  }
 }
 
 export class Qa {
@@ -41,7 +49,7 @@ export class Qa {
   upvotedUserIds: number[];
   utilTimestamp: string;
   userName: string;
-  report: Report;
+  report: ReportsByPageIndex;
 
   constructor(title: string, content: string, appUser: AppUser, tags: Tag[], fileDownloadUris: string[], userName: string) {
     this.title = title;
@@ -130,18 +138,23 @@ export class ReportObj {
     this.question = question;
   }
 }
+
 export class AddupvoteQa {
   userId: number;
+
   constructor(id: number) {
     this.userId = id;
   }
 }
+
 export class AddupvoteAn {
   userId: number;
+
   constructor(id: number) {
     this.userId = id;
   }
 }
+
 export class Q {
   questionId: number;
 

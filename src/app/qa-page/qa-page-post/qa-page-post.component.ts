@@ -32,10 +32,12 @@ export class QaPagePostComponent implements OnInit {
   topTag$: Tag[];
   editQuestion$: Qa;
   answer$: any;
+  ckeConfig: any;
   public model = {
     editorData: '',
-    default : ''
+    default: ''
   };
+
   constructor(private qaService: QaService,
               private route: ActivatedRoute,
               private router: Router,
@@ -43,11 +45,20 @@ export class QaPagePostComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ckeConfig = {
+      allowedContent: false,
+      extraPlugins: 'divarea',
+      forcePasteAsPlainText: true,
+      cloudServices_tokenUrl: 'https://41367.cke-cs.com/token/dev/ZSxEmpAFgnVMSwitJpPICegFIkakUBW0nh9VuyNvFw13DUbpQNLJAQqhyyh2',
+      cloudServices_uploadUrl: 'https://41367.cke-cs.com/easyimage/upload/',
+      removeButtons: 'Save,NewPage,Preview,Print,Templates,Replace,SelectAll,Form,Checkbox,Radio,TextField,Textarea,Find,Select,Button,ImageButton,HiddenField,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,CopyFormatting,CreateDiv,BidiLtr,BidiRtl,Language,Flash,Smiley,PageBreak,Iframe,TextColor,BGColor,ShowBlocks,Cut,Copy,Paste,Table,Source,Maximize,Styles,Anchor,SpecialChar,PasteFromWord,PasteText,Scayt,Undo,Redo,Strike,RemoveFormat,Indent,Outdent,Blockquote,Subscript,Superscript,About,Link,Unlink'
+    };
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.getQaDetail(this.data);
     this.getTopQa();
     this.getTopTag();
     this.getTopUser();
+
   }
 
   public onChange(event: CKEditor4.EventInfo) {
@@ -57,22 +68,27 @@ export class QaPagePostComponent implements OnInit {
   abcd() {
     console.log('=====', this.data);
   }
+
   getQaDetail(questionId: number): void {
     this.qaService.getQaDetail(questionId).subscribe(qa => {
       this.qa = qa;
       this.model.default = this.qa.content;
-      console.log('=====',qa.tags);
+      console.log('=====', qa.tags);
     });
   }
+
   getTopQa(): void {
     this.qaService.getTopQa().subscribe(getObjectTopQa => this.getObjectTopQa$ = getObjectTopQa);
   }
+
   getTopTag(): void {
     this.qaService.getTopTag().subscribe(getObjectTopTag => this.getObjectTopTag$ = getObjectTopTag);
   }
+
   getTopUser(): void {
     this.qaService.getTopUser().subscribe(getObjectTopUser => this.getObjectTopUser$ = getObjectTopUser);
   }
+
   addQa(title: string, array: string): void {
     this.userName$ = '';
     this.subString = [];
@@ -104,7 +120,7 @@ export class QaPagePostComponent implements OnInit {
     console.log(this.appUser$);
     const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n);
     console.log(newQa);
-    console.log(this.model.editorData) ;
+    console.log(this.model.editorData);
     this.qaService.addQa(newQa).subscribe(
       onSuccess => {
         alert('added');
@@ -147,24 +163,27 @@ export class QaPagePostComponent implements OnInit {
     console.log(this.appUser$);
     const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n);
     console.log(newQa);
-      this.qaService.updateQuestion(this.data, newQa).subscribe(
-        onSuccess => {
-          alert('cập nhật thành công!!!');
-        },
-        onFail => {
-          alert('cập nhật thất bại');
-        }
-      );
+    this.qaService.updateQuestion(this.data, newQa).subscribe(
+      onSuccess => {
+        alert('cập nhật thành công!!!');
+      },
+      onFail => {
+        alert('cập nhật thất bại');
+      }
+    );
   }
+
   isLoggedIn() {
     if (localStorage.getItem('currentUser')) {
       return true;
     }
     return false;
   }
+
   getNumber(object: Answers) {
     return Object.keys(object).length;
   }
+
   edit(qa: Qa) {
     this.editQuestion$ = qa;
     this.answer$ = qa.answers;
@@ -174,6 +193,7 @@ export class QaPagePostComponent implements OnInit {
     this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
     // console.log(this.dataShareService.getShareData());
   }
+
   getQaByTag(tagId: number) {
     this.router.navigate(['./qa-page'], {queryParams: {id: tagId}});
   }

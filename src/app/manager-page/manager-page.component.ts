@@ -1,25 +1,35 @@
 import {Component, OnInit} from '@angular/core';
 import * as CanvasJS from '../../assets/layout/scripts/canvasjs.min.js';
-import {Answers, GetObject} from '../qa-page/qa.model';
+import {Answers, AppUser, GetObject, ReportsByPageIndex} from '../qa-page/qa.model';
 import {QaService} from '../qa-page/qa.service';
 import {HeaderComponent} from '../common/header/header.component';
 import {AuthService} from 'angularx-social-login';
 import {QaPageDetailComponent} from '../qa-page/qa-page-detail/qa-page-detail.component';
 import {DataShareService} from '../share-data-service/date-share-service';
 import {Globals} from '../common/globalVariables';
-
+import {ManagerService} from './manager.service';
+import {GetObjectReport, GetObjectTag} from './manager.model';
 
 @Component({
   selector: 'app-manager-page',
   templateUrl: './manager-page.component.html',
   styleUrls: ['./manager-page.component.css'],
-  providers: [QaService, HeaderComponent, AuthService, QaPageDetailComponent, DataShareService, Globals]
+  providers: [QaService, HeaderComponent, AuthService, QaPageDetailComponent, DataShareService, Globals, ManagerService]
 })
 
 export class ManagerPageComponent implements OnInit {
   getObject$: GetObject;
+  getReport$: ReportsByPageIndex;
+  getObjectReport$: GetObjectReport;
+  getObjectTag$: GetObjectTag;
+  getUserByTag$: AppUser[];
+  reportDetail = false;
+  tagDetail = false;
+  tagUserDetail = false;
   pageIndex$ = 0;
   sortBy$ = 'viewCount';
+  sortTagBy$ = 'viewCount';
+  allView$: number;
   /**=====================*/
   isFlatShowView = false;
   isFlatShowUser = false;
@@ -28,12 +38,25 @@ export class ManagerPageComponent implements OnInit {
   isFlatShowtags = false;
   isFlatShowQuestion = false;
 
+
   init() {
+    this.getObjectReport$ = new GetObjectReport();
+    this.getReport$ = new ReportsByPageIndex();
     this.getObject$ = new GetObject();
+    this.getObjectTag$ = new GetObjectTag();
+    this.allView$ = 0;
+    this.getAllView();
+    this.getAllTag(this.sortTagBy$, this.pageIndex$);
     this.getQa(this.sortBy$, this.pageIndex$);
+    this.getReport(this.pageIndex$);
   }
 
-  constructor(private qaService: QaService) {
+  constructor(private qaService: QaService,
+              private managerService: ManagerService) {
+  }
+
+  getAllView() {
+    this.managerService.getAllView().subscribe(allView => this.allView$ = allView);
   }
 
   /**
@@ -61,12 +84,55 @@ export class ManagerPageComponent implements OnInit {
       console.log(this.getObject$.qa);
     });
   }
+
   sortArticleBy(value: string) {
     this.sortBy$ = value;
     console.log(value);
     this.getQa(this.sortBy$, this.pageIndex$);
   }
+
   /**=======================tag manager=========================================*/
+  getAllTag(sortBy: string, pageIndex: number): void {
+    this.managerService.getAllTag(sortBy, pageIndex).subscribe(getObject => {
+
+      this.getObjectTag$ = getObject;
+      console.log(this.getObject$);
+    });
+  }
+
+  getSearchTag(pageIndex: number, textSearch: string) {
+    if (textSearch) {
+      this.tagDetail = true;
+      this.managerService.getSearchTag('upvoteCount', pageIndex, textSearch).subscribe(object =>
+        this.getObjectTag$ = object);
+    }
+  }
+
+  getUserByTag(tagId: number) {
+    this.tagUserDetail = true;
+    this.managerService.getUserByTag(tagId).subscribe(object =>
+      this.getUserByTag$ = object);
+  }
+
+  sortTagBy(value: string) {
+    this.sortTagBy$ = value;
+    console.log(value);
+    this.getAllTag(this.sortBy$, this.pageIndex$);
+  }
+
+  /**=======================getReport============================================*/
+  getReport(pageIndex: number) {
+    this.managerService.getReport(pageIndex).subscribe(getObject => {
+
+      this.getObjectReport$ = getObject;
+    });
+  }
+
+  getReportDetail(report: ReportsByPageIndex) {
+    this.reportDetail = true;
+    this.getReport$ = report;
+  }
+
   /**======================other common=========================================*/
   getNumber(object: Answers) {
     return Object.keys(object).length;

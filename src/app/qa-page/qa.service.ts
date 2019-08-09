@@ -63,10 +63,10 @@ export class QaService {
   }
 
   /** GET question whose name contains search term */
-  searchQa(textSearch: string, pageIndex: number): Observable<GetObject> {
+  searchQa(textSearch: string, type: string, pageIndex: number): Observable<GetObject> {
     const params = {textSearch};
 
-    return this.http.post<GetObject>(`${this.QaUrl}/${pageIndex}`, params);
+    return this.http.post<GetObject>(`${this.QaUrl}/${type}/${pageIndex}`, params);
   }
   reportQa(id: number, reportObj: ReportObj): Observable<{}> {
     const url = `http://localhost:8080/question/reportQuestion/${id}`;

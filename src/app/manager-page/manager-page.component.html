@@ -80,35 +80,9 @@
             <div class="col-md-10">
               <!--Thống kê tương tác -->
               <div *ngIf="isFlatShowView">
-                <h4 style="text-transform: none;">Thống kê tương tác theo
-                  <select style="width: fit-content;margin: 0;">
-                    <option>Tuần</option>
-                    <option>Tháng</option>
-                  </select>
+                <h4 style="text-transform: none;">Thống kê tương tác
                 </h4>
-
-                <div id="chartContainer"></div>
-                <div style="display: inline-flex;margin-top: 26rem;">
-                  <h5 style="text-transform: none;"> * Chú thích</h5>
-                  <div style="display: flex;">
-                    <svg width="50px" height="50px">
-                      <line x1="50" y1="10" x2="0" y2="10" style="stroke:#8BC34A;stroke-width:2"></line>
-                    </svg>
-                    <p style="margin-top: 10px;">Views</p>
-                  </div>
-                  <div style="display: flex;">
-                    <svg width="50px" height="50px">
-                      <line x1="50" y1="10" x2="0" y2="10" style="stroke:#8BC34A;stroke-width:2"></line>
-                    </svg>
-                    <p style="margin-top: 10px;">Like</p>
-                  </div>
-                  <div style="display: flex;">
-                    <svg width="50px" height="50px">
-                      <rect width="50px" height="25px" style="fill:rgb(161, 62, 55);stroke-width:3;"/>
-                    </svg>
-                    <p style="margin-top: 10px;">Share</p>
-                  </div>
-                </div>
+                <h1>Đã có tổng cộng {{allView$}} lượt xem</h1>
               </div>
               <!--Thống kê tương tác -->
 
@@ -120,115 +94,37 @@
                   <form style="margin: 0px">
                     <div style="min-width: 100%;">
                       <input type="text" data-role="tagsinput" placeholder="Nhập tag"
-                             style="max-width: 100%;border: 1px solid #0E76A8;padding: 1rem;" #tagInput>
+                             style="max-width: 100%;border: 1px solid #0E76A8;padding: 1rem;" #tagInput (keyup.enter)="getSearchTag(0, tagInput.value)">
                     </div>
                   </form>
                 </div>
                 <div id=" table-wrapper"><!-- -->
-                  <table style="text-align: center;">
+                  <table class="scrollable" *ngIf="tagDetail">
+                    <tr style="text-align: center">
+                      <td >Tag Id</td>
+                      <td>Tên tag</td>
+                      <td>Số view</td>
+                      <td>Số điểm</td>
+                    </tr>
+                    <tr style="text-align: center" *ngFor="let object of getObjectTag$.tagsByPageIndex" (click)="getUserByTag(object.tagId)">
+                      <td>{{object.tagId}}</td>
+                      <td>{{object.name}}</td>
+                      <td>{{object.viewCount}}</td>
+                      <td>{{object.reputation}}</td>
+                    </tr>
+                  </table>
+                  <table style="text-align: center;" *ngIf="tagUserDetail">
                     <tbody>
                     <tr class="" style="">
                       <td>Tên tài khoản</td>
                       <td>Email/ Facebook</td>
-                      <td>Số câu hỏi</td>
-                      <td>Số câu hỏi</td>
-                      <td>Ngày tham gia</td>
-                      <td>Trạng thái</td>
                       <td>Tông điểm</td>
                     </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
+                    <tr class="" *ngFor="let user of getUserByTag$">
+                      <td class="">{{user.userId}}</td>
+                      <td class=" ">a</td>
+                      <td class=" ">a</td>
                     </tr>
-
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-                    <tr class="">
-                      <td class="">Crit Cardio</td>
-                      <td class=" ">tinhnx@gmail.com</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                      <td class=" ">100</td>
-                    </tr>
-
-
                     </tbody>
                   </table>
                 </div>
@@ -239,50 +135,49 @@
               <!--Thống kê báo cáo -->
               <div *ngIf="isFlatShowReport" id="report">
                 <h4 style="text-transform: none;">Báo cáo từ người dùng</h4>
-                <span>Thể loại : <select>
-                  <option>Tất cả</option>
-                  <option>Bài viết</option>
-                  <option>Câu hỏi</option>
-                  <option>Câu trả lời</option>
-                </select>
-                </span>
+                <!--<span>Thể loại : <select>-->
+                  <!--<option>Tất cả</option>-->
+                  <!--<option>Bài viết</option>-->
+                  <!--<option>Câu hỏi</option>-->
+                  <!--<option>Câu trả lời</option>-->
+                <!--</select>-->
+                <!--</span>-->
                 <ul id="showReport">
-                  <form>
+                  <table class="scrollable">
+                    <tr style="text-align: center">
+                      <td>Số thứ tự</td>
+                      <td>Tên tài khoản</td>
+                    </tr>
+                    <tr style="text-align: center" *ngFor="let report of getObjectReport$.reportsByPageIndex" (click)="getReportDetail(report)">
+                      <td>{{report.reportId}}</td>
+                      <td>{{report.appUser.socialUser.name}}</td>
+                    </tr>
+                  </table>
+                  <div class="phan-trang clear">
+                    <div class="pagination">
+                      <a>&laquo;</a>
+                      <a *ngFor="let page of arrayPage(getObjectReport$.numberOfPages) let i = index" (click)="getReport(i)">{{i}}</a>
+                      <a>&raquo;</a>
+                    </div>
+                  </div>
+                  <form *ngIf="reportDetail">
                     <li>
                       <table class="table-report">
                         <tr class="table-report-first">
                           <td class="label-report">Người báo cáo :</td>
-                          <td class="content-report"><a>Người báo cáo</a></td>
+                          <td class="content-report"><a>{{getReport$.appUser.socialUser.name}}</a></td>
                           <td class="label-report">Ngày gửi</td>
-                          <td class="content-report">Ngày tháng</td>
+                          <td class="content-report">{{getReport$.utilTimestamp| date: 'yyyy-MM-dd'}}</td>
                         </tr>
                         <tr>
                           <td class="label-report">Người bị báo cáo :</td>
-                          <td class="content-report"><a>Người bị báo cáo</a></td>
+                          <td class="content-report"><a>{{getReport$.question.appUser.socialUser.name}}</a></td>
                           <td class="label-report">Thể loại</td>
-                          <td class="content-report">Bài viết/Câu hỏi/Câu trả lời</td>
-                        </tr>
-                        <tr>
-                          <td class="label-report">Tiêu đề :</td>
-                          <td class="content-report" colspan="3"><a>Tiêu đề ở đây</a></td>
-                        </tr>
-                        <tr>
-                          <td class="label-report">Nội dung :</td>
-                          <td class="content-report" colspan="3"><a>Nội dung ở đây</a></td>
+                          <td class="content-report">Câu hỏi</td>
                         </tr>
                         <tr>
                           <td class="label-report">Lí do :</td>
-                          <td class="content-report" colspan="3"><a>Lí do ở đây </a></td>
-                        </tr>
-                        <tr>
-                          <td class="label-report">Trạng thái :</td>
-                          <td class="content-report" colspan="3">
-                            <select style="margin: 0;width: fit-content">
-                              <option>Chờ duyệt</option>
-                              <option>Đồng ý</option>
-                              <option>Hủy bỏ</option>
-                            </select>
-                          </td>
+                          <td class="content-report" colspan="3"><a>{{getReport$.message}}</a></td>
                         </tr>
                       </table>
                     </li>
@@ -374,84 +269,33 @@
 
               <!--Show tags -->
               <div *ngIf="isFlatShowtags" id="tags">
-                <h5 style="text-transform: none;">Top 10 tags theo
-                  <select style="width: fit-content;margin: 0;">
-                    <option>Tổng điểm</option>
-                    <option>Ngày đăng</option>
+                <h5 style="text-transform: none;">Sắp xếp theo
+                  <select style="width: fit-content;margin: 0;" (change)="sortTagBy($event.target.value)">
+                    <option value="viewCount">Số view</option>
+                    <option value="date">Ngày đăng</option>
                   </select>
                 </h5>
                 <table class="scrollable">
                   <tr style="text-align: center">
-                    <td >Tên tag</td>
-                    <td>Số like</td>
-                    <td>Số bài viết</td>
-                    <td>Ngày đăng</td>
+                    <td >Tag Id</td>
+                    <td>Tên tag</td>
+                    <td>Số view</td>
+                    <td>Số điểm</td>
                   </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center">
-                    <td>Tiêu đề</td>
-                    <td>Số like</td>
-                    <td>Số comment</td>
-                    <td>Ngày đăng</td>
+                  <tr style="text-align: center" *ngFor="let object of getObjectTag$.tagsByPageIndex">
+                    <td>{{object.tagId}}</td>
+                    <td>{{object.name}}</td>
+                    <td>{{object.viewCount}}</td>
+                    <td>{{object.reputation}}</td>
                   </tr>
                 </table>
-                <div>
-                  <h6 style="text-transform: none;"><a href="">Xem tất cả tags tại đây</a></h6>
+                <div class="phan-trang clear">
+                  <div class="pagination">
+                    <a>&laquo;</a>
+                    <a *ngFor="let page of arrayPage(getObjectTag$.numberOfPages) let i = index" (click)="getAllTag(sortBy$,i)">{{i}}</a>
+                    <a>&raquo;</a>
+                  </div>
                 </div>
-
               </div>
 
               <!--Show câu hỏi -->
@@ -530,7 +374,7 @@
     </div>
     <div class="one_third">
       <h6 class="heading">SMART FARMING</h6>
-      <figure><a><img class="borderedbox inspace-10 btmspace-15" src="images/demo/320x168.png" alt=""></a>
+      <figure><a><img class="borderedbox inspace-10 btmspace-15" src="../../assets/images/demo/320x168.png" alt=""></a>
         <figcaption>
           <h6 class="nospace font-x1"><a>Ngày phát hành</a></h6>
           <time class="font-xs block btmspace-10" datetime="2019-04-06">Friday, 6<sup>th</sup> April 2019</time>

@@ -142,8 +142,6 @@ export class QaPageDetailComponent implements OnInit {
   getQaDetail(questionId: number): void {
     this.qaService.getQaDetail(questionId).subscribe(qa => {
       this.qa$ = qa;
-      console.log('===================$', this.qa$);
-      console.log('******************', JSON.parse(localStorage.getItem('currentAppUser')).userId);
       for (let value of this.qa$.upvotedUserIds) {
         if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
           this.checkLikeButton$ = true;
@@ -311,11 +309,18 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   checkUpvoteAnswer(answer: Answers) {
-    for (let value of answer.upvotedUserIds) {
-      if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
-        return true;
+    if (!JSON.parse(localStorage.getItem('currentAppUser'))) {
+      return false;
+    } else {
+      for (let value of answer.upvotedUserIds) {
+        if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
+          return true;
+        }
       }
     }
     return false;
+  }
+  pop(answer) {
+    console.log('=========================================', answer);
   }
 }

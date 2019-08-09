@@ -1,19 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import {TrangChinhService} from '../trang-chinh/trang-chinh.service';
+import {CloneService} from './Clone.service';
+import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
+import {DungService} from '../phan-bon/Dung.service';
+
 
 @Component({
-  providers: [TrangChinhService],
+  providers: [CloneService],
   selector: 'app-ky-thuat-nhan-giong',
   templateUrl: './ky-thuat-nhan-giong.component.html',
   styleUrls: ['./ky-thuat-nhan-giong.component.css']
 })
 export class KyThuatNhanGiongComponent implements OnInit {
 
-  constructor(private trangChinhService: TrangChinhService) { }
+  getCloneArticle$ = new GetAllArticle();
+  pageIndex$ = 0;
+  constructor(private cloneService: CloneService) { }
 
   ngOnInit() {
+    // this.getDungArticle(this.pageIndex$);
   }
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
   }
+  // getDungArticle(pageIndex$: number) {
+  //   this.dungService.getDungArticle(this.pageIndex$).subscribe(object => {
+  //     this.getDungArticle$ = object;
+  //     console.log(this.getDungArticle$);
+  //   });
+  // }
 }

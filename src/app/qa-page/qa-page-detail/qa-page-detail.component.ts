@@ -100,6 +100,7 @@ export class QaPageDetailComponent implements OnInit {
 
   checkAuthen() {
     if (JSON.parse(localStorage.getItem('currentAppUser')) == null) {
+      console.log('ssssssssssssssssssssssssss');
       return false;
     } else if (JSON.parse(localStorage.getItem('currentAppUser')) != null) {
       this.compare$ = JSON.parse(localStorage.getItem('currentAppUser')).userId;
@@ -173,16 +174,23 @@ export class QaPageDetailComponent implements OnInit {
       );
     }
   }
+
   getQaByTag(tagId: number) {
     this.router.navigate(['./qa-page'], {queryParams: {id: tagId}});
   }
+
   reportQa(qa: Qa) {
     const u = new AppUser();
-    u.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
+    if (!JSON.parse(localStorage.getItem('currentAppUser'))) {
+      u.anonymous = true;
+    } else {
+      u.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
+    }
     const q = new Q(qa.questionId);
     const a: ReportObj = new ReportObj(u, 'Nội dung không phù hợp', q);
     this.qaService.reportQa(qa.questionId, a).subscribe();
   }
+
   edit(qa: Qa) {
     this.editQuestion$ = qa;
     this.answer$ = qa.answers;
@@ -197,6 +205,7 @@ export class QaPageDetailComponent implements OnInit {
     this.checkEditAnswer = true;
     this.editAnswer$ = answer;
   }
+
   updateAnwer(content: string) {
     const u: AppUser = new AppUser();
     u.userId = this.editAnswer$.appUser.userId;
@@ -209,6 +218,7 @@ export class QaPageDetailComponent implements OnInit {
     );
     // this.getQaDetail(this.data);
   }
+
   navigate(qa: Qa) {
     this.editQuestion$ = qa;
     this.answer$ = qa.answers;
@@ -260,7 +270,7 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   isLoggedIn() {
-    if (localStorage.getItem('currentUser')) {
+    if (localStorage.getItem('currentAppUser')) {
       return true;
     }
     return false;

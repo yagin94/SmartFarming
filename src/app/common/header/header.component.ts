@@ -17,14 +17,23 @@ export class HeaderComponent implements OnInit {
   user: SocialUser;
   checkAdmin = '';
 
-  constructor(private authService: AuthService, private http: HttpClient, private globals: Globals ) {
+  constructor(private authService: AuthService, private http: HttpClient, private globals: Globals) {
   }
 
   ngOnInit() {
-    this.checkAdmin = JSON.parse(localStorage.getItem('currentAppUser')).role;
+     this.checkRole();
     this.authService.authState.subscribe((user) => {
       this.user = user;
     });
+  }
+
+  checkRole() {
+    if (!JSON.parse(localStorage.getItem('currentAppUser'))) {
+      return false;
+    } else {
+      this.checkAdmin = JSON.parse(localStorage.getItem('currentAppUser')).role;
+
+    }
   }
 
   getResponse(token: string): void {
@@ -42,11 +51,11 @@ export class HeaderComponent implements OnInit {
         idToken: this.user.idToken,
         authorizationCode: this.user.authorizationCode
       }).subscribe(app => {
-      localStorage.setItem('currentAppUser', JSON.stringify(app)) ;
-      this.checkAdmin = app.role;
-      console.log('HienND', localStorage.getItem('currentAppUser'));
-    }
-  );
+        localStorage.setItem('currentAppUser', JSON.stringify(app));
+        this.checkAdmin = app.role;
+        console.log('HienND', localStorage.getItem('currentAppUser'));
+      }
+    );
   }
 
   signInWithGoogle(): void {
@@ -110,6 +119,7 @@ export class HeaderComponent implements OnInit {
     location.replace(window.location.href);
 
   }
+
   isLoggedIn() {
     if (localStorage.getItem('currentUser')) {
       return true;

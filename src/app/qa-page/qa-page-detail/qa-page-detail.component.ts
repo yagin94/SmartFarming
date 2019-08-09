@@ -249,7 +249,6 @@ export class QaPageDetailComponent implements OnInit {
       // this.answer$.push(answer)
       this.getQaDetail(this.data);
       this.ansContent = '';
-
     });
     // console.log(x);
   }
@@ -280,17 +279,11 @@ export class QaPageDetailComponent implements OnInit {
       return;
     } else {
       const u = new AddupvoteQa(JSON.parse(localStorage.getItem('currentAppUser')).userId);
-      this.qaService.upvoteQuestion(questionId, u).subscribe(
-        onSuccess => {
-          alert('upvote câu hỏi thành công!!!');
-          this.checkLikeButton$ = !this.checkLikeButton$;
-          window.location.replace('http://localhost:4200/qa-page');
-        },
-        onFail => {
-          alert('Bạn không thể upvote câu hỏi này !!!');
+      this.qaService.upvoteQuestion(questionId, u).subscribe(question => {
         }
       );
-
+      this.checkLikeButton$ = !this.checkLikeButton$;
+      this.getQaDetail(this.data);
     }
   }
 
@@ -315,11 +308,13 @@ export class QaPageDetailComponent implements OnInit {
       for (let value of answer.upvotedUserIds) {
         if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
           return true;
+          this.getQaDetail(this.data);
         }
       }
     }
     return false;
   }
+
   pop(answer) {
     console.log('=========================================', answer);
   }

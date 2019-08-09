@@ -125,6 +125,7 @@ export class QaPagePostComponent implements OnInit {
       onSuccess => {
         alert('added');
         this.qa$.push(newQa);
+        location.replace(`/qa-page`);
       },
       onFail => {
         alert('can not add question');
@@ -165,6 +166,7 @@ export class QaPagePostComponent implements OnInit {
     console.log(newQa);
     this.qaService.updateQuestion(this.data, newQa).subscribe(
       onSuccess => {
+        window.location.replace(`/qa-page-detail?id=${this.data}`);
         alert('cập nhật thành công!!!');
       },
       onFail => {
@@ -174,7 +176,7 @@ export class QaPagePostComponent implements OnInit {
   }
 
   isLoggedIn() {
-    if (localStorage.getItem('currentUser')) {
+    if (localStorage.getItem('currentAppUser')) {
       return true;
     }
     return false;

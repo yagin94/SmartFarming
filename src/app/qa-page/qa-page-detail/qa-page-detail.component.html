@@ -71,7 +71,7 @@
             </div>
             <div class="question-tag">
 
-              <p *ngFor="let tag of qa$.tags" style="padding: 0% 1% !important;">{{tag.name}}</p>
+              <p *ngFor="let tag of qa$.tags" style="padding: 0% 1% !important;" (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
 
             </div>
 
@@ -121,7 +121,9 @@
                          src="{{answer.appUser.socialUser.photoUrl}}" alt="">
                   </figure>
                   <address style="text-align: left;font-size: 12px;color: dodgerblue;margin-left: 10%">
-                    <a href="#">Anonymous</a> <!--Name of user -->
+                    <a *ngIf="answer.appUser!=null&&answer.appUser.anonymous==false">{{answer.appUser.socialUser.name}}</a> <!--Name of user -->
+                    <a *ngIf="answer.appUser==null">Anonymous</a>
+                    <a *ngIf="answer.appUser!=null&&answer.appUser.anonymous==true">Anonymous</a>
                     <p style="max-width: 100%;">
                       <time style="font-size: 13px; "><span style="color: #7c7f85 !important;">Ngày đăng:</span>
                         {{answer.utilTimestamp | date: 'yyyy-MM-dd'}}
@@ -164,10 +166,10 @@
             <form *ngIf="!checkEditAnswer">
               <div class="centent-comment">
                 <textarea id="contentOfAnswer" style="width: 100%;" placeholder="Nhập ý kiến của bạn..."
-                          #AnsContent></textarea>
+                          [(ngModel)]="ansContent" [ngModelOptions]="{standalone: true}"></textarea>
               </div>
               <div class="user-infor">
-                <button (click)="addAnswers(AnsContent.value)" type="button" class="addAnswer">
+                <button (click)="addAnswers(ansContent)" type="button" class="addAnswer">
                   Đăng
                 </button>
               </div>
@@ -175,10 +177,10 @@
             <form *ngIf="checkEditAnswer">
               <div class="centent-comment">
                 <textarea id="contentOfAnswer" style="width: 100%;"
-                          #AnsContent>{{editAnswer$.content}}</textarea>
+                          [(ngModel)]="ansContent" [ngModelOptions]="{standalone: true}">{{editAnswer$.content}}</textarea>
               </div>
               <div class="user-infor">
-                <button (click)="updateAnwer(AnsContent.value)" type="button" class="addAnswer">
+                <button (click)="updateAnwer(ansContent)" type="button" class="addAnswer">
                   Cập nhật
                 </button>
               </div>

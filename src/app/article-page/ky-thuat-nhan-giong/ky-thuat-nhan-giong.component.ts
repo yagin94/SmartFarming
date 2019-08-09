@@ -17,15 +17,15 @@ export class KyThuatNhanGiongComponent implements OnInit {
   constructor(private cloneService: CloneService) { }
 
   ngOnInit() {
-    // this.getDungArticle(this.pageIndex$);
+     this.getDungArticle(this.pageIndex$);
   }
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
   }
-  // getDungArticle(pageIndex$: number) {
-  //   this.dungService.getDungArticle(this.pageIndex$).subscribe(object => {
-  //     this.getDungArticle$ = object;
-  //     console.log(this.getDungArticle$);
-  //   });
-  // }
+  getDungArticle(pageIndex$: number) {
+    this.cloneService.getCloneArticle(this.pageIndex$).subscribe(object => {
+      this.getCloneArticle$ = object;
+      console.log(this.getCloneArticle$);
+    });
+  }
 }

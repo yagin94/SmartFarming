@@ -338,6 +338,7 @@ input{
   border: none;
   padding: 2%;
   max-width: 100%;
+  width: 100%;
 }
 .color{
   background: #5fba7d;

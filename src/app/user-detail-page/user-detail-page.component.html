@@ -45,20 +45,28 @@
     <!--menu left side -->
     <nav class="sidebar one_quarter first">
       <div class="div-menu-left">
-        <img  src="{{appUser$.socialUser.photoUrl}}" style="border-radius: 50%;" >
-        <input *ngIf="!change$" value="{{appUser$.socialUser.firstName}}"   readonly>
-        <input *ngIf="!change$" value="{{appUser$.socialUser.email}}"  style="font-weight: unset;"  readonly>
-        <input *ngIf="!change$" value="{{appUser$.cvUrl}}" style="font-weight: unset;text-align:left" placeholder="Link CV" readonly >
+        <div *ngIf="!isFlatEdit">
+          <img  src="{{srcImg}}" style="border-radius: 50%;" >
+          <input [(ngModel)]="nameUserInput" [ngModelOptions]="{standalone: true}" readonly/>
+          <input style="font-weight: unset;" [(ngModel)]="emailUser" [ngModelOptions]="{standalone: true}" readonly/>
+          <span style="float: left;margin-left: 2.5%;">Link CV: </span>
+          <a *ngIf="check" style="font-weight: unset;text-align:left" [(ngModel)]="linkCV"
+             [ngModelOptions]="{standalone: true}" href="{{linkCV}}">{{linkCV}}</a>
+          <input *ngIf="!check" style="font-weight: unset;text-align:left" [(ngModel)]="linkCV"
+                 [ngModelOptions]="{standalone: true}" />
+        </div>
+        <div *ngIf="isFlatEdit">
+          <img  src="{{srcImg}}" style="border-radius: 50%;" >
+          <input [(ngModel)]="nameUserInput" [ngModelOptions]="{standalone: true}"/>
+          <input style="font-weight: unset;" [(ngModel)]="emailUser" [ngModelOptions]="{standalone: true}"/>
+          <a><input style="font-weight: unset;text-align:left" placeholder="Tải lên CV(.jpg .pdf)" [(ngModel)]="linkCV"
+                 [ngModelOptions]="{standalone: true}" type="file" id="picked" #picked (change)="onPicked($event)"/></a>
 
-        <input #nameUser *ngIf="change$" value="{{appUser$.socialUser.firstName}}"  >
-        <input #emailUser *ngIf="change$" value="{{appUser$.socialUser.email}}"  style="font-weight: unset;"  >
-        <input #linkCV *ngIf="change$" value="{{appUser$.cvUrl}}" style="font-weight: unset;text-align:left" placeholder="Link CV"  >
-
+        </div>
         <div class="buttin-logout">
           <div class="btn btn-info btn-lg">
-            <div *ngIf="!change$" class="glyphicon glyphicon-log-out" (click)="updateUser()">Chỉnh sửa</div>
-
-            <div *ngIf="change$" (click)="saveUserInfo(nameUser.value,emailUser.value,linkCV.value);reUpdateUser()">Lưu</div>
+            <div *ngIf="!isFlatEdit" class="glyphicon glyphicon-log-out" (click)="updateUser()">Chỉnh sửa</div>
+            <div  *ngIf="isFlatEdit" (click)="saveUserInfo();">Lưu</div>
           </div>
         </div>
       </div>

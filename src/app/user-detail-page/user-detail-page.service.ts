@@ -6,11 +6,15 @@ import {
   GetTopQuestionOfUser,
   GetAllQuestionOfUser,
   GetUserDetailInfor,
-  GetTotalTagsOfUser
+  GetTotalTagsOfUser, UpLoadFile
 } from './user-detail-page.model';
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {AppUser, Qa} from '../qa-page/qa.model';
+import {
+  HttpClient, HttpEvent, HttpEventType, HttpProgressEvent,
+  HttpRequest, HttpResponse, HttpErrorResponse
+} from '@angular/common/http';
+import {catchError, last, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class UserDetailPageService {
@@ -45,18 +49,22 @@ export class UserDetailPageService {
   }
 
   // get information of user (total information)
-  getUserDetailInfor(userID: number): Observable<GetUserDetailInfor> {
-    return this.http.get<GetUserDetailInfor>(`http://localhost:8080/admin/userChartInfo/${userID}`);
+  getUserDetailInfor(userID: number): Observable<GetUserDetailInfor[]> {
+    return this.http.get<GetUserDetailInfor[]>(`http://localhost:8080/admin/userChartInfo/${userID}`);
   }
 
   getTotalTagOfUser(userID: number): Observable<GetTotalTagsOfUser> {
     return this.http.get<GetTotalTagsOfUser>(`http://localhost:8080/userDetail/getTotalTagsOfUser/${userID}`);
   }
+
   getViewUser(userID: number): Observable<AppUser> {
     return this.http.get<AppUser>(`http://localhost:8080/userDetail/viewUser/${userID}`);
   }
 
   updateUser(userId: number, appuser: AppUser): Observable<AppUser> {
-    return this.http.put<AppUser>(`http://localhost:8080/userDetail/editProfile/${userId}`, appuser.socialUser);
+    return this.http.post<AppUser>(`http://localhost:8080/userDetail/editProfile/${userId}`, appuser);
   }
+
+
+
 }

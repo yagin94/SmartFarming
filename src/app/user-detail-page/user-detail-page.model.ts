@@ -80,3 +80,10 @@ export class ChartData {
   y: number;
 }
 
+export class UpLoadFile {
+  id: number;
+  uploadedFileUrlShownOnUI: string;
+  uploadedFileName: string;
+  bucketName: string;
+}
+

@@ -8,6 +8,9 @@ import {HeaderComponent} from '../common/header/header.component';
 import {GetTopArticle, GetTopQuestion} from './home-page.model';
 import {HomePageService} from './home-page.service';
 import {SearchText} from './home-page.model';
+import {Qa} from '../qa-page/qa.model';
+import {Router} from '@angular/router';
+import {Article} from '../article-page/article.model';
 
 @Component({
   providers: [LoginService, HeaderComponent, HomePageService],
@@ -21,8 +24,10 @@ export class HomePageComponent implements OnInit {
   showTopSearch$ = false;
   getTopArticle$: GetTopArticle;
   getTopQuestion$: GetTopQuestion;
+  searchText: string;
 
-  constructor(private authService: AuthService, private http: HttpClient, private homePageService: HomePageService) {
+  constructor(private authService: AuthService, private http: HttpClient, private homePageService: HomePageService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -81,9 +86,11 @@ export class HomePageComponent implements OnInit {
   }
 
   getTop(search: string): void {
+    this.searchText = search;
     this.getTopArticle(search);
     this.getTopQuestion(search);
   }
+
   getTopArticle(search: string): void {
     this.homePageService.getTopArticle(search).subscribe(getTopArticle => {
       this.getTopArticle$ = getTopArticle;
@@ -97,5 +104,13 @@ export class HomePageComponent implements OnInit {
       this.getTopQuestion$ = getTopQuestion;
       this.showTopSearch$ = true;
     });
+  }
+
+  goToQuestionDetail(qa: Qa) {
+    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
+  }
+
+  goToArticleDetail(qa: Article) {
+    this.router.navigate(['./article-detail-page'], {queryParams: {id: qa.articleId}});
   }
 }

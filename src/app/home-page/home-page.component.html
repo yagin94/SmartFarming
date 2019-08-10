@@ -52,14 +52,14 @@
             </svg>
           </button>
           <input #textSearch id="search" type="text" placeholder="" value=""
-                 (keyup.enter)="getTop(textSearch.value)" [ngx-scroll-to]="topView" onkeypress="enter()" />
+                 (keyup.enter)="getTop(textSearch.value)"  onkeypress="scrollDiv(event)"  />
 
         </div>
       </div>
 
 
       <!-- ################################################################################################ -->
-      <h3 class="heading">NÔNG TRẠI THÔNG THÁI</h3>
+      <h3 class="heading" style="text-transform: none;">Nông trại thông thái</h3>
       <p>Nơi chia sẻ những kinh nghiệm quý báu về cây nông nghiệp</p>
       <p class="font-x1 uppercase bold">Cùng nhau phát triển nghề nông</p>
       <footer>
@@ -73,20 +73,21 @@
     </article>
   </div>
   <!-- ################################################################################################ -->
-  <div class="wrapper row3" #topView id="topView" *ngIf="showTopSearch$">
+  <div #topView  id="topView"></div>
+  <div class="wrapper row3"  *ngIf="showTopSearch$">
     <section class="hoc container clear" style="padding-bottom: 0%;">
       <!-- ################################################################################################ -->
       <div class="sectiontitle">
-        <h6 class="heading">Danh mục đáng chú ý</h6>
+        <h6 class="heading">Kết quả tìm kiếm cho {{searchText}}</h6>
       </div>
       <div class="group testimonials">
         <div class="one_half first">
-          <p class="customP">Top 5 Kiến thức</p>
+          <p class="customP">Kiến thức</p>
           <div class="topFive">
             <!--##################################################3-->
             <div class="arcticle" *ngFor="let article of getTopArticle$.articlesByPageIndex">
-              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
-              <a class="articleTitle">{{article.title}}</a>
+              <!--<img src="../../assets/images/demo/100x100.png" class="arcticleImage">-->
+              <a class="articleTitle" (click)="goToArticleDetail(article)"  >{{article.title}}</a>
               <p>Danh mục: {{article.category}}</p>
               <p>Thời gian: {{article.utilTimestamp | date: 'yyyy-MM-dd' }}</p>
               <p>Lượt xem: {{article.viewCount}}</p>
@@ -96,11 +97,11 @@
           </div>
         </div>
         <div class="one_half">
-          <p class="customP"> Top 5 Hỏi đáp</p>
+          <p class="customP"> Câu hỏi</p>
           <div class="topFive">
             <div class="question" *ngFor="let qa of getTopQuestion$.qa">
-              <img src="../../assets/images/demo/100x100.png" class="arcticleImage">
-              <a class="clickTitle">{{qa.title}}</a>
+              <!--<img src="../../assets/images/demo/100x100.png" class="arcticleImage">-->
+              <a class="clickTitle" (click)="goToQuestionDetail(qa)">Tiêu đề {{qa.title}}</a>
               <p>Thời gian: {{qa.utilTimestamp | date: 'yyyy-MM-dd' }}</p>
               <p>Lượt xem: {{qa.viewCount}}</p>
             </div>

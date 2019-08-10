@@ -2,7 +2,7 @@
   <div id="topbar" class="hoc clear">
     <!-- ################################################################################################ -->
     <ul>
-      <li *ngIf="user"><div><i><a href="/user-detail-page"><img class="image-user-icon" (click)="getUserDetail()" src="{{ user.photoUrl }}"style="cursor: pointer; width: 5em;height: 5em"></a></i></div></li>
+      <li *ngIf="user"><div><i><img class="image-user-icon" (click)="userDetail(id)" src="{{ user.photoUrl }}"style="cursor: pointer; width: 5em;height: 5em"></i></div></li>
       <li><i class="fa fa-clock-o"></i> Làm việc 24/7</li>
       <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
       <li><i class="fa fa-envelope-o"></i> smartfarming@gmail.com</li>

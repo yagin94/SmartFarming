@@ -157,6 +157,7 @@ export class UserDetailPageComponent implements OnInit {
   getTopTagOfUser(): void {
     this.userDetailPageService.getTopTagOfUser(this.appUser$.userId).subscribe(getTopTagOfUser => {
       this.getTopTagOfUser$ = getTopTagOfUser;
+      console.log(this.getTopTagOfUser$);
     });
   }
 

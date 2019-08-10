@@ -65,3 +65,10 @@ function closeForm() {
 function setStyle() {
   document.getElementById("numberIndex").style.backgroundColor = "blue";
 }
+
+function scrollDiv(e){
+  if (e.keyCode == 13) {
+    var tb = document.getElementById("topView");
+    tb.scrollIntoView(true);
+  }
+}

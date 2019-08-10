@@ -4,6 +4,8 @@ import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedInLoginPr
 import {HttpClient} from '@angular/common/http';
 import {AppUser} from '../../qa-page/qa.model';
 import {Globals} from '../globalVariables';
+import {Router} from '@angular/router';
+import {Local} from 'protractor/built/driverProviders';
 
 
 @Component({
@@ -16,15 +18,21 @@ export class HeaderComponent implements OnInit {
   appUser$: AppUser;
   user: SocialUser;
   checkAdmin = '';
+  id: number;
 
-  constructor(private authService: AuthService, private http: HttpClient, private globals: Globals) {
+  constructor(private authService: AuthService, private http: HttpClient, private globals: Globals, private router: Router) {
   }
 
   ngOnInit() {
-     this.checkRole();
+    if (localStorage.getItem('currentAppUser')) {
+      this.id = JSON.parse(localStorage.getItem('currentAppUser')).userId;
+    }
+
+    this.checkRole();
     this.authService.authState.subscribe((user) => {
       this.user = user;
     });
+
   }
 
   checkRole() {
@@ -54,6 +62,9 @@ export class HeaderComponent implements OnInit {
         localStorage.setItem('currentAppUser', JSON.stringify(app));
         this.checkAdmin = app.role;
         console.log('HienND', localStorage.getItem('currentAppUser'));
+
+
+        console.log('header ', this.id);
       }
     );
   }
@@ -127,5 +138,9 @@ export class HeaderComponent implements OnInit {
     return false;
   }
 
+  userDetail(userId: number) {
+    console.log(userId);
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+  }
 
 }

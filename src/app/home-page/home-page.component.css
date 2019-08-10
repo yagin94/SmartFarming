@@ -360,3 +360,12 @@ a {
 .benefit span{
   padding: 3%;
 }
+
+.arcticle{
+  text-align: center;
+  border-bottom: #364e92 1px solid;
+}
+.question{
+  text-align: center;
+  border-bottom: #364e92 1px solid;
+}

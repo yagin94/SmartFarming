@@ -21,6 +21,7 @@ export class PhanBonComponent implements OnInit {
     return Array(numberOfPage);
   }
   getDungArticle(pageIndex$: number) {
+    this.pageIndex$ = pageIndex$;
     this.dungService.getDungArticle(this.pageIndex$).subscribe(object => {
       this.getDungArticle$ = object;
       console.log(this.getDungArticle$);

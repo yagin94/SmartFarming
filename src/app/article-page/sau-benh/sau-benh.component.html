@@ -19,7 +19,7 @@
         <figure>
           <header class="heading">Sâu bệnh</header>
             <ul class="nospace clear">
-              <li *ngFor="let article of getBugArticle$.articlesByPageIndex" class="one_quarter first"><a href="article-detail-page" style="cursor: pointer"></a>{{article.title}}</li>
+              <li *ngFor="let article of getBugArticle$.articlesByPageIndex" class="one_quarter first"><a href="article-detail-page" style="cursor: pointer">{{article.title}}</a></li>
             </ul>
         </figure>
       </div>
@@ -27,7 +27,7 @@
       <!-- ################################################################################################ -->
       <div class="pagination">
         <a>&laquo;</a>
-        <a *ngFor="let page of arrayPage(getBugArticle$.numberOfPages) let i = index" (click)="getTakeArticle(i)">{{i}}</a>
+        <a *ngFor="let page of arrayPage(getBugArticle$.numberOfPages) let i = index" (click)="getBugArticle(i)">{{i}}</a>
         <a>&raquo;</a>
       </div>
       <!-- ################################################################################################ -->

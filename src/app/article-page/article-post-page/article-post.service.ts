@@ -14,4 +14,7 @@ export class ArticlePostService {
   addArticle(addArticle: AddArticle): Observable<Article> {
     return this.http.post<Article>('http://localhost:8080/article/addArticle', addArticle);
   }
+  updateArticle(id: number, updateArticle: AddArticle): Observable<Article> {
+    return this.http.put<Article>(`http://localhost:8080/article/updateArticle/${id}`, updateArticle);
+  }
 }

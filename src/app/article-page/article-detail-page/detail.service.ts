@@ -13,6 +13,13 @@ export class ArticleDetailService {
   getDetail(articleId: number): Observable<Article> {
     return this.http.get<Article>(`http://localhost:8080/article/viewArticle/${articleId}`);
   }
+  getDistinct() {
+    return this.http.get(` http://localhost:8080/article/viewDistinctCategories`);
+  }
+  deleteArticle(articleId: number): Observable<{}> {
+    const url = `http://localhost:8080/article/deleteArticle/${articleId}`;
+    return this.http.delete(url);
+  }
 }
 
 

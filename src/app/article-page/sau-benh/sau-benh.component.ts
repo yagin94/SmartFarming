@@ -20,6 +20,7 @@ export class SauBenhComponent implements OnInit {
     return Array(numberOfPage);
   }
   getBugArticle(pageIndex$: number) {
+    this.pageIndex$ = pageIndex$;
     this.bugService.getBugArticle(this.pageIndex$).subscribe(object => {
       this.getBugArticle$ = object;
       console.log(this.getBugArticle$);

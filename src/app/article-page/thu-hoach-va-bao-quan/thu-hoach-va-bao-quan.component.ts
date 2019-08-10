@@ -20,6 +20,7 @@ export class ThuHoachVaBaoQuanComponent implements OnInit {
     return Array(numberOfPage);
   }
   getTakeArticle(pageIndex$: number) {
+    this.pageIndex$ = pageIndex$;
     this.takeService.getTakeArticle(this.pageIndex$).subscribe(object => {
       this.getTakeArticle$ = object;
       console.log(this.getTakeArticle$);

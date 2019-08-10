@@ -23,6 +23,7 @@ export class TrangChinhComponent implements OnInit {
   }
 
   getAllArticle(pageIndex$: number) {
+    this.pageIndex$ = pageIndex$;
     this.trangChinhService.getAllArticle(this.pageIndex$).subscribe(object => {
       this.getAllArticle$ = object;
       console.log(this.getAllArticle$);

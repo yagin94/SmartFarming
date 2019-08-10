@@ -38,7 +38,7 @@
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
-  <main class="hoc container clear" style="padding-top: 0%;background-color: #FFFFFF;max-width: 75%;width: 100%;">
+  <main class="hoc container clear" style="padding-top: 0%;background-color: #FFFFFF;max-width: 75%;width: 100%;" *ngIf="!data">
 
     <!--Content -->
     <div class="content three_quarter first" style=" margin-left: 1.5%;">
@@ -71,6 +71,47 @@
             </div>
             <div class="button" style="">
               <input type="submit" name="submit" value="Đăng bài" (click)="addArticle(inputATitle.value, tagAInput.value, selectedValue$)">
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <div class="clear"></div>
+  </main>
+  <main class="hoc container clear" style="padding-top: 0%;background-color: #FFFFFF;max-width: 75%;width: 100%;" *ngIf="data">
+
+    <!--Content -->
+    <div class="content three_quarter first" style=" margin-left: 1.5%;">
+      <div class="">
+        <h2 style="text-transform: none;text-align: center">Chỉnh sửa bài viết</h2>
+        <form action="#" method="post">
+          <div class="one_third first">
+            <label for="Aname">Tiêu đề <span>*</span></label>
+            <input type="text" name="Aname" id="Aname" value="{{article$.title}}" size="22" #inputATitle required
+                   style="border: 1px solid #d1d1d1;">
+          </div>
+          <div class="block clear" style="">
+            <label>Nội dung <span>*</span></label>
+            <ckeditor [(ngModel)]="model.default" [ngModelOptions]="{standalone: true}"></ckeditor>
+            <label>Chọn thể loại</label>
+            <div>
+              <select [(ngModel)]="selectedValue$" [ngModelOptions]="{standalone: true}" >
+                <option>kỹ thuật trồng</option>
+                <option>thu hoạch bảo quản</option>
+                <option>phân bón</option>
+                <option>thuốc bảo vệ thực vật</option>
+                <option>sâu bệnh</option>
+                <option>kỹ thuật nhân giống</option>
+                <option>giống cây</option>
+              </select>
+            </div>
+            <label>Chọn từ khóa</label>
+            <div>
+              <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagAInput>
+            </div>
+            <div class="button" style="">
+              <input type="submit" name="submit" value="Đăng bài" (click)="updateArticle(inputATitle.value, tagAInput.value, selectedValue$)">
             </div>
           </div>
         </form>

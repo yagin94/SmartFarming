@@ -19,7 +19,7 @@
         <figure>
           <header class="heading">Phân bón</header>
           <ul class="nospace clear">
-            <li *ngFor="let article of getDungArticle$.articlesByPageIndex" class="one_quarter first"><a href="article-detail-page" style="cursor: pointer"></a>{{article.title}}</li>
+            <li *ngFor="let article of getDungArticle$.articlesByPageIndex" class="one_quarter first"><a href="article-detail-page" style="cursor: pointer">{{article.title}}</a></li>
           </ul>
         </figure>
       </div>
@@ -27,7 +27,7 @@
       <!-- ################################################################################################ -->
       <div class="pagination">
         <a>&laquo;</a>
-        <a *ngFor="let page of arrayPage(getDungArticle$.numberOfPages) let i = index" (click)="getTakeArticle(i)">{{i}}</a>
+        <a *ngFor="let page of arrayPage(getDungArticle$.numberOfPages) let i = index" (click)="getDungArticle(i)">{{i}}</a>
         <a>&raquo;</a>
       </div>
       <!-- ################################################################################################ -->

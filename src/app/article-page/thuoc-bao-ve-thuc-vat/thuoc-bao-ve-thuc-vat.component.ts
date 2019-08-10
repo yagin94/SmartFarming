@@ -17,6 +17,7 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
     this.getDrugArticle(this.pageIndex$);
   }
   getDrugArticle(pageIndex$: number) {
+    this.pageIndex$ = pageIndex$;
     this.drugService.getDrugArticle(this.pageIndex$).subscribe(object => {
       this.getDrugArticle$ = object;
       console.log(this.getDrugArticle$);

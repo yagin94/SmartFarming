@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CloneService} from './Clone.service';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
-import {DungService} from '../phan-bon/Dung.service';
+
 
 
 @Component({
@@ -17,12 +17,13 @@ export class KyThuatNhanGiongComponent implements OnInit {
   constructor(private cloneService: CloneService) { }
 
   ngOnInit() {
-     this.getDungArticle(this.pageIndex$);
+     this.getCloneArticle(this.pageIndex$);
   }
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
   }
-  getDungArticle(pageIndex$: number) {
+  getCloneArticle(pageIndex$: number) {
+    this.pageIndex$ = pageIndex$;
     this.cloneService.getCloneArticle(this.pageIndex$).subscribe(object => {
       this.getCloneArticle$ = object;
       console.log(this.getCloneArticle$);

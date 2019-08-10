@@ -1,4 +1,3 @@
-
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -8,7 +7,9 @@
     <header id="header" class="hoc clear">
       <!-- ################################################################################################ -->
       <div id="logo" class="fl_left">
-        <h1><a style="font-size: 17px; color: #F7AF9D;letter-spacing: 5px; font-family: 'Open Sans Condensed', sans-serif; font-weight: 700;  text-align: center; text-transform: uppercase;" href="index.html">FPT developer Team</a></h1>
+        <h1><a
+          style="font-size: 17px; color: #F7AF9D;letter-spacing: 5px; font-family: 'Open Sans Condensed', sans-serif; font-weight: 700;  text-align: center; text-transform: uppercase;"
+          href="index.html">FPT developer Team</a></h1>
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear">
@@ -25,8 +26,8 @@
               <li><a href="article-page/app-trang-chinh">Chủ đề nổi bật</a></li>
             </ul>
           </li>
-          <li><a  href="#">Hỏi - Đáp</a></li>
-          <li><a  href="#">Liên hệ</a></li>
+          <li><a href="#">Hỏi - Đáp</a></li>
+          <li><a href="#">Liên hệ</a></li>
 
         </ul>
       </nav>
@@ -59,19 +60,53 @@
   <main class="hoc container clear">
     <!-- main body -->
     <!-- ################################################################################################ -->
-    <div class="content ">
+    <div class="sidebar one_quarter first">
       <!-- ################################################################################################ -->
-      <h1><p>Rệp cam</p></h1>
-      <img class="imgr borderedbox inspace-5" src="../../../assets/images/demo/vuon_cam.jpg" alt="">
-      <img class="imgr borderedbox inspace-5 custom-img" src="../../../assets/images/demo/cam1.jpg" alt="">
-      <p><b>Tên khoa học: </b>Toxoptera auranti và Toxoptera citricidus</p>
-      <p><b>Họ rầy mềm (rệp cam): </b>>Aphididae</p>
-      <p><b>Bộ cánh đều: </b>Homoptera</p>
-      <p><b>Đặc điểm hình thái và khả năng gây hại của rầy mềm (rệp cam) Toxoptera auranti và Toxoptera citricidus:</b></p>
-      <img class="imgl borderedbox inspace-5 custom-img" src="../../../assets/images/demo/cam2.jpg" alt="">
-      <p>Cơ thể của chúng có hình bầu dục, bóng và có kích thước rất nhỏ, hình dáng hơi giống trái lê, mầu nâu đen hay mầu nâu đỏ hơi hồng.</p>
-      <p>Rầy mềm (rệp cam) là loài đa ký chủ. Chúng gây hại trên nhiều loại cây như cây có múi, cà phê, trà, xoài, đu đủ, ca cao... Con trưởng thành đực (thường ít gặp) luôn luôn có cánh, con trưởng thành cái có hai dạng: có cánh thì dài gần 2mm và không cánh thì lớn hơn (khoảng 2mm). Trong điều kiện nhiệt đới, thức ăn phù hợp, rầy cái thường không có cánh, chủ yếu là sinh sản đơn tính và đẻ con. Do vậy, chúng tích lũy mật số rất nhanh. Còn khi mật số của rầy cao, hết thức ăn phù hợp, rầy sẽ sinh cánh dài, bắt cặp và di chuyển đi tìm nguồn thức ăn, sản sinh quần thể mới.</p>
-      <p>Cả rầy non và trưởng thành đều bám ở mặt dưới lá, cành và đọt non để chích hút làm cho chồi, lá biến dạng, cong queo, còi cọc, không phát triển được giảm sức tăng trưởng của cây. Ngoài ra, chất bài biết của rầy có chứa nhiều đường mật tạo môi trường thuận lợi cho cho nấm bồ hóng phát triển làm ảnh hưởng trực tiếp đến quá trình quang hợp của cây.</p>
+      <h6>Danh mục thể loại</h6>
+      <nav class="sdb_holder">
+        <ul>
+          <li *ngFor="let distinct of distinct$"><a href="">{{distinct}}</a></li>
+        </ul>
+      </nav>
+      <div class="sdb_holder">
+        <h6>Lorem ipsum dolor</h6>
+        <address>
+          Full Name<br>
+          Address Line 1<br>
+          Address Line 2<br>
+          Town/City<br>
+          Postcode/Zip<br>
+          <br>
+          Tel: xxxx xxxx xxxxxx<br>
+          Email: <a href="#">contact@domain.com</a>
+        </address>
+      </div>
+      <div class="sdb_holder">
+        <article>
+          <h6>Lorem ipsum dolor</h6>
+          <p>Nuncsed sed conseque a at quismodo tris mauristibus sed habiturpiscinia sed.</p>
+          <ul>
+            <li><a href="#">Lorem ipsum dolor sit</a></li>
+            <li>Etiam vel sapien et</li>
+            <li><a href="#">Etiam vel sapien et</a></li>
+          </ul>
+          <p>Nuncsed sed conseque a at quismodo tris mauristibus sed habiturpiscinia sed. Condimentumsantincidunt dui
+            mattis magna intesque purus orci augue lor nibh.</p>
+          <p class="more"><a href="#">Continue Reading &raquo;</a></p>
+        </article>
+      </div>
+      <!-- ################################################################################################ -->
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <div class="content three_quarter">
+      <!-- ################################################################################################ -->
+      <h1><p>{{article$.title}}</p></h1>
+      <div *ngIf="checkAdmin=='ADMIN'" class="group btmspace-50 demo" style="width: 50%; cursor: pointer">
+        <a class="one_half first" style="font-size: large" (click)="editArticle(article$)">chỉnh sửa bài viết</a>
+        <a class="one_half" style="font-size: large" (click)="deleteArticle(article$.articleId)">xóa bài viết</a>
+      </div>
+      <p innerHTML="{{article$.content}}" style="max-width: 100% !important;text-align: left;color: grey"></p>
       <div id="comments">
         <h2>Thảo luận</h2>
         <ul>
@@ -156,11 +191,11 @@
     <div class="one_third">
       <h6 class="heading tittFooter">THÀNH VIÊN</h6>
       <ul>
-        <li class="space_line">  Lê Thu Hà</li>
-        <li class="space_line">  Nguyễn Phúc Minh Sơn</li>
-        <li class="space_line">  Nguyễn Duy Hiển</li>
-        <li class="space_line">  Trần Hồng Quỳnh</li>
-        <li class="space_line">  Ngô Xuân Tính</li>
+        <li class="space_line"> Lê Thu Hà</li>
+        <li class="space_line"> Nguyễn Phúc Minh Sơn</li>
+        <li class="space_line"> Nguyễn Duy Hiển</li>
+        <li class="space_line"> Trần Hồng Quỳnh</li>
+        <li class="space_line"> Ngô Xuân Tính</li>
       </ul>
     </div>
     <div class="one_third">
@@ -182,7 +217,8 @@
   <div id="copyright" class="hoc clear">
     <!-- ################################################################################################ -->
     <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Domain Name</a></p>
-    <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+    <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/"
+                                       title="Free Website Templates">OS Templates</a></p>
     <!-- ################################################################################################ -->
   </div>
 </div>

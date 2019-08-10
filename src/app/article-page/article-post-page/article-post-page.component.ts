@@ -49,7 +49,7 @@ export class ArticlePostPageComponent implements OnInit {
     a.title = title;
     a.content = this.model.editorData;
     a.appUser = new AppUser();
-    a.appUser.userId = 418;
+    a.appUser.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
     a.tags = this.tags;
     a.uploadedFiles = [];
     a.category = selected;
@@ -74,11 +74,12 @@ export class ArticlePostPageComponent implements OnInit {
     a.title = title;
     a.content = this.model.default;
     a.appUser = new AppUser();
-    a.appUser.userId = 418;
+    a.appUser.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
     a.tags = this.tags;
     a.uploadedFiles = [];
     a.category = selected;
     this.articlePostService.updateArticle(this.data, a).subscribe();
     window.location.replace(`/article-detail-page?id=${this.data}`);
   }
+
 }

@@ -68,6 +68,7 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.ansContent = '';
     this.getTopQa();
     this.getTopTag();
@@ -202,6 +203,7 @@ export class QaPageDetailComponent implements OnInit {
   editAnswer(answer: Answers) {
     this.checkEditAnswer = true;
     this.editAnswer$ = answer;
+    this.ansContent = answer.content;
   }
 
   updateAnwer(content: string) {

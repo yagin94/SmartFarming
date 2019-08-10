@@ -69,32 +69,28 @@
         </ul>
       </nav>
       <div class="sdb_holder">
-        <h6>Lorem ipsum dolor</h6>
-        <address>
-          Full Name<br>
-          Address Line 1<br>
-          Address Line 2<br>
-          Town/City<br>
-          Postcode/Zip<br>
-          <br>
-          Tel: xxxx xxxx xxxxxx<br>
-          Email: <a href="#">contact@domain.com</a>
-        </address>
-      </div>
-      <div class="sdb_holder">
         <article>
-          <h6>Lorem ipsum dolor</h6>
-          <p>Nuncsed sed conseque a at quismodo tris mauristibus sed habiturpiscinia sed.</p>
+          <h6>Top Kiến thức</h6>
+          <p> Những bài đăng mới nhất</p>
           <ul>
-            <li><a href="#">Lorem ipsum dolor sit</a></li>
-            <li>Etiam vel sapien et</li>
-            <li><a href="#">Etiam vel sapien et</a></li>
+            <li *ngFor="let a of getAllArticle$.articlesByPageIndex"><a href="#">{{a.title}}</a></li>
           </ul>
-          <p>Nuncsed sed conseque a at quismodo tris mauristibus sed habiturpiscinia sed. Condimentumsantincidunt dui
-            mattis magna intesque purus orci augue lor nibh.</p>
-          <p class="more"><a href="#">Continue Reading &raquo;</a></p>
         </article>
       </div>
+      <div class="sdb_holder">
+        <h6>Mọi thắc mắc liên hệ</h6>
+        <address>
+          Nguyễn Duy Hiển<br>
+          Admin<br>
+          Facebook: Yanyagin94<br>
+          Hòa Lạc - Hà Nội<br>
+          Đại học FPT<br>
+          <br>
+          Tel: 0984298666<br>
+          Email: <a>hienndse05142@fpt.edu.vvn</a>
+        </address>
+      </div>
+
       <!-- ################################################################################################ -->
     </div>
     <!-- ################################################################################################ -->
@@ -110,51 +106,36 @@
       <div id="comments">
         <h2>Thảo luận</h2>
         <ul>
-          <li>
+          <li *ngFor="let comment of article$.comments">
             <article>
               <header>
-                <figure class="avatar"><img src="../../../assets/images/demo/avatar.png" alt=""></figure>
+                <figure class="avatar"><img *ngIf="comment.appUser!=null&&comment.appUser.anonymous==true"
+                                            src="../../assets/images/demo/avatar.png" alt="">
+                  <img *ngIf="comment.appUser==null"
+                       src="../../assets/images/demo/avatar.png" alt="">
+                  <img *ngIf="comment.appUser!=null&&comment.appUser.anonymous==false"
+                       src="{{comment.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(comment.appUser.userId)" ></figure>
                 <address>
                   By <a href="#">A</a>
                 </address>
                 <time datetime="2045-04-06T08:15+00:00">Friday, 6<sup>th</sup> April 2019 @08:15:00</time>
               </header>
               <div class="comcont">
-                <p>A comment rằng abc</p>
+                <p>{{comment.content}}</p>
               </div>
             </article>
+            <figure class="avatar"><a style="cursor: pointer" (click)="deleteComment(comment.commentId)">Xóa bình luận</a></figure>
           </li>
-          <li>
-            <article>
-              <header>
-                <figure class="avatar"><img src="../../../assets/images/demo/avatar.png" alt=""></figure>
-                <address>
-                  By <a href="#">B</a>
-                </address>
-                <time datetime="2045-04-06T08:15+00:00">Friday, 6<sup>th</sup> April 2019 @08:15:00</time>
-              </header>
-              <div class="comcont">
-                <p>A comment rằng xyz</p>
-              </div>
-            </article>
-          </li>
+
         </ul>
         <h2>Bình luận</h2>
         <form action="#" method="post">
-          <div class="one_third first">
-            <label for="name">Tên <span>*</span></label>
-            <input type="text" name="name" id="name" value="" size="22" required>
-          </div>
-          <div class="one_third">
-            <label for="email">Địa chỉ Email <span>*</span></label>
-            <input type="email" name="email" id="email" value="" size="22" required>
-          </div>
           <div class="block clear">
             <label for="comment">Bình luận của bạn</label>
-            <textarea name="comment" id="comment" cols="25" rows="10"></textarea>
+            <textarea name="comment" id="comment" cols="25" rows="10" [(ngModel)]="ansContent" [ngModelOptions]="{standalone: true}"></textarea>
           </div>
           <div>
-            <input type="submit" name="submit" value="Đăng">
+            <input type="submit" name="submit" value="Đăng" (click)="addComment(ansContent)">
             &nbsp;
             <input type="reset" name="reset" value="Đặt lại">
           </div>

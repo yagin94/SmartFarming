@@ -246,4 +246,7 @@ export class QaPageComponent implements OnInit {
   getNumber(object: Answers) {
     return Object.keys(object).length;
   }
+  userDetail(userId: number) {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+  }
 }

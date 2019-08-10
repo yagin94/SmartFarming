@@ -2,15 +2,15 @@
   <div id="topbar" class="hoc clear">
     <!-- ################################################################################################ -->
     <ul>
+      <li *ngIf="user"><div><i><a href="/user-detail-page"><img class="image-user-icon" (click)="getUserDetail()" src="{{ user.photoUrl }}"style="cursor: pointer; width: 5em;height: 5em"></a></i></div></li>
       <li><i class="fa fa-clock-o"></i> Làm việc 24/7</li>
       <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
       <li><i class="fa fa-envelope-o"></i> smartfarming@gmail.com</li>
-      <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
-      <li *ngIf="!user"><div title="Đăng nhập bằng facebook" (click)="signInWithFB()" style="cursor: pointer"><i class="fa fa-lg fa-facebook-square"></i></div></li>
-      <li *ngIf="!user"><div title="Đăng nhập bằng google" (click)="signInWithGoogle()" style="cursor: pointer"><i class="fa fa-lg fa-google-plus-square"></i></div></li>
-      <li *ngIf="user"><div><i><a href="/user-detail-page"><img class="image-user-icon" (click)="getUserDetail()" src="{{ user.photoUrl }}"style="cursor: pointer"></a></i></div></li>
-      <li *ngIf="user"><div title="Đăng xuất" (click)="signOut()" style="cursor: pointer"><i class="fa fa-lg fa-sign-out"></i></div>
+      <li *ngIf="!user"><div title="Đăng nhập bằng google" (click)="signInWithGoogle()" style="cursor: pointer"><a style="cursor: pointer; font-size: large">Đăng nhập</a></div></li>
+      <li *ngIf="user"><div title="Đăng xuất" (click)="signOut()" style="cursor: pointer"><a style="cursor: pointer; font-size: large">Đăng xuất</a></div>
        <li *ngIf="checkAdmin=='ADMIN'"> <a class="button" href="./manage-page" style="cursor: pointer; font-size: large">Quản lý</a> </li>
+      <li *ngIf="checkAdmin=='ADMIN'"> <a class="button" href="./article-post-page" style="cursor: pointer; font-size: large">Đăng bài viết</a> </li>
+
     </ul>
     <!-- ################################################################################################ -->
   </div>

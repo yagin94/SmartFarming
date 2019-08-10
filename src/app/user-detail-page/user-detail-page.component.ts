@@ -1,16 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import * as CanvasJS from '../../app/manager-page/http_canvasjs.com_assets_script_canvasjs.min';
 import {AppUser} from '../qa-page/qa.model';
-import {ChartData, GetTotalTagsOfUser, GetUserDetailInfor, UserDetailInfor} from './user-detail-page.model';
+import {ChartData, GetTotalTagsOfUser, GetUserDetailInfor, UpLoadFile, UserDetailInfor} from './user-detail-page.model';
 import {HeaderComponent} from '../common/header/header.component';
 import {UserDetailPageService} from './user-detail-page.service';
 import {DataShareService} from '../share-data-service/date-share-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GetAllQuestionOfUser, GetAllTagOfUser, GetTopQuestionOfUser, GetTopTagOfUser} from './user-detail-page.model';
 import {forEach} from '@angular/router/src/utils/collection';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
-  providers: [HeaderComponent, UserDetailPageService, DataShareService],
+  providers: [HeaderComponent, UserDetailPageService, DataShareService, FormBuilder],
   selector: 'app-user-detail-page',
   templateUrl: './user-detail-page.component.html',
   styleUrls: ['./user-detail-page.component.css']
@@ -21,11 +23,9 @@ export class UserDetailPageComponent implements OnInit {
   userDetail$: UserDetailInfor;
   data: any;
   getTopTagOfUser$: GetTopTagOfUser;
-
   getTopQuestionOfUser$: GetTopQuestionOfUser;
-
-  getUserDeatilInfor$: GetUserDetailInfor;
-  getTotalTagOfUser$: GetTotalTagsOfUser;
+  getUserDeatilInfor$: any;
+  getTotalTagOfUser$: any;
   totalQuestionOfuser$ = 0;
   totalAnswerOfUser$ = 0;
   totalTagsOfUser$ = 0;
@@ -33,6 +33,16 @@ export class UserDetailPageComponent implements OnInit {
   sortBy$ = 'viewCount';
   pageIndex$ = 0;
   change$ = false;
+  nameUserInput: string;
+  emailUser: string;
+  linkCV: string;
+  srcImg: string;
+  isFlatEdit = false;
+
+  uploadForm: FormGroup;
+  upLoadFile: UpLoadFile;
+  check = false;
+  nameCV = '';
 
   init() {
     // this.drawChart();
@@ -42,7 +52,9 @@ export class UserDetailPageComponent implements OnInit {
   constructor(private userDetailPageService: UserDetailPageService,
               private route: ActivatedRoute,
               private router: Router,
-              private dataShareService: DataShareService) {
+              private dataShareService: DataShareService,
+              private httpClient: HttpClient,
+              private formBuilder: FormBuilder) {
   }
 
   drawChart(dataChart1: any, dataChart2, dataChart3) {
@@ -78,18 +90,28 @@ export class UserDetailPageComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.init();
-    this.appUserGG$ = JSON.parse(localStorage.getItem('currentAppUser'));
-    this.getViewUser(this.appUserGG$.userId);
-
+    // this.appUserGG$ = JSON.parse(localStorage.getItem('currentAppUser'));
+    this.getViewUser(this.data);
+    this.uploadForm = this.formBuilder.group({
+      profile: ['']
+    });
+    if (this.linkCV == null) {
+      this.check = true;
+    }
   }
 
   /** getUserDetail TinhNX*/
 
   getViewUser(userId: number): void {
-    this.userDetailPageService.getViewUser(this.appUserGG$.userId).subscribe(
+    this.userDetailPageService.getViewUser(userId).subscribe(
       appUser => {
         this.appUser$ = appUser;
-        console.log(this.appUser$);
+        this.appUserGG$ = appUser;
+        this.nameUserInput = appUser.socialUser.name;
+        this.linkCV = appUser.cvUrl;
+        this.emailUser = appUser.socialUser.email;
+        this.srcImg = appUser.socialUser.photoUrl;
+        this.appUser$ = appUser;
         this.totalScore$ = this.appUser$.reputation;
         this.getUserDetail();
         this.getTopTagOfUser();
@@ -107,6 +129,7 @@ export class UserDetailPageComponent implements OnInit {
       });
   }
 
+
   getUserDetail(): void {
     let dataQa = [];
     let dataTag = [];
@@ -114,17 +137,19 @@ export class UserDetailPageComponent implements OnInit {
 
     this.userDetailPageService.getUserDetailInfor(this.appUser$.userId).subscribe(userDetail => {
       this.getUserDeatilInfor$ = userDetail;
-      if (userDetail != null) {
-        // userDetail.forEach(item => {
-        //   this.totalQuestionOfuser$ += item.numberOfQuestion;
-        //   this.totalAnswerOfUser$ += item.numberOfAnswer;
-        //   // this.totalTagsOfUser$ += item.numberOfTag;
-        //   dataQa.push({label: item.date, y: item.numberOfQuestion});
-        //   dataAnser.push({label: item.date, y: item.totalQuestionViewCount});
-        // });
+      if (this.getUserDeatilInfor$ != null) {
+        let totalQues = 0;
+        let totalAns = 0;
+        this.getUserDeatilInfor$.forEach(item => {
+          totalQues += parseInt(item.numberOfQuestion);
+          totalAns += parseInt(item.numberOfAnswer);
+          dataQa.push({label: item.date, y: item.numberOfQuestion});
+          dataAnser.push({label: item.date, y: item.totalQuestionViewCount});
+        });
+        this.totalQuestionOfuser$ = totalQues;
+        this.totalAnswerOfUser$ = totalAns;
         this.drawChart(dataQa, dataAnser, dataTag);
       }
-
     });
 
   }
@@ -143,25 +168,53 @@ export class UserDetailPageComponent implements OnInit {
 
   sortBy(sortBy: string) {
     this.sortBy$ = sortBy;
-    console.log(this.sortBy$);
-    console.log(this.appUserGG$.userId);
     this.getTopQuestionOfUser(this.sortBy$, this.appUserGG$.userId);
   }
 
   updateUser() {
-    this.change$ = true;
+    this.isFlatEdit = true;
   }
 
-  reUpdateUser() {
-    this.change$ = false;
+  saveUserInfo() {
+
+    this.isFlatEdit = false;
+    this.appUserGG$.socialUser.name = this.nameUserInput;
+    this.appUserGG$.socialUser.email = this.emailUser;
+    if (this.upLoadFile != null) {
+      this.appUserGG$.cvUrl = this.upLoadFile.uploadedFileUrlShownOnUI;
+      this.linkCV = this.upLoadFile.uploadedFileUrlShownOnUI;
+    }
+    console.log(this.appUserGG$);
+
+    this.userDetailPageService.updateUser(this.appUserGG$.userId, this.appUserGG$).subscribe(onSuccess => {
+        if (onSuccess.socialUser.name === this.nameUserInput) {
+          alert('Cập nhật thành công');
+        }
+
+      },
+      onFail => {
+        alert('Cập nhật thất bại');
+      });
   }
 
-  saveUserInfo(name: string, email: string, link: string) {
-    this.appUserGG$.socialUser.firstName = name;
-    this.appUserGG$.socialUser.email = email;
-    this.appUserGG$.cvUrl = link;
-    console.log(name);
-    this.userDetailPageService.updateUser(this.appUserGG$.userId, this.appUserGG$);
-    this.getViewUser(this.appUserGG$.userId);
+  onPicked(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.uploadForm.get('profile').setValue(file);
+      this.nameCV = this.uploadForm.get('profile').value.name;
+    }
+
+    const formData = new FormData();
+    formData.append('file', this.uploadForm.get('profile').value);
+
+    this.httpClient.post<any>('http://localhost:8080/file/uploadFile', formData).subscribe(
+      (res) => {
+        this.upLoadFile = res;
+        console.log(this.upLoadFile);
+      },
+      (err) => console.log(err)
+    );
+
   }
+
 }

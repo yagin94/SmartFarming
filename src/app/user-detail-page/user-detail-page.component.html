@@ -115,14 +115,14 @@
           <!--tags -->
           <div id="report-tags">
             <div style="display: -webkit-box;padding-bottom: 1.5%;;">
-              <h3>Tags</h3>
+              <h3>Top tags </h3>
 
             </div>
-            <div id="span-tags" >
-              <span class="tag-infor" *ngFor="let object of getTopTagOfUser$.tagsByPageIndex" ><a href="" class="name-tag">{{object.name}}</a>
+            <div id="span-tags" style="min-height: 5rem;" >
+              <div class="tag-infor" *ngFor="let object of getTopTagOfUser$.tagsByPageIndex" ><a href="" class="name-tag">{{object.name}}</a>
                 <span class="infor-tag">Điểm: {{object.reputation}} </span> <!-- -->
                 <span class="infor-tag">Lượt xem: {{object.viewCount}}</span> <!---->
-              </span>
+              </div>
             </div>
             <div>
               <h5 style="text-transform: none;float: right;"><a href="/all-tag-user">Xem tất cả tags ở đây -></a></h5>
@@ -133,7 +133,7 @@
           <!--Question -->
           <div id="report-question">
             <div style="display: -webkit-box;">
-              <h3>Câu hỏi ({{totalQuestionOfuser$}})</h3>
+              <h3>Top câu hỏi ({{totalQuestionOfuser$}})</h3>
               <select style="width: auto;margin: 10%;" (change)="sortBy($event.target.value)" >
                 <option value="viewCount">Sắp xếp theo lượt xem</option>
                 <option value="upvoteCount ">Sắp xếp theo lượt thích </option>
@@ -142,7 +142,8 @@
             </div>
             <table id="table-report">
               <tr class="table-report-first" *ngFor="let qa of getTopQuestionOfUser$.qa" >
-                <td style="padding-top: 15px;"><span class="icon"> {{qa.viewCount}}</span><a
+                <td class="viewQuestion">{{qa.viewCount}}</td>
+                <td style="padding-top: 15px;"><a
                   href="">{{qa.title}}</a></td>
                 <td class="time-user-detail">{{qa.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
               </tr>

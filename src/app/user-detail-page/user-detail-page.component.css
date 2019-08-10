@@ -165,16 +165,26 @@ table > tbody > tr:first-child {
 }
 
 #table-report tr td a {
-  margin-left: 4%;
+  /*margin-left: 4%;*/
 }
 
 /*#table-report tr:nth-child(n + 4) {*/
 /*visibility: revert;*/
 /*}*/
+.viewQuestion{
+  width: 2rem;
+  padding: 2%;
+  border-color: #5fba7d;
+  background: #5fba7d;
+  color: #FFFFFF;
+  text-align: center;
+}
 
 .icon {
   height: 50px;
   width: 50px;
+  max-width: 50px;
+  min-width: 50px;
   border-color: #5fba7d;
   background: #5fba7d;
   color: #FFFFFF;
@@ -283,6 +293,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   font-size: 14px;
   padding-right: 2%;
+  overflow-wrap: break-word;
 }
 
 .number-user {

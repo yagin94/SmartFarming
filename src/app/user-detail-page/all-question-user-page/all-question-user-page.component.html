@@ -49,6 +49,13 @@
           <div id="report-tags">
             <div style="display: -webkit-box;padding-bottom: 1.5%;;">
               <h3><span style="text-transform: none">Tất cả câu hỏi của</span> {{appUser$.socialUser.firstName}}</h3>
+              <div>
+                Sắp xếp theo <select (change)="sortBy($event.target.value)">
+                <option value="viewCount">Lượt thích</option>
+                <option value="upvoteCount">Lượt xem</option>
+                <option value="date">Thời gian</option>
+              </select>
+              </div>
             </div>
 
             <div class="scrollable">

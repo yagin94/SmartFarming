@@ -318,4 +318,7 @@ export class QaPageDetailComponent implements OnInit {
   pop(answer) {
     console.log('=========================================', answer);
   }
+  userDetail(userId: number) {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+  }
 }

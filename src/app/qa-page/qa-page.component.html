@@ -64,18 +64,18 @@
               <li *ngFor="let object of getObject$.qa" style="color: black;margin-bottom: 0px;border-bottom: groove;">
                 <article style="padding-top: 2%">
                   <header>
-                    <figure class="avatar" style="float: left;"><img
+                    <figure class="avatar" style="float: left; cursor: pointer"><img
                       *ngIf="object.appUser!=null&&object.appUser.anonymous==true"
                       src="../../assets/images/demo/avatar.png" alt="">
                       <img *ngIf="object.appUser==null"
                            src="../../assets/images/demo/avatar.png" alt="">
                       <img *ngIf="object.appUser!=null&&object.appUser.anonymous==false"
-                           src="{{object.appUser.socialUser.photoUrl}}" alt="">
+                           src="{{object.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(object.appUser.userId)">
                     </figure>
                     <address style="text-align: left;color: dodgerblue;margin-left: 7%;">
                       <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
                       <a href="#" *ngIf="object.appUser==null">anonymous </a>
-                      <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==false">{{object.appUser.socialUser.name}}</a>
+                      <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==false" (click)="userDetail(object.appUser.userId)">{{object.appUser.socialUser.name}}</a>
                       <time style="font-size: 13px;float: right; "><span
                         style="color: #7c7f85 !important;">Ngày đăng:</span>{{object.utilTimestamp
                         | date: 'yyyy-MM-dd'}}
@@ -111,7 +111,8 @@
                 </div>
                 <div class="pagination" *ngIf="checkPaging$=='tag'">
                   <a>&laquo;</a>
-                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQaByTag(sortBy$,tagId,i)">{{i}}</a>
+                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
+                     (click)="getQaByTag(sortBy$,tagId,i)" onclick="setStyle()" id="numberIndex">{{i}}</a>
                   <a>&raquo;</a>
                 </div>
               </div>

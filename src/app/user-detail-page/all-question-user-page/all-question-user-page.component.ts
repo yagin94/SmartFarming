@@ -28,7 +28,7 @@ export class AllQuestionUserPageComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.appUser$ = JSON.parse(localStorage.getItem('currentAppUser'));
-    this.getAllQuestionOfUser(this.sortBy$,this.appUser$.userId,this.pageNumber$);
+    this.getAllQuestionOfUser(this.sortBy$, this.appUser$.userId, this.pageNumber$);
   }
 
   getAllQuestionOfUser(type: string, userId: number, pageNumber: number): void {
@@ -40,18 +40,8 @@ export class AllQuestionUserPageComponent implements OnInit {
     return Array(numberOfPage);
   }
 
-  sortByView() {
-    this.sortBy$ = 'viewCount';
-    this.getAllQuestionOfUser(this.sortBy$, this.appUser$.userId, this.pageNumber$);
-  }
-
-  sortByUpvote() {
-    this.sortBy$ = 'upvoteCount';
-    this.getAllQuestionOfUser(this.sortBy$, this.appUser$.userId, this.pageNumber$);
-  }
-
-  sortByDate() {
-    this.sortBy$ = 'date';
+  sortBy(sortBy: string) {
+    this.sortBy$ = sortBy;
     this.getAllQuestionOfUser(this.sortBy$, this.appUser$.userId, this.pageNumber$);
   }
 }

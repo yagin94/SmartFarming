@@ -6,10 +6,13 @@ import {AppUser} from '../../qa-page/qa.model';
 import {Globals} from '../globalVariables';
 import {Router} from '@angular/router';
 import {Local} from 'protractor/built/driverProviders';
+import {HeaderService} from './header.service';
+import {GetNotif, Notifications} from './header.model';
+import {Observable} from 'rxjs';
 
 
 @Component({
-  providers: [LoginService, Globals],
+  providers: [LoginService, Globals, HeaderService],
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
@@ -19,11 +22,17 @@ export class HeaderComponent implements OnInit {
   user: SocialUser;
   checkAdmin = '';
   id: number;
+  appUserByIp$: AppUser;
+  getNotif$: GetNotif = new GetNotif();
+  pageIndex = 0;
 
-  constructor(private authService: AuthService, private http: HttpClient, private globals: Globals, private router: Router) {
+  constructor(private authService: AuthService,
+              private headerService: HeaderService,
+              private http: HttpClient, private globals: Globals, private router: Router) {
   }
 
   ngOnInit() {
+    this.getUserByIpAddress();
     if (localStorage.getItem('currentAppUser')) {
       this.id = JSON.parse(localStorage.getItem('currentAppUser')).userId;
     }
@@ -32,7 +41,7 @@ export class HeaderComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.user = user;
     });
-
+    this.getNotif();
   }
 
   checkRole() {
@@ -74,8 +83,10 @@ export class HeaderComponent implements OnInit {
       .then((x) => {
         this.user = x;
         this.sendToRestApiMethod(this.user.idToken);
+        window.location.replace(window.location.href);
       }).catch((x) => {
     });
+
   }
 
   getAuthorizationToken() {
@@ -140,7 +151,59 @@ export class HeaderComponent implements OnInit {
 
   userDetail(userId: number) {
     console.log(userId);
-    this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+    window.location.replace(`/user-detail-page?id=${userId}`);
   }
 
+  getUserByIpAddress() {
+    this.headerService.getUserByIpAddres().subscribe(res => {
+      this.appUserByIp$ = res;
+      localStorage.setItem('anonymousUser', JSON.stringify(this.appUserByIp$));
+    });
+  }
+
+  getNotif() {
+    if (localStorage.getItem('currentAppUser')) {
+      const userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
+      this.headerService.getNotification(userId, this.pageIndex).subscribe(res => {
+        this.getNotif$ = res;
+        console.log(`================================================`, this.getNotif$);
+      });
+    } else if (localStorage.getItem('anonumousUser')) {
+      const userId = JSON.parse(localStorage.getItem('anonumousUser')).userId;
+      this.headerService.getNotification(userId, this.pageIndex).subscribe(res => {
+        this.getNotif$ = res;
+      });
+    } else {
+      this.getNotif$.notificationsByPageIndex.message = 'không có thông báo nào';
+    }
+  }
+
+  seeNotif(notif: Notifications) {
+    // this.router.navigate(['/qa-page-detail'], {queryParams: {id: questionId}});
+    if (notif.question) {
+      window.location.replace(`http://localhost:4200/qa-page-detail?id=${notif.question.questionId}`);
+    } else {
+      window.location.replace(`http://localhost:4200/article-detail-page?id=${notif.article.articleId}`);
+    }
+  }
+
+  unsubscribeNotif(notif: Notifications) {
+    if (notif.question) {
+      const noti: Notifications = new Notifications();
+      noti.notificationId = notif.notificationId;
+      noti.appUserReceiver.userId = notif.appUserReceiver.userId;
+      noti.question.questionId = notif.question.questionId;
+      this.headerService.unsubscribeNotif(noti).subscribe();
+    } else {
+      const noti: Notifications = new Notifications();
+      noti.notificationId = notif.notificationId;
+      noti.appUserReceiver.userId = notif.appUserReceiver.userId;
+      noti.article.articleId = notif.article.articleId;
+      this.headerService.unsubscribeNotif(noti).subscribe();
+    }
+  }
+  deleteNotif(id: number) {
+    this.headerService.deleteNotif(id).subscribe();
+    this.getNotif();
+  }
 }

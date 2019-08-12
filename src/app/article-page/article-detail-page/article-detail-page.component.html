@@ -14,7 +14,7 @@
       <nav id="mainav" class="fl_right">
         <ul class="clear">
           <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a class="drop" href="/article-page" routerLinkActive="active">Kiến thức</a>
+          <li><a class="drop" href="article-page/app-trang-chinh">Kiến thức</a>
             <ul>
               <li><a href="article-page/app-ki-thuat-trong">Kỹ thuật trồng</a></li>
               <li><a href="article-page/app-thu-hoach-va-bao-quan">Thu hoạch & Bảo quản</a></li>
@@ -43,12 +43,6 @@
 <div class="wrapper row2">
   <div id="breadcrumb" class="hoc clear">
     <!-- ################################################################################################ -->
-    <ul class="">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="article-page/app-ki-thuat-trong">Kiến thức</a></li>
-      <li><a href="article-page/app-sau-benh">Sâu bệnh</a></li>
-      <li><a>Bài viết về sâu bệnh</a></li>
-    </ul>
     <!-- ################################################################################################ -->
   </div>
 </div>
@@ -116,26 +110,40 @@
                   <img *ngIf="comment.appUser!=null&&comment.appUser.anonymous==false"
                        src="{{comment.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(comment.appUser.userId)" ></figure>
                 <address>
-                  By <a href="#">A</a>
+                  By <a style="cursor: pointer">{{comment.appUser.socialUser.name}}</a>
                 </address>
-                <time datetime="2045-04-06T08:15+00:00">Friday, 6<sup>th</sup> April 2019 @08:15:00</time>
+                <time><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{comment.utilTimestamp
+                  | date: 'yyyy-MM-dd'}}
+                </time>
               </header>
               <div class="comcont">
                 <p>{{comment.content}}</p>
               </div>
             </article>
-            <figure class="avatar"><a style="cursor: pointer" (click)="deleteComment(comment.commentId)">Xóa bình luận</a></figure>
+            <figure *ngIf="checkAuthenAnswer(comment)" class="avatar"><a style="cursor: pointer" (click)="editComment(comment)" [ngx-scroll-to]="editAns">Sửa bình luận</a></figure>
+            <figure *ngIf="checkAuthenAnswer(comment)" class="avatar"><a style="cursor: pointer" (click)="deleteComment(comment.commentId)">Xóa bình luận</a></figure>
           </li>
 
         </ul>
-        <h2>Bình luận</h2>
-        <form action="#" method="post">
+        <h2 #editAns>Bình luận</h2>
+        <form action="#" method="post" *ngIf="!checkEditComment$">
           <div class="block clear">
             <label for="comment">Bình luận của bạn</label>
             <textarea name="comment" id="comment" cols="25" rows="10" [(ngModel)]="ansContent" [ngModelOptions]="{standalone: true}"></textarea>
           </div>
           <div>
             <input type="submit" name="submit" value="Đăng" (click)="addComment(ansContent)">
+            &nbsp;
+            <input type="reset" name="reset" value="Đặt lại">
+          </div>
+        </form>
+        <form action="#" method="post" *ngIf="checkEditComment$">
+          <div class="block clear">
+            <label for="comment">Bình luận của bạn</label>
+            <textarea name="comment" id="comment" cols="25" rows="10" [(ngModel)]="ansContent" [ngModelOptions]="{standalone: true}"></textarea>
+          </div>
+          <div>
+            <input type="submit" name="submit" value="Cập nhật" (click)="updateComment(ansContent)">
             &nbsp;
             <input type="reset" name="reset" value="Đặt lại">
           </div>

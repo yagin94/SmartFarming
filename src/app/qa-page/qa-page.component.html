@@ -23,15 +23,16 @@
           <ul class="clear">
             <li></li>
             <li><a href="index.html">Trang chủ</a></li>
-            <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
+            <li><a class="drop" href="article-page/app-trang-chinh">Kiến thức</a>
               <ul>
-                <li><a href="">Kỹ thuật trồng</a></li>
-                <li><a href="">Thu hoạch & Bảo quản</a></li>
-                <li><a href="">Phân bón</a></li>
-                <li><a href="">Thuốc bảo vệ thực vật</a></li>
-                <li><a href="">Sâu bệnh</a></li>
-                <li><a href="">Kỹ thuật nhân giống</a></li>
-                <li><a href="">Giống cây</a></li>
+                <li><a href="article-page/app-ki-thuat-trong">Kỹ thuật trồng</a></li>
+                <li><a href="article-page/app-thu-hoach-va-bao-quan">Thu hoạch & Bảo quản</a></li>
+                <li><a href="article-page/app-phan-bon">Phân bón</a></li>
+                <li><a href="article-page/app-thuoc-bao-ve-thuc-vat">Thuốc bảo vệ thực vật</a></li>
+                <li><a href="article-page/app-sau-benh">Sâu bệnh</a></li>
+                <li><a href="article-page/app-ky-thuat-nhan-giong">Kỹ thuật nhân giống</a></li>
+                <li><a href="article-page/app-giong-cay">Giống cây</a></li>
+                <li><a href="article-page/app-trang-chinh">Chủ đề nổi bật</a></li>
               </ul>
             </li>
             <li class="active"><a routerLink="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
@@ -57,6 +58,7 @@
             <span id="sort-qa-time" onclick="sortQA_time()" (click)="sortByDate()"
                   style="background-color: gainsboro;cursor: pointer;">Thời gian đăng</span>
           </div>
+          <h1 *ngIf="checkSearch">Kết quả tìm kiếm của "{{questionTitle.value}}"</h1>
           <div style="margin-top: 2%;">
             <ul>
 
@@ -73,9 +75,9 @@
                            src="{{object.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(object.appUser.userId)">
                     </figure>
                     <address style="text-align: left;color: dodgerblue;margin-left: 7%;">
-                      <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
-                      <a href="#" *ngIf="object.appUser==null">anonymous </a>
-                      <a href="#" *ngIf="object.appUser!=null&&object.appUser.anonymous==false" (click)="userDetail(object.appUser.userId)">{{object.appUser.socialUser.name}}</a>
+                      <a *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
+                      <a *ngIf="object.appUser==null">anonymous </a>
+                      <a *ngIf="object.appUser!=null&&object.appUser.anonymous==false" (click)="userDetail(object.appUser.userId)">{{object.appUser.socialUser.name}}</a>
                       <time style="font-size: 13px;float: right; "><span
                         style="color: #7c7f85 !important;">Ngày đăng:</span>{{object.utilTimestamp
                         | date: 'yyyy-MM-dd'}}
@@ -86,10 +88,10 @@
                       <a class="title-qa" (click)="edit(object)">{{object.title}}</a>
                     </h3>
                   </header>
-                  <div class="comcont">
-                    <p style="max-width: 100% !important;text-align: left;color: grey"
-                       innerHTML="{{object.content}}"></p>
-                  </div>
+                  <!--<div class="comcont">-->
+                    <!--<p style="max-width: 100% !important;text-align: left;color: grey"-->
+                       <!--innerHTML="{{object.content}}"></p>-->
+                  <!--</div>-->
                   <div class="question-tag">
 
                     <p *ngFor="let tag of object.tags" style="padding: 0% 1% !important;"
@@ -106,13 +108,18 @@
               <div class="phan-trang clear">
                 <div class="pagination" *ngIf="checkPaging$=='viewAndDate'">
                   <a>&laquo;</a>
-                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(sortBy$,i)">{{i}}</a>
+                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(sortBy$,i)">{{i+1}}</a>
+                  <a>&raquo;</a>
+                </div>
+                <div class="pagination" *ngIf="checkPaging$=='search'">
+                  <a>&laquo;</a>
+                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="searchQa(questionTitle.value, i)">{{i}}</a>
                   <a>&raquo;</a>
                 </div>
                 <div class="pagination" *ngIf="checkPaging$=='tag'">
                   <a>&laquo;</a>
                   <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
-                     (click)="getQaByTag(sortBy$,tagId,i)" onclick="setStyle()" id="numberIndex">{{i}}</a>
+                     (click)="getQaByTag(sortBy$,tagId,i)" onclick="setStyle()" id="numberIndex">{{i+1}}</a>
                   <a>&raquo;</a>
                 </div>
               </div>

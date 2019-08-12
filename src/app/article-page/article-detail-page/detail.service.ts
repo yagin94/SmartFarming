@@ -2,7 +2,7 @@ import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AddAnsObj, Answers, Qa} from '../../qa-page/qa.model';
-import {Article} from '../article.model';
+import {Article, Comments} from '../article.model';
 import {AddArticle} from '../article-post-page/article-post.model';
 import {AddCommentObj} from './detail.model';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
@@ -24,6 +24,9 @@ export class ArticleDetailService {
   }
   addComment(comment: AddCommentObj): Observable<Article> {
     return this.http.post<Article>('http://localhost:8080/comment/addComment', comment);
+  }
+  updateComment(commentId: number, comment: AddCommentObj): Observable<Comments> {
+    return this.http.put<Comments>(`http://localhost:8080/comment/updateComment/${commentId}`, comment);
   }
   deleteAnswer(commentId: number): Observable<{}> {
     const url = `http://localhost:8080/comment/deleteComment/${commentId}`;

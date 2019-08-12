@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Article} from '../article.model';
+import {Article, Comments} from '../article.model';
 import {ArticleDetailService} from './detail.service';
 import {DataShareService} from '../../share-data-service/date-share-service';
-import {AddAnsObj, AppUser, Q} from '../../qa-page/qa.model';
+import {AddAnsObj, Answers, AppUser, Q} from '../../qa-page/qa.model';
 import {A, AddCommentObj} from './detail.model';
 import {Observable} from 'rxjs';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
@@ -25,7 +25,9 @@ export class ArticleDetailPageComponent implements OnInit {
   userName$: string;
   appUser$: AppUser = new AppUser();
   getAllArticle$: GetAllArticle = new GetAllArticle();
-
+  checkEditComment$ = false;
+  editComment$: Comments;
+  compare$: number;
   constructor(private route: ActivatedRoute,
               private router: Router,
               private dataShareService: DataShareService,
@@ -84,7 +86,8 @@ export class ArticleDetailPageComponent implements OnInit {
   editArticle(article: Article) {
     this.editArticle$ = article;
     this.dataShareService.setShareData(article);
-    this.router.navigate(['./article-post-page'], {queryParams: {id: article.articleId}});
+    // this.router.navigate(['./article-post-page'], {queryParams: {id: article.articleId}});
+    window.location.replace(`/article-detail-page?id=${article.articleId}`);
   }
 
   addComment(ansewerContent: string): void {
@@ -112,7 +115,11 @@ export class ArticleDetailPageComponent implements OnInit {
     });
     // console.log(x);
   }
-
+  editComment(comment: Comments) {
+    this.checkEditComment$ = true;
+    this.editComment$ = comment;
+    this.ansContent = comment.content;
+  }
   deleteComment(commentId: number): void {
     if (confirm('are you sure to delete this answer')) {
       // this.answer$ = this.answer$.filter(h => h !== answerId);
@@ -125,6 +132,20 @@ export class ArticleDetailPageComponent implements OnInit {
         });
     }
   }
+  updateComment(content: string) {
+    const u: AppUser = new AppUser();
+    u.userId = this.editComment$.appUser.userId;
+    const ar: Article = new Article();
+    ar.articleId = this.article$.articleId;
+    const a: AddCommentObj = new AddCommentObj(content, u, ar);
+    this.articleDetailService.updateComment(this.editComment$.commentId, a).subscribe(
+      onSuccess => {
+        this.getArticleDetail(this.data);
+        this.checkEditComment$ = false;
+        this.ansContent = '';
+      }
+    );
+  }
   getTopArticle(): void {
     this.articleDetailService.getTopArticle().subscribe(top => this.getAllArticle$ = top);
   }
@@ -133,5 +154,34 @@ export class ArticleDetailPageComponent implements OnInit {
       return true;
     }
     return false;
+  }
+  checkAuthenAnswer(comment: Answers) {
+    if (JSON.parse(localStorage.getItem('currentAppUser')) == null) {
+      this.compare$ = JSON.parse(localStorage.getItem('anonymousUser')).userId;
+      if (comment.appUser != null) {
+        if (this.compare$ == comment.appUser.userId) {
+          // console.log((localStorage.getItem('currentAppUser')).userId);
+          // console.log(this.qa$.appUser.userId);
+          // console.log(this.compare$);
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else if (JSON.parse(localStorage.getItem('currentAppUser')) != null) {
+      this.compare$ = JSON.parse(localStorage.getItem('currentAppUser')).userId;
+      if (comment.appUser != null) {
+        if (this.compare$ == comment.appUser.userId) {
+          // console.log((localStorage.getItem('currentAppUser')).userId);
+          // console.log(this.qa$.appUser.userId);
+          // console.log(this.compare$);
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
   }
 }

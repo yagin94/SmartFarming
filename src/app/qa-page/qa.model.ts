@@ -94,7 +94,8 @@ export class AppUser {
   viewCount: number;
   cvUrl: string;
   role: string;
-
+  createdTimeByUtilTimeStamp: string;
+  lastActiveByUtilTimeStamp: string;
   constructor() {
   }
 }
@@ -169,4 +170,21 @@ export class TextSearch {
   constructor(textSearch: string) {
     this.textSearch = textSearch;
   }
+}
+
+export class SearchUserByTag {
+  appUserTagId: number;
+  appUser: AppUser;
+  tag: Tag;
+  reputation: number;
+  viewCount: number;
+}
+
+export class ResponseReport {
+  reportId: number;
+  appUser: AppUser;
+  reason: string;
+  message: string;
+  question: Qa;
+  utilTimestamp: string;
 }

@@ -17,6 +17,7 @@ export class A {
   constructor(id: number) {
     this.articleId = id;
   }
+
 }
 
 

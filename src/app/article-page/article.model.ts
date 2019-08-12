@@ -10,11 +10,22 @@ export class Article {
   tags: Tag[];
   utilTimestamp: string;
   uploadedFiles: UploadedFiles[];
-  comments: any;
+  comments: Comments;
   upvotedUserIds: any;
   upvoteCount: number;
   viewCount: number;
 
   constructor() {
+  }
+}
+export class Comments {
+  commentId: number;
+  content: string;
+  appUser: AppUser;
+  utilTimestamp: string;
+  upvotedUserIds: any;
+  upvoteCount: any;
+  constructor() {
+
   }
 }

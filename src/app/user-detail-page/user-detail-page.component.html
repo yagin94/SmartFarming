@@ -1,4 +1,3 @@
-
 <!-- Phan Link dia chi lien ket hoi dap ... -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -15,19 +14,20 @@
       <nav id="mainav" class="fl_right">
         <ul class="clear" style="margin-top: 3%;font-size: 17px">
           <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a class="drop" href="/article-page" routerLinkActive="active">Kiến thức</a>
+          <li><a class="drop" href="article-page/app-trang-chinh">Kiến thức</a>
             <ul>
-              <li><a href="">Kỹ thuật trồng</a></li>
-              <li><a href="">Thu hoạch & Bảo quản</a></li>
-              <li><a href="">Phân bón</a></li>
-              <li><a href="">Thuốc bảo vệ thực vật</a></li>
-              <li><a href="">Sâu bệnh</a></li>
-              <li><a href="">Kỹ thuật nhân giống</a></li>
-              <li><a href="">Giống cây</a></li>
+              <li><a href="article-page/app-ki-thuat-trong">Kỹ thuật trồng</a></li>
+              <li><a href="article-page/app-thu-hoach-va-bao-quan">Thu hoạch & Bảo quản</a></li>
+              <li><a href="article-page/app-phan-bon">Phân bón</a></li>
+              <li><a href="article-page/app-thuoc-bao-ve-thuc-vat">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="article-page/app-sau-benh">Sâu bệnh</a></li>
+              <li><a href="article-page/app-ky-thuat-nhan-giong">Kỹ thuật nhân giống</a></li>
+              <li><a href="article-page/app-giong-cay">Giống cây</a></li>
+              <li><a href="article-page/app-trang-chinh">Chủ đề nổi bật</a></li>
             </ul>
           </li>
-          <li><a  href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
-          <li><a  href="#">Liên hệ</a></li>
+          <li><a href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
+          <li><a href="#">Liên hệ</a></li>
 
         </ul>
 
@@ -46,27 +46,29 @@
     <nav class="sidebar one_quarter first">
       <div class="div-menu-left">
         <div *ngIf="!isFlatEdit">
-          <img  src="{{srcImg}}" style="border-radius: 50%;" >
+          <img src="{{srcImg}}" style="border-radius: 50%;">
           <input [(ngModel)]="nameUserInput" [ngModelOptions]="{standalone: true}" readonly/>
           <input style="font-weight: unset;" [(ngModel)]="emailUser" [ngModelOptions]="{standalone: true}" readonly/>
           <span style="float: left;margin-left: 2.5%;">Link CV: </span>
           <a *ngIf="check" style="font-weight: unset;text-align:left" [(ngModel)]="linkCV"
              [ngModelOptions]="{standalone: true}" href="{{linkCV}}">{{linkCV}}</a>
           <input *ngIf="!check" style="font-weight: unset;text-align:left" [(ngModel)]="linkCV"
-                 [ngModelOptions]="{standalone: true}" />
+                 [ngModelOptions]="{standalone: true}"/>
         </div>
         <div *ngIf="isFlatEdit">
-          <img  src="{{srcImg}}" style="border-radius: 50%;" >
+          <img src="{{srcImg}}" style="border-radius: 50%;">
           <input [(ngModel)]="nameUserInput" [ngModelOptions]="{standalone: true}"/>
           <input style="font-weight: unset;" [(ngModel)]="emailUser" [ngModelOptions]="{standalone: true}"/>
           <a><input style="font-weight: unset;text-align:left" placeholder="Tải lên CV(.jpg .pdf)" [(ngModel)]="linkCV"
-                 [ngModelOptions]="{standalone: true}" type="file" id="picked" #picked (change)="onPicked($event)"/></a>
+                    [ngModelOptions]="{standalone: true}" type="file" id="picked" #picked (change)="onPicked($event)"/></a>
 
         </div>
         <div class="buttin-logout">
-          <div class="btn btn-info btn-lg">
-            <div *ngIf="!isFlatEdit" class="glyphicon glyphicon-log-out" (click)="updateUser()">Chỉnh sửa</div>
-            <div  *ngIf="isFlatEdit" (click)="saveUserInfo();">Lưu</div>
+          <div class="btn btn-info btn-lg" *ngIf="checkAuthenEdit(appUserGG$)">
+            <div *ngIf="!isFlatEdit" class="glyphicon glyphicon-log-out"
+                 (click)="updateUser()">Chỉnh sửa
+            </div>
+            <div *ngIf="isFlatEdit" (click)="saveUserInfo();">Lưu</div>
           </div>
         </div>
       </div>
@@ -86,7 +88,7 @@
           </tr>
           <tr class="table-report-first">
             <td>Số tags</td>
-            <td class="number-user">{{getTotalTagOfUser$}} </td>
+            <td class="number-user">{{getTotalTagOfUser$}}</td>
 
           </tr>
 
@@ -98,7 +100,6 @@
           </tbody>
         </table>
       </div>
-
 
 
     </nav>
@@ -126,8 +127,9 @@
               <h3>Top tags </h3>
 
             </div>
-            <div id="span-tags" style="min-height: 5rem;" >
-              <div class="tag-infor" *ngFor="let object of getTopTagOfUser$.tagsByPageIndex" ><a href="" class="name-tag">{{object.name}}</a>
+            <div id="span-tags" style="min-height: 5rem;" *ngIf="getTopTagOfUser$ != null">
+              <div class="tag-infor" *ngFor="let object of getTopTagOfUser$.tagsByPageIndex">
+                <a href="" class="name-tag">{{object.name}}</a>
                 <span class="infor-tag">Điểm: {{object.reputation}} </span> <!-- -->
                 <span class="infor-tag">Lượt xem: {{object.viewCount}}</span> <!---->
               </div>
@@ -142,26 +144,25 @@
           <div id="report-question">
             <div style="display: -webkit-box;">
               <h3>Top câu hỏi ({{totalQuestionOfuser$}})</h3>
-              <select style="width: auto;margin: 10%;" (change)="sortBy($event.target.value)" >
+              <select style="width: auto;margin: 10%;" (change)="sortBy($event.target.value)">
                 <option value="viewCount">Sắp xếp theo lượt xem</option>
-                <option value="upvoteCount ">Sắp xếp theo lượt thích </option>
-                <option value="date">Sắp xếp theo thời gian </option>
+                <option value="upvoteCount ">Sắp xếp theo lượt thích</option>
+                <option value="date">Sắp xếp theo thời gian</option>
               </select>
             </div>
             <table id="table-report">
-              <tr class="table-report-first" *ngFor="let qa of getTopQuestionOfUser$.qa" >
+              <tr class="table-report-first" *ngFor="let qa of getTopQuestionOfUser$.qa">
                 <td class="viewQuestion">{{qa.viewCount}}</td>
-                <td style="padding-top: 15px;"><a
-                  href="">{{qa.title}}</a></td>
+                <td style="padding-top: 15px;"><a (click)="questionDetail(qa)">{{qa.title}}</a></td>
                 <td class="time-user-detail">{{qa.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
               </tr>
 
             </table>
             <div>
-              <h5 style="text-transform: none;float: right;"><a href="/all-question-user">Xem tất cả câu hỏi ở đây -></a></h5>
+              <h5 style="text-transform: none;float: right;"><a (click)="goToAllQuestionuser()">Xem tất cả câu hỏi ở đây
+                -></a></h5>
             </div>
           </div>
-
 
 
           <!--end số liệu -->

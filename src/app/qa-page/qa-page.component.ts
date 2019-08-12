@@ -58,7 +58,10 @@ export class QaPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getObjectTopQa$ = new GetObjectTopQa();
     this.getObject$ = new GetObject();
+    this.getObjectTopTag$ = new GetObjectTopTag();
+    this.getObjectTopUser$ = new GetObjectTopUser();
     this.route.queryParams.subscribe(params => this.data = params.id);
     if (this.data == null) {
       this.getQa(this.sortBy$, this.pageIndex$);
@@ -175,6 +178,7 @@ export class QaPageComponent implements OnInit {
   }
 
   searchQa(searchTerm: string, pageIndex: number) {
+    this.checkPaging$ = 'search';
     this.checkSearch = true;
     console.log('=========================', searchTerm);
     if (searchTerm) {

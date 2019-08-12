@@ -43,7 +43,9 @@ export class ArticlePostPageComponent implements OnInit {
     this.subString = array.split(',');
     for (let i = 0; i < this.subString.length; i++) {
       this.tag = new Tag(this.subString[i], 'dfasdfasdfasdf');
-      this.tags.push(this.tag);
+      if (this.tags.length < 5) {
+        this.tags.push(this.tag);
+      }
     }
     const a: AddArticle = new AddArticle();
     a.title = title;
@@ -68,7 +70,9 @@ export class ArticlePostPageComponent implements OnInit {
     this.subString = array.split(',');
     for (let i = 0; i < this.subString.length; i++) {
       this.tag = new Tag(this.subString[i], 'dfasdfasdfasdf');
-      this.tags.push(this.tag);
+      if (this.tags.length < 5) {
+        this.tags.push(this.tag);
+      }
     }
     const a: AddArticle = new AddArticle();
     a.title = title;

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as CanvasJS from '../../app/manager-page/http_canvasjs.com_assets_script_canvasjs.min';
-import {AppUser} from '../qa-page/qa.model';
+import {Answers, AppUser, Qa} from '../qa-page/qa.model';
 import {ChartData, GetTotalTagsOfUser, GetUserDetailInfor, UpLoadFile, UserDetailInfor} from './user-detail-page.model';
 import {HeaderComponent} from '../common/header/header.component';
 import {UserDetailPageService} from './user-detail-page.service';
@@ -18,12 +18,12 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./user-detail-page.component.css']
 })
 export class UserDetailPageComponent implements OnInit {
-  appUserGG$: AppUser;
+  appUserGG$ = new AppUser();
   appUser$ = new AppUser();
   userDetail$: UserDetailInfor;
   data: any;
-  getTopTagOfUser$: GetTopTagOfUser;
-  getTopQuestionOfUser$: GetTopQuestionOfUser;
+  getTopTagOfUser$ = new GetTopTagOfUser();
+  getTopQuestionOfUser$ = new GetTopQuestionOfUser();
   getUserDeatilInfor$: any;
   getTotalTagOfUser$: any;
   totalQuestionOfuser$ = 0;
@@ -40,13 +40,27 @@ export class UserDetailPageComponent implements OnInit {
   isFlatEdit = false;
 
   uploadForm: FormGroup;
-  upLoadFile: UpLoadFile;
+  upLoadFile = new UpLoadFile();
   check = false;
   nameCV = '';
+  compare$: number;
 
   init() {
     // this.drawChart();
 
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => this.data = params.id);
+    this.init();
+    // this.appUserGG$ = JSON.parse(localStorage.getItem('currentAppUser'));
+    this.getViewUser(this.data);
+    this.uploadForm = this.formBuilder.group({
+      profile: ['']
+    });
+    if (this.linkCV == null) {
+      this.check = true;
+    }
   }
 
   constructor(private userDetailPageService: UserDetailPageService,
@@ -87,18 +101,6 @@ export class UserDetailPageComponent implements OnInit {
     chart.render();
   }
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => this.data = params.id);
-    this.init();
-    // this.appUserGG$ = JSON.parse(localStorage.getItem('currentAppUser'));
-    this.getViewUser(this.data);
-    this.uploadForm = this.formBuilder.group({
-      profile: ['']
-    });
-    if (this.linkCV == null) {
-      this.check = true;
-    }
-  }
 
   /** getUserDetail TinhNX*/
 
@@ -169,7 +171,8 @@ export class UserDetailPageComponent implements OnInit {
 
   sortBy(sortBy: string) {
     this.sortBy$ = sortBy;
-    this.getTopQuestionOfUser(this.sortBy$, this.appUserGG$.userId);
+    this.getTopQuestionOfUser(this.sortBy$, this.data);
+    console.log('thisData', this.data);
   }
 
   updateUser() {
@@ -218,4 +221,28 @@ export class UserDetailPageComponent implements OnInit {
 
   }
 
+  checkAuthenEdit(appUser: AppUser) {
+    if (JSON.parse(localStorage.getItem('currentAppUser')) == null) {
+      return false;
+    } else if (JSON.parse(localStorage.getItem('currentAppUser')) != null) {
+      this.compare$ = JSON.parse(localStorage.getItem('currentAppUser')).userId;
+      if (appUser != null) {
+        if (this.compare$ === appUser.userId) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+  }
+
+  questionDetail(qa: Qa) {
+    this.router.navigate(['/qa-page-detail'], {queryParams: {id: qa.questionId}});
+  }
+
+  goToAllQuestionuser() {
+    this.router.navigate(['/all-question-user'], {queryParams: {id: this.data}});
+  }
 }

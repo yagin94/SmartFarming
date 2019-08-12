@@ -15,15 +15,16 @@
       <nav id="mainav" class="fl_right">
         <ul class="clear">
           <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a class="drop" routerLink="/article-page" routerLinkActive="active">Kiến thức</a>
+          <li><a class="drop" href="article-page/app-trang-chinh">Kiến thức</a>
             <ul>
-              <li><a href="">Kỹ thuật trồng</a></li>
-              <li><a href="">Thu hoạch & Bảo quản</a></li>
-              <li><a href="">Phân bón</a></li>
-              <li><a href="">Thuốc bảo vệ thực vật</a></li>
-              <li><a href="">Sâu bệnh</a></li>
-              <li><a href="">Kỹ thuật nhân giống</a></li>
-              <li><a href="">Giống cây</a></li>
+              <li><a href="article-page/app-ki-thuat-trong">Kỹ thuật trồng</a></li>
+              <li><a href="article-page/app-thu-hoach-va-bao-quan">Thu hoạch & Bảo quản</a></li>
+              <li><a href="article-page/app-phan-bon">Phân bón</a></li>
+              <li><a href="article-page/app-thuoc-bao-ve-thuc-vat">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="article-page/app-sau-benh">Sâu bệnh</a></li>
+              <li><a href="article-page/app-ky-thuat-nhan-giong">Kỹ thuật nhân giống</a></li>
+              <li><a href="article-page/app-giong-cay">Giống cây</a></li>
+              <li><a href="article-page/app-trang-chinh">Chủ đề nổi bật</a></li>
             </ul>
           </li>
           <li><a href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
@@ -46,8 +47,9 @@
         <li style="color: black;margin-bottom: 0px;border-bottom: groove;margin-top: 10px;padding: 15px 15px 0 15px;">
           <article>
             <header>
-              <figure class="avatar" style="float: left;cursor: pointer"><img *ngIf="qa$.appUser!=null&&qa$.appUser.anonymous==true"
-                                                                                 src="../../assets/images/demo/avatar.png" alt="">
+              <figure class="avatar" style="float: left;cursor: pointer"><img
+                *ngIf="qa$.appUser!=null&&qa$.appUser.anonymous==true"
+                src="../../assets/images/demo/avatar.png" alt="">
                 <img *ngIf="qa$.appUser==null"
                      src="../../assets/images/demo/avatar.png" alt="">
                 <img *ngIf="qa$.appUser!=null&&qa$.appUser.anonymous==false"
@@ -71,30 +73,60 @@
             </div>
             <div class="question-tag">
 
-              <p *ngFor="let tag of qa$.tags" style="padding: 0% 1% !important;" (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
+              <p *ngFor="let tag of qa$.tags" style="padding: 0% 1% !important;" (click)="getQaByTag(tag.tagId)">
+                {{tag.name}}</p>
 
             </div>
 
             <!--<div class="question-footer">-->
-              <!--<button style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a> Thích</a>-->
-              <!--</button>-->
-              <!--<button style="padding-top: 3px;" class="btn like share"><i class="fa fa-share"></i><a-->
-                <!--(click)="facebookSharing(shareObj)">-->
-                <!--Chia sẻ</a>-->
-              <!--</button>-->
+            <!--<button style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a> Thích</a>-->
+            <!--</button>-->
+            <!--<button style="padding-top: 3px;" class="btn like share"><i class="fa fa-share"></i><a-->
+            <!--(click)="facebookSharing(shareObj)">-->
+            <!--Chia sẻ</a>-->
+            <!--</button>-->
             <!--</div>-->
             <div class="question-footer">
-              <div *ngIf="!checkLikeButton$" style="padding-top: 3px; cursor: pointer" (click)="upvoteQuestion(qa$.questionId)"><i class="fa fa-heart icon-like"></i><a>Thích</a></div>
-              <div *ngIf="checkLikeButton$" style="padding-top: 3px; cursor: pointer" (click)="upvoteQuestion(qa$.questionId)"><i class="fa fa-heart icon-like"></i><a>Đã thích</a></div>
-              <div style="padding-top: 3px; cursor: pointer" (click)="facebookSharing(shareObj)"><i class="fa fa-heart icon-like"></i><a>Chia sẻ</a></div>
+              <div *ngIf="!checkLikeButton$" style="padding-top: 3px; cursor: pointer"
+                   (click)="upvoteQuestion(qa$.questionId)"><i class="fa fa-heart icon-like"></i><a>Thích</a></div>
+              <div *ngIf="checkLikeButton$" style="padding-top: 3px; cursor: pointer"
+                   (click)="upvoteQuestion(qa$.questionId)"><i class="fa fa-heart icon-like"></i><a>Đã thích</a></div>
+              <div style="padding-top: 3px; cursor: pointer" (click)="facebookSharing(shareObj)"><i
+                class="fa fa-heart icon-like"></i><a>Chia sẻ</a></div>
             </div>
 
             <div class="report-delete">
-              <div *ngIf="checkAuthen()" style="border: none;cursor: pointer;"><i class="fa fa-edit"></i><a (click)="edit(qa$)">Chỉnh sửa câu hỏi</a>
+              <div *ngIf="checkAuthen()" style="border: none;cursor: pointer;"><i class="fa fa-edit"></i><a
+                (click)="edit(qa$)">Chỉnh sửa câu hỏi</a>
               </div>
-              <div *ngIf="checkAuthen()" style="border: none;cursor: pointer;"><i class="fa fa-delicious"></i><a (click)="deleteQa(qa$.questionId)">Xóa câu
+              <div *ngIf="checkAuthen()" style="border: none;cursor: pointer;"><i class="fa fa-delicious"></i><a
+                (click)="deleteQa(qa$.questionId)">Xóa câu
                 hỏi</a></div>
-              <div *ngIf="!checkAuthen()" style="border: none;cursor: pointer;"><i class="fa fa-edit"></i><a (click)="reportQa(qa$)">Báo cáo câu hỏi</a>
+              <div *ngIf="!checkAuthen()" style="border: none;cursor: pointer;"><i class="fa fa-edit"></i><a
+                onclick="openForm()">Báo cáo câu hỏi</a>
+              </div>
+              <div class="form-popup" id="myForm" style="padding: 0%;">
+                <form action="/action_page.php" class="form-container">
+                  <h3 style="text-transform: none;text-align: center">Báo cáo bài viết</h3>
+
+                  <label style="text-align: center"><b>Chọn lí do</b></label>
+                  <div style="display: -webkit-box">
+                    <input type="radio" value="Nội dung không phù hợp" id="1" name="reason"
+                            (click)="onItemChange($event)"/>
+                    <label for="1">Nội dung không phù hợp</label>
+                  </div>
+                  <div style="display: -webkit-box">
+                    <input type="radio" value="Spam" id="2" name="reason" (click)="onItemChange($event)"/>
+                    <label for="2">Spam</label>
+                  </div>
+                  <div style="display: -webkit-box">
+                    <input type="radio" value="Gây hiểu lầm hoặc lừa đảo" id="3" name="reason" (click)="onItemChange($event)"/>
+                    <label for="3">Gây hiểu lầm hoặc lừa đảo</label>
+                  </div>
+
+                  <button type="submit" class="btn" (click)="reportQa(qa$)" onclick="closeForm()">Gửi báo cáo</button>
+                  <button type="button" class="btn cancel" onclick="closeForm()">Hủy</button>
+                </form>
               </div>
             </div>
           </article>
@@ -113,15 +145,19 @@
                 style="color: black;margin-bottom: 0px;border-bottom: groove;margin-top: 10px;padding: 15px 15px 0 15px;">
               <article>
                 <header>
-                  <figure class="avatar" style="float: left;cursor: pointer"><img *ngIf="answer.appUser!=null&&answer.appUser.anonymous==true"
-                                                                   src="../../assets/images/demo/avatar.png" alt="">
+                  <figure class="avatar" style="float: left;cursor: pointer"><img
+                    *ngIf="answer.appUser!=null&&answer.appUser.anonymous==true"
+                    src="../../assets/images/demo/avatar.png" alt="">
                     <img *ngIf="answer.appUser==null"
                          src="../../assets/images/demo/avatar.png" alt="">
                     <img *ngIf="answer.appUser!=null&&answer.appUser.anonymous==false"
-                         src="{{answer.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(answer.appUser.userId)" >
+                         src="{{answer.appUser.socialUser.photoUrl}}" alt=""
+                         (click)="userDetail(answer.appUser.userId)">
                   </figure>
                   <address style="text-align: left;font-size: 12px;color: dodgerblue;margin-left: 10%">
-                    <a *ngIf="answer.appUser!=null&&answer.appUser.anonymous==false" (click)="userDetail(answer.appUser.userId)">{{answer.appUser.socialUser.name}}</a> <!--Name of user -->
+                    <a *ngIf="answer.appUser!=null&&answer.appUser.anonymous==false"
+                       (click)="userDetail(answer.appUser.userId)">{{answer.appUser.socialUser.name}}</a>
+                    <!--Name of user -->
                     <a *ngIf="answer.appUser==null">Anonymous</a>
                     <a *ngIf="answer.appUser!=null&&answer.appUser.anonymous==true">Anonymous</a>
                     <p style="max-width: 100%;">
@@ -137,20 +173,25 @@
                 </div>
 
                 <div class="question-footer">
-                  <button *ngIf="!checkUpvoteAnswer(answer)" (click)="upvoteAnswer(answer.answerId)" style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a> Thích</a>
+                  <button *ngIf="!checkUpvoteAnswer(answer)" (click)="upvoteAnswer(answer.answerId)"
+                          style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a> Thích</a>
                   </button>
-                  <button *ngIf="checkUpvoteAnswer(answer)" (click)="upvoteAnswer(answer.answerId)" style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a>Đã thích</a>
+                  <button *ngIf="checkUpvoteAnswer(answer)" (click)="upvoteAnswer(answer.answerId)"
+                          style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a>Đã
+                    thích</a>
                   </button>
-                    <button style="padding-top: 3px;" class="btn like share"><i class="fa fa-share"></i><a
+                  <button style="padding-top: 3px;" class="btn like share"><i class="fa fa-share"></i><a
                     (click)="facebookSharing(shareObj)">
                     Chia sẻ</a>
                   </button>
-                  <button (click)="pop(answer)">AAAAAAAA</button>
                 </div>
                 <div class="report-delete">
-                  <div *ngIf="checkAuthenAnswer(answer)" style="border: none;cursor: pointer;" [ngx-scroll-to]="editAns"><i class="fa fa-google"></i><a (click)="editAnswer(answer)">Chỉnh sửa câu trả
+                  <div *ngIf="checkAuthenAnswer(answer)" style="border: none;cursor: pointer;"
+                       [ngx-scroll-to]="editAns"><i class="fa fa-google"></i><a (click)="editAnswer(answer)">Chỉnh sửa
+                    câu trả
                     lời</a></div>
-                  <div *ngIf="checkAuthenAnswer(answer)" style="border: none;cursor: pointer;"><i class="fa fa-google"></i><a (click)="deleteAnswer(answer.answerId)">Xóa câu
+                  <div *ngIf="checkAuthenAnswer(answer)" style="border: none;cursor: pointer;"><i
+                    class="fa fa-google"></i><a (click)="deleteAnswer(answer.answerId)">Xóa câu
                     trả lời</a></div>
                 </div>
               </article>
@@ -177,7 +218,8 @@
             <form *ngIf="checkEditAnswer">
               <div class="centent-comment">
                 <textarea id="contentOfAnswer" style="width: 100%;"
-                          [(ngModel)]="ansContent" [ngModelOptions]="{standalone: true}">{{editAnswer$.content}}</textarea>
+                          [(ngModel)]="ansContent"
+                          [ngModelOptions]="{standalone: true}">{{editAnswer$.content}}</textarea>
               </div>
               <div class="user-infor">
                 <button (click)="updateAnwer(ansContent)" type="button" class="addAnswer">
@@ -212,8 +254,8 @@
               <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
               <div class="title-article"><a (click)="navigate(item)" style="cursor: pointer"> {{item.title}}</a></div>
               <div>
-                <span class="top-article-view"><a >{{getNumber(item.answers)}} trả lời</a></span>
-                <span class="top-article-view"><a >{{item.viewCount}} lượt xem</a></span>
+                <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
+                <span class="top-article-view"><a>{{item.viewCount}} lượt xem</a></span>
               </div>
             </li>
           </ul>
@@ -224,7 +266,8 @@
           <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top tags
         </p>
         <div class="question-tag">
-          <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;" (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
+          <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
+             (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
         </div>
 
       </div>
@@ -252,7 +295,8 @@
 </div>
 <!-- ################################################################################################ -->
 <!-- footer-->
-<div class="wrapper row4 bgded overlay" style="background-image:url('https://storage.googleapis.com/sonson-1-bucket/images.jpg');" #aboutUs>
+<div class="wrapper row4 bgded overlay"
+     style="background-image:url('https://storage.googleapis.com/sonson-1-bucket/images.jpg');" #aboutUs>
   <footer id="footer" class="hoc clear">
     <!-- ################################################################################################ -->
     <div class="one_third first">
@@ -271,11 +315,11 @@
     <div class="one_third">
       <h6 class="heading tittFooter">THÀNH VIÊN</h6>
       <ul>
-        <li class="space_line">  Lê Thu Hà</li>
-        <li class="space_line">  Nguyễn Phúc Minh Sơn</li>
-        <li class="space_line">  Nguyễn Duy Hiển</li>
-        <li class="space_line">  Trần Hồng Quỳnh</li>
-        <li class="space_line">  Ngô Xuân Tính</li>
+        <li class="space_line"> Lê Thu Hà</li>
+        <li class="space_line"> Nguyễn Phúc Minh Sơn</li>
+        <li class="space_line"> Nguyễn Duy Hiển</li>
+        <li class="space_line"> Trần Hồng Quỳnh</li>
+        <li class="space_line"> Ngô Xuân Tính</li>
       </ul>
     </div>
     <div class="one_third">

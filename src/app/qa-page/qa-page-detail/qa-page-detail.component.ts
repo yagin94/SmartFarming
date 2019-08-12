@@ -12,7 +12,7 @@ import {
   Qa,
   Tag,
   AddupvoteQa,
-  AddupvoteAn, ReportObj
+  AddupvoteAn, ReportObj, ResponseReport
 } from '../qa.model';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {HeaderComponent} from '../../common/header/header.component';
@@ -57,6 +57,8 @@ export class QaPageDetailComponent implements OnInit {
     hashtag: '#FACEBOOK-SHARE-HASGTAG'
   };
   checkLikeButton$ = false;
+  reason: string;
+  responseReport: ResponseReport;
 
   constructor(
     private qaService: QaService,
@@ -76,7 +78,7 @@ export class QaPageDetailComponent implements OnInit {
     // this.dataShareService.currentMessage.subscribe(message => this.message = message);
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.getQaDetail(this.data);
-    // console.log(this.data);
+     console.log(localStorage.getItem('anonymousUser'));
   }
 
   abc() {
@@ -101,12 +103,11 @@ export class QaPageDetailComponent implements OnInit {
 
   checkAuthen() {
     if (JSON.parse(localStorage.getItem('currentAppUser')) == null) {
-      console.log('ssssssssssssssssssssssssss');
       return false;
     } else if (JSON.parse(localStorage.getItem('currentAppUser')) != null) {
       this.compare$ = JSON.parse(localStorage.getItem('currentAppUser')).userId;
       if (this.qa$.appUser != null) {
-        if (this.compare$ == this.qa$.appUser.userId) {
+        if (this.compare$ === this.qa$.appUser.userId) {
           // console.log((localStorage.getItem('currentAppUser')).userId);
           // console.log(this.qa$.appUser.userId);
           // console.log(this.compare$);
@@ -122,11 +123,21 @@ export class QaPageDetailComponent implements OnInit {
 
   checkAuthenAnswer(answer: Answers) {
     if (JSON.parse(localStorage.getItem('currentAppUser')) == null) {
-      return false;
+      this.compare$ = JSON.parse(localStorage.getItem('anonymousUser')).userId;
+      if (answer.appUser != null) {
+        if (this.compare$ == answer.appUser.userId) {
+          // console.log((localStorage.getItem('currentAppUser')).userId);
+          // console.log(this.qa$.appUser.userId);
+          // console.log(this.compare$);
+          return true;
+        } else {
+          return false;
+        }
+      }
     } else if (JSON.parse(localStorage.getItem('currentAppUser')) != null) {
       this.compare$ = JSON.parse(localStorage.getItem('currentAppUser')).userId;
       if (answer.appUser != null) {
-        if (this.compare$ == answer.appUser.userId) {
+        if (this.compare$ === answer.appUser.userId) {
           // console.log((localStorage.getItem('currentAppUser')).userId);
           // console.log(this.qa$.appUser.userId);
           // console.log(this.compare$);
@@ -144,8 +155,14 @@ export class QaPageDetailComponent implements OnInit {
     this.qaService.getQaDetail(questionId).subscribe(qa => {
       this.qa$ = qa;
       for (let value of this.qa$.upvotedUserIds) {
-        if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
-          this.checkLikeButton$ = true;
+        if (JSON.parse(localStorage.getItem('currentAppUser'))) {
+          if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
+            this.checkLikeButton$ = true;
+          }
+        } else {
+          if (value === JSON.parse(localStorage.getItem('anonymousUser')).userId) {
+            this.checkLikeButton$ = true;
+          }
         }
       }
       // console.log(this.checkAuthen());
@@ -185,9 +202,17 @@ export class QaPageDetailComponent implements OnInit {
     } else {
       u.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
     }
+
+
     const q = new Q(qa.questionId);
-    const a: ReportObj = new ReportObj(u, 'Nội dung không phù hợp', q);
-    this.qaService.reportQa(qa.questionId, a).subscribe();
+    const a: ReportObj = new ReportObj(u, this.reason, q);
+    this.qaService.reportQa(qa.questionId, a).subscribe(onsuccess => {
+      if (onsuccess != null) {
+        alert('Gửi báo cáo thành công');
+      } else {
+        alert('Gửi báo cáo thất bại');
+      }
+    });
   }
 
   edit(qa: Qa) {
@@ -196,8 +221,9 @@ export class QaPageDetailComponent implements OnInit {
 
     this.dataShareService.setShareData(qa);
     // console.log(qa);
-    this.router.navigate(['./qa-page-post'], {queryParams: {id: qa.questionId}});
+    //this.router.navigate(['./qa-page-post'], {queryParams: {id: qa.questionId}});
     // console.log(this.dataShareService.getShareData());
+    window.location.replace(`/qa-page-post?id=${qa.questionId}`);
   }
 
   editAnswer(answer: Answers) {
@@ -214,6 +240,8 @@ export class QaPageDetailComponent implements OnInit {
     this.qaService.updateAnswer(this.editAnswer$.answerId, a).subscribe(
       onSuccess => {
         this.getQaDetail(this.data);
+        this.checkEditAnswer = false;
+        this.ansContent = '';
       }
     );
     // this.getQaDetail(this.data);
@@ -320,7 +348,13 @@ export class QaPageDetailComponent implements OnInit {
   pop(answer) {
     console.log('=========================================', answer);
   }
+
   userDetail(userId: number) {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+  }
+
+  onItemChange(value) {
+    this.reason = value.target.defaultValue;
+    console.log(this.reason);
   }
 }

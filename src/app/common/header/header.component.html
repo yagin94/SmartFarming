@@ -1,7 +1,8 @@
 <div class="wrapper row0">
   <div id="topbar" class="hoc clear">
     <!-- ################################################################################################ -->
-    <ul>
+    <nav id="mainav" class="fl_right">
+      <ul class="clear">
       <li *ngIf="user"><div><i><img class="image-user-icon" (click)="userDetail(id)" src="{{ user.photoUrl }}"style="cursor: pointer; width: 5em;height: 5em"></i></div></li>
       <li><i class="fa fa-clock-o"></i> Làm việc 24/7</li>
       <li><i class="fa fa-phone"></i> + (89) 947 939 762</li>
@@ -11,7 +12,22 @@
        <li *ngIf="checkAdmin=='ADMIN'"> <a class="button" href="./manage-page" style="cursor: pointer; font-size: large">Quản lý</a> </li>
       <li *ngIf="checkAdmin=='ADMIN'"> <a class="button" href="./article-post-page" style="cursor: pointer; font-size: large">Đăng bài viết</a> </li>
 
-    </ul>
+          <li><a class="drop" href="/article-page" routerLinkActive="active" style="cursor: pointer; font-size: large">Thông báo</a>
+            <ul>
+              <li *ngFor="let notif of getNotif$.notificationsByPageIndex"><a class="drop"(click)="seeNotif(notif)" style="cursor: pointer">{{notif.message}}</a>
+              <ul>
+                <li><a style="cursor: pointer" (click)="deleteNotif(notif.notificationId)">Xóa thông báo</a></li>
+                <li><a style="cursor: pointer" (click)="unsubscribeNotif(notif)">Ngừng theo dõi bài viết này</a></li>
+              </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
     <!-- ################################################################################################ -->
   </div>
 </div>
+<script>
+
+
+</script>

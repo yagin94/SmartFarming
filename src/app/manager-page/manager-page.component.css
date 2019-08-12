@@ -342,3 +342,10 @@ svg {
 .col-account .col-date .col-gg{
   min-width: 10rem;
 }
+
+.inputDate{
+  margin-left: 2%
+}
+.inputDate input{
+  width: 14.5rem;
+}

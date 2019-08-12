@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as CanvasJS from '../../assets/layout/scripts/canvasjs.min.js';
-import {Answers, AppUser, GetObject, ReportsByPageIndex} from '../qa-page/qa.model';
+import {Answers, AppUser, GetObject, Qa, ReportsByPageIndex, SearchUserByTag} from '../qa-page/qa.model';
 import {QaService} from '../qa-page/qa.service';
 import {HeaderComponent} from '../common/header/header.component';
 import {AuthService} from 'angularx-social-login';
@@ -8,7 +8,9 @@ import {QaPageDetailComponent} from '../qa-page/qa-page-detail/qa-page-detail.co
 import {DataShareService} from '../share-data-service/date-share-service';
 import {Globals} from '../common/globalVariables';
 import {ManagerService} from './manager.service';
-import {GetObjectReport, GetObjectTag} from './manager.model';
+import {BodyJsonDrawChart, DrawChart, GetAllArticle, GetAllUser, GetObjectReport, GetObjectTag, GetReportUser} from './manager.model';
+import {Router} from '@angular/router';
+import {Article} from '../article-page/article.model';
 
 @Component({
   selector: 'app-manager-page',
@@ -22,14 +24,20 @@ export class ManagerPageComponent implements OnInit {
   getReport$: ReportsByPageIndex;
   getObjectReport$: GetObjectReport;
   getObjectTag$: GetObjectTag;
-  getUserByTag$: AppUser[];
+  getUserByTag$: SearchUserByTag[];
   reportDetail = false;
   tagDetail = false;
   tagUserDetail = false;
   pageIndex$ = 0;
+  pageIndexArticle$ = 0;
+  pageIndexAllUser$ = 0;
   sortBy$ = 'viewCount';
   sortTagBy$ = 'viewCount';
   allView$: number;
+  getAllarticle$: GetAllArticle;
+  getAllUser$: GetAllUser;
+  getReportUser$: GetReportUser;
+  classifyChart = 'date';
   /**=====================*/
   isFlatShowView = false;
   isFlatShowUser = false;
@@ -37,6 +45,7 @@ export class ManagerPageComponent implements OnInit {
   isFlatShowArticle = false;
   isFlatShowtags = false;
   isFlatShowQuestion = false;
+  isFlatShowAllUser = false;
 
 
   init() {
@@ -44,15 +53,21 @@ export class ManagerPageComponent implements OnInit {
     this.getReport$ = new ReportsByPageIndex();
     this.getObject$ = new GetObject();
     this.getObjectTag$ = new GetObjectTag();
+    this.getAllarticle$ = new GetAllArticle();
+    this.getAllUser$ = new GetAllUser();
+    this.getReportUser$ = new GetReportUser();
     this.allView$ = 0;
     this.getAllView();
     this.getAllTag(this.sortTagBy$, this.pageIndex$);
     this.getQa(this.sortBy$, this.pageIndex$);
     this.getReport(this.pageIndex$);
+    this.getAllarticle(this.pageIndexArticle$);
+    this.getAllUser(this.pageIndexAllUser$);
   }
 
   constructor(private qaService: QaService,
-              private managerService: ManagerService) {
+              private managerService: ManagerService,
+              private router: Router) {
   }
 
   getAllView() {
@@ -77,13 +92,13 @@ export class ManagerPageComponent implements OnInit {
   }
 
   /**=======================article manager=====================================*/
-  getArticle(sortBy: string, pageIndex: number): void {
-    this.qaService.getQa(sortBy, pageIndex).subscribe(getObject => {
-
-      this.getObject$ = getObject;
-      console.log(this.getObject$.qa);
-    });
-  }
+  // getArticle(sortBy: string, pageIndex: number): void {
+  //   this.qaService.getQa(sortBy, pageIndex).subscribe(getObject => {
+  //
+  //     this.getObject$ = getObject;
+  //     console.log(this.getObject$.qa);
+  //   });
+  // }
 
   sortArticleBy(value: string) {
     this.sortBy$ = value;
@@ -102,16 +117,22 @@ export class ManagerPageComponent implements OnInit {
 
   getSearchTag(pageIndex: number, textSearch: string) {
     if (textSearch) {
+      this.isFlatShowAllUser = false;
       this.tagDetail = true;
+      this.tagUserDetail = false;
       this.managerService.getSearchTag('upvoteCount', pageIndex, textSearch).subscribe(object =>
         this.getObjectTag$ = object);
     }
   }
 
   getUserByTag(tagId: number) {
+    console.log('id', tagId);
     this.tagUserDetail = true;
-    this.managerService.getUserByTag(tagId).subscribe(object =>
-      this.getUserByTag$ = object);
+    this.isFlatShowAllUser = false;
+    this.managerService.getUserByTag(tagId).subscribe(object => {
+      this.getUserByTag$ = object;
+      console.log('tinhnx', this.getUserByTag$);
+    });
   }
 
   sortTagBy(value: string) {
@@ -123,14 +144,17 @@ export class ManagerPageComponent implements OnInit {
   /**=======================getReport============================================*/
   getReport(pageIndex: number) {
     this.managerService.getReport(pageIndex).subscribe(getObject => {
-
-      this.getObjectReport$ = getObject;
+      this.getReportUser$ = getObject;
     });
   }
 
-  getReportDetail(report: ReportsByPageIndex) {
+  getReportDetail(report: number) {
+    console.log('click', report);
     this.reportDetail = true;
-    this.getReport$ = report;
+    this.managerService.getReportDetail(report).subscribe(reportDetailuser => {
+      this.getReport$ = reportDetailuser;
+      console.log('detail', this.getReport$);
+    });
   }
 
   /**======================other common=========================================*/
@@ -158,9 +182,10 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowArticle = false;
         this.isFlatShowtags = false;
         this.isFlatShowQuestion = false;
-        this.drawChart();
         break;
       case 1:
+        console.log('this.isFlatShowAllUser:', this.isFlatShowAllUser);
+        this.isFlatShowAllUser = false;
         this.isFlatShowView = false;
         this.isFlatShowUser = true;
         this.isFlatShowReport = false;
@@ -203,7 +228,91 @@ export class ManagerPageComponent implements OnInit {
     }
   }
 
-  drawChart() {
+
+  ngOnInit() {
+    this.init();
+  }
+
+  gotoDetailPage(qa: Qa) {
+    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
+  }
+
+  getAllarticle(pageIndex: number) {
+    this.managerService.getAllarticle(pageIndex).subscribe(getObject => {
+      this.getAllarticle$ = getObject;
+    });
+  }
+
+  goToArticlePage(article: Article) {
+    console.log('article', article.articleId);
+    this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId}});
+  }
+
+
+  getAllUser(pageNumber: number) {
+    console.log('tinhnx', pageNumber);
+    this.isFlatShowAllUser = true;
+    this.tagDetail = false;
+    this.tagUserDetail = false;
+    this.managerService.getAllUser(pageNumber).subscribe(object => {
+      this.getAllUser$ = object;
+      console.log('tinhnx1', this.getAllUser$);
+    });
+  }
+
+  userDetail(userId: number) {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+  }
+
+  typeDraw(sortBy: string) {
+    this.classifyChart = sortBy;
+    // this.getTopQuestionOfUser(this.sortBy$, this.appUserGG$.userId);
+  }
+
+  letDrawChart(e) {
+    let dataViewCount = [];
+    let dataUpvoteCount = [];
+    let dataNewAccount = [];
+    let dataInactiveAccount = [];
+    let bodyJson = new BodyJsonDrawChart();
+    let jsonResponse = new DrawChart();
+    bodyJson.startTime = e;
+    bodyJson.period = 10;
+    this.managerService.getChartInfor(this.classifyChart, bodyJson).subscribe(infor => {
+      jsonResponse = infor;
+      if (jsonResponse != null) {
+        let totalViewCount = 0;
+        let totalUpvoteCount = 0;
+        let totalNewAccount = 0;
+        let totalInactiveAccount = 0;
+        jsonResponse.forEach(item => {
+          totalViewCount += parseInt(item.totalViewCount);
+          totalUpvoteCount += parseInt(item.totalUpvoteCount);
+          totalNewAccount += parseInt(item.totalNewAccount);
+          totalInactiveAccount += parseInt(item.totalInactiveAccount);
+          if (item.chartByDate != null) {
+            dataViewCount.push({label: item.chartByDate, y: item.totalViewCount});
+            dataUpvoteCount.push({label: item.chartByDate, y: item.totalUpvoteCount});
+            dataNewAccount.push({label: item.chartByDate, y: item.totalNewAccount});
+            dataInactiveAccount.push({label: item.chartByDate, y: item.totalInactiveAccount});
+          } else if (item.chartByMonth != null) {
+            dataViewCount.push({label: item.chartByMonth, y: item.totalViewCount});
+            dataUpvoteCount.push({label: item.chartByMonth, y: item.totalUpvoteCount});
+            dataNewAccount.push({label: item.chartByMonth, y: item.totalNewAccount});
+            dataInactiveAccount.push({label: item.chartByMonth, y: item.totalInactiveAccount});
+          } else if (item.chartByYear != null) {
+            dataViewCount.push({label: item.chartByYear, y: item.totalViewCount});
+            dataUpvoteCount.push({label: item.chartByYear, y: item.totalUpvoteCount});
+            dataNewAccount.push({label: item.chartByYear, y: item.totalNewAccount});
+            dataInactiveAccount.push({label: item.chartByYear, y: item.totalInactiveAccount});
+          }
+
+        });
+        this.drawChart(dataViewCount, dataUpvoteCount, dataNewAccount, dataInactiveAccount);
+      }
+    });
+  }
+  drawChart(dataChart1: any, dataChart2, dataChart3, dataChart4) {
     let chart = new CanvasJS.Chart('chartContainer', {
       animationEnabled: true,
       exportEnabled: true,
@@ -211,27 +320,39 @@ export class ManagerPageComponent implements OnInit {
       title: {
         text: ''
       },
-      data: [{
-        type: 'column',
-        dataPoints: [
-          {y: 71, label: 'Apple'},
-          {y: 55, label: 'Mango'},
-          {y: 50, label: 'Orange'},
-          {y: 65, label: 'Banana'},
-          {y: 95, label: 'Pineapple'},
-          {y: 68, label: 'Pears'},
-          {y: 28, label: 'Grapes'},
-          {y: 34, label: 'Lychee'},
-          {y: 14, label: 'Jackfruit'}
-        ]
-      }]
+      data: [
+        {
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: 'column',
+          name: 'Tài khoản mới',
+          showInLegend: true,
+          dataPoints: dataChart3
+        },
+        {
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: 'column',
+          name: 'Tài khoản kém hoạt dộng',
+          showInLegend: true,
+          dataPoints: dataChart4
+        },
+        {
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: 'line',
+          name: 'Lượt xem',
+          showInLegend: true,
+          dataPoints: dataChart1
+        },
+        {
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: 'line',
+          name: 'Lượt thích',
+          showInLegend: true,
+          dataPoints: dataChart2
+        },
+
+      ]
     });
 
     chart.render();
   }
-
-  ngOnInit() {
-    this.init();
-  }
-
 }

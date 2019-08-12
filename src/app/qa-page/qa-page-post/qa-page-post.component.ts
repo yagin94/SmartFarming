@@ -73,7 +73,6 @@ export class QaPagePostComponent implements OnInit {
     this.qaService.getQaDetail(questionId).subscribe(qa => {
       this.qa = qa;
       this.model.default = this.qa.content;
-      console.log('=====', qa.tags);
     });
   }
 
@@ -99,7 +98,9 @@ export class QaPagePostComponent implements OnInit {
     this.subString = array.split(',');
     for (let i = 0; i < this.subString.length; i++) {
       this.tag = new Tag(this.subString[i], 'dfasdfasdfasdf');
-      this.tags.push(this.tag);
+      if (this.tags.length < 5) {
+        this.tags.push(this.tag);
+      }
     }
     if (this.isLoggedIn()) {
       this.appUser$.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
@@ -125,7 +126,7 @@ export class QaPagePostComponent implements OnInit {
       onSuccess => {
         alert('added');
         this.qa$.push(newQa);
-        location.replace(`/qa-page`);
+         location.replace(`/qa-page`);
       },
       onFail => {
         alert('can not add question');
@@ -143,7 +144,9 @@ export class QaPagePostComponent implements OnInit {
     this.subString = array.split(',');
     for (let i = 0; i < this.subString.length; i++) {
       this.tag = new Tag(this.subString[i], 'dfasdfasdfasdf');
-      this.tags.push(this.tag);
+      if (this.tags.length < 5) {
+        this.tags.push(this.tag);
+      }
     }
     if (this.isLoggedIn()) {
       this.appUser$.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
@@ -162,7 +165,7 @@ export class QaPagePostComponent implements OnInit {
     const f = this.fileDownloadUris$;
     const n = this.userName$;
     console.log(this.appUser$);
-    const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n);
+    const newQa: Qa = new Qa(title, this.model.default, a, t, f, n);
     console.log(newQa);
     this.qaService.updateQuestion(this.data, newQa).subscribe(
       onSuccess => {

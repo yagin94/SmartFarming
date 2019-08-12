@@ -4,7 +4,7 @@ import {HeaderComponent} from '../../common/header/header.component';
 import {UserDetailPageService} from '../user-detail-page.service';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AppUser} from '../../qa-page/qa.model';
+import {AppUser, Qa} from '../../qa-page/qa.model';
 
 @Component({
   providers: [HeaderComponent, UserDetailPageService, DataShareService],
@@ -28,7 +28,7 @@ export class AllQuestionUserPageComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.appUser$ = JSON.parse(localStorage.getItem('currentAppUser'));
-    this.getAllQuestionOfUser(this.sortBy$, this.appUser$.userId, this.pageNumber$);
+    this.getAllQuestionOfUser(this.sortBy$, this.data, this.pageNumber$);
   }
 
   getAllQuestionOfUser(type: string, userId: number, pageNumber: number): void {
@@ -42,6 +42,10 @@ export class AllQuestionUserPageComponent implements OnInit {
 
   sortBy(sortBy: string) {
     this.sortBy$ = sortBy;
-    this.getAllQuestionOfUser(this.sortBy$, this.appUser$.userId, this.pageNumber$);
+    this.getAllQuestionOfUser(this.sortBy$, this.data, this.pageNumber$);
+  }
+
+  goToQuestionDetail(qa: Qa) {
+    this.router.navigate(['/qa-page-detail'], {queryParams: {id: qa.questionId}});
   }
 }

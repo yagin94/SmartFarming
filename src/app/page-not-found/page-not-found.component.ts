@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { AuthService } from 'angularx-social-login';
-import { SocialUser } from 'angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
+import {AuthService} from 'angularx-social-login';
+import {SocialUser} from 'angularx-social-login';
+import {GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from 'angularx-social-login';
+import {Globals} from '../common/globalVariables';
 
 @Component({
+  providers: [Globals],
   selector: 'app-page-not-found',
   templateUrl: './page-not-found.component.html',
   styleUrls: ['./page-not-found.component.css']
@@ -12,27 +14,14 @@ import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } fro
 export class PageNotFoundComponent {
   user: SocialUser;
 
-  constructor(private authService: AuthService) { }
+  constructor(private globals: Globals) {
+  }
 
   ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-    });
+
   }
 
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
+  getGlobal() {
 
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
-
-  signInWithLinkedIn(): void {
-    this.authService.signIn(LinkedInLoginProvider.PROVIDER_ID);
-  }
-
-  signOut(): void {
-    this.authService.signOut();
   }
 }

@@ -37,7 +37,7 @@ export class QaPagePostComponent implements OnInit {
     editorData: '',
     default: ''
   };
-
+  loadingPostQa = false;
   constructor(private qaService: QaService,
               private route: ActivatedRoute,
               private router: Router,
@@ -89,6 +89,7 @@ export class QaPagePostComponent implements OnInit {
   }
 
   addQa(title: string, array: string): void {
+    this.loadingPostQa = true;
     this.userName$ = '';
     this.subString = [];
     this.qa$ = [];
@@ -126,6 +127,7 @@ export class QaPagePostComponent implements OnInit {
       onSuccess => {
         alert('added');
         this.qa$.push(newQa);
+        this.loadingPostQa = false;
          location.replace(`/qa-page`);
       },
       onFail => {

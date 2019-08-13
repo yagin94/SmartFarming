@@ -25,13 +25,14 @@ export class HeaderComponent implements OnInit {
   appUserByIp$: AppUser;
   getNotif$: GetNotif = new GetNotif();
   pageIndex = 0;
-
+  loadingC: boolean
   constructor(private authService: AuthService,
               private headerService: HeaderService,
               private http: HttpClient, private globals: Globals, private router: Router) {
   }
 
   ngOnInit() {
+    //this.globals.lo.subscribe(re => this.loadingC = re);
     this.getUserByIpAddress();
     if (localStorage.getItem('currentAppUser')) {
       this.id = JSON.parse(localStorage.getItem('currentAppUser')).userId;
@@ -79,10 +80,12 @@ export class HeaderComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
+    this.loadingC = true;
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((x) => {
         this.user = x;
         this.sendToRestApiMethod(this.user.idToken);
+        this.loadingC = false;
         window.location.replace(window.location.href);
       }).catch((x) => {
     });
@@ -134,10 +137,12 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut(): void {
+    this.loadingC = true;
     this.authService.signOut();
     localStorage.removeItem('currentAppUser');
     // localStorage.removeItem('currentUser');
     // console.log(localStorage.getItem('currentAppUser'));
+    this.loadingC = false;
     location.replace(window.location.href);
 
   }
@@ -205,5 +210,11 @@ export class HeaderComponent implements OnInit {
   deleteNotif(id: number) {
     this.headerService.deleteNotif(id).subscribe();
     this.getNotif();
+  }
+  abc() {
+    this.globals.load.next(true);
+   // console.log(this.globals.loading);
+   // console.log(this.globals.lo);
+   console.log(this.globals.load.value);
   }
 }

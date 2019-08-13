@@ -31,7 +31,8 @@
     "ng2-ckeditor": "^1.2.4",
     "ngx-loading": "^3.0.1",
     "ngx-social-button": "^1.0.4",
-    "rxjs": "6.0.0",
+    "rxjs": "^6.5.2",
+    "rxjs-compat": "^6.5.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

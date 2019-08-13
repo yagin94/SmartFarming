@@ -269,90 +269,92 @@ export class ManagerPageComponent implements OnInit {
     // this.getTopQuestionOfUser(this.sortBy$, this.appUserGG$.userId);
   }
 
-  letDrawChart(e) {
-    let dataViewCount = [];
-    let dataUpvoteCount = [];
-    let dataNewAccount = [];
-    let dataInactiveAccount = [];
-    let bodyJson = new BodyJsonDrawChart();
-    let jsonResponse = new DrawChart();
-    bodyJson.startTime = e;
-    bodyJson.period = 10;
-    this.managerService.getChartInfor(this.classifyChart, bodyJson).subscribe(infor => {
-      jsonResponse = infor;
-      if (jsonResponse != null) {
-        let totalViewCount = 0;
-        let totalUpvoteCount = 0;
-        let totalNewAccount = 0;
-        let totalInactiveAccount = 0;
-        jsonResponse.forEach(item => {
-          totalViewCount += parseInt(item.totalViewCount);
-          totalUpvoteCount += parseInt(item.totalUpvoteCount);
-          totalNewAccount += parseInt(item.totalNewAccount);
-          totalInactiveAccount += parseInt(item.totalInactiveAccount);
-          if (item.chartByDate != null) {
-            dataViewCount.push({label: item.chartByDate, y: item.totalViewCount});
-            dataUpvoteCount.push({label: item.chartByDate, y: item.totalUpvoteCount});
-            dataNewAccount.push({label: item.chartByDate, y: item.totalNewAccount});
-            dataInactiveAccount.push({label: item.chartByDate, y: item.totalInactiveAccount});
-          } else if (item.chartByMonth != null) {
-            dataViewCount.push({label: item.chartByMonth, y: item.totalViewCount});
-            dataUpvoteCount.push({label: item.chartByMonth, y: item.totalUpvoteCount});
-            dataNewAccount.push({label: item.chartByMonth, y: item.totalNewAccount});
-            dataInactiveAccount.push({label: item.chartByMonth, y: item.totalInactiveAccount});
-          } else if (item.chartByYear != null) {
-            dataViewCount.push({label: item.chartByYear, y: item.totalViewCount});
-            dataUpvoteCount.push({label: item.chartByYear, y: item.totalUpvoteCount});
-            dataNewAccount.push({label: item.chartByYear, y: item.totalNewAccount});
-            dataInactiveAccount.push({label: item.chartByYear, y: item.totalInactiveAccount});
-          }
-
-        });
-        this.drawChart(dataViewCount, dataUpvoteCount, dataNewAccount, dataInactiveAccount);
-      }
-    });
+  // letDrawChart(e) {
+  //   let dataViewCount = [];
+  //   let dataUpvoteCount = [];
+  //   let dataNewAccount = [];
+  //   let dataInactiveAccount = [];
+  //   let bodyJson = new BodyJsonDrawChart();
+  //   let jsonResponse = new DrawChart();
+  //   bodyJson.startTime = e;
+  //   bodyJson.period = 10;
+  //   this.managerService.getChartInfor(this.classifyChart, bodyJson).subscribe(infor => {
+  //     jsonResponse = infor;
+  //     if (jsonResponse != null) {
+  //       let totalViewCount = 0;
+  //       let totalUpvoteCount = 0;
+  //       let totalNewAccount = 0;
+  //       let totalInactiveAccount = 0;
+  //       //     jsonResponse.forEach(item => {
+  //       //       totalViewCount += parseInt(item.totalViewCount);
+  //       //       totalUpvoteCount += parseInt(item.totalUpvoteCount);
+  //       //       totalNewAccount += parseInt(item.totalNewAccount);
+  //       //       totalInactiveAccount += parseInt(item.totalInactiveAccount);
+  //       //       if (item.chartByDate != null) {
+  //       //         dataViewCount.push({label: item.chartByDate, y: item.totalViewCount});
+  //       //         dataUpvoteCount.push({label: item.chartByDate, y: item.totalUpvoteCount});
+  //       //         dataNewAccount.push({label: item.chartByDate, y: item.totalNewAccount});
+  //       //         dataInactiveAccount.push({label: item.chartByDate, y: item.totalInactiveAccount});
+  //       //       } else if (item.chartByMonth != null) {
+  //       //         dataViewCount.push({label: item.chartByMonth, y: item.totalViewCount});
+  //       //         dataUpvoteCount.push({label: item.chartByMonth, y: item.totalUpvoteCount});
+  //       //         dataNewAccount.push({label: item.chartByMonth, y: item.totalNewAccount});
+  //       //         dataInactiveAccount.push({label: item.chartByMonth, y: item.totalInactiveAccount});
+  //       //       } else if (item.chartByYear != null) {
+  //       //         dataViewCount.push({label: item.chartByYear, y: item.totalViewCount});
+  //       //         dataUpvoteCount.push({label: item.chartByYear, y: item.totalUpvoteCount});
+  //       //         dataNewAccount.push({label: item.chartByYear, y: item.totalNewAccount});
+  //       //         dataInactiveAccount.push({label: item.chartByYear, y: item.totalInactiveAccount});
+  //       //       }
+  //       //
+  //       //     });
+  //       //     this.drawChart(dataViewCount, dataUpvoteCount, dataNewAccount, dataInactiveAccount);
+  //       //   }
+  //       // });
+  //     }
+  //     // drawChart(dataChart1 : any, dataChart2, dataChart3, dataChart4) {
+  //     //   let chart = new CanvasJS.Chart('chartContainer', {
+  //     //     animationEnabled: true,
+  //     //     exportEnabled: true,
+  //     //     zoomEnabled: true,
+  //     //     title: {
+  //     //       text: ''
+  //     //     },
+  //     //     data: [
+  //     //       {
+  //     //         // Change type to "bar", "area", "spline", "pie",etc.
+  //     //         type: 'column',
+  //     //         name: 'Tài khoản mới',
+  //     //         showInLegend: true,
+  //     //         dataPoints: dataChart3
+  //     //       },
+  //     //       {
+  //     //         // Change type to "bar", "area", "spline", "pie",etc.
+  //     //         type: 'column',
+  //     //         name: 'Tài khoản kém hoạt dộng',
+  //     //         showInLegend: true,
+  //     //         dataPoints: dataChart4
+  //     //       },
+  //     //       {
+  //     //         // Change type to "bar", "area", "spline", "pie",etc.
+  //     //         type: 'line',
+  //     //         name: 'Lượt xem',
+  //     //         showInLegend: true,
+  //     //         dataPoints: dataChart1
+  //     //       },
+  //     //       {
+  //     //         // Change type to "bar", "area", "spline", "pie",etc.
+  //     //         type: 'line',
+  //     //         name: 'Lượt thích',
+  //     //         showInLegend: true,
+  //     //         dataPoints: dataChart2
+  //     //       },
+  //     //
+  //     //     ]
+  //     //   });
+  //     //
+  //     //   chart.render();
+  //     // }
+  //   }
   }
-  drawChart(dataChart1: any, dataChart2, dataChart3, dataChart4) {
-    let chart = new CanvasJS.Chart('chartContainer', {
-      animationEnabled: true,
-      exportEnabled: true,
-      zoomEnabled: true,
-      title: {
-        text: ''
-      },
-      data: [
-        {
-          // Change type to "bar", "area", "spline", "pie",etc.
-          type: 'column',
-          name: 'Tài khoản mới',
-          showInLegend: true,
-          dataPoints: dataChart3
-        },
-        {
-          // Change type to "bar", "area", "spline", "pie",etc.
-          type: 'column',
-          name: 'Tài khoản kém hoạt dộng',
-          showInLegend: true,
-          dataPoints: dataChart4
-        },
-        {
-          // Change type to "bar", "area", "spline", "pie",etc.
-          type: 'line',
-          name: 'Lượt xem',
-          showInLegend: true,
-          dataPoints: dataChart1
-        },
-        {
-          // Change type to "bar", "area", "spline", "pie",etc.
-          type: 'line',
-          name: 'Lượt thích',
-          showInLegend: true,
-          dataPoints: dataChart2
-        },
 
-      ]
-    });
-
-    chart.render();
-  }
-}

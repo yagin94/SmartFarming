@@ -1,6 +1,7 @@
 <div>
 <app-header></app-header>
 <router-outlet></router-outlet>
-<ngx-loading [show]="globals.loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+<ngx-loading [show]="header.loadingC" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
              [template]="loadingTemplate"></ngx-loading>
 </div>
+<button (click)="abc()">AAAAA</button>

@@ -51,6 +51,7 @@ export class QaPageComponent implements OnInit {
   checkPaging$ = 'viewAndDate';
   tagId: number;
   data: any;
+  loadingPostQa = false;
 
   constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
               private globals: Globals,

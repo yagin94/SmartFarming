@@ -15,7 +15,8 @@ import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
   styleUrls: ['./article-detail-page.component.css']
 })
 export class ArticleDetailPageComponent implements OnInit {
-  data: any;
+  data1: any;
+  data2: any;
   article$: Article = new Article();
   distinct$: any;
   checkAdmin = '';
@@ -28,6 +29,7 @@ export class ArticleDetailPageComponent implements OnInit {
   checkEditComment$ = false;
   editComment$: Comments;
   compare$: number;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private dataShareService: DataShareService,
@@ -37,8 +39,11 @@ export class ArticleDetailPageComponent implements OnInit {
   ngOnInit() {
     window.scroll(0, 0);
     this.checkRole();
-    this.route.queryParams.subscribe(params => this.data = params.id);
-    this.getArticleDetail(this.data);
+    this.route.queryParams.subscribe(params => {
+      this.data1 = params['id'];
+      this.data2 = params['userId'];
+    });
+    this.getArticleDetail(this.data2, this.data1);
     this.getTopArticle();
     this.getDistinct();
   }
@@ -52,8 +57,8 @@ export class ArticleDetailPageComponent implements OnInit {
     }
   }
 
-  getArticleDetail(articleId: number) {
-    this.articleDetailService.getDetail(articleId).subscribe(result => {
+  getArticleDetail(userId: number, articleId: number) {
+    this.articleDetailService.getDetail(userId, articleId).subscribe(result => {
       this.article$ = result;
       console.log(this.article$);
     });
@@ -110,28 +115,31 @@ export class ArticleDetailPageComponent implements OnInit {
     console.log(x);
     this.articleDetailService.addComment(x).subscribe(answer => {
       // this.answer$.push(answer)
-      this.getArticleDetail(this.data);
+      this.getArticleDetail(this.data2, this.data1);
       this.ansContent = '';
     });
     // console.log(x);
   }
+
   editComment(comment: Comments) {
     this.checkEditComment$ = true;
     this.editComment$ = comment;
     this.ansContent = comment.content;
   }
+
   deleteComment(commentId: number): void {
     if (confirm('are you sure to delete this answer')) {
       // this.answer$ = this.answer$.filter(h => h !== answerId);
       this.articleDetailService.deleteAnswer(commentId).subscribe(onSuccess => {
           alert('Xóa câu thành công!!!');
-          this.getArticleDetail(this.data);
+          this.getArticleDetail(this.data2, this.data1);
         },
         onFail => {
           alert('Bạn không thể xóa câu trả lời này !!!');
         });
     }
   }
+
   updateComment(content: string) {
     const u: AppUser = new AppUser();
     u.userId = this.editComment$.appUser.userId;
@@ -140,21 +148,24 @@ export class ArticleDetailPageComponent implements OnInit {
     const a: AddCommentObj = new AddCommentObj(content, u, ar);
     this.articleDetailService.updateComment(this.editComment$.commentId, a).subscribe(
       onSuccess => {
-        this.getArticleDetail(this.data);
+        this.getArticleDetail(this.data2, this.data1);
         this.checkEditComment$ = false;
         this.ansContent = '';
       }
     );
   }
+
   getTopArticle(): void {
     this.articleDetailService.getTopArticle().subscribe(top => this.getAllArticle$ = top);
   }
+
   isLoggedIn() {
     if (localStorage.getItem('currentAppUser')) {
       return true;
     }
     return false;
   }
+
   checkAuthenAnswer(comment: Answers) {
     if (JSON.parse(localStorage.getItem('currentAppUser')) == null) {
       this.compare$ = JSON.parse(localStorage.getItem('anonymousUser')).userId;

@@ -109,8 +109,14 @@
                        src="../../assets/images/demo/avatar.png" alt="">
                   <img *ngIf="comment.appUser!=null&&comment.appUser.anonymous==false"
                        src="{{comment.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(comment.appUser.userId)" ></figure>
-                <address>
+                <address *ngIf="comment.appUser!=null&&comment.appUser.anonymous==false">
                   By <a style="cursor: pointer">{{comment.appUser.socialUser.name}}</a>
+                </address>
+                <address *ngIf="comment.appUser==null">
+                  By <a style="cursor: pointer">Anonymous</a>
+                </address>
+                <address *ngIf="comment.appUser!=null&&comment.appUser.anonymous==true">
+                  By <a style="cursor: pointer">Anonymous</a>
                 </address>
                 <time><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{comment.utilTimestamp
                   | date: 'yyyy-MM-dd'}}

@@ -12,26 +12,33 @@ import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 export class ArticleDetailService {
   constructor(private http: HttpClient) {
   }
-  getDetail(articleId: number): Observable<Article> {
-    return this.http.get<Article>(`http://localhost:8080/article/viewArticle/${articleId}`);
+
+  getDetail(userId: number, articleId: number): Observable<Article> {
+    return this.http.get<Article>(`http://localhost:8080/article/viewArticle/${userId}/${articleId}`);
   }
+
   getDistinct() {
     return this.http.get(` http://localhost:8080/article/viewDistinctCategories`);
   }
+
   deleteArticle(articleId: number): Observable<{}> {
     const url = `http://localhost:8080/article/deleteArticle/${articleId}`;
     return this.http.delete(url);
   }
+
   addComment(comment: AddCommentObj): Observable<Article> {
     return this.http.post<Article>('http://localhost:8080/comment/addComment', comment);
   }
+
   updateComment(commentId: number, comment: AddCommentObj): Observable<Comments> {
     return this.http.put<Comments>(`http://localhost:8080/comment/updateComment/${commentId}`, comment);
   }
+
   deleteAnswer(commentId: number): Observable<{}> {
     const url = `http://localhost:8080/comment/deleteComment/${commentId}`;
     return this.http.delete(url);
   }
+
   getTopArticle(): Observable<GetAllArticle> {
     return this.http.get<GetAllArticle>(`http://localhost:8080/article/getTop10ArticlesByUploadDate`);
   }

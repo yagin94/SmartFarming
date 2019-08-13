@@ -37,7 +37,7 @@ export class TrangChinhComponent implements OnInit {
   }
 
   getArticleDetail(article: Article) {
-    this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId}});
+    this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId, userId: article.appUser.userId}});
   }
 
   searchArticle(textSearch: string, pageIndex: number) {

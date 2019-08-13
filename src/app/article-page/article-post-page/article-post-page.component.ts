@@ -13,7 +13,8 @@ import {Article} from '../article.model';
   providers: [ArticlePostService, ArticleDetailService]
 })
 export class ArticlePostPageComponent implements OnInit {
-  data: any;
+  data1: any;
+  data2: any;
   subString: string[];
   tag: Tag;
   tags: Tag[];
@@ -33,8 +34,11 @@ export class ArticlePostPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => this.data = params.id);
-    this.getArticleDetail(this.data);
+    this.route.queryParams.subscribe(params => {
+      this.data1 = params['id'];
+      this.data2 = params['userId'];
+    });
+    this.getArticleDetail(this.data2, this.data1);
   }
 
   addArticle(title: string, array: string, selected: string) {
@@ -55,15 +59,17 @@ export class ArticlePostPageComponent implements OnInit {
     a.tags = this.tags;
     a.uploadedFiles = [];
     a.category = selected;
-     this.articlePostService.addArticle(a).subscribe();
+    this.articlePostService.addArticle(a).subscribe();
   }
-  getArticleDetail(articleId: number) {
-    this.articleDetailService.getDetail(articleId).subscribe(result => {
+
+  getArticleDetail(userId: number, articleId: number) {
+    this.articleDetailService.getDetail(userId, articleId).subscribe(result => {
       this.article$ = result;
       this.model.default = this.article$.content;
-        console.log(this.article$);
+      console.log(this.article$);
     });
   }
+
   updateArticle(title: string, array: string, selected: string) {
     this.tags = [];
     this.subString = [];
@@ -82,8 +88,8 @@ export class ArticlePostPageComponent implements OnInit {
     a.tags = this.tags;
     a.uploadedFiles = [];
     a.category = selected;
-    this.articlePostService.updateArticle(this.data, a).subscribe();
-    window.location.replace(`/article-detail-page?id=${this.data}`);
+    this.articlePostService.updateArticle(this.data1, a).subscribe();
+    window.location.replace(`/article-detail-page?id=${this.data1}`);
   }
 
 }

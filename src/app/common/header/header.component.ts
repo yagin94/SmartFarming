@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     //this.globals.lo.subscribe(re => this.loadingC = re);
+    console.log(localStorage.getItem('currentAppUser'));
     this.getUserByIpAddress();
     if (localStorage.getItem('currentAppUser')) {
       this.id = JSON.parse(localStorage.getItem('currentAppUser')).userId;
@@ -79,6 +80,7 @@ export class HeaderComponent implements OnInit {
         console.log('header ', this.id);
       }
     );
+    window.location.replace(window.location.href);
   }
 
   signInWithGoogle(): void {
@@ -88,7 +90,6 @@ export class HeaderComponent implements OnInit {
         this.user = x;
         this.sendToRestApiMethod(this.user.idToken);
         this.loadingC = false;
-        window.location.replace(window.location.href);
       }).catch((x) => {
     });
 
@@ -116,8 +117,8 @@ export class HeaderComponent implements OnInit {
           authorizationCode: this.user.authorizationCode
         }).subscribe(
         onSuccess => {
-          this.globals.loading = false;
           this.getResponse(this.user.idToken);
+          this.globals.loading = false;
 
           localStorage.setItem('currentUser', JSON.stringify(this.user));
           // console.log('DuyNk', localStorage.getItem('currentUser'));
@@ -145,7 +146,7 @@ export class HeaderComponent implements OnInit {
     // localStorage.removeItem('currentUser');
     // console.log(localStorage.getItem('currentAppUser'));
     this.loadingC = false;
-    location.replace(window.location.href);
+     location.replace(window.location.href);
 
   }
 

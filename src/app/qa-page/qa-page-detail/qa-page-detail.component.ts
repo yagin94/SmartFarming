@@ -34,10 +34,10 @@ import {Globals} from '../../common/globalVariables';
 
 export class QaPageDetailComponent implements OnInit {
   ansContent: string;
-  getObjectTopTag$: GetObjectTopTag;
-  getObjectTopUser$: GetObjectTopUser;
-  getObjectTopQa$: GetObjectTopQa;
-  qa$: Qa;
+  getObjectTopTag$: GetObjectTopTag = new GetObjectTopTag();
+  getObjectTopUser$: GetObjectTopUser = new GetObjectTopUser();
+  getObjectTopQa$: GetObjectTopQa = new GetObjectTopQa();
+  qa$: Qa = new Qa('', '', new AppUser(), null, null, '');
   topTag$: Tag[];
   topQa$: Qa[];
   editQuestion$: Qa;
@@ -50,8 +50,8 @@ export class QaPageDetailComponent implements OnInit {
   answer$: any;
   userName$: string;
   compare$: number;
-  appUser$: AppUser;
-  user: SocialUser;
+  appUser$: AppUser = new AppUser();
+  user: SocialUser = new SocialUser();
   shareObj = {
     href: '',
     hashtag: '#FACEBOOK-SHARE-HASGTAG'
@@ -78,7 +78,7 @@ export class QaPageDetailComponent implements OnInit {
     // this.dataShareService.currentMessage.subscribe(message => this.message = message);
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.getQaDetail(this.data);
-     console.log(localStorage.getItem('anonymousUser'));
+    console.log(localStorage.getItem('anonymousUser'));
   }
 
   abc() {
@@ -86,7 +86,9 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   getNumber(object: Answers) {
-    return Object.keys(object).length;
+    if (object != null) {
+      return Object.keys(object).length;
+    }
   }
 
   getTopQa(): void {

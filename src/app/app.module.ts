@@ -41,6 +41,7 @@ import {
 import {ngxLoadingAnimationTypes, NgxLoadingModule} from 'ngx-loading';
 import {AllTagUserPageComponent} from './user-detail-page/all-tag-user-page/all-tag-user-page.component';
 import {AllQuestionUserPageComponent} from './user-detail-page/all-question-user-page/all-question-user-page.component';
+import { FooterComponent } from './common/footer/footer.component';
 
 export function getAuthServiceConfigs() {
   let configs = new SocialServiceConfig()
@@ -87,7 +88,8 @@ export function provideConfig() {
     UserDetailPageComponent,
     HeaderComponent,
     AllTagUserPageComponent,
-    AllQuestionUserPageComponent
+    AllQuestionUserPageComponent,
+    FooterComponent
   ],
   imports: [
     CKEditorModule,

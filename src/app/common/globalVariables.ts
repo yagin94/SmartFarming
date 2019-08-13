@@ -1,17 +1,15 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs-compat/BehaviorSubject';
 @Injectable()
 export class Globals {
   questionId: number;
   loading = false;
   checkGetQa = true;
   test = 'default';
-  load: BehaviorSubject<boolean>;
-
+  load = new BehaviorSubject<boolean>(false);
+  lo = this.load.asObservable();
   constructor() {
-    this.load = new BehaviorSubject<boolean>(false);
-    // const lo = this.load.asObservable();
-    // lo.subscribe(res => this.loading = res);
+    this.lo.subscribe(res => this.loading = res);
   }
   changeLoading() {
     this.load.next(true);

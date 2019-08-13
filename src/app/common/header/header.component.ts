@@ -25,7 +25,9 @@ export class HeaderComponent implements OnInit {
   appUserByIp$: AppUser;
   getNotif$: GetNotif = new GetNotif();
   pageIndex = 0;
-  loadingC: boolean
+  loadingC: boolean;
+  checkNotif = true;
+
   constructor(private authService: AuthService,
               private headerService: HeaderService,
               private http: HttpClient, private globals: Globals, private router: Router) {
@@ -179,7 +181,7 @@ export class HeaderComponent implements OnInit {
         this.getNotif$ = res;
       });
     } else {
-      this.getNotif$.notificationsByPageIndex.message = 'không có thông báo nào';
+      this.checkNotif = false;
     }
   }
 
@@ -207,14 +209,16 @@ export class HeaderComponent implements OnInit {
       this.headerService.unsubscribeNotif(noti).subscribe();
     }
   }
+
   deleteNotif(id: number) {
     this.headerService.deleteNotif(id).subscribe();
     this.getNotif();
   }
+
   abc() {
-    this.globals.load.next(true);
-   // console.log(this.globals.loading);
-   // console.log(this.globals.lo);
-   console.log(this.globals.load.value);
+    this.globals.changeLoading();
+    console.log(this.globals.loading);
+    console.log(this.globals.lo);
+    console.log(this.globals.load);
   }
 }

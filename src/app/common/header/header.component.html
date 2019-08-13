@@ -12,8 +12,11 @@
        <li *ngIf="checkAdmin=='ADMIN'"> <a class="button" href="./manage-page" style="cursor: pointer; font-size: large">Quản lý</a> </li>
       <li *ngIf="checkAdmin=='ADMIN'"> <a class="button" href="./article-post-page" style="cursor: pointer; font-size: large">Đăng bài viết</a> </li>
          <li><button (click)="abc()">AAA</button></li>
-          <li><a class="drop" href="/article-page" routerLinkActive="active" style="cursor: pointer; font-size: large">Thông báo</a>
-            <ul>
+          <li><a class="drop" routerLinkActive="active" style="cursor: pointer; font-size: large">Thông báo</a>
+            <ul *ngIf="!checkNotif">
+              <li>Không có thông báo nào</li>
+            </ul>
+            <ul *ngIf="checkNotif">
               <li *ngFor="let notif of getNotif$.notificationsByPageIndex"><a class="drop"(click)="seeNotif(notif)" style="cursor: pointer">{{notif.message}}</a>
               <ul>
                 <li><a style="cursor: pointer" (click)="deleteNotif(notif.notificationId)">Xóa thông báo</a></li>

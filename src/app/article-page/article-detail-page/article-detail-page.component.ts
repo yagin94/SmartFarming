@@ -35,8 +35,11 @@ export class ArticleDetailPageComponent implements OnInit {
               private dataShareService: DataShareService,
               private articleDetailService: ArticleDetailService) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     window.scroll(0, 0);
     this.checkRole();
     this.route.queryParams.subscribe(params => {

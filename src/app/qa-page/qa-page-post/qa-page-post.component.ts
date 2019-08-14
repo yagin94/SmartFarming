@@ -44,8 +44,11 @@ export class QaPagePostComponent implements OnInit {
               private router: Router,
               private dataShareService: DataShareService) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.ckeConfig = {
       allowedContent: false,
       extraPlugins: 'divarea',

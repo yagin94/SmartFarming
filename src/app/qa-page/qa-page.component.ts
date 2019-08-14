@@ -57,8 +57,11 @@ export class QaPageComponent implements OnInit {
               private globals: Globals,
               private route: ActivatedRoute) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.getObjectTopQa$ = new GetObjectTopQa();
     this.getObject$ = new GetObject();
     this.getObjectTopTag$ = new GetObjectTopTag();

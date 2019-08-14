@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {TrangChinhService} from '../trang-chinh/trang-chinh.service';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 import {TypeService} from './Type.service';
 import {Article} from '../article.model';
 import {Router} from '@angular/router';
+import {NgxLoadingComponent} from 'ngx-loading';
 
 @Component({
   providers: [TypeService],
@@ -18,8 +19,11 @@ export class GiongCayComponent implements OnInit {
   checkSearch = false;
   constructor(private router: Router, private typeService: TypeService) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.getTypeArticle(this.pageIndex$);
   }
 

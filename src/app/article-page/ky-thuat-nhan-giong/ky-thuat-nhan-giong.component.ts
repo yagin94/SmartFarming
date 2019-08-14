@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CloneService} from './Clone.service';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 import {Article} from '../article.model';
 import {Router} from '@angular/router';
+import {NgxLoadingComponent} from 'ngx-loading';
 
 
 
@@ -18,8 +19,11 @@ export class KyThuatNhanGiongComponent implements OnInit {
   pageIndex$ = 0;
   checkSearch = false;
   constructor(private router: Router, private cloneService: CloneService) { }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
      this.getCloneArticle(this.pageIndex$);
   }
   arrayPage(numberOfPage: number): any[] {

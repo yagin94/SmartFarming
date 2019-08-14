@@ -15,7 +15,6 @@ import {FooterComponent} from './common/footer/footer.component';
 export class AppComponent {
   constructor(private globals: Globals) {
   }
-
   @ViewChild('ngxLoading') ngxLoadingComponent: NgxLoadingComponent;
   public loadingTemplate: TemplateRef<any>;
   title = 'app';

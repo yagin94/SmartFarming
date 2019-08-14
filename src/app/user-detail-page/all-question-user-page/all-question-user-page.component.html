@@ -1,4 +1,6 @@
 <div class="bgded overlay" style="background: #f2f2f2 !important;">
+  <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+               [template]="loadingTemplate"></ngx-loading>
   <!-- ################################################################################################ -->
   <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
     <header id="header" class="hoc clear">
@@ -8,21 +10,21 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear" style="margin-top: 3%;font-size: 17px">
-          <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a class="drop" href="article-page/app-trang-chinh">Kiến thức</a>
+          <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
+          <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
             <ul>
-              <li><a href="article-page/app-ki-thuat-trong">Kỹ thuật trồng</a></li>
-              <li><a href="article-page/app-thu-hoach-va-bao-quan">Thu hoạch & Bảo quản</a></li>
-              <li><a href="article-page/app-phan-bon">Phân bón</a></li>
-              <li><a href="article-page/app-thuoc-bao-ve-thuc-vat">Thuốc bảo vệ thực vật</a></li>
-              <li><a href="article-page/app-sau-benh">Sâu bệnh</a></li>
-              <li><a href="article-page/app-ky-thuat-nhan-giong">Kỹ thuật nhân giống</a></li>
-              <li><a href="article-page/app-giong-cay">Giống cây</a></li>
-              <li><a href="article-page/app-trang-chinh">Chủ đề nổi bật</a></li>
+              <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
+              <li><a href="article-page/app-thu-hoach-va-bao-quan" (click)="click()">Thu hoạch & Bảo quản</a></li>
+              <li><a href="article-page/app-phan-bon" (click)="click()">Phân bón</a></li>
+              <li><a href="article-page/app-thuoc-bao-ve-thuc-vat" (click)="click()">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="article-page/app-sau-benh" (click)="click()">Sâu bệnh</a></li>
+              <li><a href="article-page/app-ky-thuat-nhan-giong" (click)="click()">Kỹ thuật nhân giống</a></li>
+              <li><a href="article-page/app-giong-cay" (click)="click()">Giống cây</a></li>
+              <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
             </ul>
           </li>
-          <li><a href="/qa-page" routerLinkActive="active">Hỏi - Đáp</a></li>
-          <li><a href="#">Liên hệ</a></li>
+          <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+          <li><a (click)="click()">Liên hệ</a></li>
 
         </ul>
 

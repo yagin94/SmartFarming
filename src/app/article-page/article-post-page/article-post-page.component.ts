@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ArticlePostService} from './article-post.service';
 import {AppUser, Tag} from '../../qa-page/qa.model';
 import {AddArticle} from './article-post.model';
@@ -32,8 +32,11 @@ export class ArticlePostPageComponent implements OnInit {
               private router: Router,
               private articleDetailService: ArticleDetailService) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.route.queryParams.subscribe(params => {
       this.data1 = params['id'];
       this.data2 = params['userId'];

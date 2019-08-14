@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 import {BugService} from './Bug.service';
 import {Article} from '../article.model';
 import {Router} from '@angular/router';
+import {NgxLoadingComponent} from 'ngx-loading';
 
 @Component({
   providers: [BugService],
@@ -16,8 +17,11 @@ export class SauBenhComponent implements OnInit {
   checkSearch = false;
   loading = true;
   constructor(private router: Router, private bugService: BugService) { }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.getBugArticle(this.pageIndex$);
   }
   arrayPage(numberOfPage: number): any[] {

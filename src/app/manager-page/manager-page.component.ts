@@ -50,6 +50,7 @@ export class ManagerPageComponent implements OnInit {
 
 
   init() {
+    this.loading = false;
     this.getObjectReport$ = new GetObjectReport();
     this.getReport$ = new ReportsByPageIndex();
     this.getObject$ = new GetObject();
@@ -70,7 +71,9 @@ export class ManagerPageComponent implements OnInit {
               private managerService: ManagerService,
               private router: Router) {
   }
-
+  click() {
+    this.loading = true;
+  }
   getAllView() {
     this.managerService.getAllView().subscribe(allView => this.allView$ = allView);
   }

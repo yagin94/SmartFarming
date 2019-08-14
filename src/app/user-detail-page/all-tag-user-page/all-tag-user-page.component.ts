@@ -17,14 +17,17 @@ export class AllTagUserPageComponent implements OnInit {
   getAllTagOfUser$: GetAllTagOfUser;
   pageNumber = 0;
   data: any;
-
+  loading = true;
   constructor(private userDetailPageService: UserDetailPageService,
               private route: ActivatedRoute,
               private router: Router,
               private dataShareService: DataShareService) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.appUser$ = JSON.parse(localStorage.getItem('currentAppUser'));
     console.log(this.appUser$.socialUser.firstName );

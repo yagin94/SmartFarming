@@ -5,11 +5,13 @@
 .sap-xep {
   min-width: 100%;
 }
+
 .pagination {
   display: inline-block;
   cursor: pointer;
   width: auto !important;
 }
+
 .pagination a {
   color: black;
   float: left;
@@ -26,6 +28,7 @@
   width: 100%;
   text-align: center;
 }
+
 #menu-sap-xep ul li::after {
   content: '';
   display: block;
@@ -52,8 +55,6 @@
 .title-qa:hover {
   color: blue !important;
 }
-
-
 
 .question-tag ul {
   margin: 0px !important;
@@ -105,8 +106,6 @@
   color: #7c7f85;
 }
 
-
-
 /*left side*/
 .menu-left-qa {
   background: rgba(159, 213, 255, 0.6);
@@ -126,7 +125,7 @@
   padding: 10px 10px 10px 0;
 }
 
-.div-menu-left ul li ul li{
+.div-menu-left ul li ul li {
   padding: 5px 0px 0px 30px;
   font-size: 13px;
   font-family: "Open Sans", Arial, sans-serif;
@@ -143,10 +142,11 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*xep hang start*/
 
-table{
+table {
   max-height: 300px !important;
   padding: 5px;
 }
+
 #table-wrapper {
   height: 300px;
   padding: 0px;
@@ -162,7 +162,6 @@ table > tbody > tr:first-child {
   background: linear-gradient(to top, #8e9eab, #eef2f3);
   text-align: center;
 }
-
 
 #menu-sap-xep ul li:hover::after {
   width: 100%;
@@ -199,8 +198,6 @@ table > tbody > tr:first-child {
   color: blue !important;
 }
 
-
-
 .question-tag ul {
   margin: 0px !important;
 }
@@ -251,7 +248,6 @@ table > tbody > tr:first-child {
   color: #7c7f85;
 }
 
-
 .div-menu-left {
   padding: 30px 10px 30px 20px !important;
   position: fixed;
@@ -261,7 +257,7 @@ table > tbody > tr:first-child {
   padding: 10px 10px 10px 0;
 }
 
-.div-menu-left ul li ul li{
+.div-menu-left ul li ul li {
   padding: 5px 0px 0px 30px;
   font-size: 13px;
   font-family: "Open Sans", Arial, sans-serif;
@@ -278,10 +274,11 @@ table > tbody > tr:first-child {
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*xep hang start*/
 
-table{
+table {
   max-height: 300px !important;
   padding: 5px;
 }
+
 #table-wrapper {
   height: 300px;
   padding: 0px;
@@ -289,12 +286,14 @@ table{
   overflow: auto;
 
 }
-#report{
+
+#report {
   /*height: 300px;*/
   padding: 0px;
   margin: 0px auto 0px auto;
   overflow: auto;
 }
+
 table > tbody > tr:first-child {
   font-size: 16px;
   color: #454545;
@@ -303,20 +302,22 @@ table > tbody > tr:first-child {
   text-align: center;
 }
 
-.table-report{
+.table-report {
   border-color: #694eff;
 
 }
-.table-report tr{
+
+.table-report tr {
   border-color: #694eff;
 }
-.table-report tr td{
+
+.table-report tr td {
   border-color: #694eff;
   padding: 1%;
   cursor: pointer;
 }
 
-.table-report-first{
+.table-report-first {
   /*border: none !important;*/
   font-size: 14px !important;
   color: #474747 !important;
@@ -324,28 +325,80 @@ table > tbody > tr:first-child {
   background: none !important;
   text-align: left !important;
 }
-.label-report{
+
+.label-report {
   width: 17%;
   text-align: center !important;
   background-color: lavender;
   border-bottom: 1px inset #3f51b5;
 }
 
-.title{
+.title {
   text-align: center;
   margin-top: 1%;
 }
+
 svg {
   padding: 10px 15px;
 }
 
-.col-account .col-date .col-gg{
+.col-account .col-date .col-gg {
   min-width: 10rem;
 }
 
-.inputDate{
+.inputDate {
   margin-left: 2%
 }
-.inputDate input{
+
+.inputDate input {
   width: 14.5rem;
+}
+
+/*auto increase index table*/
+.tagInShowUser {
+  counter-reset: rowNumber;
+}
+
+.tagInShowUser tr + tr {
+  counter-increment: rowNumber;
+}
+
+.tagInShowUser tr + tr td:first-child::after {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+
+/*button search article*/
+.button-search {
+  outline: 0;
+  background: none;
+  background-color: rgba(38, 50, 56, 0.8);
+  float: left;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  line-height: 42px;
+  border: 0;
+  color: #FFF;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 16px;
+  text-rendering: auto;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transition: background-color .4s ease;
+  transition: background-color .4s ease;
+  -webkit-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.button-search:hover {
+  background-color: rgba(0, 150, 136, 0.8);
+}
+
+.searchArticle {
+  color: black;
+  width: 50%;
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+  box-sizing: border-box;
 }

@@ -17,8 +17,11 @@ export class KiThuatTrongComponent implements OnInit {
   loading = true;
   constructor(private router: Router, private growService: GrowService) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.getGrowArticle(this.pageIndex$);
   }
 

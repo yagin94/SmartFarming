@@ -21,6 +21,7 @@ export class TrangChinhComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = false;
     this.getAllArticle(this.pageIndex$);
   }
 

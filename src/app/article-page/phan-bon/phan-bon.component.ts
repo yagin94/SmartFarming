@@ -19,6 +19,7 @@ export class PhanBonComponent implements OnInit {
   constructor(private router: Router, private dungService: DungService) { }
 
   ngOnInit() {
+    this.loading = false;
     this.getDungArticle(this.pageIndex$);
   }
   arrayPage(numberOfPage: number): any[] {

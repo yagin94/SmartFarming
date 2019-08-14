@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {TakeService} from './take.service';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 import {Article} from '../article.model';
 import {Router} from '@angular/router';
+import {NgxLoadingComponent} from 'ngx-loading';
 
 @Component({
   providers: [TakeService],
@@ -16,8 +17,11 @@ export class ThuHoachVaBaoQuanComponent implements OnInit {
   checkSearch = false;
   loading = true;
   constructor(private router: Router, private takeService: TakeService) { }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.getTakeArticle(this.pageIndex$);
   }
   arrayPage(numberOfPage: number): any[] {

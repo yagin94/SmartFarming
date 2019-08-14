@@ -24,8 +24,11 @@ export class AllQuestionUserPageComponent implements OnInit {
               private router: Router,
               private dataShareService: DataShareService) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.appUser$ = JSON.parse(localStorage.getItem('currentAppUser'));
     this.getAllQuestionOfUser(this.sortBy$, this.data, this.pageNumber$);

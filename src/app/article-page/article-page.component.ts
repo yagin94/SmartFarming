@@ -14,9 +14,9 @@ export class ArticlePageComponent implements OnInit {
   editArticle$: Article;
   loading = true;
   constructor(private articleService: ArticleService) {}
-  @ViewChild('ngxLoading') ngxLoadingComponent: NgxLoadingComponent;
-  public loadingTemplate: TemplateRef<any>;
-  title = 'app';
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
     this.loading = false;
   }

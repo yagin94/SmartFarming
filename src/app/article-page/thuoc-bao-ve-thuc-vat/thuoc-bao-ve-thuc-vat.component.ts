@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {DrugService} from './drug.service';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 import {Article} from '../article.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NgxLoadingComponent} from 'ngx-loading';
 
 @Component({
   providers: [DrugService],
@@ -19,7 +20,11 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute) { }
 
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     this.getDrugArticle(this.pageIndex$);
   }
   getDrugArticle(pageIndex$: number) {

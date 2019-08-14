@@ -68,8 +68,11 @@ export class QaPageDetailComponent implements OnInit {
     private router: Router,
     private globals: Globals) {
   }
-
+  click() {
+    this.loading = true;
+  }
   ngOnInit() {
+    this.loading = false;
     window.scroll(0, 0);
     this.ansContent = '';
     this.getTopQa();

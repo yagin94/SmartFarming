@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
               private headerService: HeaderService,
               private http: HttpClient, private globals: Globals, private router: Router) {
   }
-
   ngOnInit() {
     //this.globals.lo.subscribe(re => this.loadingC = re);
     console.log(localStorage.getItem('currentAppUser'));

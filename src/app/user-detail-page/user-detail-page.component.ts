@@ -51,6 +51,7 @@ export class UserDetailPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = false;
     this.route.queryParams.subscribe(params => this.data = params.id);
     this.init();
     // this.appUserGG$ = JSON.parse(localStorage.getItem('currentAppUser'));
@@ -70,7 +71,9 @@ export class UserDetailPageComponent implements OnInit {
               private httpClient: HttpClient,
               private formBuilder: FormBuilder) {
   }
-
+  click() {
+    this.loading = true;
+  }
   drawChart(dataChart1: any, dataChart2, dataChart3) {
     var chart = new CanvasJS.Chart('chartContainerUser', {
       theme: 'light1', // "light2", "dark1", "dark2"

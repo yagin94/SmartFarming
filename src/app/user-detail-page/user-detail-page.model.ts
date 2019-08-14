@@ -2,6 +2,7 @@ import {SocialUser} from 'angularx-social-login';
 import {Answers, AppUser, Qa, Tag} from '../qa-page/qa.model';
 
 export class UserDetailInfor {
+  loading = true;
   date: string;
   numberOfQuestion: number;
   numberOfAnswer: number;

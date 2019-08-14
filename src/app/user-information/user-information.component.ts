@@ -10,6 +10,7 @@ export class UserInformationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

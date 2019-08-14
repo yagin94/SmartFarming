@@ -60,4 +60,8 @@ export class ManagerService {
   getChartInfor(type: string, body: BodyJsonDrawChart): Observable<DrawChart> {
     return this.http.post<DrawChart>(`http://localhost:8080/admin/systemChartInfo/${type}`, body);
   }
+  searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
+    const param = {textSearch};
+    return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);
+  }
 }

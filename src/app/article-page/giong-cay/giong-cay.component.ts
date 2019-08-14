@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {TrangChinhService} from '../trang-chinh/trang-chinh.service';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 import {TypeService} from './Type.service';
+import {Article} from '../article.model';
+import {Router} from '@angular/router';
 
 @Component({
   providers: [TypeService],
@@ -10,10 +12,11 @@ import {TypeService} from './Type.service';
   styleUrls: ['./giong-cay.component.css']
 })
 export class GiongCayComponent implements OnInit {
-
+  loading = true;
   getTypeArticle$ = new GetAllArticle();
   pageIndex$ = 0;
-  constructor(private typeService: TypeService) {
+  checkSearch = false;
+  constructor(private router: Router, private typeService: TypeService) {
   }
 
   ngOnInit() {
@@ -30,5 +33,18 @@ export class GiongCayComponent implements OnInit {
 
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
+  }
+  getArticleDetail(article: Article) {
+    this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId, userId: article.appUser.userId}});
+  }
+
+  searchArticle(textSearch: string, pageIndex: number) {
+    this.checkSearch = true;
+    if (textSearch) {
+      textSearch.trim();
+      this.typeService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
+        this.getTypeArticle$ = getObject;
+      });
+    }
   }
 }

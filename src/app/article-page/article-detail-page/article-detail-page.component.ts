@@ -7,7 +7,7 @@ import {AddAnsObj, Answers, AppUser, Q} from '../../qa-page/qa.model';
 import {A, AddCommentObj} from './detail.model';
 import {Observable} from 'rxjs';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   providers: [ArticleDetailService, DataShareService],
   selector: 'app-article-detail-page',
@@ -29,7 +29,7 @@ export class ArticleDetailPageComponent implements OnInit {
   checkEditComment$ = false;
   editComment$: Comments;
   compare$: number;
-
+  loading = true;
   constructor(private route: ActivatedRoute,
               private router: Router,
               private dataShareService: DataShareService,
@@ -92,7 +92,7 @@ export class ArticleDetailPageComponent implements OnInit {
     this.editArticle$ = article;
     this.dataShareService.setShareData(article);
     // this.router.navigate(['./article-post-page'], {queryParams: {id: article.articleId}});
-    window.location.replace(`/article-detail-page?id=${article.articleId}`);
+    window.location.replace(`/article-post-page?userId=${article.appUser.userId}&id=${article.articleId}`);
   }
 
   addComment(ansewerContent: string): void {
@@ -156,7 +156,11 @@ export class ArticleDetailPageComponent implements OnInit {
   }
 
   getTopArticle(): void {
-    this.articleDetailService.getTopArticle().subscribe(top => this.getAllArticle$ = top);
+    this.articleDetailService.getTopArticle(this.data1).subscribe(top => this.getAllArticle$ = top);
+  }
+
+  viewDetail(a: Article) {
+    window.location.replace(`/article-detail-page?userId=${a.appUser.userId}&id=${a.articleId}`);
   }
 
   isLoggedIn() {

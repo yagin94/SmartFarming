@@ -13,6 +13,10 @@ export class BugService {
     return this.http.post<GetAllArticle>(`http://localhost:8080/article/viewArticlesByCategory/date/${pageIndex}`,
       {'category': 'sâu bệnh'});
   }
+  searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
+    const param = {textSearch};
+    return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);
+  }
 }
 
 

@@ -39,8 +39,8 @@ export class ArticleDetailService {
     return this.http.delete(url);
   }
 
-  getTopArticle(): Observable<GetAllArticle> {
-    return this.http.get<GetAllArticle>(`http://localhost:8080/article/getTop10ArticlesByUploadDate`);
+  getTopArticle(articleId): Observable<GetAllArticle> {
+    return this.http.get<GetAllArticle>(`http://localhost:8080/article/viewRelatedArticles/${articleId}`);
   }
 }
 

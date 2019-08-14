@@ -6,7 +6,7 @@ import {forEach} from '@angular/router/src/utils/collection';
 import {CKEditor4} from 'ckeditor4-angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataShareService} from '../../share-data-service/date-share-service';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   providers: [HeaderComponent, QaService, DataShareService],
   selector: 'app-qa-page-post',
@@ -38,6 +38,7 @@ export class QaPagePostComponent implements OnInit {
     default: ''
   };
   loadingPostQa = false;
+  loading = true;
   constructor(private qaService: QaService,
               private route: ActivatedRoute,
               private router: Router,

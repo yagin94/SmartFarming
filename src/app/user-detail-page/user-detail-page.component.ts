@@ -10,7 +10,7 @@ import {GetAllQuestionOfUser, GetAllTagOfUser, GetTopQuestionOfUser, GetTopTagOf
 import {forEach} from '@angular/router/src/utils/collection';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   providers: [HeaderComponent, UserDetailPageService, DataShareService, FormBuilder],
   selector: 'app-user-detail-page',
@@ -44,7 +44,7 @@ export class UserDetailPageComponent implements OnInit {
   check = false;
   nameCV = '';
   compare$: number;
-
+  loading = true;
   init() {
     // this.drawChart();
 

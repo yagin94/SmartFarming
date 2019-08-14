@@ -5,7 +5,7 @@ import {AddArticle} from './article-post.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ArticleDetailService} from '../article-detail-page/detail.service';
 import {Article} from '../article.model';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   selector: 'app-article-post-page',
   templateUrl: './article-post-page.component.html',
@@ -26,7 +26,7 @@ export class ArticlePostPageComponent implements OnInit {
     editorData: '',
     default: ''
   };
-
+  loading = true;
   constructor(private articlePostService: ArticlePostService,
               private route: ActivatedRoute,
               private router: Router,
@@ -60,6 +60,7 @@ export class ArticlePostPageComponent implements OnInit {
     a.uploadedFiles = [];
     a.category = selected;
     this.articlePostService.addArticle(a).subscribe();
+    window.location.replace(`/article-page/app-trang-chinh`);
   }
 
   getArticleDetail(userId: number, articleId: number) {
@@ -89,7 +90,7 @@ export class ArticlePostPageComponent implements OnInit {
     a.uploadedFiles = [];
     a.category = selected;
     this.articlePostService.updateArticle(this.data1, a).subscribe();
-    window.location.replace(`/article-detail-page?id=${this.data1}`);
+    window.location.replace(`/article-detail-page?userId=${this.data2}&id=${this.data1}`);
   }
 
 }

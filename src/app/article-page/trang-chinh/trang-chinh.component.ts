@@ -14,7 +14,7 @@ export class TrangChinhComponent implements OnInit {
   getAllArticle$ = new GetAllArticle();
   pageIndex$ = 0;
   checkSearch = false;
-
+  loading = true;
   constructor(private trangChinhService: TrangChinhService,
               private router: Router,
               private route: ActivatedRoute) {

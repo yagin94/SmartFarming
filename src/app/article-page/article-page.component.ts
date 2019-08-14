@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Article} from './article.model';
 import {ArticleService} from './article.service';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   selector: 'app-article-page',
   templateUrl: './article-page.component.html',
@@ -12,8 +12,13 @@ export class ArticlePageComponent implements OnInit {
   article$: Article[];
   checkAdd$ = 0;
   editArticle$: Article;
+  loading = true;
   constructor(private articleService: ArticleService) {}
+  @ViewChild('ngxLoading') ngxLoadingComponent: NgxLoadingComponent;
+  public loadingTemplate: TemplateRef<any>;
+  title = 'app';
   ngOnInit() {
+    this.loading = false;
   }
 
   getArticle(): void {

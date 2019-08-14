@@ -3,6 +3,8 @@
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <div class="bgded overlay" style="background-image:url('../../assets/images/demo/backgrounds/01.png');">
+  <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+               [template]="loadingTemplate"></ngx-loading>
   <!-- ################################################################################################ -->
   <div class="wrapper row1">
     <header id="header" class="hoc clear">

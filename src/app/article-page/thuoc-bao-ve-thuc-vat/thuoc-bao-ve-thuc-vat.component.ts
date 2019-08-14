@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {DrugService} from './drug.service';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
+import {Article} from '../article.model';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   providers: [DrugService],
@@ -11,7 +13,11 @@ import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 export class ThuocBaoVeThucVatComponent implements OnInit {
   getDrugArticle$ = new GetAllArticle();
   pageIndex$ = 0;
-  constructor(private drugService: DrugService) { }
+  checkSearch = false;
+  loading = true;
+  constructor(private drugService: DrugService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getDrugArticle(this.pageIndex$);
@@ -25,5 +31,18 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
   }
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
+  }
+  getArticleDetail(article: Article) {
+    this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId, userId: article.appUser.userId}});
+  }
+
+  searchArticle(textSearch: string, pageIndex: number) {
+    this.checkSearch = true;
+    if (textSearch) {
+      textSearch.trim();
+      this.drugService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
+        this.getDrugArticle$ = getObject;
+      });
+    }
   }
 }

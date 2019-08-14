@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 import {BugService} from './Bug.service';
+import {Article} from '../article.model';
+import {Router} from '@angular/router';
 
 @Component({
   providers: [BugService],
@@ -11,7 +13,9 @@ import {BugService} from './Bug.service';
 export class SauBenhComponent implements OnInit {
   getBugArticle$ = new GetAllArticle();
   pageIndex$ = 0;
-  constructor(private bugService: BugService) { }
+  checkSearch = false;
+  loading = true;
+  constructor(private router: Router, private bugService: BugService) { }
 
   ngOnInit() {
     this.getBugArticle(this.pageIndex$);
@@ -25,5 +29,18 @@ export class SauBenhComponent implements OnInit {
       this.getBugArticle$ = object;
       console.log(this.getBugArticle$);
     });
+  }
+  getArticleDetail(article: Article) {
+    this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId, userId: article.appUser.userId}});
+  }
+
+  searchArticle(textSearch: string, pageIndex: number) {
+    this.checkSearch = true;
+    if (textSearch) {
+      textSearch.trim();
+      this.bugService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
+        this.getBugArticle$ = getObject;
+      });
+    }
   }
 }

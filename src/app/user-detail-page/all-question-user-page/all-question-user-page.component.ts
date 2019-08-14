@@ -5,7 +5,7 @@ import {UserDetailPageService} from '../user-detail-page.service';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppUser, Qa} from '../../qa-page/qa.model';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   providers: [HeaderComponent, UserDetailPageService, DataShareService],
   selector: 'app-all-question-user-page',
@@ -18,7 +18,7 @@ export class AllQuestionUserPageComponent implements OnInit {
   pageNumber$ = 0;
   sortBy$ = 'viewCount';
   data: any;
-
+  loading = true;
   constructor(private userDetailPageService: UserDetailPageService,
               private route: ActivatedRoute,
               private router: Router,

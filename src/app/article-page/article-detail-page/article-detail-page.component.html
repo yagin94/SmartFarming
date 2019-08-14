@@ -59,15 +59,21 @@
       <h6>Danh mục thể loại</h6>
       <nav class="sdb_holder">
         <ul>
-          <li *ngFor="let distinct of distinct$"><a href="">{{distinct}}</a></li>
+          <li><a href="/article-page/app-ki-thuat-trong">Kỹ thuật trồng</a></li>
+          <li><a href="/article-page/app-thu-hoach-va-bao-quan">Thu hoạch và bảo quản</a></li>
+          <li><a href="/article-page/app-phan-bon">Phân bón</a></li>
+          <li><a href="/article-page/app-thuoc-bao-ve-thuc-vat">Thuốc bảo vệ thực vật</a></li>
+          <li><a href="/article-page/app-sau-benh">Sâu bệnh</a></li>
+          <li><a href="/article-page/app-ky-thuat-nhan-giong">Kỹ thuật nhân giống</a></li>
+          <li><a href="/article-page/app-giong-cay">Giống cây</a></li>
         </ul>
       </nav>
       <div class="sdb_holder">
         <article>
           <h6>Top Kiến thức</h6>
-          <p> Những bài đăng mới nhất</p>
+          <p> Những bài viết liên quan</p>
           <ul>
-            <li *ngFor="let a of getAllArticle$.articlesByPageIndex"><a href="#">{{a.title}}</a></li>
+            <li *ngFor="let a of getAllArticle$.articlesByPageIndex"><a style="cursor: pointer" (click)="viewDetail(a)">{{a.title}}</a></li>
           </ul>
         </article>
       </div>

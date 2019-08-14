@@ -11,7 +11,6 @@
       <li *ngIf="user"><div title="Đăng xuất" (click)="signOut()" style="cursor: pointer"><a style="cursor: pointer; font-size: large">Đăng xuất</a></div>
        <li *ngIf="checkAdmin=='ADMIN'"> <a class="button" href="./manage-page" style="cursor: pointer; font-size: large">Quản lý</a> </li>
       <li *ngIf="checkAdmin=='ADMIN'"> <a class="button" href="./article-post-page" style="cursor: pointer; font-size: large">Đăng bài viết</a> </li>
-         <li><button (click)="abc()">AAA</button></li>
           <li><a class="drop" routerLinkActive="active" style="cursor: pointer; font-size: large">Thông báo</a>
             <ul *ngIf="!checkNotif">
               <li>Không có thông báo nào</li>

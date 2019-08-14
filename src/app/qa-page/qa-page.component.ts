@@ -52,7 +52,7 @@ export class QaPageComponent implements OnInit {
   tagId: number;
   data: any;
   loadingPostQa = false;
-
+  loading = true;
   constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
               private globals: Globals,
               private route: ActivatedRoute) {

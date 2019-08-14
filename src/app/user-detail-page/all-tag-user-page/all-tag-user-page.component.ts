@@ -5,7 +5,7 @@ import {UserDetailPageService} from '../user-detail-page.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {HeaderComponent} from '../../common/header/header.component';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   providers: [HeaderComponent, UserDetailPageService, DataShareService],
   selector: 'app-all-tag-user-page',

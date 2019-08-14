@@ -11,7 +11,7 @@ import {SearchText} from './home-page.model';
 import {Qa} from '../qa-page/qa.model';
 import {Router} from '@angular/router';
 import {Article} from '../article-page/article.model';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   providers: [LoginService, HeaderComponent, HomePageService],
   selector: 'app-home-page',
@@ -19,7 +19,7 @@ import {Article} from '../article-page/article.model';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-
+  loading = true;
   user: SocialUser;
   showTopSearch$ = false;
   getTopArticle$: GetTopArticle;
@@ -31,11 +31,14 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = false;
     this.authService.authState.subscribe((user) => {
       this.user = user;
     });
   }
-
+click() {
+    this.loading = true;
+}
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((x) => {
@@ -111,6 +114,6 @@ export class HomePageComponent implements OnInit {
   }
 
   goToArticleDetail(qa: Article) {
-    this.router.navigate(['./article-detail-page'], {queryParams: {id: qa.articleId}});
+    this.router.navigate(['./article-detail-page'], {queryParams: {id: qa.articleId, userId: qa.appUser.userId}});
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CloneService} from './Clone.service';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
+import {Article} from '../article.model';
+import {Router} from '@angular/router';
 
 
 
@@ -11,10 +13,11 @@ import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
   styleUrls: ['./ky-thuat-nhan-giong.component.css']
 })
 export class KyThuatNhanGiongComponent implements OnInit {
-
+  loading = true;
   getCloneArticle$ = new GetAllArticle();
   pageIndex$ = 0;
-  constructor(private cloneService: CloneService) { }
+  checkSearch = false;
+  constructor(private router: Router, private cloneService: CloneService) { }
 
   ngOnInit() {
      this.getCloneArticle(this.pageIndex$);
@@ -28,5 +31,18 @@ export class KyThuatNhanGiongComponent implements OnInit {
       this.getCloneArticle$ = object;
       console.log(this.getCloneArticle$);
     });
+  }
+  getArticleDetail(article: Article) {
+    this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId, userId: article.appUser.userId}});
+  }
+
+  searchArticle(textSearch: string, pageIndex: number) {
+    this.checkSearch = true;
+    if (textSearch) {
+      textSearch.trim();
+      this.cloneService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
+        this.getCloneArticle$ = getObject;
+      });
+    }
   }
 }

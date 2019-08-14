@@ -11,7 +11,7 @@ import {ManagerService} from './manager.service';
 import {BodyJsonDrawChart, DrawChart, GetAllArticle, GetAllUser, GetObjectReport, GetObjectTag, GetReportUser} from './manager.model';
 import {Router} from '@angular/router';
 import {Article} from '../article-page/article.model';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   selector: 'app-manager-page',
   templateUrl: './manager-page.component.html',
@@ -20,6 +20,7 @@ import {Article} from '../article-page/article.model';
 })
 
 export class ManagerPageComponent implements OnInit {
+  loading = true;
   getObject$: GetObject;
   getReport$: ReportsByPageIndex;
   getObjectReport$: GetObjectReport;

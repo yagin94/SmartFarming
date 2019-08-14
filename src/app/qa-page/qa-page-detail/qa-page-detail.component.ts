@@ -24,7 +24,7 @@ import {
 import {SocialUser} from 'angularx-social-login';
 import {forEach} from '@angular/router/src/utils/collection';
 import {Globals} from '../../common/globalVariables';
-
+import {NgxLoadingComponent} from 'ngx-loading';
 @Component({
   providers: [HeaderComponent, DataShareService, QaService, SocialService, Globals],
   selector: 'app-qa-page-detail',
@@ -59,7 +59,7 @@ export class QaPageDetailComponent implements OnInit {
   checkLikeButton$ = false;
   reason: string;
   responseReport: ResponseReport;
-
+  loading = true;
   constructor(
     private qaService: QaService,
     private dataShareService: DataShareService,

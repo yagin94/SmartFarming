@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../common/header/header.component';
 import {QaService} from '../qa.service';
-import {Answers, AppUser, GetObject, GetObjectTopQa, GetObjectTopTag, GetObjectTopUser, Qa, Tag} from '../qa.model';
+import {Answers, AppUser, GetObject, GetObjectTopQa, GetObjectTopTag, GetObjectTopUser, Qa, Tag, TextSearch} from '../qa.model';
 import {forEach} from '@angular/router/src/utils/collection';
 import {CKEditor4} from 'ckeditor4-angular';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -15,9 +15,9 @@ import {NgxLoadingComponent} from 'ngx-loading';
 })
 export class QaPagePostComponent implements OnInit {
   getObject$: GetObject;
-  getObjectTopTag$: GetObjectTopTag;
-  getObjectTopUser$: GetObjectTopUser;
-  getObjectTopQa$: GetObjectTopQa;
+  getObjectTopTag$ = new GetObjectTopTag();
+  getObjectTopUser$ = new GetObjectTopUser();
+  getObjectTopQa$ = new GetObjectTopQa();
   qa$: Qa[];
   qa: Qa;
   appUser$: AppUser;
@@ -39,6 +39,8 @@ export class QaPagePostComponent implements OnInit {
   };
   loadingPostQa = false;
   loading = true;
+  ownerUserId: number;
+  getTagSuggest$ = new GetObjectTopTag();
   constructor(private qaService: QaService,
               private route: ActivatedRoute,
               private router: Router,
@@ -57,8 +59,14 @@ export class QaPagePostComponent implements OnInit {
       cloudServices_uploadUrl: 'https://41367.cke-cs.com/easyimage/upload/',
       removeButtons: 'Save,NewPage,Preview,Print,Templates,Replace,SelectAll,Form,Checkbox,Radio,TextField,Textarea,Find,Select,Button,ImageButton,HiddenField,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,CopyFormatting,CreateDiv,BidiLtr,BidiRtl,Language,Flash,Smiley,PageBreak,Iframe,TextColor,BGColor,ShowBlocks,Cut,Copy,Paste,Table,Source,Maximize,Styles,Anchor,SpecialChar,PasteFromWord,PasteText,Scayt,Undo,Redo,Strike,RemoveFormat,Indent,Outdent,Blockquote,Subscript,Superscript,About,Link,Unlink'
     };
-    this.route.queryParams.subscribe(params => this.data = params.id);
-    this.getQaDetail(this.data);
+    this.route.queryParams.subscribe(params => {
+      this.data = params['id'];
+      this.ownerUserId = params['userId'];
+    });
+    if (this.data != null && this.ownerUserId != null) {
+      this.getQaDetail(this.data, this.ownerUserId);
+    }
+
     this.getTopQa();
     this.getTopTag();
     this.getTopUser();
@@ -73,8 +81,8 @@ export class QaPagePostComponent implements OnInit {
     console.log('=====', this.data);
   }
 
-  getQaDetail(questionId: number): void {
-    this.qaService.getQaDetail(questionId).subscribe(qa => {
+  getQaDetail(questionId: number, ownerId: number): void {
+    this.qaService.getQaDetail(questionId, ownerId).subscribe(qa => {
       this.qa = qa;
       this.model.default = this.qa.content;
     });
@@ -132,7 +140,7 @@ export class QaPagePostComponent implements OnInit {
         alert('added');
         this.qa$.push(newQa);
         this.loadingPostQa = false;
-         location.replace(`/qa-page`);
+        location.replace(`/qa-page`);
       },
       onFail => {
         alert('can not add question');

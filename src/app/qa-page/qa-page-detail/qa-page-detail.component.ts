@@ -12,7 +12,7 @@ import {
   Qa,
   Tag,
   AddupvoteQa,
-  AddupvoteAn, ReportObj, ResponseReport
+  AddupvoteAn, ReportObj, ResponseReport, GetUserRelateQa
 } from '../qa.model';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {HeaderComponent} from '../../common/header/header.component';
@@ -60,6 +60,9 @@ export class QaPageDetailComponent implements OnInit {
   reason: string;
   responseReport: ResponseReport;
   loading = true;
+  ownerUser: any;
+  getUserRelateQa$ = new GetUserRelateQa();
+  arrayUser: any;
   constructor(
     private qaService: QaService,
     private dataShareService: DataShareService,
@@ -74,13 +77,17 @@ export class QaPageDetailComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     window.scroll(0, 0);
+    this.route.queryParams.subscribe(params => {
+      this.data = params['id'];
+      this.ownerUser = params['userId'];
+    });
     this.ansContent = '';
     this.getTopQa();
     this.getTopTag();
     this.getTopUser();
     // this.dataShareService.currentMessage.subscribe(message => this.message = message);
-    this.route.queryParams.subscribe(params => this.data = params.id);
-    this.getQaDetail(this.data);
+
+    this.getQaDetail(this.data, this.ownerUser);
     console.log(localStorage.getItem('anonymousUser'));
   }
 
@@ -103,7 +110,10 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   getTopUser(): void {
-    this.qaService.getTopUser().subscribe(getObjectTopUser => this.getObjectTopUser$ = getObjectTopUser);
+    this.qaService.getTopUserRelate(this.data).subscribe(getObjectTopUser => {
+      this.getUserRelateQa$ = getObjectTopUser;
+
+    });
   }
 
   checkAuthen() {
@@ -156,8 +166,8 @@ export class QaPageDetailComponent implements OnInit {
     }
   }
 
-  getQaDetail(questionId: number): void {
-    this.qaService.getQaDetail(questionId).subscribe(qa => {
+  getQaDetail(questionId: number, ownerId: number): void {
+    this.qaService.getQaDetail(questionId, ownerId).subscribe(qa => {
       this.qa$ = qa;
       for (let value of this.qa$.upvotedUserIds) {
         if (JSON.parse(localStorage.getItem('currentAppUser'))) {
@@ -228,7 +238,7 @@ export class QaPageDetailComponent implements OnInit {
     // console.log(qa);
     //this.router.navigate(['./qa-page-post'], {queryParams: {id: qa.questionId}});
     // console.log(this.dataShareService.getShareData());
-    window.location.replace(`/qa-page-post?id=${qa.questionId}`);
+    window.location.replace(`/qa-page-post?id=${qa.questionId}&userId=${qa.appUser.userId}`);
   }
 
   editAnswer(answer: Answers) {
@@ -244,7 +254,7 @@ export class QaPageDetailComponent implements OnInit {
     const a: AddAnsObj = new AddAnsObj(content, u, q);
     this.qaService.updateAnswer(this.editAnswer$.answerId, a).subscribe(
       onSuccess => {
-        this.getQaDetail(this.data);
+        this.getQaDetail(this.data, this.ownerUser);
         this.checkEditAnswer = false;
         this.ansContent = '';
       }
@@ -282,7 +292,7 @@ export class QaPageDetailComponent implements OnInit {
     console.log(x);
     this.qaService.addAnswer(x).subscribe(answer => {
       // this.answer$.push(answer)
-      this.getQaDetail(this.data);
+      this.getQaDetail(this.data, this.ownerUser);
       this.ansContent = '';
     });
     // console.log(x);
@@ -293,7 +303,7 @@ export class QaPageDetailComponent implements OnInit {
       // this.answer$ = this.answer$.filter(h => h !== answerId);
       this.qaService.deleteAnswer(answerId).subscribe(onSuccess => {
           alert('Xóa câu thành công!!!');
-          this.getQaDetail(this.data);
+          this.getQaDetail(this.data, this.ownerUser);
         },
         onFail => {
           alert('Bạn không thể xóa câu trả lời này !!!');
@@ -318,7 +328,7 @@ export class QaPageDetailComponent implements OnInit {
         }
       );
       this.checkLikeButton$ = !this.checkLikeButton$;
-      this.getQaDetail(this.data);
+      this.getQaDetail(this.data, this.ownerUser);
     }
   }
 
@@ -329,7 +339,7 @@ export class QaPageDetailComponent implements OnInit {
     } else {
       const u = new AddupvoteAn(JSON.parse(localStorage.getItem('currentAppUser')).userId);
       this.qaService.upvoteAnswer(answerId, u).subscribe(answer => {
-          this.getQaDetail(this.data);
+          this.getQaDetail(this.data, this.ownerUser);
         }
       );
 
@@ -343,7 +353,7 @@ export class QaPageDetailComponent implements OnInit {
       for (let value of answer.upvotedUserIds) {
         if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
           return true;
-          this.getQaDetail(this.data);
+          this.getQaDetail(this.data, this.ownerUser);
         }
       }
     }

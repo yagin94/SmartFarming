@@ -11,7 +11,9 @@ import {ManagerService} from './manager.service';
 import {BodyJsonDrawChart, DrawChart, GetAllArticle, GetAllUser, GetObjectReport, GetObjectTag, GetReportUser} from './manager.model';
 import {Router} from '@angular/router';
 import {Article} from '../article-page/article.model';
+import {TrangChinhService} from '../article-page/trang-chinh/trang-chinh.service';
 import {NgxLoadingComponent} from 'ngx-loading';
+
 @Component({
   selector: 'app-manager-page',
   templateUrl: './manager-page.component.html',
@@ -39,6 +41,9 @@ export class ManagerPageComponent implements OnInit {
   getAllUser$: GetAllUser;
   getReportUser$: GetReportUser;
   classifyChart = 'date';
+  jsonReport: any;
+  pageIndexArticleSearch$ = 0;
+  getArticle$: any;
   /**=====================*/
   isFlatShowView = false;
   isFlatShowUser = false;
@@ -47,6 +52,7 @@ export class ManagerPageComponent implements OnInit {
   isFlatShowtags = false;
   isFlatShowQuestion = false;
   isFlatShowAllUser = false;
+  checkSearch = false;
 
 
   init() {
@@ -58,6 +64,7 @@ export class ManagerPageComponent implements OnInit {
     this.getAllarticle$ = new GetAllArticle();
     this.getAllUser$ = new GetAllUser();
     this.getReportUser$ = new GetReportUser();
+    this.getArticle$ = new GetAllArticle();
     this.allView$ = 0;
     this.getAllView();
     this.getAllTag(this.sortTagBy$, this.pageIndex$);
@@ -238,7 +245,7 @@ export class ManagerPageComponent implements OnInit {
   }
 
   gotoDetailPage(qa: Qa) {
-    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
+    this.router.navigate(['./qa-page-detail'], {queryParams: {userId: qa.appUser.userId, id: qa.questionId}});
   }
 
   getAllarticle(pageIndex: number) {
@@ -249,7 +256,7 @@ export class ManagerPageComponent implements OnInit {
 
   goToArticlePage(article: Article) {
     console.log('article', article.articleId);
-    this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId}});
+    this.router.navigate(['./article-detail-page'], {queryParams: {userId: article.appUser.userId, id: article.articleId}});
   }
 
 
@@ -273,92 +280,102 @@ export class ManagerPageComponent implements OnInit {
     // this.getTopQuestionOfUser(this.sortBy$, this.appUserGG$.userId);
   }
 
-  // letDrawChart(e) {
-  //   let dataViewCount = [];
-  //   let dataUpvoteCount = [];
-  //   let dataNewAccount = [];
-  //   let dataInactiveAccount = [];
-  //   let bodyJson = new BodyJsonDrawChart();
-  //   let jsonResponse = new DrawChart();
-  //   bodyJson.startTime = e;
-  //   bodyJson.period = 10;
-  //   this.managerService.getChartInfor(this.classifyChart, bodyJson).subscribe(infor => {
-  //     jsonResponse = infor;
-  //     if (jsonResponse != null) {
-  //       let totalViewCount = 0;
-  //       let totalUpvoteCount = 0;
-  //       let totalNewAccount = 0;
-  //       let totalInactiveAccount = 0;
-  //       //     jsonResponse.forEach(item => {
-  //       //       totalViewCount += parseInt(item.totalViewCount);
-  //       //       totalUpvoteCount += parseInt(item.totalUpvoteCount);
-  //       //       totalNewAccount += parseInt(item.totalNewAccount);
-  //       //       totalInactiveAccount += parseInt(item.totalInactiveAccount);
-  //       //       if (item.chartByDate != null) {
-  //       //         dataViewCount.push({label: item.chartByDate, y: item.totalViewCount});
-  //       //         dataUpvoteCount.push({label: item.chartByDate, y: item.totalUpvoteCount});
-  //       //         dataNewAccount.push({label: item.chartByDate, y: item.totalNewAccount});
-  //       //         dataInactiveAccount.push({label: item.chartByDate, y: item.totalInactiveAccount});
-  //       //       } else if (item.chartByMonth != null) {
-  //       //         dataViewCount.push({label: item.chartByMonth, y: item.totalViewCount});
-  //       //         dataUpvoteCount.push({label: item.chartByMonth, y: item.totalUpvoteCount});
-  //       //         dataNewAccount.push({label: item.chartByMonth, y: item.totalNewAccount});
-  //       //         dataInactiveAccount.push({label: item.chartByMonth, y: item.totalInactiveAccount});
-  //       //       } else if (item.chartByYear != null) {
-  //       //         dataViewCount.push({label: item.chartByYear, y: item.totalViewCount});
-  //       //         dataUpvoteCount.push({label: item.chartByYear, y: item.totalUpvoteCount});
-  //       //         dataNewAccount.push({label: item.chartByYear, y: item.totalNewAccount});
-  //       //         dataInactiveAccount.push({label: item.chartByYear, y: item.totalInactiveAccount});
-  //       //       }
-  //       //
-  //       //     });
-  //       //     this.drawChart(dataViewCount, dataUpvoteCount, dataNewAccount, dataInactiveAccount);
-  //       //   }
-  //       // });
-  //     }
-  //     // drawChart(dataChart1 : any, dataChart2, dataChart3, dataChart4) {
-  //     //   let chart = new CanvasJS.Chart('chartContainer', {
-  //     //     animationEnabled: true,
-  //     //     exportEnabled: true,
-  //     //     zoomEnabled: true,
-  //     //     title: {
-  //     //       text: ''
-  //     //     },
-  //     //     data: [
-  //     //       {
-  //     //         // Change type to "bar", "area", "spline", "pie",etc.
-  //     //         type: 'column',
-  //     //         name: 'Tài khoản mới',
-  //     //         showInLegend: true,
-  //     //         dataPoints: dataChart3
-  //     //       },
-  //     //       {
-  //     //         // Change type to "bar", "area", "spline", "pie",etc.
-  //     //         type: 'column',
-  //     //         name: 'Tài khoản kém hoạt dộng',
-  //     //         showInLegend: true,
-  //     //         dataPoints: dataChart4
-  //     //       },
-  //     //       {
-  //     //         // Change type to "bar", "area", "spline", "pie",etc.
-  //     //         type: 'line',
-  //     //         name: 'Lượt xem',
-  //     //         showInLegend: true,
-  //     //         dataPoints: dataChart1
-  //     //       },
-  //     //       {
-  //     //         // Change type to "bar", "area", "spline", "pie",etc.
-  //     //         type: 'line',
-  //     //         name: 'Lượt thích',
-  //     //         showInLegend: true,
-  //     //         dataPoints: dataChart2
-  //     //       },
-  //     //
-  //     //     ]
-  //     //   });
-  //     //
-  //     //   chart.render();
-  //     // }
-  //   }
+  letDrawChart(e) {
+    let dataViewCount = [];
+    let dataUpvoteCount = [];
+    let dataNewAccount = [];
+    let dataInactiveAccount = [];
+    let bodyJson = new BodyJsonDrawChart();
+    // let jsonResponse = new DrawChart();
+    bodyJson.startTime = e;
+    bodyJson.period = 10;
+    this.managerService.getChartInfor(this.classifyChart, bodyJson).subscribe(infor => {
+      this.jsonReport = infor;
+      if (this.jsonReport != null) {
+        let totalViewCount = 0;
+        let totalUpvoteCount = 0;
+        let totalNewAccount = 0;
+        let totalInactiveAccount = 0;
+        this.jsonReport.forEach(item => {
+          totalViewCount += parseInt(item.totalViewCount);
+          totalUpvoteCount += parseInt(item.totalUpvoteCount);
+          totalNewAccount += parseInt(item.totalNewAccount);
+          totalInactiveAccount += parseInt(item.totalInactiveAccount);
+          if (item.chartByDate != null) {
+            dataViewCount.push({label: item.chartByDate, y: item.totalViewCount});
+            dataUpvoteCount.push({label: item.chartByDate, y: item.totalUpvoteCount});
+            dataNewAccount.push({label: item.chartByDate, y: item.totalNewAccount});
+            dataInactiveAccount.push({label: item.chartByDate, y: item.totalInactiveAccount});
+          } else if (item.chartByMonth != null) {
+            dataViewCount.push({label: item.chartByMonth, y: item.totalViewCount});
+            dataUpvoteCount.push({label: item.chartByMonth, y: item.totalUpvoteCount});
+            dataNewAccount.push({label: item.chartByMonth, y: item.totalNewAccount});
+            dataInactiveAccount.push({label: item.chartByMonth, y: item.totalInactiveAccount});
+          } else if (item.chartByYear != null) {
+            dataViewCount.push({label: item.chartByYear, y: item.totalViewCount});
+            dataUpvoteCount.push({label: item.chartByYear, y: item.totalUpvoteCount});
+            dataNewAccount.push({label: item.chartByYear, y: item.totalNewAccount});
+            dataInactiveAccount.push({label: item.chartByYear, y: item.totalInactiveAccount});
+          }
+
+        });
+        this.drawChart(dataViewCount, dataUpvoteCount, dataNewAccount, dataInactiveAccount);
+      }
+    });
   }
 
+  drawChart(dataChart1: any, dataChart2, dataChart3, dataChart4) {
+    let chart = new CanvasJS.Chart('chartContainer', {
+      animationEnabled: true,
+      exportEnabled: true,
+      zoomEnabled: true,
+      title: {
+        text: ''
+      },
+      data: [
+        {
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: 'column',
+          name: 'Tài khoản mới',
+          showInLegend: true,
+          dataPoints: dataChart3
+        },
+        {
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: 'column',
+          name: 'Tài khoản kém hoạt dộng',
+          showInLegend: true,
+          dataPoints: dataChart4
+        },
+        {
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: 'line',
+          name: 'Lượt xem',
+          showInLegend: true,
+          dataPoints: dataChart1
+        },
+        {
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: 'line',
+          name: 'Lượt thích',
+          showInLegend: true,
+          dataPoints: dataChart2
+        },
+
+      ]
+    });
+
+    chart.render();
+  }
+
+  searchArticle(textSearch: string, pageIndexArticleSearch: number) {
+    this.checkSearch = true;
+    if (textSearch) {
+      textSearch.trim();
+      this.managerService.searchArticle(pageIndexArticleSearch, textSearch).subscribe(getObject => {
+        this.getArticle$ = getObject;
+        console.log('search', this.getArticle$.numberOfPages);
+      });
+    }
+  }
+}

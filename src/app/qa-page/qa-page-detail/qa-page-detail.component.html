@@ -255,9 +255,9 @@
           </p>
           <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
             <li>
-              <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <span><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
               <div class="title-article"><a (click)="navigate(item)" style="cursor: pointer"> {{item.title}}</a></div>
-              <div>
+              <div style="text-align: center">
                 <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
                 <span class="top-article-view"><a>{{item.viewCount}} lượt xem</a></span>
               </div>
@@ -282,10 +282,10 @@
           <img src="../../assets/images/users.png" style="height: 20px;padding-right: 15px;">Top người dùng
         </p>
         <ul class="top-user">
-          <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex">
-            <span><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
-            <div class="title-article"><a>{{item.socialUser.firstName}}</a></div>
-            <span style="padding: 0 35px;"><a>{{item.reputation}} điểm</a></span>
+          <li *ngFor="let item of getUserRelateQa$">
+            <span><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
+            <div class="title-article"><a>{{item.appUser.socialUser.name}}</a></div>
+            <span style="padding: 0 50px;"><a>{{item.reputation}} điểm</a></span>
           </li>
         </ul>
       </div>

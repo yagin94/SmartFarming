@@ -11,7 +11,7 @@ import {
   GetObjectTopTag,
   GetObjectTopQa,
   GetObjectQaByTag,
-  AddupvoteQa, ReportObj
+  AddupvoteQa, ReportObj, GetUserRelateQa
 } from './qa.model';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
@@ -35,20 +35,27 @@ export class QaService {
   getTopQa(): Observable<GetObjectTopQa> {
     return this.http.get<GetObjectTopQa>(`http://localhost:8080/question/viewTop3QuestionsByViewCount`);
   }
+
+  getTopUserRelate(questionId: number): Observable<GetUserRelateQa> {
+    return this.http.get<GetUserRelateQa>(`http://localhost:8080/question/viewRelatedUsersByQuestion/${questionId}`);
+  }
+
   getTopUser(): Observable<GetObjectTopUser> {
     return this.http.get<GetObjectTopUser>(`http://localhost:8080/userDetail/viewTop3UsersByReputation`);
   }
+
   getTopTag(): Observable<GetObjectTopTag> {
     return this.http.get<GetObjectTopTag>(`http://localhost:8080/tag/viewTop5TagsByViewCount`);
   }
+
   /** Get questions by tag*/
   getQaByTag(sortBy: string, tagId: number, pageIndex: number): Observable<GetObjectQaByTag> {
     return this.http.get<GetObjectQaByTag>(`http://localhost:8080/question/viewQuestionsByTag/${sortBy}/${tagId}/${pageIndex}`);
   }
 
   /** GET 1 question from the server */
-  getQaDetail(questionId: number): Observable<Qa> {
-    return this.http.get<Qa>(`http://localhost:8080/question/viewQuestion/${questionId}`);
+  getQaDetail(questionId: number, userID: number): Observable<Qa> {
+    return this.http.get<Qa>(`http://localhost:8080/question/viewQuestion/${userID}/${questionId}`);
   }
 
   /** POST: add a new question to the database */
@@ -68,24 +75,30 @@ export class QaService {
 
     return this.http.post<GetObject>(`${this.QaUrl}/${type}/${pageIndex}`, params);
   }
+
   reportQa(id: number, reportObj: ReportObj): Observable<{}> {
     const url = `http://localhost:8080/question/reportQuestion/${id}`;
     return this.http.post(url, reportObj);
   }
+
   /** PUT: update the question on the server. Returns the updated article upon success. */
   updateQuestion(id: number, question: Qa): Observable<Qa> {
     return this.http.put<Qa>(`http://localhost:8080/question/updateQuestion/${id}`, question);
   }
+
   upvoteQuestion(questionId: number, userId: AddupvoteQa): Observable<{}> {
     return this.http.post<{}>(`http://localhost:8080/upvote/question/${questionId}`, userId);
   }
+
   /** POST: add a new answer to the database */
   addAnswer(answer: AddAnsObj): Observable<Answers> {
     return this.http.post<Answers>('http://localhost:8080/answer/addAnswerToQuestion', answer);
   }
+
   upvoteAnswer(answerId: number, userId: AddupvoteQa): Observable<{}> {
     return this.http.post<{}>(`http://localhost:8080/upvote/answer/${answerId}`, userId);
   }
+
   /** PUT: update the answer on the server. Returns the updated article upon success. */
   updateAnswer(answerId: number, answer: AddAnsObj): Observable<AddAnsObj> {
     console.log('idddd', answerId);
@@ -99,5 +112,11 @@ export class QaService {
   }
 
   /** POST: upvote the question from the server */
+
+
+  /** tinhnx*/
+  getTagSuggest(text: TextSearch): Observable<GetObjectTopTag> {
+    return this.http.post<GetObjectTopTag>(' http://localhost:8080/tag/searchTagsWhileTyping', text);
+  }
 
 }

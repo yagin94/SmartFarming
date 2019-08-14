@@ -96,6 +96,7 @@ export class AppUser {
   role: string;
   createdTimeByUtilTimeStamp: string;
   lastActiveByUtilTimeStamp: string;
+
   constructor() {
   }
 }
@@ -188,3 +189,15 @@ export class ResponseReport {
   question: Qa;
   utilTimestamp: string;
 }
+
+export class GetUserRelateQa {
+  appUserTagId: number;
+  appUser: AppUser;
+  tag: Tag;
+  reputation: number;
+  viewCount: number;
+
+  constructor() {
+  };
+}
+

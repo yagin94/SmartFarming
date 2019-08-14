@@ -402,3 +402,52 @@ svg {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+/*auto increase index table*/
+.tagInShowUser {
+  counter-reset: rowNumber;
+}
+
+.tagInShowUser tr + tr {
+  counter-increment: rowNumber;
+}
+
+.tagInShowUser tr + tr td:first-child::after {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+
+/*button search article*/
+.button-search {
+  outline: 0;
+  background: none;
+  background-color: rgba(38, 50, 56, 0.8);
+  float: left;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  line-height: 42px;
+  border: 0;
+  color: #FFF;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 16px;
+  text-rendering: auto;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transition: background-color .4s ease;
+  transition: background-color .4s ease;
+  -webkit-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.button-search:hover {
+  background-color: rgba(0, 150, 136, 0.8);
+}
+
+.searchArticle {
+  color: black;
+  width: 50%;
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

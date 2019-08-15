@@ -29,7 +29,7 @@
             </ul>
           </li>
           <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
-          <li><a (click)="click()">Liên hệ</a></li>
+          <!--<li><a (click)="click()">Liên hệ</a></li>-->
 
         </ul>
 
@@ -153,6 +153,11 @@
               </select>
             </div>
             <table id="table-report">
+              <tr>
+                <th style="color: black;background-color: #c2c2c2">Lượt xem</th>
+                <th style="color: black;background-color: #c2c2c2">Tiêu đề câu hỏi</th>
+                <th style="color: black;background-color: #c2c2c2">Ngày đăng</th>
+              </tr>
               <tr class="table-report-first" *ngFor="let qa of getTopQuestionOfUser$.qa">
                 <td class="viewQuestion">{{qa.viewCount}}</td>
                 <td style="padding-top: 15px;"><a (click)="questionDetail(qa)">{{qa.title}}</a></td>

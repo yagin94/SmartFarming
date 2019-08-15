@@ -10,17 +10,17 @@
   <div class="bgded overlay" style="background: #f2f2f2 !important;">
     <!-- ################################################################################################ -->
     <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
-      <header id="header" class="hoc clear">
+      <header id="header" class="hoc clear" style="max-width: max-content">
         <!-- ################################################################################################ -->
         <div id="logo" class="fl_left" style="padding-right: 0.5rem">
-          <h1><a href="index.html">FPT developer Team</a></h1>
+          <h1 style="margin-left: -28%"><a href="index.html">FPT developer Team</a></h1>
         </div>
-        <div style="margin: 0rem 8rem;">
-          <input #questionTitle (keyup.enter)="searchQa(questionTitle.value, pageIndex$)" style="color: black;margin-top: 2.25rem;width: 21rem;">
-          <input title="Search" value="" type="submit" class="button-search" style="margin-top: -1.75rem;margin-left: 21rem"
+        <div style="float: left;padding: 0 5px;margin-left: -3%;">
+          <input #questionTitle (keyup.enter)="searchQa(questionTitle.value, pageIndex$)" style="color: black;margin-top: 2.25rem;width: 19rem;">
+          <input title="Search" value="" type="submit" class="button-search" style="margin-top: -1.75rem;margin-left: 19rem"
                  (click)="searchQa(questionTitle.value, pageIndex$)">
         </div>
-        <nav id="mainav" class="fl_right">
+        <nav id="mainav" class="fl_right" >
           <ul class="clear" style="margin-top: 3%;font-size: 17px">
             <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
             <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
@@ -36,7 +36,7 @@
               </ul>
             </li>
             <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
-            <li><a (click)="click()">Liên hệ</a></li>
+            <!--<li><a (click)="click()">Liên hệ</a></li>-->
 
           </ul>
 
@@ -108,17 +108,17 @@
                 </article>
               </li>
               <div class="phan-trang clear">
-                <div class="pagination" *ngIf="checkPaging$=='viewAndDate'">
+                <div class="pagination" *ngIf="checkPaging$=='viewAndDate' && getObject$.numberOfPages != 1">
                   <a>&laquo;</a>
                   <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(sortBy$,i)">{{i+1}}</a>
                   <a>&raquo;</a>
                 </div>
-                <div class="pagination" *ngIf="checkPaging$=='search'">
+                <div class="pagination" *ngIf="checkPaging$=='search' && getObject$.numberOfPages != 1">
                   <a>&laquo;</a>
                   <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="searchQa(questionTitle.value, i)">{{i}}</a>
                   <a>&raquo;</a>
                 </div>
-                <div class="pagination" *ngIf="checkPaging$=='tag'">
+                <div class="pagination" *ngIf="checkPaging$=='tag'&& getObject$.numberOfPages != 1">
                   <a>&laquo;</a>
                   <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
                      (click)="getQaByTag(sortBy$,tagId,i)" onclick="setStyle()" id="numberIndex">{{i+1}}</a>
@@ -149,7 +149,7 @@
             </ul>
             <!--Top question -->
             <p class="title-menu-right">
-              <img src="../../assets/images/question_icon.png" style="height: 20px;padding-right: 15px;">Top Questions
+              <img src="../../assets/images/question_icon.png" style="height: 20px;padding-right: 15px;">Top câu hỏi
             </p>
             <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
               <li>
@@ -166,7 +166,7 @@
         </div>
         <div class="top-tag">
           <p class="title-menu-right">
-            <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top tags
+            <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top từ khóa
           </p>
           <div class="question-tag">
             <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"

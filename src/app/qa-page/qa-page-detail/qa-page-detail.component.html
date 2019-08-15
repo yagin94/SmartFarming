@@ -30,7 +30,7 @@
             </ul>
           </li>
           <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
-          <li><a (click)="click()">Liên hệ</a></li>
+          <!--<li><a (click)="click()">Liên hệ</a></li>-->
 
         </ul>
 
@@ -255,7 +255,8 @@
           </p>
           <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
             <li>
-              <span><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
+              <span *ngIf="item.appUser.socialUser != null"><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
+              <span *ngIf="item.appUser.socialUser == null"><a><img src="../../../assets/images/demo/avatar.png" class="image-user"> </a></span>
               <div class="title-article"><a (click)="navigate(item)" style="cursor: pointer"> {{item.title}}</a></div>
               <div style="text-align: center">
                 <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
@@ -265,9 +266,10 @@
           </ul>
         </article>
       </div>
+      <!--Top tag -->
       <div class="top-tag">
         <p class="title-menu-right">
-          <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top tags
+          <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top từ khóa
         </p>
         <div class="question-tag">
           <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
@@ -286,7 +288,7 @@
             <span><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
             <div class="title-article"><a>{{item.appUser.socialUser.name}}</a></div>
             <span style="padding: 0 50px;">
-              <p class="topUser">Tên tag: {{item.tag.name}}</p>
+              <p class="topUser">Tên tag: <a (click)="getQaByTag(item.tag.tagId)">{{item.tag.name}}</a></p>
               <p class="topUser">Lượt xem: {{item.viewCount}} </p>
               <p class="topUser">Tổng điểm: {{item.reputation}} </p>
             </span>

@@ -73,6 +73,7 @@ export class QaPageComponent implements OnInit {
     if (this.data == null) {
       this.getQa(this.sortBy$, this.pageIndex$);
     } else {
+      console.log('here!!!!');
       this.getQaByTag(this.sortBy$, this.data, this.pageIndex$);
     }
 

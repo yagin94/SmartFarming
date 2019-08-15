@@ -168,6 +168,8 @@ export class UserDetailPageComponent implements OnInit {
 
 
   getTopQuestionOfUser(sortBy: string, userId: number): void {
+    console.log('tinhnx',sortBy);
+    console.log('tinhnx',userId);
     this.userDetailPageService.getTopQuestionOfUser(sortBy, userId).subscribe
     (getTopQuestionOfUser => this.getTopQuestionOfUser$ = getTopQuestionOfUser);
   }

@@ -42,7 +42,7 @@ import {ngxLoadingAnimationTypes, NgxLoadingModule} from 'ngx-loading';
 import {AllTagUserPageComponent} from './user-detail-page/all-tag-user-page/all-tag-user-page.component';
 import {AllQuestionUserPageComponent} from './user-detail-page/all-question-user-page/all-question-user-page.component';
 import { FooterComponent } from './common/footer/footer.component';
-
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 export function getAuthServiceConfigs() {
   let configs = new SocialServiceConfig()
     .addFacebook('760042107748144')
@@ -92,6 +92,7 @@ export function provideConfig() {
     FooterComponent
   ],
   imports: [
+    AutocompleteLibModule,
     CKEditorModule,
     NgxSocialButtonModule,
     AngularFontAwesomeModule,

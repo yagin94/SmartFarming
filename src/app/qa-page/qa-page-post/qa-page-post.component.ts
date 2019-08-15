@@ -41,6 +41,9 @@ export class QaPagePostComponent implements OnInit {
   loading = true;
   ownerUserId: number;
   getTagSuggest$ = new GetObjectTopTag();
+
+
+
   constructor(private qaService: QaService,
               private route: ActivatedRoute,
               private router: Router,
@@ -183,7 +186,7 @@ export class QaPagePostComponent implements OnInit {
     console.log(newQa);
     this.qaService.updateQuestion(this.data, newQa).subscribe(
       onSuccess => {
-        window.location.replace(`/qa-page-detail?id=${this.data}`);
+        window.location.replace(`/qa-page-detail?id=${this.data}&userId=${this.ownerUserId}`);
         alert('cập nhật thành công!!!');
       },
       onFail => {
@@ -216,4 +219,6 @@ export class QaPagePostComponent implements OnInit {
   getQaByTag(tagId: number) {
     this.router.navigate(['./qa-page'], {queryParams: {id: tagId}});
   }
+
+
 }

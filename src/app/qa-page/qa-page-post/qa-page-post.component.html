@@ -65,6 +65,7 @@
             </div>
 
 
+
             <div class="button" style="">
               <input  type="submit" name="submit" value="Đăng câu hỏi"
                      (click)="addQa(inputTitle.value,tagInput.value)">
@@ -83,7 +84,8 @@
             <ckeditor [config]="ckeConfig" [(ngModel)]="model.default" [ngModelOptions]="{standalone: true}"></ckeditor>
             <label>Chọn từ khóa</label>
             <div>
-              <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
+              <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi"
+                     #tagInput >
             </div>
 
 
@@ -116,7 +118,8 @@
           </p>
           <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
             <li>
-              <span><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
+              <span *ngIf="item.appUser.socialUser != null"><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
+              <span *ngIf="item.appUser.socialUser == null"><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
               <div class="title-article"><a (click)="edit(item)" style="cursor: pointer"> {{item.title}}</a></div>
               <div>
                 <span class="top-article-view"><a >{{getNumber(item.answers)}} trả lời</a></span>

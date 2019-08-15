@@ -101,7 +101,29 @@
                              style="max-width: 100%;border: 1px solid #0E76A8;padding: 1rem;" #tagInput
                              (keyup.enter)="getSearchTag(0, tagInput.value)">
                     </div>
+
+                    <!--<div class="ng-autocomplete">-->
+                      <!--<div>Bo may day</div>-->
+                      <!--<ng-autocomplete-->
+                        <!--[data]="data1"-->
+                        <!--[searchKeyword]="keyword"-->
+                        <!--(selected)='selectEvent($event)'-->
+                        <!--(inputChanged)='onChangeSearch($event)'-->
+                        <!--(inputFocused)='onFocused($event)'-->
+                        <!--[itemTemplate]="itemTemplate"-->
+                        <!--[notFoundTemplate]="notFoundTemplate" >-->
+                      <!--</ng-autocomplete>-->
+
+                      <!--<ng-template #itemTemplate let-item>-->
+                        <!--<a [innerHTML]="item.name"></a>-->
+                      <!--</ng-template>-->
+
+                      <!--<ng-template #notFoundTemplate let-notFound>-->
+                        <!--<div [innerHTML]="notFound"></div>-->
+                      <!--</ng-template>-->
+                    <!--</div>-->
                   </form>
+
                   <h6><a (click)="getAllUser(0)" style="cursor: pointer;">Xem tất cả người dùng ở đây</a></h6>
                 </div>
 
@@ -193,15 +215,15 @@
                       <td>Số lần gửi report</td>
                     </tr>
                     <tr style="text-align: center" *ngFor="let report of getReportUser$.userAndReportTimes"
-                        (click)="getReportDetail(report.userId)">
+                        (click)="getReportDetail(report.userId,0)">
                       <td></td>
-                      <td *ngIf="report.fullName != null">{{report.fullName}}</td>
-                      <td *ngIf="report.fullName == null">Anonymus {{report.userId}}</td>
+                      <td *ngIf="report.fullName != null"><a>{{report.fullName}}</a></td>
+                      <td *ngIf="report.fullName == null"><a>Anonymus {{report.userId}}</a></td>
                       <td>{{report.role}}</td>
                       <td>{{report.numberOfReports}}</td>
                     </tr>
                   </table>
-                  <div class="phan-trang clear">
+                  <div class="phan-trang clear" *ngIf="getReportUser$.numberOfPages != 1">
                     <div class="pagination">
                       <a>&laquo;</a>
                       <a *ngFor="let page of arrayPage(getReportUser$.numberOfPages) let i = index"
@@ -210,8 +232,9 @@
                     </div>
                   </div>
                   <form *ngIf="reportDetail">
+                    <h5>Chi tiết các báo cáo</h5>
                     <li>
-                      <table class="table-report" *ngFor="let reportUser of getReport$">
+                      <table class="table-report" *ngFor="let reportUser of getReport$.reportsByPageIndex">
                         <tr class="table-report-first">
                           <td class="label-report">Người báo cáo :</td>
                           <td class="content-report" *ngIf="reportUser.appUser.socialUser != null">
@@ -225,17 +248,35 @@
                         </tr>
                         <tr>
                           <td class="label-report">Người bị báo cáo :</td>
-                          <td class="content-report"><a>{{reportUser.question.appUser.socialUser.name}}</a></td>
+                          <td class="content-report" *ngIf="reportUser.question.appUser.socialUser != null">
+                            <a>{{reportUser.question.appUser.socialUser.name}}</a>
+                          </td>
+                          <td class="content-report" *ngIf="reportUser.question.appUser.socialUser == null">
+                            <a>Anonymus {{reportUser.question.appUser.userId}}</a>
+                          </td>
                           <td class="label-report">Thể loại</td>
                           <td class="content-report">Câu hỏi</td>
                         </tr>
                         <tr>
+
                           <td class="label-report">Lí do :</td>
                           <td class="content-report" colspan="3"><a>{{reportUser.message}}</a></td>
+                        </tr>
+                        <tr>
+                          <td class="label-report">Link câu hỏi :</td>
+                          <td class="content-report" colspan="3"><a (click)="gotoDetailPage(reportUser.question)">{{reportUser.question.title}}</a></td>
                         </tr>
                       </table>
                     </li>
                   </form>
+                  <div class="phan-trang clear" *ngIf="getReport$.numberOfPages != 1">
+                    <div class="pagination">
+                      <a>&laquo;</a>
+                      <a *ngFor="let page of arrayPage(getReport$.numberOfPages) let i = index"
+                         (click)="getReportDetail(getReport$.reportsByPageIndex.appUser.userId,i)">{{i+1}}</a>
+                      <a>&raquo;</a>
+                    </div>
+                  </div>
                 </ul>
               </div>
 
@@ -269,7 +310,7 @@
                     </tr>
 
                   </table>
-                  <div class="phan-trang clear">
+                  <div class="phan-trang clear" *ngIf="getAllarticle$.numberOfPages != 1">
                     <div class="pagination">
                       <a>&laquo;</a>
                       <a *ngFor="let page of arrayPage(getAllarticle$.numberOfPages) let i = index"
@@ -300,7 +341,7 @@
                     </tr>
 
                   </table>
-                  <div class="phan-trang clear">
+                  <div class="phan-trang clear" *ngIf="getArticle$.numberOfPages != 1">
                     <div class="pagination">
                       <a>&laquo;</a>
                       <a *ngFor="let page of arrayPage(getArticle$.numberOfPages) let i = index"
@@ -321,6 +362,7 @@
                   <select style="width: fit-content;margin: 0;" (change)="sortTagBy($event.target.value)">
                     <option value="viewCount">Số view</option>
                     <option value="upvoteCount">Tổng điểm</option>
+                    <option value="trend">Xu hướng</option>
                   </select>
                 </h5>
                 <table class="scrollable tagInShowUser">
@@ -329,15 +371,17 @@
                     <td>Tên tag</td>
                     <td>Số view</td>
                     <td>Số điểm</td>
+                    <td>Số view 7 ngày trước</td>
                   </tr>
                   <tr style="text-align: center" *ngFor="let object of getObjectTag$.tagsByPageIndex">
                     <td></td>
                     <td>{{object.name}}</td>
                     <td>{{object.viewCount}}</td>
                     <td>{{object.reputation}}</td>
+                    <td>{{object.viewCountOneWeekAgo}}(+{{object.increasementOneWeekAgoTillNow}})</td>
                   </tr>
                 </table>
-                <div class="phan-trang clear">
+                <div class="phan-trang clear" *ngIf="getObjectTag$.numberOfPages != 1">
                   <div class="pagination">
                     <a>&laquo;</a>
                     <a *ngFor="let page of arrayPage(getObjectTag$.numberOfPages) let i = index"
@@ -369,7 +413,8 @@
                   <tr style="text-align: center" *ngFor="let object of getObject$.qa">
                     <td></td>
                     <td><a (click)="gotoDetailPage(object)" style="cursor: pointer;">{{object.title}}</a></td>
-                    <td>{{object.appUser.socialUser.name}}</td>
+                    <td *ngIf="object.appUser.socialUser != null">{{object.appUser.socialUser.name}}</td>
+                    <td *ngIf="object.appUser.socialUser == null">Anonymus {{object.appUser.userId}}</td>
                     <td>{{object.viewCount}}</td>
                     <td>{{getNumber(object.answers)}}</td>
                     <td>{{object.utilTimestamp | date: 'yyyy-MM-dd'}}</td>

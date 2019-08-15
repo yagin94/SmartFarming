@@ -53,13 +53,16 @@ export class QaPageComponent implements OnInit {
   data: any;
   loadingPostQa = false;
   loading = true;
+
   constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
               private globals: Globals,
               private route: ActivatedRoute) {
   }
+
   click() {
     this.loading = true;
   }
+
   ngOnInit() {
     this.loading = false;
     this.getObjectTopQa$ = new GetObjectTopQa();
@@ -137,7 +140,10 @@ export class QaPageComponent implements OnInit {
   }
 
   getTopTag(): void {
-    this.qaService.getTopTag().subscribe(getObjectTopTag => this.getObjectTopTag$ = getObjectTopTag);
+    this.qaService.getTopTag().subscribe(getObjectTopTag => {
+      this.getObjectTopTag$ = getObjectTopTag;
+      console.log('--------------------',this.getObjectTopTag$.tagsByPageIndex);
+    });
   }
 
   getTopUser(): void {
@@ -254,6 +260,7 @@ export class QaPageComponent implements OnInit {
   getNumber(object: Answers) {
     return Object.keys(object).length;
   }
+
   userDetail(userId: number) {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
   }

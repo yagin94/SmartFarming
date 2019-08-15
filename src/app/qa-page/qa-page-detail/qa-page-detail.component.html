@@ -251,7 +251,7 @@
           </ul>
           <!--Top question -->
           <p class="title-menu-right">
-            <img src="../../assets/images/question_icon.png" style="height: 20px;padding-right: 15px;">Top Questions
+            <img src="../../assets/images/question_icon.png" style="height: 20px;padding-right: 15px;">Top câu hỏi liên quan
           </p>
           <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
             <li>
@@ -279,13 +279,17 @@
       <!--Top user -->
       <div>
         <p class="title-menu-right" style="padding-left: 4%;">
-          <img src="../../assets/images/users.png" style="height: 20px;padding-right: 15px;">Top người dùng
+          <img src="../../assets/images/users.png" style="height: 20px;padding-right: 15px;">Top người dùng liên quan
         </p>
         <ul class="top-user">
           <li *ngFor="let item of getUserRelateQa$">
             <span><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
             <div class="title-article"><a>{{item.appUser.socialUser.name}}</a></div>
-            <span style="padding: 0 50px;"><a>{{item.reputation}} điểm</a></span>
+            <span style="padding: 0 50px;">
+              <p class="topUser">Tên tag: {{item.tag.name}}</p>
+              <p class="topUser">Lượt xem: {{item.viewCount}} </p>
+              <p class="topUser">Tổng điểm: {{item.reputation}} </p>
+            </span>
           </li>
         </ul>
       </div>

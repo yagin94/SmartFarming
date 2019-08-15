@@ -25,6 +25,13 @@ export class GetObjectQaByTag {
   numberOfPages: number;
 }
 
+export class ReportUser {
+  numberOfPages: number;
+  reportsByPageIndex: ReportsByPageIndex;
+  constructor(){
+
+  }
+}
 export class ReportsByPageIndex {
   reportId: number;
   appUser: AppUser;
@@ -107,6 +114,8 @@ export class Tag {
   description: string;
   reputation: number;
   viewCount: number;
+  viewCountOneWeekAgo: number;
+  increasementOneWeekAgoTillNow: number;
 
   constructor(name: string, description: string) {
     // this.tagId = tagId;

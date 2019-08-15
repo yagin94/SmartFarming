@@ -2,7 +2,7 @@ import {Observable} from 'rxjs';
 import {
   AppUser,
   GetObject,
-  ReportsByPageIndex, SearchUserByTag
+  ReportsByPageIndex, ReportUser, SearchUserByTag
 } from '../qa-page/qa.model';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
@@ -53,13 +53,14 @@ export class ManagerService {
     return this.http.get<GetAllUser>(`http://localhost:8080/userDetail/viewUsers/${pageNumber}`);
   }
 
-  getReportDetail(userId: number): Observable<ReportsByPageIndex> {
-    return this.http.get<ReportsByPageIndex>(`http://localhost:8080/report/findListReportsByUser/${userId}`);
+  getReportDetail(userId: number, pageNumber: number): Observable<ReportUser> {
+    return this.http.get<ReportUser>(`http://localhost:8080/report/findListReportsByUser/${userId}/${pageNumber}`);
   }
 
   getChartInfor(type: string, body: BodyJsonDrawChart): Observable<DrawChart> {
     return this.http.post<DrawChart>(`http://localhost:8080/admin/systemChartInfo/${type}`, body);
   }
+
   searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
     const param = {textSearch};
     return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);

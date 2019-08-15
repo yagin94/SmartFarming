@@ -36,6 +36,10 @@ export class QaService {
     return this.http.get<GetObjectTopQa>(`http://localhost:8080/question/viewTop3QuestionsByViewCount`);
   }
 
+  getTopQaRelate(questionId: number): Observable<GetObjectTopQa> {
+    return this.http.get<GetObjectTopQa>(`http://localhost:8080/question/viewRelatedQuestions/${questionId}`);
+  }
+
   getTopUserRelate(questionId: number): Observable<GetUserRelateQa> {
     return this.http.get<GetUserRelateQa>(`http://localhost:8080/question/viewRelatedUsersByQuestion/${questionId}`);
   }

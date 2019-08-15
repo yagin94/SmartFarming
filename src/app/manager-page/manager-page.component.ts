@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as CanvasJS from '../../assets/layout/scripts/canvasjs.min.js';
-import {Answers, AppUser, GetObject, Qa, ReportsByPageIndex, SearchUserByTag} from '../qa-page/qa.model';
+import {Answers, AppUser, GetObject, Qa, ReportsByPageIndex, ReportUser, SearchUserByTag} from '../qa-page/qa.model';
 import {QaService} from '../qa-page/qa.service';
 import {HeaderComponent} from '../common/header/header.component';
 import {AuthService} from 'angularx-social-login';
@@ -24,7 +24,7 @@ import {NgxLoadingComponent} from 'ngx-loading';
 export class ManagerPageComponent implements OnInit {
   loading = true;
   getObject$: GetObject;
-  getReport$: ReportsByPageIndex;
+  getReport$: ReportUser;
   getObjectReport$: GetObjectReport;
   getObjectTag$: GetObjectTag;
   getUserByTag$: SearchUserByTag[];
@@ -44,6 +44,7 @@ export class ManagerPageComponent implements OnInit {
   jsonReport: any;
   pageIndexArticleSearch$ = 0;
   getArticle$: any;
+  pageIndexReport$ = 0;
   /**=====================*/
   isFlatShowView = false;
   isFlatShowUser = false;
@@ -54,11 +55,34 @@ export class ManagerPageComponent implements OnInit {
   isFlatShowAllUser = false;
   checkSearch = false;
 
+  keyword = 'name';
+  data1 = [
+    {
+      id: 1,
+      name: 'Tinh'
+    },
+    {
+      id: 2,
+      name: 'Ha'
+    }, {
+      id: 4,
+      name: 'Son'
+    }, {
+      id: 5,
+      name: 'Hien'
+    }, {
+      id: 6,
+      name: 'Quynh'
+    }, {
+      id: 7,
+      name: 'Lam'
+    },
+  ];
 
   init() {
     this.loading = false;
     this.getObjectReport$ = new GetObjectReport();
-    this.getReport$ = new ReportsByPageIndex();
+    this.getReport$ = new ReportUser();
     this.getObject$ = new GetObject();
     this.getObjectTag$ = new GetObjectTag();
     this.getAllarticle$ = new GetAllArticle();
@@ -78,9 +102,11 @@ export class ManagerPageComponent implements OnInit {
               private managerService: ManagerService,
               private router: Router) {
   }
+
   click() {
     this.loading = true;
   }
+
   getAllView() {
     this.managerService.getAllView().subscribe(allView => this.allView$ = allView);
   }
@@ -119,6 +145,7 @@ export class ManagerPageComponent implements OnInit {
 
   /**=======================tag manager=========================================*/
   getAllTag(sortBy: string, pageIndex: number): void {
+    console.log('valueGet', sortBy);
     this.managerService.getAllTag(sortBy, pageIndex).subscribe(getObject => {
 
       this.getObjectTag$ = getObject;
@@ -148,8 +175,8 @@ export class ManagerPageComponent implements OnInit {
 
   sortTagBy(value: string) {
     this.sortTagBy$ = value;
-    console.log(value);
-    this.getAllTag(this.sortBy$, this.pageIndex$);
+    console.log('valueSortby', value);
+    this.getAllTag(value, this.pageIndex$);
   }
 
   /**=======================getReport============================================*/
@@ -159,10 +186,10 @@ export class ManagerPageComponent implements OnInit {
     });
   }
 
-  getReportDetail(report: number) {
+  getReportDetail(report: number, pageNumber: number) {
     console.log('click', report);
     this.reportDetail = true;
-    this.managerService.getReportDetail(report).subscribe(reportDetailuser => {
+    this.managerService.getReportDetail(report, pageNumber).subscribe(reportDetailuser => {
       this.getReport$ = reportDetailuser;
       console.log('detail', this.getReport$);
     });
@@ -377,5 +404,20 @@ export class ManagerPageComponent implements OnInit {
         console.log('search', this.getArticle$.numberOfPages);
       });
     }
+  }
+
+
+  /** Suggest tag*/
+  selectEvent(item) {
+    // do something with selected item
+  }
+
+  onChangeSearch(val: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+
+  onFocused(e) {
+    // do something when input is focused
   }
 }

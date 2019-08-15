@@ -25,6 +25,7 @@ import {SocialUser} from 'angularx-social-login';
 import {forEach} from '@angular/router/src/utils/collection';
 import {Globals} from '../../common/globalVariables';
 import {NgxLoadingComponent} from 'ngx-loading';
+
 @Component({
   providers: [HeaderComponent, DataShareService, QaService, SocialService, Globals],
   selector: 'app-qa-page-detail',
@@ -61,8 +62,9 @@ export class QaPageDetailComponent implements OnInit {
   responseReport: ResponseReport;
   loading = true;
   ownerUser: any;
-  getUserRelateQa$ = new GetUserRelateQa();
-  arrayUser: any;
+  getUserRelateQa$: any;
+  // arrayUser = new AppUser()[{}];
+
   constructor(
     private qaService: QaService,
     private dataShareService: DataShareService,
@@ -71,9 +73,11 @@ export class QaPageDetailComponent implements OnInit {
     private router: Router,
     private globals: Globals) {
   }
+
   click() {
     this.loading = true;
   }
+
   ngOnInit() {
     this.loading = false;
     window.scroll(0, 0);
@@ -102,17 +106,23 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   getTopQa(): void {
-    this.qaService.getTopQa().subscribe(getObjectTopQa => this.getObjectTopQa$ = getObjectTopQa);
+    this.qaService.getTopQaRelate(this.data).subscribe(getObjectTopQa => {
+      this.getObjectTopQa$ = getObjectTopQa;
+      console.log('getTopQa', this.getObjectTopQa$);
+    });
   }
 
   getTopTag(): void {
-    this.qaService.getTopTag().subscribe(getObjectTopTag => this.getObjectTopTag$ = getObjectTopTag);
+    this.qaService.getTopTag().subscribe(getObjectTopTag => {
+      this.getObjectTopTag$ = getObjectTopTag;
+      console.log('---------------', this.getObjectTopTag$.tagsByPageIndex);
+    });
   }
 
   getTopUser(): void {
     this.qaService.getTopUserRelate(this.data).subscribe(getObjectTopUser => {
       this.getUserRelateQa$ = getObjectTopUser;
-
+      console.log('relate',this.getUserRelateQa$);
     });
   }
 

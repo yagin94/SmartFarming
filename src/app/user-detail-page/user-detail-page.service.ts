@@ -30,8 +30,7 @@ export class UserDetailPageService {
 
   // get all tag of a user
   getAllTagOfUser(userId: number, pageNumber: number): Observable<GetAllTagOfUser> {
-    return this.http.get<GetAllTagOfUser>(`http://localhost:8080/userDetail/getAllTagsOfUser/${userId}/${pageNumber}
-`);
+    return this.http.get<GetAllTagOfUser>(`http://localhost:8080/userDetail/getAllTagsOfUser/${userId}/${pageNumber}`);
   }
 
   // get top question

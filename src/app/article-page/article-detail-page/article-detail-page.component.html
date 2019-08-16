@@ -90,7 +90,7 @@
           Đại học FPT<br>
           <br>
           Tel: 0984298666<br>
-          Email: <a>hienndse05142@fpt.edu.vvn</a>
+          Email: <a href="https://mail.google.com/mail/u/0/#inbox">hienndse05142@fpt.edu.vvn</a>
         </address>
       </div>
 
@@ -105,6 +105,10 @@
         <a class="one_half first" style="font-size: large" (click)="editArticle(article$)">chỉnh sửa bài viết</a>
         <a class="one_half" style="font-size: large" (click)="deleteArticle(article$.articleId)">xóa bài viết</a>
       </div>
+      <div class="tag">
+        Từ khóa:
+        <span *ngFor="let tag of article$.tags" style="padding: 1em"><a style="cursor: pointer" (click)="getArticleByTag(tag)">{{tag.name}}</a></span>
+      </div>
       <p innerHTML="{{article$.content}}" style="max-width: 100% !important;text-align: left;color: grey"></p>
       <div id="comments">
         <h2>Thảo luận</h2>
@@ -117,7 +121,8 @@
                   <img *ngIf="comment.appUser==null"
                        src="../../assets/images/demo/avatar.png" alt="">
                   <img *ngIf="comment.appUser!=null&&comment.appUser.anonymous==false"
-                       src="{{comment.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(comment.appUser.userId)" ></figure>
+                       src="{{comment.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(comment.appUser.userId)" style="cursor: pointer;width: 50%;
+    float: right;"></figure>
                 <address *ngIf="comment.appUser!=null&&comment.appUser.anonymous==false">
                   By <a style="cursor: pointer">{{comment.appUser.socialUser.name}}</a>
                 </address>
@@ -137,6 +142,7 @@
             </article>
             <figure *ngIf="checkAuthenAnswer(comment)" class="avatar"><a style="cursor: pointer" (click)="editComment(comment)" [ngx-scroll-to]="editAns">Sửa bình luận</a></figure>
             <figure *ngIf="checkAuthenAnswer(comment)" class="avatar"><a style="cursor: pointer" (click)="deleteComment(comment.commentId)">Xóa bình luận</a></figure>
+            <figure *ngIf="checkAuthenAdmin()" class="avatar"><a style="cursor: pointer;" (click)="adminDeleteAnswer(comment.commentId)">Xóa bình luận</a></figure>
           </li>
 
         </ul>
@@ -146,9 +152,9 @@
             <textarea name="comment" id="comment" cols="25" rows="10" [(ngModel)]="ansContent" [ngModelOptions]="{standalone: true}"></textarea>
           </div>
           <div>
-            <input type="submit" name="submit" value="Đăng" (click)="addComment(ansContent)">
+            <input type="submit" name="submit" value="Đăng" (click)="addComment(ansContent)" class="articleButton">
             &nbsp;
-            <input type="reset" name="reset" value="Đặt lại">
+            <input type="reset" name="reset" value="Xóa trắng" class="articleButton">
           </div>
         </form>
         <form action="#" method="post" *ngIf="checkEditComment$">
@@ -159,7 +165,7 @@
           <div>
             <input type="submit" name="submit" value="Cập nhật" (click)="updateComment(ansContent)">
             &nbsp;
-            <input type="reset" name="reset" value="Đặt lại">
+            <input type="reset" name="reset" value="Xóa trắng">
           </div>
         </form>
       </div>

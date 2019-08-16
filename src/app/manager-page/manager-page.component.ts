@@ -55,6 +55,11 @@ export class ManagerPageComponent implements OnInit {
   isFlatShowAllUser = false;
   checkSearch = false;
 
+  dateChart = '';
+  monthChart = '';
+  yearChart = '';
+  periodChart = '';
+
   keyword = 'name';
   data1 = [
     {
@@ -307,7 +312,8 @@ export class ManagerPageComponent implements OnInit {
     // this.getTopQuestionOfUser(this.sortBy$, this.appUserGG$.userId);
   }
 
-  letDrawChart(e) {
+  letDrawChart(e: string, period: string) {
+    console.log('chart', e);
     let dataViewCount = [];
     let dataUpvoteCount = [];
     let dataNewAccount = [];
@@ -315,7 +321,7 @@ export class ManagerPageComponent implements OnInit {
     let bodyJson = new BodyJsonDrawChart();
     // let jsonResponse = new DrawChart();
     bodyJson.startTime = e;
-    bodyJson.period = 10;
+    bodyJson.period = parseInt(period);
     this.managerService.getChartInfor(this.classifyChart, bodyJson).subscribe(infor => {
       this.jsonReport = infor;
       if (this.jsonReport != null) {

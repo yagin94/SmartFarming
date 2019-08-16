@@ -3,11 +3,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Article, Comments} from '../article.model';
 import {ArticleDetailService} from './detail.service';
 import {DataShareService} from '../../share-data-service/date-share-service';
-import {AddAnsObj, Answers, AppUser, Q} from '../../qa-page/qa.model';
+import {AddAnsObj, Answers, AppUser, Q, Tag} from '../../qa-page/qa.model';
 import {A, AddCommentObj} from './detail.model';
 import {Observable} from 'rxjs';
 import {GetAllArticle} from '../trang-chinh/trang-chinh.model';
 import {NgxLoadingComponent} from 'ngx-loading';
+
 @Component({
   providers: [ArticleDetailService, DataShareService],
   selector: 'app-article-detail-page',
@@ -30,14 +31,17 @@ export class ArticleDetailPageComponent implements OnInit {
   editComment$: Comments;
   compare$: number;
   loading = true;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private dataShareService: DataShareService,
               private articleDetailService: ArticleDetailService) {
   }
+
   click() {
     this.loading = true;
   }
+
   ngOnInit() {
     this.loading = false;
     window.scroll(0, 0);
@@ -75,6 +79,7 @@ export class ArticleDetailPageComponent implements OnInit {
   }
 
   deleteArticle(id: any): void {
+    this.loading = true;
     // console.log(id);
     this.articleDelete$ = [];
     if (confirm('are you sure to delete this article')) {
@@ -129,7 +134,18 @@ export class ArticleDetailPageComponent implements OnInit {
     this.editComment$ = comment;
     this.ansContent = comment.content;
   }
-
+  adminDeleteAnswer(commentId: number): void {
+    if (confirm('are you sure to delete this answer')) {
+      // this.answer$ = this.answer$.filter(h => h !== answerId);
+      this.articleDetailService.deleteAnswer(commentId).subscribe(onSuccess => {
+          alert('Xóa câu thành công!!!');
+          this.getArticleDetail(this.data2, this.data1);
+        },
+        onFail => {
+          alert('Bạn không thể xóa câu trả lời này !!!');
+        });
+    }
+  }
   deleteComment(commentId: number): void {
     if (confirm('are you sure to delete this answer')) {
       // this.answer$ = this.answer$.filter(h => h !== answerId);
@@ -201,5 +217,22 @@ export class ArticleDetailPageComponent implements OnInit {
         return false;
       }
     }
+  }
+  userDetail(userId: number) {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+  }
+  checkAuthenAdmin() {
+    if (localStorage.getItem('currentAppUser') != null) {
+      if (JSON.parse(localStorage.getItem('currentAppUser')).role === 'ADMIN') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  getArticleByTag(tag: Tag) {
+    window.location.replace(`/article-page/app-trang-chinh?tagid=${tag.tagId}`);
   }
 }

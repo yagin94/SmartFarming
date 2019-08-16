@@ -35,12 +35,16 @@ export class ArticleDetailService {
   }
 
   deleteAnswer(commentId: number): Observable<{}> {
-    const url = `http://localhost:8080/comment/deleteComment/${commentId}`;
+    const url = `http://localhost:8080/admin/deleteComment/${commentId}`;
     return this.http.delete(url);
   }
 
   getTopArticle(articleId): Observable<GetAllArticle> {
     return this.http.get<GetAllArticle>(`http://localhost:8080/article/viewRelatedArticles/${articleId}`);
+  }
+  adminDeleteAnswer(commentId: number): Observable<{}> {
+    const url = ` http://localhost:8080/admin/deleteComment/${commentId}`;
+    return this.http.delete(url);
   }
 }
 

@@ -4,7 +4,8 @@
 <!-- ################################################################################################ -->
 <!-- Phan trang chu hien thi thong tin, background ....-->
 <div class="bgded overlay" style="background: #f2f2f2 !important;">
-  <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+  <ngx-loading [show]="loading"
+               [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
                [template]="loadingTemplate"></ngx-loading>
   <!-- ################################################################################################ -->
   <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
@@ -15,8 +16,8 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear" style="margin-top: 3%;font-size: 17px">
-          <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
-          <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
+          <li class="active"><a href="index.html" (click)="click()">Trang chủ</a></li>
+          <li><a class="drop" href="article-page/app-trang-chinh" (click)="click()">Kiến thức</a>
             <ul>
               <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
               <li><a href="article-page/app-thu-hoach-va-bao-quan" (click)="click()">Thu hoạch & Bảo quản</a></li>
@@ -28,7 +29,7 @@
               <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
             </ul>
           </li>
-          <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+          <li><a href="/qa-page" routerLinkActive="active" (click)="click()">Hỏi - Đáp</a></li>
           <!--<li><a (click)="click()">Liên hệ</a></li>-->
 
         </ul>
@@ -137,7 +138,8 @@
               </div>
             </div>
             <div>
-              <h5 style="text-transform: none;float: right;"><a href="/all-tag-user">Xem tất cả tags ở đây -></a></h5>
+              <h5 style="text-transform: none;float: right;"><a style="cursor: pointer;" (click)="goToAllTagUser()">Xem
+                tất cả tags ở đây -></a></h5>
             </div>
           </div>
           <!--tags -->
@@ -148,26 +150,31 @@
               <h3>Top câu hỏi ({{totalQuestionOfuser$}})</h3>
               <select style="width: auto;margin: 10%;" (change)="sortBy($event.target.value)">
                 <option value="viewCount">Sắp xếp theo lượt xem</option>
-                <option value="upvoteCount ">Sắp xếp theo lượt thích</option>
+                <option value="upvoteCount ">Sắp xếp theo tổng điểm</option>
                 <option value="date">Sắp xếp theo thời gian</option>
               </select>
             </div>
             <table id="table-report">
               <tr>
-                <th style="color: black;background-color: #c2c2c2">Lượt xem</th>
+
                 <th style="color: black;background-color: #c2c2c2">Tiêu đề câu hỏi</th>
+                <th style="color: black;background-color: #c2c2c2">Lượt xem</th>
+                <th style="color: black;background-color: #c2c2c2">Tổng điểm</th>
                 <th style="color: black;background-color: #c2c2c2">Ngày đăng</th>
               </tr>
               <tr class="table-report-first" *ngFor="let qa of getTopQuestionOfUser$.qa">
-                <td class="viewQuestion">{{qa.viewCount}}</td>
+
                 <td style="padding-top: 15px;"><a (click)="questionDetail(qa)">{{qa.title}}</a></td>
+                <td class="">{{qa.viewCount}}</td>
+                <td class="" *ngIf="qa.reputation != null">{{qa.reputation}}</td>
+                <td class="" *ngIf="qa.reputation == null">0</td>
                 <td class="time-user-detail">{{qa.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
               </tr>
 
             </table>
             <div>
-              <h5 style="text-transform: none;float: right;"><a (click)="goToAllQuestionuser()">Xem tất cả câu hỏi ở đây
-                -></a></h5>
+              <h5 style="text-transform: none;float: right;"><a (click)="goToAllQuestionuser()" style="cursor: pointer">
+                Xem tất cả câu hỏi ở đây -></a></h5>
             </div>
           </div>
 

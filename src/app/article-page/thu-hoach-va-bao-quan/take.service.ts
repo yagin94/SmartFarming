@@ -14,7 +14,7 @@ export class TakeService {
       {'category': 'thu hoạch bảo quản'});
   }
   searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
-    const param = {textSearch};
+    const param = {category: 'thu hoạch và bảo quản', textSearch};
     return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);
   }
 }

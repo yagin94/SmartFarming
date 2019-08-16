@@ -212,7 +212,7 @@ export class QaPagePostComponent implements OnInit {
 
     this.dataShareService.setShareData(qa);
     console.log(qa);
-    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
+    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId,userId: qa.appUser.userId}});
     // console.log(this.dataShareService.getShareData());
   }
 

@@ -49,9 +49,16 @@
       </div>
       <!-- ################################################################################################ -->
       <!-- ################################################################################################ -->
-      <div class="pagination">
+      <div class="pagination" *ngIf="!checkSearch&& getDungArticle$.numberOfPages!=1">
         <a>&laquo;</a>
-        <a *ngFor="let page of arrayPage(getDungArticle$.numberOfPages) let i = index" (click)="getDungArticle(i)">{{i}}</a>
+        <a *ngFor="let page of arrayPage(getDungArticle$.numberOfPages) let i = index"
+           (click)="getAllArticle(i)">{{i+1}}</a>
+        <a>&raquo;</a>s
+      </div>
+      <div class="pagination" *ngIf="checkSearch&& getDungArticle$.numberOfPages!=1">
+        <a>&laquo;</a>
+        <a *ngFor="let page of arrayPage(getDungArticle$.numberOfPages) let i = index"
+           (click)="searchArticle(articleTitle.value,i)">{{i+1}}</a>
         <a>&raquo;</a>
       </div>
       <!-- ################################################################################################ -->

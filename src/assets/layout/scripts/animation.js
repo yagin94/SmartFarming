@@ -1,37 +1,37 @@
 //qa-page-detail
 
-window.showAnswer = function(){
+window.showAnswer = function () {
   // location.replace(window.location.href);
   var divAnswer = document.getElementById("showAnswer");
   var nameAnser = document.getElementById("nameAnswer");
   var timeAnser = document.getElementById("timeAnswer");
-  var  contentAnser = document.getElementById("contentAnswer");
+  var contentAnser = document.getElementById("contentAnswer");
 
   var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
 
   divAnswer.style.display = "block";
   nameAnser.text = document.getElementById("nameOfAnswer").value;
-  timeAnser.textContent = date+' '+time;
+  timeAnser.textContent = date + ' ' + time;
   contentAnser.textContent = document.getElementById("contentOfAnswer").value;
 
 }
 
-window.sortQA_like = function(){
+window.sortQA_like = function () {
   var sort_like = document.getElementById("sort-qa-like");
   var sort_time = document.getElementById("sort-qa-time");
-  sort_like.style.backgroundColor ="#FBFBFB";
-  sort_time.style.backgroundColor ="gainsboro";
+  sort_like.style.backgroundColor = "#FBFBFB";
+  sort_time.style.backgroundColor = "gainsboro";
 }
 
-window.sortQA_time = function(){
+window.sortQA_time = function () {
   var sort_like = document.getElementById("sort-qa-like");
   var sort_time = document.getElementById("sort-qa-time");
 
-  sort_like.style.backgroundColor ="gainsboro";
-  sort_time.style.backgroundColor ="#FBFBFB";
+  sort_like.style.backgroundColor = "gainsboro";
+  sort_time.style.backgroundColor = "#FBFBFB";
 
 }
 
@@ -41,12 +41,12 @@ window.sortQA_time = function(){
 //-------------------------------------------------------------------------------------------------------------------
 //manage-page
 
-window.showView = function(){
+window.showView = function () {
   var chartContainer = document.getElementById("chartContainer");
-  if(chartContainer.style.display === "none"){
+  if (chartContainer.style.display === "none") {
     chartContainer.style.display = "";
   }
-  else if(chartContainer.style.display === ""){
+  else if (chartContainer.style.display === "") {
     chartContainer.style.display = "none";
   }
 }
@@ -66,10 +66,20 @@ function setStyle() {
   document.getElementById("numberIndex").style.backgroundColor = "blue";
 }
 
-function scrollDiv(e){
+function scrollDiv(e) {
   if (e.keyCode == 13) {
     var tb = document.getElementById("topView");
     tb.scrollIntoView(true);
   }
 
+}
+
+function showTagUser() {
+  var tag = document.getElementById("tagUser");
+  if (tag.style.display === "none") {
+    tag.style.display = "block";
+  }
+  else if (tag.style.display === "block") {
+    tag.style.display = "none";
+  }
 }

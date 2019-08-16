@@ -14,10 +14,11 @@ import {NgxLoadingComponent} from 'ngx-loading';
 })
 export class AllTagUserPageComponent implements OnInit {
   appUser$: AppUser;
-  getAllTagOfUser$: GetAllTagOfUser;
+  getAllTagOfUser$ = new GetAllTagOfUser();
   pageNumber = 0;
   data: any;
   loading = true;
+  user$: AppUser;
   constructor(private userDetailPageService: UserDetailPageService,
               private route: ActivatedRoute,
               private router: Router,
@@ -29,9 +30,12 @@ export class AllTagUserPageComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.route.queryParams.subscribe(params => this.data = params.id);
+    this.userDetailPageService.getViewUser(this.data).subscribe(user => {
+      this.user$ = user;
+      this.getAllTagOfUser(this.user$.userId, this.pageNumber);
+    });
     this.appUser$ = JSON.parse(localStorage.getItem('currentAppUser'));
-    console.log(this.appUser$.socialUser.firstName );
-    this.getAllTagOfUser(this.appUser$.userId, this.pageNumber);
+
 
   }
 

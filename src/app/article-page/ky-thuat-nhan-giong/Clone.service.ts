@@ -14,7 +14,7 @@ export class CloneService {
       {'category': 'kỹ thuật nhân giống'});
   }
   searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
-    const param = {textSearch};
+    const param = {category: 'kỹ thuật nhân giống', textSearch};
     return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);
   }
 }

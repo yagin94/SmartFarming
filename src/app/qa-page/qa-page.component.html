@@ -96,7 +96,7 @@
                   <!--</div>-->
                   <div class="question-tag">
 
-                    <p *ngFor="let tag of object.tags" style="padding: 0% 1% !important;"
+                    <p *ngFor="let tag of object.tags" style="padding: 0% 2% !important;font-size: 15px"
                        (click)="getQaByTag(sortBy$, tag.tagId, pageIndex$)">{{tag.name}}</p>
 
                   </div>
@@ -139,7 +139,7 @@
         <!-- ################################################################################################ -->
         <div class="div-menu-right">
           <div class="ask-place" onclick="">
-            <a href="/qa-page-post" class="ask-button">Đặt câu hỏi</a>
+            <a href="/qa-page-post" class="ask-button">Đặt câu hỏi mới</a>
           </div>
         </div>
         <div class="sdb_holder" style="margin-bottom: 0px;">

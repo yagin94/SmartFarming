@@ -62,8 +62,9 @@ export class QaPageDetailComponent implements OnInit {
   responseReport: ResponseReport;
   loading = true;
   ownerUser: any;
-  getUserRelateQa$: any;
+  getUserRelateQa$ = new GetUserRelateQa();
   // arrayUser = new AppUser()[{}];
+  listUserRelate$: AppUser;
 
   constructor(
     private qaService: QaService,
@@ -88,11 +89,11 @@ export class QaPageDetailComponent implements OnInit {
     this.ansContent = '';
     this.getTopQa();
     this.getTopTag();
-    this.getTopUser();
+    // this.getTopUserDetail();
+    this.getUserRelate(this.data);
     // this.dataShareService.currentMessage.subscribe(message => this.message = message);
 
     this.getQaDetail(this.data, this.ownerUser);
-    console.log(localStorage.getItem('anonymousUser'));
   }
 
   abc() {
@@ -108,34 +109,40 @@ export class QaPageDetailComponent implements OnInit {
   getTopQa(): void {
     this.qaService.getTopQaRelate(this.data).subscribe(getObjectTopQa => {
       this.getObjectTopQa$ = getObjectTopQa;
-      console.log('getTopQa', this.getObjectTopQa$);
     });
   }
 
   getTopTag(): void {
     this.qaService.getTopTag().subscribe(getObjectTopTag => {
       this.getObjectTopTag$ = getObjectTopTag;
-      console.log('---------------', this.getObjectTopTag$.tagsByPageIndex);
     });
   }
 
-  getTopUser(): void {
-    this.qaService.getTopUserRelate(this.data).subscribe(getObjectTopUser => {
+  getUserRelate(questionId: number): void {
+    this.qaService.getListUserRelate(questionId).subscribe(listUserRelate => {
+      this.listUserRelate$ = listUserRelate;
+      console.log('getUserRelate', this.listUserRelate$);
+    });
+  }
+
+  getTopUserDetail(userId: number): void {
+    // this.getUserRelateQa$.tag = new Tag[{}];
+    this.qaService.getTopUserRelate(this.data, userId).subscribe(getObjectTopUser => {
       this.getUserRelateQa$ = getObjectTopUser;
-      console.log('relate',this.getUserRelateQa$);
+      console.log('tag', getObjectTopUser.tag);
     });
   }
 
   checkAuthen() {
     if (JSON.parse(localStorage.getItem('currentAppUser')) == null) {
-      return false;
+      this.compare$ = JSON.parse(localStorage.getItem('anonymousUser')).userId;
+      if(this.compare$ == this.qa$.appUser.userId){
+        return true;
+      }
     } else if (JSON.parse(localStorage.getItem('currentAppUser')) != null) {
       this.compare$ = JSON.parse(localStorage.getItem('currentAppUser')).userId;
       if (this.qa$.appUser != null) {
         if (this.compare$ === this.qa$.appUser.userId) {
-          // console.log((localStorage.getItem('currentAppUser')).userId);
-          // console.log(this.qa$.appUser.userId);
-          // console.log(this.compare$);
           return true;
         } else {
           return false;
@@ -151,9 +158,6 @@ export class QaPageDetailComponent implements OnInit {
       this.compare$ = JSON.parse(localStorage.getItem('anonymousUser')).userId;
       if (answer.appUser != null) {
         if (this.compare$ == answer.appUser.userId) {
-          // console.log((localStorage.getItem('currentAppUser')).userId);
-          // console.log(this.qa$.appUser.userId);
-          // console.log(this.compare$);
           return true;
         } else {
           return false;
@@ -163,9 +167,6 @@ export class QaPageDetailComponent implements OnInit {
       this.compare$ = JSON.parse(localStorage.getItem('currentAppUser')).userId;
       if (answer.appUser != null) {
         if (this.compare$ === answer.appUser.userId) {
-          // console.log((localStorage.getItem('currentAppUser')).userId);
-          // console.log(this.qa$.appUser.userId);
-          // console.log(this.compare$);
           return true;
         } else {
           return false;
@@ -190,7 +191,6 @@ export class QaPageDetailComponent implements OnInit {
           }
         }
       }
-      // console.log(this.checkAuthen());
       this.checkAuthen();
     });
   }
@@ -200,9 +200,8 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   deleteQa(id: any): void {
-    // console.log(id);
     this.qaDelete$ = [];
-    if (confirm('are you sure to delete this question')) {
+    if (confirm('bạn chắc chắn muốn xóa câu hỏi này chứ')) {
       this.qaDelete$ = this.qaDelete$.filter(h => h !== id);
       this.qaService.deleteQa(id).subscribe(
         onSuccess => {
@@ -245,9 +244,6 @@ export class QaPageDetailComponent implements OnInit {
     this.answer$ = qa.answers;
 
     this.dataShareService.setShareData(qa);
-    // console.log(qa);
-    //this.router.navigate(['./qa-page-post'], {queryParams: {id: qa.questionId}});
-    // console.log(this.dataShareService.getShareData());
     window.location.replace(`/qa-page-post?id=${qa.questionId}&userId=${qa.appUser.userId}`);
   }
 
@@ -277,9 +273,8 @@ export class QaPageDetailComponent implements OnInit {
     this.answer$ = qa.answers;
 
     this.dataShareService.setShareData(qa);
-    // console.log(qa);
-    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
-    window.location.replace(`http://localhost:4200/qa-page-detail?id=${qa.questionId}`);
+    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId, userId: qa.appUser.userId}});
+    window.location.replace(`http://localhost:4200/qa-page-detail?id=${qa.questionId}&userId=${qa.appUser.userId}`);
   }
 
   addAnswers(ansewerContent: string): void {
@@ -299,13 +294,11 @@ export class QaPageDetailComponent implements OnInit {
     const a = this.appUser$;
     const q = new Q(this.qa$.questionId);
     const x = new AddAnsObj(this.ansContent, a, q);
-    console.log(x);
     this.qaService.addAnswer(x).subscribe(answer => {
       // this.answer$.push(answer)
       this.getQaDetail(this.data, this.ownerUser);
       this.ansContent = '';
     });
-    // console.log(x);
   }
 
   deleteAnswer(answerId: number): void {
@@ -380,6 +373,5 @@ export class QaPageDetailComponent implements OnInit {
 
   onItemChange(value) {
     this.reason = value.target.defaultValue;
-    console.log(this.reason);
   }
 }

@@ -1,5 +1,6 @@
 <div class="bgded overlay" style="background: #f2f2f2 !important;">
-  <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+  <ngx-loading [show]="loading"
+               [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
                [template]="loadingTemplate"></ngx-loading>
   <!-- ################################################################################################ -->
   <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
@@ -10,8 +11,8 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear" style="margin-top: 3%;font-size: 17px">
-          <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
-          <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
+          <li class="active"><a href="index.html" (click)="click()">Trang chủ</a></li>
+          <li><a class="drop" href="article-page/app-trang-chinh" (click)="click()">Kiến thức</a>
             <ul>
               <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
               <li><a href="article-page/app-thu-hoach-va-bao-quan" (click)="click()">Thu hoạch & Bảo quản</a></li>
@@ -23,7 +24,7 @@
               <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
             </ul>
           </li>
-          <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+          <li><a href="/qa-page" routerLinkActive="active" (click)="click()">Hỏi - Đáp</a></li>
           <!--<li><a (click)="click()">Liên hệ</a></li>-->
 
         </ul>
@@ -65,21 +66,46 @@
               <div *ngIf="isFlatShowView">
                 <h4 style="text-transform: none;text-align: center;">Thống kê tương tác</h4>
                 <h5 style="text-transform: none;">Đã có tổng cộng {{allView$}} lượt xem</h5>
-                <div style="display: -webkit-inline-box">
-                  <select (change)="typeDraw($event.target.value)" style="height: 43px;width: auto;">
+                <h5 style="text-transform: none;">Chọn kiểu biểu đồ, mốc thời gian bắt đầu và khoảng thời gian của biểu
+                  đồ</h5>
+                <div style="display: -webkit-box">
+                  <p style="margin: 15px 0%">Chọn kiểu biểu đồ</p>
+                  <select (change)="typeDraw($event.target.value)" style="height: 43px;width: auto;margin-left: 10px;">
                     <option value="date">Thống kê theo ngày</option>
                     <option value="month">Thống kê theo tháng</option>
                     <option value="year">Thống kê theo năm</option>
                   </select>
-                  <div class="inputDate">
-                    <input #date *ngIf="classifyChart == 'date'" placeholder="Nhập ngày bắt đầu (yyyy-MM-dd)"
-                           (keyup.enter)="letDrawChart(date.value)">
-                    <input #month *ngIf="classifyChart == 'month'" placeholder="Nhập tháng bắt đầu (yyyy-MM)"
-                           (keyup.enter)="letDrawChart(month.value)">
-                    <input #year *ngIf="classifyChart == 'year'" placeholder="Nhập năm bắt đầu (yyyy)"
-                           (keyup.enter)="letDrawChart(year.value)">
-                  </div>
                 </div>
+                <form>
+                  <div style="display: -webkit-box;margin-bottom: 0%;">
+
+                    <div class="inputDate">
+                      <p style="max-width: 100%;margin: 0%">Chọn mốc thời gian bắt đầu biểu đồ</p>
+                      <input *ngIf="classifyChart == 'date'" placeholder="Nhập ngày bắt đầu (yyyy-MM-dd)"
+                             type="date" id="date" style="height: 43px;" [(ngModel)]="dateChart" [ngModelOptions]="{standalone: true}" >
+                             <!--(keyup.enter)="letDrawChart(date.value)"-->
+                      <input  *ngIf="classifyChart == 'month'" placeholder="Nhập tháng bắt đầu (yyyy-MM)"
+                             type="date" style="height: 43px;" [(ngModel)]="monthChart" [ngModelOptions]="{standalone: true}">
+                      <!--(keyup.enter)="letDrawChart(date.value)"-->
+                      <input  *ngIf="classifyChart == 'year'" placeholder="Nhập năm bắt đầu (yyyy)" type="date"
+                             style="height: 43px;" [(ngModel)]="yearChart" [ngModelOptions]="{standalone: true}">
+                             <!--(keyup.enter)="letDrawChart(date.value)"-->
+
+                    </div>
+                    <div style="width: 25%;margin-left: 4rem;">
+                      <p style="max-width: 100%;margin: 0%">Khoảng thời gian </p>
+                      <input [(ngModel)]="periodChart" type="number" placeholder="Nhập khoảng thời gian" style="height: 43px;"
+                             [ngModelOptions]="{standalone: true}" min="0">
+                    </div>
+
+                  </div>
+                  <input type="submit" value="Xem biểu đồ" (click)="letDrawChart(dateChart,periodChart)"
+                         *ngIf="classifyChart == 'date'">
+                  <input type="submit" value="Xem biểu đồ" (click)="letDrawChart(monthChart,periodChart)"
+                         *ngIf="classifyChart == 'month'">
+                  <input type="submit" value="Xem biểu đồ" (click)="letDrawChart(yearChart,periodChart)"
+                         *ngIf="classifyChart == 'year'">
+                </form>
                 <!-- Chart -->
                 <div style="border-bottom: 2px solid #b53f3f2e;">
                   <div id="chartContainer" style="height: 370px; width: 100%;">
@@ -103,24 +129,24 @@
                     </div>
 
                     <!--<div class="ng-autocomplete">-->
-                      <!--<div>Bo may day</div>-->
-                      <!--<ng-autocomplete-->
-                        <!--[data]="data1"-->
-                        <!--[searchKeyword]="keyword"-->
-                        <!--(selected)='selectEvent($event)'-->
-                        <!--(inputChanged)='onChangeSearch($event)'-->
-                        <!--(inputFocused)='onFocused($event)'-->
-                        <!--[itemTemplate]="itemTemplate"-->
-                        <!--[notFoundTemplate]="notFoundTemplate" >-->
-                      <!--</ng-autocomplete>-->
+                    <!--<div>Bo may day</div>-->
+                    <!--<ng-autocomplete-->
+                    <!--[data]="data1"-->
+                    <!--[searchKeyword]="keyword"-->
+                    <!--(selected)='selectEvent($event)'-->
+                    <!--(inputChanged)='onChangeSearch($event)'-->
+                    <!--(inputFocused)='onFocused($event)'-->
+                    <!--[itemTemplate]="itemTemplate"-->
+                    <!--[notFoundTemplate]="notFoundTemplate" >-->
+                    <!--</ng-autocomplete>-->
 
-                      <!--<ng-template #itemTemplate let-item>-->
-                        <!--<a [innerHTML]="item.name"></a>-->
-                      <!--</ng-template>-->
+                    <!--<ng-template #itemTemplate let-item>-->
+                    <!--<a [innerHTML]="item.name"></a>-->
+                    <!--</ng-template>-->
 
-                      <!--<ng-template #notFoundTemplate let-notFound>-->
-                        <!--<div [innerHTML]="notFound"></div>-->
-                      <!--</ng-template>-->
+                    <!--<ng-template #notFoundTemplate let-notFound>-->
+                    <!--<div [innerHTML]="notFound"></div>-->
+                    <!--</ng-template>-->
                     <!--</div>-->
                   </form>
 
@@ -264,7 +290,8 @@
                         </tr>
                         <tr>
                           <td class="label-report">Link câu hỏi :</td>
-                          <td class="content-report" colspan="3"><a (click)="gotoDetailPage(reportUser.question)">{{reportUser.question.title}}</a></td>
+                          <td class="content-report" colspan="3"><a (click)="gotoDetailPage(reportUser.question)">{{reportUser.question.title}}</a>
+                          </td>
                         </tr>
                       </table>
                     </li>
@@ -321,7 +348,7 @@
                 </div>
 
                 <div *ngIf="checkSearch">
-                  <h5 style="text-transform: none">Kết quả tìm kiếm của <span> " {{articleTitle.value}} " </span> </h5>
+                  <h5 style="text-transform: none">Kết quả tìm kiếm của <span> " {{articleTitle.value}} " </span></h5>
                   <table class="scrollable tagInShowUser">
                     <tr style="text-align: center">
                       <td>Stt</td>
@@ -349,7 +376,8 @@
                       <a>&raquo;</a>
                     </div>
                   </div>
-                  <h5 style="text-transform: none"><a (click)="checkSearch = false" style="cursor: pointer;">Tất cả bài viết </a></h5>
+                  <h5 style="text-transform: none"><a (click)="checkSearch = false" style="cursor: pointer;">Tất cả bài
+                    viết </a></h5>
                 </div>
 
 

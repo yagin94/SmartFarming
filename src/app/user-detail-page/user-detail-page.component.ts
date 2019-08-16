@@ -250,4 +250,9 @@ export class UserDetailPageComponent implements OnInit {
   goToAllQuestionuser() {
     this.router.navigate(['/all-question-user'], {queryParams: {id: this.data}});
   }
+
+  goToAllTagUser() {
+    this.router.navigate(['/all-tag-user'], {queryParams: {id: this.data}});
+  }
+
 }

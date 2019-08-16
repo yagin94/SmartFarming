@@ -14,7 +14,7 @@ export class DungService {
       {'category': 'phân bón'});
   }
   searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
-    const param = {textSearch};
+    const param = {category: 'phân bón', textSearch};
     return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);
   }
 }

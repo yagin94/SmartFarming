@@ -51,14 +51,15 @@
           <!--tags -->
           <div id="report-tags">
             <div style="display: -webkit-box;padding-bottom: 1.5%;;">
-              <h3><span style="text-transform: none">Tất cả câu hỏi của</span> {{appUser$.socialUser.firstName}}</h3>
-              <div>
-                Sắp xếp theo <select (change)="sortBy($event.target.value)">
-                <option value="viewCount">Lượt xem</option>
-                <option value="upvoteCount">Lượt thích</option>
-                <option value="date">Thời gian</option>
-              </select>
-              </div>
+              <h3><span style="text-transform: none">Tất cả câu hỏi của</span> {{user$.socialUser.firstName}}</h3>
+
+            </div>
+            <div>
+              Sắp xếp theo <select (change)="sortBy($event.target.value)">
+              <option value="viewCount">Lượt xem</option>
+              <option value="upvoteCount">Lượt thích</option>
+              <option value="date">Thời gian</option>
+            </select>
             </div>
 
             <div class="scrollable">
@@ -71,19 +72,23 @@
                 </tr>
                 <tr style="text-align: center" *ngFor="let qa of getAllQuestionOfUser$.qa">
                   <td><a (click)="goToQuestionDetail(qa)">{{qa.title}}</a></td>
-                  <td>{{qa.upvoteCount}}</td>
+                  <td class="" *ngIf="qa.upvoteCount != null">{{qa.upvoteCount}}</td>
+                  <td class="" *ngIf="qa.upvoteCount == null">0</td>
                   <td>{{qa.viewCount}}</td>
                   <td>{{qa.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
+
                 </tr>
+
               </table>
-              <div class="phan-trang clear" *ngIf="getAllQuestionOfUser$.numberOfPages == 0">
+              <div class="phan-trang clear" *ngIf="getAllQuestionOfUser$.numberOfPages != 1">
                 <div class="pagination">
                   <a>&laquo;</a>
                   <a *ngFor="let page of arrayPage(getAllQuestionOfUser$.numberOfPages) let i = index"
-                     (click)="getAllQuestionOfUser(sortBy$,appUser$.userId,i)">{{i}}</a>
+                     (click)="getAllQuestionOfUser(sortBy$,user$.userId,i)">{{i+1}}</a>
                   <a>&raquo;</a>
                 </div>
               </div>
+
             </div>
 
           </div>

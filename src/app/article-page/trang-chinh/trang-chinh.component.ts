@@ -15,6 +15,8 @@ export class TrangChinhComponent implements OnInit {
   pageIndex$ = 0;
   checkSearch = false;
   loading = true;
+  data: any;
+  checkPaging$: string;
   constructor(private trangChinhService: TrangChinhService,
               private router: Router,
               private route: ActivatedRoute) {
@@ -22,17 +24,31 @@ export class TrangChinhComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
-    this.getAllArticle(this.pageIndex$);
+    this.route.queryParams.subscribe(params => {
+      this.data = params.tagid;
+      console.log(this.data);
+    });
+    if (this.data == null) {
+      this.getAllArticle(this.pageIndex$);
+    } else {
+      this.getArticleByTag(this.data, this.pageIndex$);
+    }
   }
 
   getAllArticle(pageIndex$: number) {
+    this.checkPaging$ = 'home';
     this.pageIndex$ = pageIndex$;
     this.trangChinhService.getAllArticle(this.pageIndex$).subscribe(object => {
       this.getAllArticle$ = object;
       console.log(this.getAllArticle$);
     });
   }
-
+  getArticleByTag(tagId: number, pageIndex: number) {
+    this.checkPaging$ = 'tag';
+    this.trangChinhService.getArticleByTag(tagId, pageIndex).subscribe(object => {
+      this.getAllArticle$ = object;
+    });
+  }
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
   }

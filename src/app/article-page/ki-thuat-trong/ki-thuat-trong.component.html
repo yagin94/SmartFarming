@@ -1,64 +1,73 @@
-<div><ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
-                  [template]="loadingTemplate"></ngx-loading>
-<div class="wrapper row2">
-  <div id="breadcrumb" class="hoc clear">
-    <!-- ################################################################################################ -->
-    <ul class="">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="article-page/app-trang-chinh">Kiến thức</a></li>
-      <li><a href="article-page/app-ki-thuat-trong">Kỹ thuật trồng</a></li>
-    </ul>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
-<div class="wrapper row3">
-  <main class="hoc container clear">
-    <!-- main body -->
-    <!-- ################################################################################################ -->
-    <div class="content">
+<div>
+  <ngx-loading [show]="loading"
+               [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+               [template]="loadingTemplate"></ngx-loading>
+  <div class="wrapper row2">
+    <div id="breadcrumb" class="hoc clear">
       <!-- ################################################################################################ -->
-      <div id="gallery">
-        <figure>
-          <div style="font-size: 4em; padding: 1em;text-align: center">Các bài viết mới nhất</div>
-          <h3>Tìm kiếm bài viết </h3>
-          <div style="margin: 0rem 0rem 8rem 0rem;">
-            <input #articleTitle (keyup.enter)="searchArticle(articleTitle.value, pageIndex$)"
-                   style="color: black;margin-top: 2.25rem;width: 21rem;">
-            <input title="Search" value="" type="submit" class="button-search"
-                   style="margin-top: -1.75rem;margin-left: 21rem">
-          </div>
-          <h1 *ngIf="articleTitle.value">Kết quả tìm kiếm của "{{articleTitle.value}}"</h1>
-          <div class="scrollable">
-            <table>
-              <thead>
-              <tr>
-                <th>Tên bài viết</th>
-                <th>Ngày đăng</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let article of getGrowArticle$.articlesByPageIndex">
-                <td style="padding: 1em"><a style="cursor: pointer" (click)="getArticleDetail(article)">{{article.title}}</a>
-                </td>
-                <td style="padding: 1em">{{article.utilTimestamp|date: 'yyyy-MM-dd'}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </figure>
-      </div>
-      <!-- ################################################################################################ -->
-      <!-- ################################################################################################ -->
-      <div class="pagination">
-        <a>&laquo;</a>
-        <a *ngFor="let page of arrayPage(getGrowArticle$.numberOfPages) let i = index" (click)="getGrowArticle(i)">{{i}}</a>
-        <a>&raquo;</a>
-      </div>
+      <ul class="">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="article-page/app-trang-chinh">Kiến thức</a></li>
+        <li><a href="article-page/app-ki-thuat-trong">Kỹ thuật trồng</a></li>
+      </ul>
       <!-- ################################################################################################ -->
     </div>
-    <!-- ################################################################################################ -->
-    <!-- / main body -->
-    <div class="clear"></div>
-  </main>
-</div>
+  </div>
+  <div class="wrapper row3">
+    <main class="hoc container clear">
+      <!-- main body -->
+      <!-- ################################################################################################ -->
+      <div class="content">
+        <!-- ################################################################################################ -->
+        <div id="gallery">
+          <figure>
+            <div style="font-size: 4em; padding: 1em;text-align: center">Các bài viết mới nhất</div>
+            <h3>Tìm kiếm bài viết </h3>
+            <div style="margin: 0rem 0rem 8rem 0rem;">
+              <input #articleTitle (keyup.enter)="searchArticle(articleTitle.value, pageIndex$)"
+                     style="color: black;margin-top: 2.25rem;width: 21rem;">
+              <input title="Search" value="" type="submit" class="button-search"
+                     style="margin-top: -1.75rem;margin-left: 21rem">
+            </div>
+            <h1 *ngIf="articleTitle.value">Kết quả tìm kiếm của "{{articleTitle.value}}"</h1>
+            <div class="scrollable">
+              <table>
+                <thead>
+                <tr>
+                  <th>Tên bài viết</th>
+                  <th>Ngày đăng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let article of getGrowArticle$.articlesByPageIndex">
+                  <td style="padding: 1em"><a style="cursor: pointer" (click)="getArticleDetail(article)">{{article.title}}</a>
+                  </td>
+                  <td style="padding: 1em">{{article.utilTimestamp|date: 'yyyy-MM-dd'}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </figure>
+        </div>
+        <!-- ################################################################################################ -->
+        <!-- ################################################################################################ -->
+        <div class="pagination" *ngIf="!checkSearch && getGrowArticle$.numberOfPages!=1">
+          <a>&laquo;</a>
+          <a *ngFor="let page of arrayPage(getGrowArticle$.numberOfPages) let i = index"
+             (click)="getAllArticle(i)">{{i+1}}</a>
+          <a>&raquo;</a>s
+        </div>
+        <div class="pagination" *ngIf="checkSearch && getGrowArticle$.numberOfPages!=1">
+          <a>&laquo;</a>
+          <a *ngFor="let page of arrayPage(getGrowArticle$.numberOfPages) let i = index"
+             (click)="searchArticle(articleTitle.value,i)">{{i+1}}</a>
+          <a>&raquo;</a>
+        </div>
+        <!-- ################################################################################################ -->
+      </div>
+      <!-- ################################################################################################ -->
+      <!-- / main body -->
+      <div class="clear"></div>
+    </main>
+  </div>
 </div>

@@ -49,16 +49,22 @@
       </div>
       <!-- ################################################################################################ -->
       <!-- ################################################################################################ -->
-      <div class="pagination" *ngIf="!checkSearch">
+      <div class="pagination" *ngIf="!checkSearch&& getAllArticle$.numberOfPages!=1&& checkPaging$ == 'home'">
         <a>&laquo;</a>
         <a *ngFor="let page of arrayPage(getAllArticle$.numberOfPages) let i = index"
-           (click)="getAllArticle(i)">{{i}}</a>
+           (click)="getAllArticle(i)">{{i+1}}</a>
         <a>&raquo;</a>
       </div>
-      <div class="pagination" *ngIf="checkSearch">
+      <div class="pagination" *ngIf="checkSearch&& getAllArticle$.numberOfPages!=1 && checkPaging$ == 'home'">
         <a>&laquo;</a>
         <a *ngFor="let page of arrayPage(getAllArticle$.numberOfPages) let i = index"
-           (click)="searchArticle(articleTitle.value,i)">{{i}}</a>
+           (click)="searchArticle(articleTitle.value,i)">{{i+1}}</a>
+        <a>&raquo;</a>
+      </div>
+      <div class="pagination" *ngIf="!checkSearch&& getAllArticle$.numberOfPages!=1 && checkPaging$ == 'tag'">
+        <a>&laquo;</a>
+        <a *ngFor="let page of arrayPage(getAllArticle$.numberOfPages) let i = index"
+           (click)="getArticleByTag(data,i)">{{i+1}}</a>
         <a>&raquo;</a>
       </div>
       <!-- ################################################################################################ -->

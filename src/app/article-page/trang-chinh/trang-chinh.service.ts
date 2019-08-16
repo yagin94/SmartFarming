@@ -10,11 +10,17 @@ import {GetAllArticle} from './trang-chinh.model';
 export class TrangChinhService {
   constructor(private http: HttpClient) {
   }
+
   getAllArticle(pageIndex: number): Observable<GetAllArticle> {
     return this.http.get<GetAllArticle>(`http://localhost:8080/article/viewArticles/date/${pageIndex}`);
   }
+
   searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
     const param = {textSearch};
     return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);
+  }
+
+  getArticleByTag(tagId: number, pageIndex: number): Observable<GetAllArticle> {
+    return this.http.get<GetAllArticle>(`http://localhost:8080/article/viewArticlesByTag/date/${tagId}/${pageIndex}`);
   }
 }

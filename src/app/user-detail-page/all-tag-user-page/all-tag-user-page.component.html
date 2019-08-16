@@ -40,49 +40,6 @@
   <!-- ################################################################################################ -->
   <main class="hoc container clear all-tag" style="background-color: #f2f2f2;max-width: 75%;width: 100%;min-height: 500px;">
 
-    <!--menu left side -->
-    <!--<nav class="sidebar one_quarter first">-->
-    <!--<div class="div-menu-left">-->
-    <!--<img  src="{{appUser$.socialUser.photoUrl}}" style="border-radius: 50%;" >-->
-    <!--<h5>{{appUser$.socialUser.name}}</h5>-->
-    <!--<h5 style="font-weight: unset;">{{appUser$.socialUser.email}}</h5>-->
-    <!--<h5 style="font-weight: unset;">Tài khoản facebook(Nếu có)</h5>-->
-    <!--</div>-->
-    <!--<div>-->
-    <!--<table class="table-user">-->
-
-    <!--<tbody>-->
-    <!--<tr class="table-report-first" style="">-->
-    <!--<td>Số câu hỏi</td>-->
-    <!--<td class="number-user"> {{totalQuestionOfuser$}}</td>-->
-    <!--</tr>-->
-    <!--<tr class="table-report-first">-->
-    <!--<td>Số câu trả lời</td>-->
-    <!--<td class="number-user">{{totalAnswerOfUser$}}</td>-->
-
-    <!--</tr>-->
-    <!--<tr class="table-report-first">-->
-    <!--<td>Số tags</td>-->
-    <!--<td class="number-user">{{getTotalTagOfUser$}} </td>-->
-
-    <!--</tr>-->
-
-    <!--<tr class="table-report-first">-->
-    <!--<td>Tổng điểm</td>-->
-    <!--<td class="number-user">{{totalScore$}}</td>-->
-
-    <!--</tr>-->
-    <!--</tbody>-->
-    <!--</table>-->
-    <!--</div>-->
-
-    <!--<p class="buttin-logout">-->
-    <!--<a class="btn btn-info btn-lg">-->
-    <!--<span class="glyphicon glyphicon-log-out">Chỉnh sửa</span>-->
-    <!--</a>-->
-    <!--</p>-->
-
-    <!--</nav>-->
 
     <!--Content -->
     <div class="content three_quarter" style="margin-left: 0%;width: 100%;">
@@ -93,7 +50,7 @@
           <!--tags -->
           <div id="report-tags">
             <div style="display: -webkit-box;padding-bottom: 1.5%;;">
-              <h3><span style="text-transform: none">Tất cả tags của</span> {{appUser$.socialUser.firstName}}</h3>
+              <h3><span style="text-transform: none">Tất cả tags của</span> {{user$.socialUser.firstName}}</h3>
             </div>
 
             <div class="scrollable">
@@ -109,11 +66,11 @@
                   <td>{{tag.reputation}}</td>
                 </tr>
               </table>
-              <div class="phan-trang clear" *ngIf="getAllTagOfUser$.numberOfPages == 0">
+              <div class="phan-trang clear" *ngIf="getAllTagOfUser$.numberOfPages != 1">
                 <div class="pagination">
                   <a>&laquo;</a>
                   <a *ngFor="let page of arrayPage(getAllTagOfUser$.numberOfPages) let i = index"
-                     (click)="getAllTagOfUser(appUser$.userId,i)">{{i}}</a>
+                     (click)="getAllTagOfUser(user$.userId,i)">{{i+1}}</a>
                   <a>&raquo;</a>
                 </div>
               </div>

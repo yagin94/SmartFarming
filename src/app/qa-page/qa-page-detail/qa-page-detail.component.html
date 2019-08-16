@@ -5,7 +5,8 @@
 <!-- ################################################################################################ -->
 <!-- Phan trang chu hien thi thong tin, background ....-->
 <div class="bgded overlay" style="background: #f2f2f2 !important;">
-  <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+  <ngx-loading [show]="loading"
+               [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
                [template]="loadingTemplate"></ngx-loading>
   <!-- ################################################################################################ -->
   <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
@@ -16,8 +17,8 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear" style="margin-top: 3%;font-size: 17px">
-          <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
-          <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
+          <li class="active"><a href="index.html" (click)="click()">Trang chủ</a></li>
+          <li><a class="drop" href="article-page/app-trang-chinh" (click)="click()">Kiến thức</a>
             <ul>
               <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
               <li><a href="article-page/app-thu-hoach-va-bao-quan" (click)="click()">Thu hoạch & Bảo quản</a></li>
@@ -29,7 +30,7 @@
               <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
             </ul>
           </li>
-          <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+          <li><a href="/qa-page" routerLinkActive="active" (click)="click()">Hỏi - Đáp</a></li>
           <!--<li><a (click)="click()">Liên hệ</a></li>-->
 
         </ul>
@@ -57,12 +58,12 @@
                 <img *ngIf="qa$.appUser==null"
                      src="../../assets/images/demo/avatar.png" alt="">
                 <img *ngIf="qa$.appUser!=null&&qa$.appUser.anonymous==false"
-                     src="{{qa$.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(answer.appUser.userId)">
+                     src="{{qa$.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(qa$.appUser.userId)">
               </figure>
               <address style="text-align: left;font-size: 12px;color: dodgerblue;margin-left: 15%;">
                 <a *ngIf="qa$.appUser!=null&&qa$.appUser.anonymous==true">anonymous </a>
                 <a *ngIf="qa$.appUser==null">anonymous </a>
-                <a *ngIf="qa$.appUser!=null&&qa$.appUser.anonymous==false" (click)="userDetail(answer.appUser.userId)">{{qa$.appUser.socialUser.name}}</a>
+                <a *ngIf="qa$.appUser!=null&&qa$.appUser.anonymous==false" (click)="userDetail(qa$.appUser.userId)">{{qa$.appUser.socialUser.name}}</a>
                 <time style="font-size: 13px;float: right "><span style="color: #7c7f85 !important;">Ngày đăng:</span>{{qa$.utilTimestamp
                   | date: 'yyyy-MM-dd'}}
                 </time>
@@ -77,7 +78,7 @@
             </div>
             <div class="question-tag">
 
-              <p *ngFor="let tag of qa$.tags" style="padding: 0% 1% !important;" (click)="getQaByTag(tag.tagId)">
+              <p *ngFor="let tag of qa$.tags" style="padding: 0% 2% !important;font-size: 15px" (click)="getQaByTag(tag.tagId)">
                 {{tag.name}}</p>
 
             </div>
@@ -92,11 +93,11 @@
             <!--</div>-->
             <div class="question-footer">
               <div *ngIf="!checkLikeButton$" style="padding-top: 3px; cursor: pointer"
-                   (click)="upvoteQuestion(qa$.questionId)"><i class="fa fa-heart icon-like"></i><a>Thích</a></div>
+                   (click)="upvoteQuestion(qa$.questionId)"><i class="fa fa-heart-o icon-like"></i><a>Thích</a></div>
               <div *ngIf="checkLikeButton$" style="padding-top: 3px; cursor: pointer"
                    (click)="upvoteQuestion(qa$.questionId)"><i class="fa fa-heart icon-like"></i><a>Đã thích</a></div>
               <div style="padding-top: 3px; cursor: pointer" (click)="facebookSharing(shareObj)"><i
-                class="fa fa-heart icon-like"></i><a>Chia sẻ</a></div>
+                class="fa fa-share icon-like"></i><a>Chia sẻ</a></div>
             </div>
 
             <div class="report-delete">
@@ -116,7 +117,7 @@
                   <label style="text-align: center"><b>Chọn lí do</b></label>
                   <div style="display: -webkit-box">
                     <input type="radio" value="Nội dung không phù hợp" id="1" name="reason"
-                            (click)="onItemChange($event)"/>
+                           (click)="onItemChange($event)"/>
                     <label for="1">Nội dung không phù hợp</label>
                   </div>
                   <div style="display: -webkit-box">
@@ -124,7 +125,8 @@
                     <label for="2">Spam</label>
                   </div>
                   <div style="display: -webkit-box">
-                    <input type="radio" value="Gây hiểu lầm hoặc lừa đảo" id="3" name="reason" (click)="onItemChange($event)"/>
+                    <input type="radio" value="Gây hiểu lầm hoặc lừa đảo" id="3" name="reason"
+                           (click)="onItemChange($event)"/>
                     <label for="3">Gây hiểu lầm hoặc lừa đảo</label>
                   </div>
 
@@ -241,7 +243,7 @@
       <!-- ################################################################################################ -->
       <div class="div-menu-right">
         <div class="ask-place" onclick="">
-          <a href="/qa-page-post" class="ask-button">Đặt câu hỏi</a>
+          <a href="/qa-page-post" class="ask-button">Đặt câu hỏi mới</a>
         </div>
       </div>
       <div class="sdb_holder" style="margin-bottom: 0px;">
@@ -249,14 +251,31 @@
           <ul class="title-menu-right">
 
           </ul>
+
+          <!--Top tag -->
+          <div class="top-tag">
+            <p class="title-menu-right">
+              <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top từ khóa
+            </p>
+            <div class="question-tag">
+              <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
+                 (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
+            </div>
+
+          </div>
+
           <!--Top question -->
+          <h4 style="text-transform: none;text-align: center;">Thông tin liên quan</h4>
           <p class="title-menu-right">
-            <img src="../../assets/images/question_icon.png" style="height: 20px;padding-right: 15px;">Top câu hỏi liên quan
+            <img src="../../assets/images/question_icon.png" style="height: 20px;padding-right: 15px;">Top câu hỏi liên
+            quan
           </p>
           <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
             <li>
-              <span *ngIf="item.appUser.socialUser != null"><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
-              <span *ngIf="item.appUser.socialUser == null"><a><img src="../../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <span *ngIf="item.appUser.socialUser != null"><a><img src="{{item.appUser.socialUser.photoUrl}}"
+                                                                    class="image-user"> </a></span>
+              <span *ngIf="item.appUser.socialUser == null"><a><img src="../../../assets/images/demo/avatar.png"
+                                                                    class="image-user"> </a></span>
               <div class="title-article"><a (click)="navigate(item)" style="cursor: pointer"> {{item.title}}</a></div>
               <div style="text-align: center">
                 <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
@@ -266,17 +285,7 @@
           </ul>
         </article>
       </div>
-      <!--Top tag -->
-      <div class="top-tag">
-        <p class="title-menu-right">
-          <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top từ khóa
-        </p>
-        <div class="question-tag">
-          <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
-             (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
-        </div>
 
-      </div>
 
       <!--Top user -->
       <div>
@@ -284,14 +293,21 @@
           <img src="../../assets/images/users.png" style="height: 20px;padding-right: 15px;">Top người dùng liên quan
         </p>
         <ul class="top-user">
-          <li *ngFor="let item of getUserRelateQa$">
-            <span><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
-            <div class="title-article"><a>{{item.appUser.socialUser.name}}</a></div>
-            <span style="padding: 0 50px;">
-              <p class="topUser">Tên tag: <a (click)="getQaByTag(item.tag.tagId)">{{item.tag.name}}</a></p>
-              <p class="topUser">Lượt xem: {{item.viewCount}} </p>
-              <p class="topUser">Tổng điểm: {{item.reputation}} </p>
-            </span>
+          <li *ngFor="let item of listUserRelate$">
+            <span><a><img src="{{item.socialUser.photoUrl}}" class="image-user"> </a></span>
+            <div class="title-article">
+              <a>{{item.socialUser.name}}</a>
+              <p>Điểm: {{item.reputation}}</p>
+              <p (click)="getTopUserDetail(item.userId)" onclick="showTagUser()" style="cursor: pointer;">
+                <a>Xem chi tiết</a></p>
+            </div>
+            <div id="tagUser" style="display: none;">
+              <span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa$">
+              <p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>
+              <p class="topUser">Lượt xem: {{tagUser.tag.viewCount}} </p>
+              <p class="topUser">Tổng điểm: {{tagUser.tag.reputation}} </p>
+              </span>
+            </div>
           </li>
         </ul>
       </div>

@@ -110,7 +110,7 @@ click() {
   }
 
   goToQuestionDetail(qa: Qa) {
-    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId}});
+    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId, userId: qa.appUser.userId}});
   }
 
   goToArticleDetail(qa: Article) {

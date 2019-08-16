@@ -50,7 +50,7 @@
       <div class="">
         <h2 style="text-transform: none;text-align: center">Đăng câu hỏi</h2>
         <form action="#" method="post" *ngIf="!data">
-          <div class="one_third first">
+          <div class="one_third first" style="width: 100%">
             <label for="name">Tiêu đề câu hỏi <span>*</span></label>
             <input type="text" name="name" id="name" value="" size="22" #inputTitle required
                    style="border: 1px solid #d1d1d1;">
@@ -59,7 +59,7 @@
           <div class="block clear" style="">
             <label>Nội dung <span>*</span></label>
             <ckeditor [config]="ckeConfig" [(ngModel)]="model.editorData" [ngModelOptions]="{standalone: true}"></ckeditor>
-            <label>Chọn từ khóa</label>
+            <h5 style="text-transform: none;">Nhập từ khóa và enter (tối đa 5 từ khóa)</h5>
             <div>
               <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
             </div>
@@ -82,8 +82,9 @@
           <div class="block clear" style="">
             <label>Nội dung <span>*</span></label>
             <ckeditor [config]="ckeConfig" [(ngModel)]="model.default" [ngModelOptions]="{standalone: true}"></ckeditor>
-            <label>Chọn từ khóa</label>
+            <h5 style="text-transform: none;">Nhập từ khóa và enter (tối đa 5 từ khóa)</h5>
             <div>
+
               <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi"
                      #tagInput >
             </div>
@@ -104,7 +105,7 @@
       <!-- ################################################################################################ -->
       <div class="div-menu-right">
         <div class="ask-place" onclick="">
-          <a href="/qa-page-post" class="ask-button">Đặt câu hỏi</a>
+          <a href="/qa-page-post" class="ask-button">Đặt câu hỏi mới</a>
         </div>
       </div>
       <div class="sdb_holder" style="margin-bottom: 0px;">

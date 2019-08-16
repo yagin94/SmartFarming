@@ -2,5 +2,16 @@
   width: 125px;
   height: 125px;
 }
+.tag {
+  padding: 1em;
+}
+.articleButton {
+  background-color: #337AB7 !important;
+  color: #fff !important;
+}
+.articleButton:hover {
+  background-color: #005ab4 !important;
+  color: #fff !important;
+}
 #breadcrumb li a{display:block; position:relative; margin:0; padding:0 12px 0 0; font-size:12px; color: black;}
 #breadcrumb li:last-child a{margin:0; padding:0; color: #F7AF9D;}

@@ -154,11 +154,11 @@ table > tbody > tr:first-child {
 
 }
 
-#table-report tr {
-  border-bottom: 0.5px inset #A8A7A6;
-  height: 50px;
-  background-color: aliceblue;
-}
+/*#table-report tr {*/
+  /*border-bottom: 0.5px inset #A8A7A6;*/
+  /*height: 50px;*/
+  /*background-color: aliceblue;*/
+/*}*/
 
 #table-report td {
   padding-top: 15px;

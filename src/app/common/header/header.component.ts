@@ -144,7 +144,6 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('currentAppUser');
     // localStorage.removeItem('currentUser');
     // console.log(localStorage.getItem('currentAppUser'));
-    this.loadingC = false;
      location.replace(window.location.href);
 
   }

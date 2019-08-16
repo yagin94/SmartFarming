@@ -12,7 +12,7 @@ import {
   Qa,
   Tag,
   AddupvoteQa,
-  AddupvoteAn, ReportObj, ResponseReport, GetUserRelateQa
+  AddupvoteAn, ReportObj, ResponseReport, GetUserRelateQa, Tags
 } from '../qa.model';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {HeaderComponent} from '../../common/header/header.component';

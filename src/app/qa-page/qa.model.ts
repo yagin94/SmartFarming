@@ -126,6 +126,17 @@ export class Tag {
   }
 }
 
+export class Tags {
+  tagId: number;
+  name: string;
+  description: string;
+  reputation: number;
+  viewCount: number;
+  viewCountOneWeekAgo: number;
+  increasementOneWeekAgoTillNow: number;
+
+}
+
 export class AddAnsObj {
   content: string;
   appUser: AppUser;

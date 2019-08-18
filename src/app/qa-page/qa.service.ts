@@ -135,5 +135,8 @@ export class QaService {
     return this.http.delete(`http://localhost:8080/admin/deleteAnswerToQuestion/${answerId}`);
   }
 
+  getTagById(tagId: number): Observable<Tag>{
+    return this.http.get<Tag>(`http://localhost:8080/tag/findTagById/${tagId}`);
+  }
 
 }

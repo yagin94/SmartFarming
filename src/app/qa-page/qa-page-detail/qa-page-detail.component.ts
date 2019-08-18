@@ -26,6 +26,7 @@ import {SocialUser} from 'angularx-social-login';
 import {Globals} from '../../common/globalVariables';
 import {NgxLoadingComponent} from 'ngx-loading';
 import {delay} from 'rxjs/operators';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   providers: [HeaderComponent, DataShareService, QaService, SocialService, Globals],
@@ -39,7 +40,7 @@ export class QaPageDetailComponent implements OnInit {
   getObjectTopTag$: GetObjectTopTag = new GetObjectTopTag();
   getObjectTopUser$: GetObjectTopUser = new GetObjectTopUser();
   getObjectTopQa$: GetObjectTopQa = new GetObjectTopQa();
-  qa$: Qa = new Qa('', '', new AppUser(), null, null, '', [],0);
+  qa$: Qa = new Qa('', '', new AppUser(), null, null, '', [], 0);
   topTag$: Tag[];
   topQa$: Qa[];
   editQuestion$: Qa;
@@ -64,6 +65,10 @@ export class QaPageDetailComponent implements OnInit {
   loading = true;
   ownerUser: any;
   getUserRelateQa$: GetUserRelateQa[];
+  getUserRelateQa1$: GetUserRelateQa[];
+  getUserRelateQa2$: GetUserRelateQa[];
+  getUserRelateQa3$: GetUserRelateQa[];
+  getUserRelateQa4$: GetUserRelateQa[];
   // arrayUser = new AppUser()[{}];
   listUserRelate$: AppUser;
   checkAdmin = '';
@@ -91,7 +96,9 @@ export class QaPageDetailComponent implements OnInit {
       this.data = params['id'];
       this.ownerUser = params['userId'];
     });
-    this.checkAdmin = JSON.parse(localStorage.getItem('currentAppUser')).role;
+    if (localStorage.getItem('currentAppUser')) {
+      this.checkAdmin = JSON.parse(localStorage.getItem('currentAppUser')).role;
+    }
     this.ansContent = '';
     this.getQaDetail(this.data, this.ownerUser);
     this.getTopQa();
@@ -133,18 +140,28 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   getTopUserDetail(userId: number, i: number): void {
-    // this.getUserRelateQa$.tag = new Tag[{}];
+    console.log('i',i);
     this.qaService.getTopUserRelate(this.data, userId).subscribe(getObjectTopUser => {
-      this.getUserRelateQa$ = getObjectTopUser;
-      console.log('userRelate', this.getUserRelateQa$);
-      var tag = document.getElementById('tagUser' + i);
-      if (tag.style.display === 'none') {
-        tag.style.display = 'block';
+      if (i === 0) {
+        this.getUserRelateQa$ = getObjectTopUser;
+      } else if (i === 1) {
+        this.getUserRelateQa1$ = getObjectTopUser;
+      } else if (i === 2) {
+        this.getUserRelateQa2$ = getObjectTopUser;
+      } else if (i === 3) {
+        this.getUserRelateQa3$ = getObjectTopUser;
+      } else if (i === 4) {
+        this.getUserRelateQa4$ = getObjectTopUser;
       }
-      else if (tag.style.display === 'block') {
-        tag.style.display = 'none';
+        var tag = document.getElementById('tagUser' + i);
+        if (tag.style.display === 'none') {
+          tag.style.display = 'block';
+        }
+        else if (tag.style.display === 'block') {
+          tag.style.display = 'none';
+        }
       }
-    });
+    );
   }
 
   checkAuthen() {
@@ -192,19 +209,38 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   getQaDetail(questionId: number, ownerId: number): void {
-
     this.qaService.getQaDetail(questionId, ownerId).subscribe(qa => {
       this.qa$ = qa;
+      console.log(this.qa$.answers);
+      if (this.qa$.upvotedUserIds != null) {
+        for (const value of this.qa$.upvotedUserIds) {
+          if (JSON.parse(localStorage.getItem('currentAppUser'))) {
+            if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
+              this.checkLikeButton$ = true;
+            }
+          } else {
+            if (value === JSON.parse(localStorage.getItem('anonymousUser')).userId) {
+              this.checkLikeButton$ = true;
+            }
+          }
+        }
+      }
+      if (this.qa$.answers != null) {
+        for (const answer of this.qa$.answers) {
+          if (answer.upvotedUserIds != null) {
+            for (const userId of answer.upvotedUserIds) {
+              if (JSON.parse(localStorage.getItem('currentAppUser'))) {
+                if (userId === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
+                  this.checkAnswer$ = true;
+                }
+              } else {
+                if (userId === JSON.parse(localStorage.getItem('anonymousUser')).userId) {
+                  this.checkAnswer$ = true;
+                }
+              }
+            }
+          }
 
-      for (let value of this.qa$.upvotedUserIds) {
-        if (JSON.parse(localStorage.getItem('currentAppUser'))) {
-          if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
-            this.checkLikeButton$ = true;
-          }
-        } else {
-          if (value === JSON.parse(localStorage.getItem('anonymousUser')).userId) {
-            this.checkLikeButton$ = true;
-          }
         }
       }
       this.checkAuthen();
@@ -370,11 +406,11 @@ export class QaPageDetailComponent implements OnInit {
     } else {
       const u = new AddupvoteAn(JSON.parse(localStorage.getItem('currentAppUser')).userId);
       this.qaService.upvoteAnswer(answerId, u).subscribe(answer => {
-
+          this.getQaDetail(this.data, this.ownerUser);
         }
       );
     }
-    // this.getQaDetail(this.data, this.ownerUser);
+
   }
 
   checkUpvoteAnswer(answer: Answers) {
@@ -384,10 +420,7 @@ export class QaPageDetailComponent implements OnInit {
       for (let value of answer.upvotedUserIds) {
         if (value === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
           this.checkAnswer$ = true;
-
           return true;
-          this.getQaDetail(this.data, this.ownerUser);
-
         }
       }
     }

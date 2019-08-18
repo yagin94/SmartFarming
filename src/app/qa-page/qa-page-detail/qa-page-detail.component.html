@@ -182,24 +182,23 @@
                 </div>
 
                 <div class="question-footer">
-                  <button *ngIf="!checkUpvoteAnswer(answer) && answer.upvoteCount != null "
+                  <button *ngIf="!checkAnswer$ && answer.upvoteCount != null "
                           (click)="upvoteAnswer(answer.answerId)"
                           style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a>
                     {{answer.upvoteCount}} Thích</a>
                   </button>
-                  <div>{{checkAnswer$}}</div>
-                  <button *ngIf="!checkUpvoteAnswer(answer) && answer.upvoteCount == null "
+                  <button *ngIf="!checkAnswer$ && answer.upvoteCount == null "
                           (click)="upvoteAnswer(answer.answerId)"
                           style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a> 0
                     Thích</a>
                   </button>
 
-                  <button *ngIf="checkUpvoteAnswer(answer) && answer.upvoteCount != null"
+                  <button *ngIf="checkAnswer$ && answer.upvoteCount != null"
                           (click)="upvoteAnswer(answer.answerId)"
                           style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a>
                     {{answer.upvoteCount}} Đã thích</a>
                   </button>
-                  <button *ngIf="checkUpvoteAnswer(answer) && answer.upvoteCount == null"
+                  <button *ngIf="checkAnswer$ && answer.upvoteCount == null"
                           (click)="upvoteAnswer(answer.answerId)"
                           style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a>
                     0 Đã thích</a>
@@ -333,13 +332,43 @@
               <p (click)="getTopUserDetail(item.userId, i);" style="cursor: pointer;">
                 <a>Xem chi tiết</a></p>
             </div>
-            <div id="{{'tagUser' + i}}" style="display: none;">
+
+            <template id="tagUser0" style="display: none;" *ngIf="getUserRelateQa$ != null">
               <span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa$">
               <p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>
-              <p class="topUser">Lượt xem: {{tagUser.tag.viewCount}} </p>
-              <p class="topUser">Tổng điểm: {{tagUser.tag.reputation}} </p>
+              <p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>
+              <p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>
               </span>
-            </div>
+            </template>
+            <template id="tagUser1" style="display: none;" *ngIf="getUserRelateQa1$ != null">
+              <span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa1$">
+              <p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>
+              <p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>
+              <p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>
+              </span>
+            </template>
+            <template id="tagUser2" style="display: none;" *ngIf="getUserRelateQa2$ != null">
+              <span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa2$">
+              <p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>
+              <p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>
+              <p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>
+              </span>
+            </template>
+            <template id="tagUser3" style="display: none;" *ngIf="getUserRelateQa3$ != null">
+              <span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa3$">
+              <p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>
+              <p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>
+              <p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>
+              </span>
+            </template>
+            <template id="tagUser4" style="display: none;" *ngIf="getUserRelateQa4$ != null">
+              <span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa4$">
+              <p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>
+              <p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>
+              <p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>
+              </span>
+            </template>
+
           </li>
         </ul>
       </div>

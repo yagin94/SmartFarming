@@ -50,7 +50,7 @@ export class Qa {
   questionId: number;
   title: string;
   content: string;
-  answers: Answers;
+  answers: Answers[];
   viewCount: number;
   fileDownloadUris: string[];
   tags: Tag[];
@@ -61,7 +61,8 @@ export class Qa {
   report: ReportsByPageIndex;
   upvoteCount: number;
 
-  constructor(title: string, content: string, appUser: AppUser, tags: Tag[], fileDownloadUris: string[], userName: string, upvotedUserIds: number[], upvoteCount: number) {
+  constructor(title: string, content: string, appUser: AppUser, tags: Tag[],
+              fileDownloadUris: string[], userName: string, upvotedUserIds: number[], upvoteCount: number) {
     this.title = title;
     this.content = content;
     this.appUser = appUser;

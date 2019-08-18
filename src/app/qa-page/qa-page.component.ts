@@ -54,6 +54,7 @@ export class QaPageComponent implements OnInit {
   loadingPostQa = false;
   loading = true;
   selectedIndex = 0;
+  tag$ = new Tag('','');
 
   constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
               private globals: Globals,
@@ -77,7 +78,7 @@ export class QaPageComponent implements OnInit {
       console.log('here!!!!');
       this.getQaByTag(this.sortBy$, this.data, this.pageIndex$);
     }
-
+    this.getTagByTagId();
     this.getTopQa();
     this.getTopTag();
     this.getTopUser();
@@ -119,7 +120,10 @@ export class QaPageComponent implements OnInit {
   getQaByTag(sortBy: string, tagId: number, pageIndex: number): void {
     this.tagId = tagId;
     this.checkPaging$ = 'tag';
-    this.qaService.getQaByTag(sortBy, tagId, pageIndex).subscribe(getObjectQaByTag => this.getObject$ = getObjectQaByTag);
+    this.qaService.getQaByTag(sortBy, tagId, pageIndex).subscribe(getObjectQaByTag => {
+      this.getObject$ = getObjectQaByTag;
+
+    });
   }
 
   /**=======================================================================*/
@@ -278,5 +282,12 @@ export class QaPageComponent implements OnInit {
   }
   setRow(_index: number) {
     this.selectedIndex = _index;
+  }
+
+  getTagByTagId(){
+    this.qaService.getTagById(this.data).subscribe(getObject => {
+
+      this.tag$ = getObject;
+    });
   }
 }

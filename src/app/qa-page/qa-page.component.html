@@ -57,6 +57,7 @@
       <div class="content three_quarter first">
         <!-- ################################################################################################ -->
         <div style="display: grid;">
+          <h4 style="text-transform: none;font-weight: unset;" *ngIf="data != null">Những câu hỏi liên quan đến từ khóa "<strong>{{tag$.name}}</strong>" </h4>
           <div id="menu-sap-xep" *ngIf="!checkSearch">
             <span id="sort-qa-like" onclick="sortQA_like()" (click)="sortByView()"
                   style="background-color: #FBFBFB;cursor: pointer;">Nhiều lượt xem</span>

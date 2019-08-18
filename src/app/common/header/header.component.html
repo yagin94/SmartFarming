@@ -27,8 +27,8 @@
           </ul>
           <ul *ngIf="checkNotif">
             <li *ngFor="let notif of getNotif$.notificationsByPageIndex"><a class="drop" (click)="seeNotif(notif)"
-                                                                            style="cursor: pointer">{{notif.message}}</a>
-              <ul>
+                                                                            style="cursor: pointer; width: 25em">{{notif.message}}</a>
+              <ul style="margin-left: 11em">
                 <li style="padding-right: 0px;"><a style="cursor: pointer;" (click)="deleteNotif(notif.notificationId)">Xóa thông báo</a></li>
                 <li><a style="cursor: pointer" (click)="unsubscribeNotif(notif)">Ngừng theo dõi bài viết này</a></li>
               </ul>

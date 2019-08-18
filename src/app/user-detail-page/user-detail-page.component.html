@@ -127,16 +127,20 @@
           <!--tags -->
           <div id="report-tags">
             <div style="display: -webkit-box;padding-bottom: 1.5%;;">
-              <h3>Top tags </h3>
+              <h3>Top từ khóa </h3>
 
             </div>
-            <div id="span-tags" style="min-height: 5rem;" *ngIf="getTopTagOfUser$ != null">
-              <div class="tag-infor" *ngFor="let object of getTopTagOfUser$.tagsByPageIndex">
-                <a href="" class="name-tag">{{object.name}}</a>
+
+
+            <div id="span-tags" style="min-height: 5rem;" *ngIf="getTopTagOfUser$ != null" >
+              <div class="tag-infor" *ngFor="let object of getTopTagOfUser$.tagsByPageIndex"
+                   style="display: block;flex: 1 auto;min-width: 35rem;margin: 2% 0%">
+                <span class="name-tag" style="background: #E1ECF4;">{{object.name}}</span>
                 <span class="infor-tag">Điểm: {{object.reputation}} </span> <!-- -->
                 <span class="infor-tag">Lượt xem: {{object.viewCount}}</span> <!---->
               </div>
             </div>
+
             <div>
               <h5 style="text-transform: none;float: right;"><a style="cursor: pointer;" (click)="goToAllTagUser()">Xem
                 tất cả tags ở đây -></a></h5>
@@ -147,7 +151,7 @@
           <!--Question -->
           <div id="report-question">
             <div style="display: -webkit-box;">
-              <h3>Top câu hỏi ({{totalQuestionOfuser$}})</h3>
+              <h3>Top câu hỏi <!--({{totalQuestionOfuser$}})--></h3>
               <select style="width: auto;margin: 10%;" (change)="sortBy($event.target.value)">
                 <option value="viewCount">Sắp xếp theo lượt xem</option>
                 <option value="upvoteCount ">Sắp xếp theo tổng điểm</option>
@@ -164,10 +168,10 @@
               </tr>
               <tr class="table-report-first" *ngFor="let qa of getTopQuestionOfUser$.qa">
 
-                <td style="padding-top: 15px;"><a (click)="questionDetail(qa)">{{qa.title}}</a></td>
-                <td class="">{{qa.viewCount}}</td>
-                <td class="" *ngIf="qa.reputation != null">{{qa.reputation}}</td>
-                <td class="" *ngIf="qa.reputation == null">0</td>
+                <td style="padding-top: 15px;cursor: pointer"><a (click)="questionDetail(qa)">{{qa.title}}</a></td>
+                <td style="text-align: center">{{qa.viewCount}}</td>
+                <td style="text-align: center" *ngIf="qa.reputation != null">{{qa.reputation}}</td>
+                <td style="text-align: center" *ngIf="qa.reputation == null">0</td>
                 <td class="time-user-detail">{{qa.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
               </tr>
 

@@ -21,6 +21,7 @@ export class AllQuestionUserPageComponent implements OnInit {
   data: any;
   loading = true;
   user$ = new AppUser();
+  selectedIndex = 0;
 
   constructor(private userDetailPageService: UserDetailPageService,
               private route: ActivatedRoute,
@@ -40,8 +41,11 @@ export class AllQuestionUserPageComponent implements OnInit {
     this.getAllQuestionOfUser(this.sortBy$, this.data, this.pageNumber$);
   }
 
-
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
   getAllQuestionOfUser(type: string, userId: number, pageNumber: number): void {
+    this.pageNumber$ = pageNumber;
     this.userDetailPageService.getAllQuestionOfUser(type, userId, pageNumber).subscribe
     (getAllQuestionOfUser => this.getAllQuestionOfUser$ = getAllQuestionOfUser);
   }
@@ -57,5 +61,8 @@ export class AllQuestionUserPageComponent implements OnInit {
 
   goToQuestionDetail(qa: Qa) {
     this.router.navigate(['/qa-page-detail'], {queryParams: {id: qa.questionId, userId: qa.appUser.userId}});
+  }
+  setRow(_index: number) {
+    this.selectedIndex = _index;
   }
 }

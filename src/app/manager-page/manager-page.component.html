@@ -25,7 +25,8 @@
             </ul>
           </li>
           <li><a href="/qa-page" routerLinkActive="active" (click)="click()">Hỏi - Đáp</a></li>
-          <!--<li><a (click)="click()">Liên hệ</a></li>-->
+          <li *ngIf="isLoggedIn()"><a (click)="userDetails()" style="cursor: pointer">Trang cá nhân</a></li>
+
 
         </ul>
 
@@ -75,6 +76,7 @@
                     <option value="month">Thống kê theo tháng</option>
                     <option value="year">Thống kê theo năm</option>
                   </select>
+                  <strong> * Thời gian tính từ mốc thời gian + khoảng thời gian</strong>
                 </div>
                 <form>
                   <div style="display: -webkit-box;margin-bottom: 0%;">
@@ -82,20 +84,71 @@
                     <div class="inputDate">
                       <p style="max-width: 100%;margin: 0%">Chọn mốc thời gian bắt đầu biểu đồ</p>
                       <input *ngIf="classifyChart == 'date'" placeholder="Nhập ngày bắt đầu (yyyy-MM-dd)"
-                             type="date" id="date" style="height: 43px;" [(ngModel)]="dateChart" [ngModelOptions]="{standalone: true}" >
-                             <!--(keyup.enter)="letDrawChart(date.value)"-->
-                      <input  *ngIf="classifyChart == 'month'" placeholder="Nhập tháng bắt đầu (yyyy-MM)"
-                             type="date" style="height: 43px;" [(ngModel)]="monthChart" [ngModelOptions]="{standalone: true}">
+                             type="date" id="date" style="height: 43px;" [(ngModel)]="dateChart"
+                             [ngModelOptions]="{standalone: true}">
                       <!--(keyup.enter)="letDrawChart(date.value)"-->
-                      <input  *ngIf="classifyChart == 'year'" placeholder="Nhập năm bắt đầu (yyyy)" type="date"
+                      <input *ngIf="classifyChart == 'month'" placeholder="Nhập tháng bắt đầu (yyyy-MM)"
+                             type="date" style="height: 43px;" [(ngModel)]="monthChart"
+                             [ngModelOptions]="{standalone: true}">
+                      <!--(keyup.enter)="letDrawChart(date.value)"-->
+                      <input *ngIf="classifyChart == 'year'" placeholder="Nhập năm bắt đầu (yyyy)" type="date"
                              style="height: 43px;" [(ngModel)]="yearChart" [ngModelOptions]="{standalone: true}">
-                             <!--(keyup.enter)="letDrawChart(date.value)"-->
+                      <!--(keyup.enter)="letDrawChart(date.value)"-->
 
                     </div>
+
                     <div style="width: 25%;margin-left: 4rem;">
                       <p style="max-width: 100%;margin: 0%">Khoảng thời gian </p>
-                      <input [(ngModel)]="periodChart" type="number" placeholder="Nhập khoảng thời gian" style="height: 43px;"
-                             [ngModelOptions]="{standalone: true}" min="0">
+                      <!--<input [(ngModel)]="periodChart" type="number" placeholder="Nhập khoảng thời gian"-->
+                      <!--style="height: 43px;"-->
+                      <!--[ngModelOptions]="{standalone: true}" min="0" >-->
+                      <select *ngIf="classifyChart == 'date'" (change)="timePeriod($event.target.value)"
+                              style="height: 43px;">
+                        <option value="1">1 ngày</option>
+                        <option value="2">2 ngày</option>
+                        <option value="3">3 ngày</option>
+                        <option value="4">4 ngày</option>
+                        <option value="5">5 ngày</option>
+                        <option value="6">6 ngày</option>
+                        <option value="7">7 ngày</option>
+                        <option value="8">8 ngày</option>
+                        <option value="9">9 ngày</option>
+                        <option value="10">10 ngày</option>
+                        <option value="11">11 ngày</option>
+                        <option value="12">12 ngày</option>
+                        <option value="13">13 ngày</option>
+                        <option value="14">14 ngày</option>
+                        <option value="15">15 ngày</option>
+                        <option value="16">16 ngày</option>
+                        <option value="17">17 ngày</option>
+                        <option value="18">18 ngày</option>
+                        <option value="19">19 ngày</option>
+                        <option value="20">20 ngày</option>
+                      </select>
+                      <select *ngIf="classifyChart == 'month'" (change)="timePeriod($event.target.value)"
+                              style="height: 43px;">
+                        <option value="1">1 tháng</option>
+                        <option value="2">2 tháng</option>
+                        <option value="3">3 tháng</option>
+                        <option value="4">4 tháng</option>
+                        <option value="5">5 tháng</option>
+                        <option value="6">6 tháng</option>
+                        <option value="7">7 tháng</option>
+                        <option value="8">8 tháng</option>
+                        <option value="9">9 tháng</option>
+                        <option value="10">10 tháng</option>
+                        <option value="11">11 tháng</option>
+                        <option value="12">12 tháng</option>
+                      </select>
+                      <select *ngIf="classifyChart == 'year'" (change)="timePeriod($event.target.value)"
+                              style="height: 43px;">
+                        <option value="1">1 năm</option>
+                        <option value="2">2 năm</option>
+                        <option value="3">3 năm</option>
+                        <option value="4">4 năm</option>
+                        <option value="5">5 năm</option>
+                      </select>
+
                     </div>
 
                   </div>
@@ -126,28 +179,10 @@
                       <input type="text" data-role="tagsinput" placeholder="Nhập tag"
                              style="max-width: 100%;border: 1px solid #0E76A8;padding: 1rem;" #tagInput
                              (keyup.enter)="getSearchTag(0, tagInput.value)">
+                      <button class="fa fa-search" style="height: 35px;margin-bottom: 9px"
+                              (click)="getSearchTag(0, tagInput.value)"></button>
                     </div>
 
-                    <!--<div class="ng-autocomplete">-->
-                    <!--<div>Bo may day</div>-->
-                    <!--<ng-autocomplete-->
-                    <!--[data]="data1"-->
-                    <!--[searchKeyword]="keyword"-->
-                    <!--(selected)='selectEvent($event)'-->
-                    <!--(inputChanged)='onChangeSearch($event)'-->
-                    <!--(inputFocused)='onFocused($event)'-->
-                    <!--[itemTemplate]="itemTemplate"-->
-                    <!--[notFoundTemplate]="notFoundTemplate" >-->
-                    <!--</ng-autocomplete>-->
-
-                    <!--<ng-template #itemTemplate let-item>-->
-                    <!--<a [innerHTML]="item.name"></a>-->
-                    <!--</ng-template>-->
-
-                    <!--<ng-template #notFoundTemplate let-notFound>-->
-                    <!--<div [innerHTML]="notFound"></div>-->
-                    <!--</ng-template>-->
-                    <!--</div>-->
                   </form>
 
                   <h6><a (click)="getAllUser(0)" style="cursor: pointer;">Xem tất cả người dùng ở đây</a></h6>
@@ -160,26 +195,36 @@
                     <table style="text-align: center;" class="tagInShowUser">
                       <tbody>
                       <tr class="" style="">
+                        <td>STT</td>
                         <td>Tên tài khoản</td>
                         <td>Email/ Facebook</td>
+                        <td>Lượt xem</td>
                         <td>Tông điểm</td>
                       </tr>
                       <tr class="" *ngFor="let userAll of getAllUser$.appUsersByPageIndex">
-                        <td class="" *ngIf="userAll.socialUser != null"><a (click)="userDetail(userAll.userId)">{{userAll.socialUser.name}}</a>
+                        <td></td>
+
+                        <td class="" *ngIf="userAll.socialUser != null" style="text-align: left"><a
+                          (click)="userDetail(userAll.userId)">{{userAll.socialUser.name}}</a>
                         </td>
-                        <td class="" *ngIf="userAll.socialUser == null">Anonymous(Id: {{userAll.userId}})</td>
-                        <td *ngIf="userAll.socialUser != null">{{userAll.socialUser.email}}</td>
-                        <td *ngIf="userAll.socialUser == null">Anonymous</td>
+                        <td class="" *ngIf="userAll.socialUser == null" style="text-align: left">Anonymous(Id:
+                          {{userAll.userId}})
+                        </td>
+                        <td *ngIf="userAll.socialUser != null" style="text-align: left">{{userAll.socialUser.email}}
+                        </td>
+                        <td *ngIf="userAll.socialUser == null" style="text-align: left">Anonymous</td>
+                        <td>{{userAll.viewCount}}</td>
                         <td class=" ">{{userAll.reputation}}</td>
                       </tr>
                       </tbody>
                     </table>
-                    <div class="phan-trang clear">
-                      <div class="pagination">
-                        <a>&laquo;</a>
+                    <div class="phan-trang clear" *ngIf="getAllUser$.numberOfPages != 1">
+                      <div class="pagination" style="background-color: lightblue">
+
                         <a *ngFor="let page of arrayPage(getAllUser$.numberOfPages) let i = index"
-                           (click)="getAllUser(i)" onclick="setStyle()" id="numberIndex">{{i+1}}</a>
-                        <a>&raquo;</a>
+                           (click)="getAllUser(i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}"
+                           onclick="setStyle()" id="numberIndex">{{i+1}}</a>
+
                       </div>
                     </div>
                   </div>
@@ -187,16 +232,17 @@
 
                   <div *ngIf="tagDetail">
                     <h5 style="text-transform: none">Thông tin tag(bấm để hiện người dùng)</h5>
-                    <table class="scrollable">
+                    <table class="scrollable tagInShowUser">
                       <tr style="text-align: center">
-                        <td>Stt</td>
+                        <td>STT</td>
                         <td>Tên tag</td>
-                        <td>Số view</td>
+                        <td>Lượt xem</td>
                         <td>Số điểm</td>
                       </tr>
-                      <tr style="text-align: center" *ngFor="let object of getObjectTag$.tagsByPageIndex"
+                      <tr style="text-align: center" *ngFor="let object of getTagSearchUserManage$.tagsByPageIndex"
                           (click)="getUserByTag(object.tagId)">
-                        <td>{{object.name}}</td>
+                        <td></td>
+                        <td><a>{{object.name}}</a></td>
                         <td>{{object.viewCount}}</td>
                         <td>{{object.reputation}}</td>
                       </tr>
@@ -208,15 +254,16 @@
                     <table style="text-align: center;" class="tagInShowUser">
                       <tbody>
                       <tr class="" style="">
-                        <td>Stt</td>
+                        <td>STT</td>
                         <td>Tên tài khoản</td>
                         <td>Email/ Facebook</td>
                         <td>Tông điểm</td>
                       </tr>
                       <tr class="" *ngFor="let user of getUserByTag$">
                         <td></td>
-                        <td class="">{{user.appUser.socialUser.name}}</td>
-                        <td class=" ">{{user.appUser.socialUser.email}}</td>
+                        <td class="" style="text-align: left"><a (click)="userDetail(user.appUser.userId)">{{user.appUser.socialUser.name}}</a>
+                        </td>
+                        <td class=" " style="text-align: left">{{user.appUser.socialUser.email}}</td>
                         <td class=" ">{{user.appUser.reputation}}</td>
                       </tr>
                       </tbody>
@@ -235,7 +282,7 @@
                   <h5 style="text-transform: none;">Người dùng gửi report</h5>
                   <table class="scrollable tagInShowUser">
                     <tr style="text-align: center">
-                      <td>Stt</td>
+                      <td>STT</td>
                       <td>Tên tài khoản</td>
                       <td>Loại tài khoản</td>
                       <td>Số lần gửi report</td>
@@ -243,24 +290,25 @@
                     <tr style="text-align: center" *ngFor="let report of getReportUser$.userAndReportTimes"
                         (click)="getReportDetail(report.userId,0)">
                       <td></td>
-                      <td *ngIf="report.fullName != null"><a>{{report.fullName}}</a></td>
-                      <td *ngIf="report.fullName == null"><a>Anonymus {{report.userId}}</a></td>
+                      <td *ngIf="report.fullName != null"><a style="cursor: pointer;">{{report.fullName}}</a></td>
+                      <td *ngIf="report.fullName == null"><a style="cursor: pointer;">Anonymus {{report.userId}}</a></td>
                       <td>{{report.role}}</td>
                       <td>{{report.numberOfReports}}</td>
                     </tr>
                   </table>
-                  <div class="phan-trang clear" *ngIf="getReportUser$.numberOfPages != 1">
-                    <div class="pagination">
-                      <a>&laquo;</a>
+                  <div class="phan-trang clear"
+                       *ngIf="getReportUser$.numberOfPages != 1 && getReportUser$.numberOfPages != null">
+                    <div class="pagination" style="background-color: lightblue">
+
                       <a *ngFor="let page of arrayPage(getReportUser$.numberOfPages) let i = index"
-                         (click)="getReport(i)">{{i+1}}</a>
-                      <a>&raquo;</a>
+                         (click)="getReport(i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
                     </div>
                   </div>
                   <form *ngIf="reportDetail">
                     <h5>Chi tiết các báo cáo</h5>
-                    <li>
-                      <table class="table-report" *ngFor="let reportUser of getReport$.reportsByPageIndex">
+                    <div *ngFor="let reportUser of getReport$.reportsByPageIndex">
+                      <table class="table-report" style="margin-bottom: 0%">
                         <tr class="table-report-first">
                           <td class="label-report">Người báo cáo :</td>
                           <td class="content-report" *ngIf="reportUser.appUser.socialUser != null">
@@ -286,22 +334,29 @@
                         <tr>
 
                           <td class="label-report">Lí do :</td>
-                          <td class="content-report" colspan="3"><a>{{reportUser.message}}</a></td>
+                          <td class="content-report" colspan="3">{{reportUser.message}}</td>
                         </tr>
                         <tr>
                           <td class="label-report">Link câu hỏi :</td>
                           <td class="content-report" colspan="3"><a (click)="gotoDetailPage(reportUser.question)">{{reportUser.question.title}}</a>
                           </td>
                         </tr>
+
+
                       </table>
-                    </li>
+                      <button (click)="deleteReport(reportUser)">Xóa báo cáo</button>
+
+                    </div>
+
                   </form>
-                  <div class="phan-trang clear" *ngIf="getReport$.numberOfPages != 1">
-                    <div class="pagination">
-                      <a>&laquo;</a>
+                  <div class="phan-trang clear"
+                       *ngIf="getReport$.numberOfPages != 1 && getReport$.numberOfPages != null">
+                    <div class="pagination" style="background-color: lightblue">
+
                       <a *ngFor="let page of arrayPage(getReport$.numberOfPages) let i = index"
-                         (click)="getReportDetail(getReport$.reportsByPageIndex.appUser.userId,i)">{{i+1}}</a>
-                      <a>&raquo;</a>
+                         (click)="getReportDetail(getReport$.reportsByPageIndex.appUser.userId,i);setRow(i)"
+                         [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
                     </div>
                   </div>
                 </ul>
@@ -313,67 +368,83 @@
                 <div>
                   <h5 style="text-transform: none;">Tìm kiếm</h5>
                   <input #articleTitle (keyup.enter)="searchArticle(articleTitle.value, pageIndexArticleSearch$)"
-                         class="searchArticle">
+                         class="searchArticle" style="float: left;">
+                  <button class="fa fa-search" style="height: 41px;width: 40px;margin-bottom: 9px"
+                          (click)="searchArticle(articleTitle.value, pageIndexArticleSearch$)"></button>
 
                 </div>
+
                 <div *ngIf="!checkSearch">
+                  <div>
+                    <select (change)="getSortByArticle($event.target.value)">
+                      <option value="date">Sắp xếp theo thời gian</option>
+                      <option value="viewCount">Sắp xếp theo lượt xem</option>
+                      <option value="upvoteCount">Sắp xếp theo lượt thích</option>
+                    </select>
+                  </div>
                   <h5 style="text-transform: none">Tất cả bài viết </h5>
-                  <table class="scrollable tagInShowUser">
+                  <table class="scrollable ">
                     <tr style="text-align: center">
-                      <td>Stt</td>
+                      <td>STT</td>
                       <td style="min-width: 17rem;">Tiêu đề</td>
-                      <td>Category</td>
+                      <td>Thể loại</td>
                       <td>Người đăng</td>
-                      <td>Số view</td>
+                      <td>Lượt xem</td>
                       <td>Ngày đăng</td>
                     </tr>
-                    <tr style="text-align: center" *ngFor="let article of getAllarticle$.articlesByPageIndex">
-                      <td></td>
-                      <td><a (click)="goToArticlePage(article)" style="cursor: pointer;">{{article.title}}</a></td>
-                      <td>{{article.category}}</td>
-                      <td>{{article.appUser.socialUser.name}}</td>
-                      <td>{{article.viewCount}}</td>
-                      <td>{{article.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
+                    <tr style="text-align: center"
+                        *ngFor="let article of getAllarticle$.articlesByPageIndex let i = index">
+                      <td>{{i+1+pageIndexArticle$*10}}</td>
+                      <td style="text-align: left;"><a (click)="goToArticlePage(article)" style="cursor: pointer;">{{article.title}}</a>
+                      </td>
+                      <td style="text-align: left;">{{article.category}}</td>
+                      <td style="text-align: left;">{{article.appUser.socialUser.name}}</td>
+                      <td style="text-align: left;">{{article.viewCount}}</td>
+                      <td style="text-align: left;">{{article.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
                     </tr>
 
                   </table>
                   <div class="phan-trang clear" *ngIf="getAllarticle$.numberOfPages != 1">
-                    <div class="pagination">
-                      <a>&laquo;</a>
+                    <div class="pagination" style="background-color: lightblue">
+
                       <a *ngFor="let page of arrayPage(getAllarticle$.numberOfPages) let i = index"
-                         (click)="getAllarticle(i)">{{i+1}}</a>
-                      <a>&raquo;</a>
+                         (click)="getAllarticle(sortArticleBy$,i);setRow(i)"
+                         [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
                     </div>
                   </div>
                 </div>
 
                 <div *ngIf="checkSearch">
                   <h5 style="text-transform: none">Kết quả tìm kiếm của <span> " {{articleTitle.value}} " </span></h5>
-                  <table class="scrollable tagInShowUser">
+                  <table class="scrollable ">
                     <tr style="text-align: center">
-                      <td>Stt</td>
+                      <td>STT</td>
                       <td style="min-width: 17rem;">Tiêu đề</td>
-                      <td>Category</td>
+                      <td>Thể loại</td>
                       <td>Người đăng</td>
-                      <td>Số view</td>
+                      <td>Lượt xem</td>
                       <td>Ngày đăng</td>
                     </tr>
-                    <tr style="text-align: center" *ngFor="let article of getArticle$.articlesByPageIndex">
-                      <td></td>
-                      <td><a (click)="goToArticlePage(article)" style="cursor: pointer;">{{article.title}}</a></td>
-                      <td>{{article.category}}</td>
-                      <td>{{article.appUser.socialUser.name}}</td>
-                      <td>{{article.viewCount}}</td>
-                      <td>{{article.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
+                    <tr style="text-align: center"
+                        *ngFor="let article of getArticle$.articlesByPageIndex let i = index">
+                      <td>{{i+1+pageIndexArticleSearch$*10}}</td>
+                      <td style="text-align: left;"><a (click)="goToArticlePage(article)" style="cursor: pointer;">{{article.title}}</a>
+                      </td>
+                      <td style="text-align: left;">{{article.category}}</td>
+                      <td style="text-align: left;">{{article.appUser.socialUser.name}}</td>
+                      <td style="text-align: left;">{{article.viewCount}}</td>
+                      <td style="text-align: left;">{{article.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
                     </tr>
 
                   </table>
                   <div class="phan-trang clear" *ngIf="getArticle$.numberOfPages != 1">
-                    <div class="pagination">
-                      <a>&laquo;</a>
+                    <div class="pagination" style="background-color: lightblue">
+
                       <a *ngFor="let page of arrayPage(getArticle$.numberOfPages) let i = index"
-                         (click)="searchArticle(articleTitle.value,i)">{{i+1}}</a>
-                      <a>&raquo;</a>
+                         (click)="searchArticle(articleTitle.value,i);setRow(i)"
+                         [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
                     </div>
                   </div>
                   <h5 style="text-transform: none"><a (click)="checkSearch = false" style="cursor: pointer;">Tất cả bài
@@ -388,21 +459,21 @@
                 <h4 style="text-transform: none;text-align: center;">Thống kê tag</h4>
                 <h5 style="text-transform: none;">Sắp xếp theo
                   <select style="width: fit-content;margin: 0;" (change)="sortTagBy($event.target.value)">
-                    <option value="viewCount">Số view</option>
+                    <option value="viewCount">Lượt xem</option>
                     <option value="upvoteCount">Tổng điểm</option>
                     <option value="trend">Xu hướng</option>
                   </select>
                 </h5>
-                <table class="scrollable tagInShowUser">
+                <table class="scrollable">
                   <tr style="text-align: center">
-                    <td>Stt</td>
+                    <td>STT</td>
                     <td>Tên tag</td>
-                    <td>Số view</td>
+                    <td>Lượt xem</td>
                     <td>Số điểm</td>
-                    <td>Số view 7 ngày trước</td>
+                    <td>Lượt xem 7 ngày trước</td>
                   </tr>
-                  <tr style="text-align: center" *ngFor="let object of getObjectTag$.tagsByPageIndex">
-                    <td></td>
+                  <tr style="text-align: center" *ngFor="let object of getObjectTag$.tagsByPageIndex let i = index">
+                    <td>{{i+1+pageIndexReport$*10}}</td>
                     <td>{{object.name}}</td>
                     <td>{{object.viewCount}}</td>
                     <td>{{object.reputation}}</td>
@@ -410,52 +481,119 @@
                   </tr>
                 </table>
                 <div class="phan-trang clear" *ngIf="getObjectTag$.numberOfPages != 1">
-                  <div class="pagination">
-                    <a>&laquo;</a>
+                  <div class="pagination" style="background-color: lightblue">
+
                     <a *ngFor="let page of arrayPage(getObjectTag$.numberOfPages) let i = index"
-                       (click)="getAllTag(sortBy$,i)">{{i+1}}</a>
-                    <a>&raquo;</a>
+                       (click)="getAllTag(sortBy$,i);setRow(i)"
+                       [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
                   </div>
+                  <h6 style="text-transform: none"><a (click)="showAllQuestion()" style="cursor: pointer">Xem tất cả câu
+                    hỏi</a></h6>
                 </div>
               </div>
 
               <!--Show câu hỏi -->
               <div *ngIf="isFlatShowQuestion" id="question">
                 <h4 style="text-transform: none;text-align: center;">Thống kê câu hỏi</h4>
-                <h5 style="text-transform: none;">Sắp xếp theo
-                  <select style="width: fit-content;margin: 0;" (change)="sortBy($event.target.value)">
-                    <option value="viewCount">Số view</option>
-                    <option value="upvoteCount">Tổng điểm</option>
-                    <option value="date">Ngày đăng</option>
-                  </select>
-                </h5>
-                <table class="scrollable tagInShowUser">
-                  <tr style="text-align: center">
-                    <td>Stt</td>
-                    <td style="min-width: 10rem;">Tiêu đề</td>
-                    <td>Người đăng</td>
-                    <td>Số view</td>
-                    <td>Số trả lời</td>
-                    <td>Ngày đăng</td>
-                  </tr>
-                  <tr style="text-align: center" *ngFor="let object of getObject$.qa">
-                    <td></td>
-                    <td><a (click)="gotoDetailPage(object)" style="cursor: pointer;">{{object.title}}</a></td>
-                    <td *ngIf="object.appUser.socialUser != null">{{object.appUser.socialUser.name}}</td>
-                    <td *ngIf="object.appUser.socialUser == null">Anonymus {{object.appUser.userId}}</td>
-                    <td>{{object.viewCount}}</td>
-                    <td>{{getNumber(object.answers)}}</td>
-                    <td>{{object.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
-                  </tr>
-                </table>
-                <div class="phan-trang clear">
-                  <div class="pagination">
-                    <a>&laquo;</a>
-                    <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
-                       (click)="getQa(sortBy$,i)">{{i+1}}</a>
-                    <a>&raquo;</a>
+                <div>
+                  <h5 style="text-transform: none;">Tìm kiếm</h5>
+                  <input #questionSearch (keyup.enter)="searchQuestion(questionSearch.value,0)"
+                         class="searchArticle" style="float: left;">
+                  <button class="fa fa-search" style="height: 41px;width: 40px;margin-bottom: 9px"
+                          (click)="searchQuestion(questionSearch.value,0)"></button>
+                </div>
+
+                <div *ngIf="!checkSearchQuestion">
+                  <div>
+                    <h5 style="text-transform: none;">Sắp xếp theo
+                      <select style="width: fit-content;margin: 0;" (change)="sortBy($event.target.value)">
+                        <option value="viewCount">Lượt xem</option>
+                        <option value="upvoteCount">Tổng điểm</option>
+                        <option value="date">Ngày đăng</option>
+                      </select>
+                    </h5>
+                  </div>
+                  <h5 style="text-transform: none;">Tất cả câu hỏi</h5>
+                  <table class="scrollable">
+                    <tr style="text-align: center">
+                      <td>STT</td>
+                      <td style="min-width: 10rem;">Tiêu đề</td>
+                      <td>Người đăng</td>
+                      <td>Lượt xem</td>
+                      <td>Số trả lời</td>
+                      <td>Số điểm</td>
+                      <td>Ngày đăng</td>
+                    </tr>
+                    <tr style="text-align: center" *ngFor="let object of getObject$.qa let i = index">
+                      <td>{{i+1+pageIndex$*10}}</td>
+                      <td style="text-align: left;"><a (click)="gotoDetailPage(object)" style="cursor: pointer;">{{object.title}}</a>
+                      </td>
+                      <td style="text-align: left;" *ngIf="object.appUser.socialUser != null">
+                        {{object.appUser.socialUser.name}}
+                      </td>
+                      <td style="text-align: left;" *ngIf="object.appUser.socialUser == null">Anonymus
+                        {{object.appUser.userId}}
+                      </td>
+                      <td style="text-align: left;">{{object.viewCount}}</td>
+                      <td style="text-align: left;">{{getNumber(object.answers)}}</td>
+                      <td style="text-align: left;" *ngIf="object.reputation != null">{{object.reputation}}</td>
+                      <td style="text-align: left;" *ngIf="object.reputation == null">0</td>
+                      <td style="text-align: left;"> {{object.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
+                    </tr>
+                  </table>
+                  <div class="phan-trang clear" *ngIf="getObject$.numberOfPages != 1">
+                    <div class="pagination" style="background-color: lightblue">
+
+                      <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
+                         (click)="getQa(sortBy$,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
+                    </div>
                   </div>
                 </div>
+                <div *ngIf="checkSearchQuestion">
+                  <h5 style="text-transform: none">Kết quả tìm kiếm của <strong>{{questionSearch.value}}</strong></h5>
+                  <table class="scrollable ">
+
+                    <tr style="text-align: center">
+                      <td>STT</td>
+                      <td style="min-width: 10rem;">Tiêu đề</td>
+                      <td>Người đăng</td>
+                      <td>Lượt xem</td>
+                      <td>Số trả lời</td>
+                      <td>Số điểm</td>
+                      <td>Ngày đăng</td>
+                    </tr>
+                    <tr style="text-align: center" *ngFor="let object of getQuestionSearch.qa let i = index">
+                      <td>{{i+1+pageIndex$*10}}</td>
+                      <td style="text-align: left;"><a (click)="gotoDetailPage(object)" style="cursor: pointer;">{{object.title}}</a>
+                      </td>
+                      <td style="text-align: left;" *ngIf="object.appUser.socialUser != null">
+                        {{object.appUser.socialUser.name}}
+                      </td>
+                      <td style="text-align: left;" *ngIf="object.appUser.socialUser == null">Anonymus
+                        {{object.appUser.userId}}
+                      </td>
+                      <td style="text-align: left;">{{object.viewCount}}</td>
+                      <td style="text-align: left;">{{getNumber(object.answers)}}</td>
+
+                      <td style="text-align: left;" *ngIf="object.reputation != null">{{object.reputation}}</td>
+                      <td style="text-align: left;" *ngIf="object.reputation == null">0</td>
+                      <td style="text-align: left;">{{object.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
+                    </tr>
+                  </table>
+                  <div class="phan-trang clear" *ngIf="getQuestionSearch.numberOfPages != 1">
+                    <div class="pagination" style="background-color: lightblue">
+
+                      <a *ngFor="let page of arrayPage(getQuestionSearch.numberOfPages) let i = index"
+                         (click)="searchQuestion(questionSearch.value,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
+                    </div>
+                  </div>
+                  <h6 style="text-transform: none"><a (click)="showAllQuestion()" style="cursor: pointer">Xem tất cả câu
+                    hỏi</a></h6>
+                </div>
+
               </div>
             </div>
           </div>

@@ -15,6 +15,7 @@ export class KiThuatTrongComponent implements OnInit {
   pageIndex$ = 0;
   checkSearch = false;
   loading = true;
+  selectedIndex = 0 ;
   constructor(private router: Router, private growService: GrowService) {
   }
   click() {
@@ -26,7 +27,8 @@ export class KiThuatTrongComponent implements OnInit {
   }
 
   getGrowArticle(pageIndex$: number) {
-    this.growService.getGrowArticle(this.pageIndex$).subscribe(object => {
+    this.pageIndex$ = pageIndex$;
+    this.growService.getGrowArticle(pageIndex$).subscribe(object => {
       this.getGrowArticle$ = object;
       console.log(this.getGrowArticle$);
     });
@@ -40,6 +42,8 @@ export class KiThuatTrongComponent implements OnInit {
   }
 
   searchArticle(textSearch: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
     this.checkSearch = true;
     if (textSearch) {
       textSearch.trim();
@@ -47,5 +51,18 @@ export class KiThuatTrongComponent implements OnInit {
         this.getGrowArticle$ = getObject;
       });
     }
+  }
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
+  }
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+    console.log(`=====================`, this.selectedIndex);
   }
 }

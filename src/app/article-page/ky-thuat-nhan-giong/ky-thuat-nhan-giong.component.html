@@ -22,22 +22,24 @@
           <div style="font-size: 4em; padding: 1em;text-align: center">Các bài viết mới nhất</div>
           <h3>Tìm kiếm bài viết </h3>
           <div style="margin: 0rem 0rem 8rem 0rem;">
-            <input #articleTitle (keyup.enter)="searchArticle(articleTitle.value, pageIndex$)"
-                   style="color: black;margin-top: 2.25rem;width: 21rem;">
+            <input #articleTitle (keyup.enter)="searchArticle(articleTitle.value, 0)"
+                   style="color: black;margin-top: 2.25rem;width: 31rem;height: 2.5em">
             <input title="Search" value="" type="submit" class="button-search"
-                   style="margin-top: -1.75rem;margin-left: 21rem">
+                   style="margin-top: -2.3rem;margin-left: 31rem;height:2.5em ">
           </div>
           <h1 *ngIf="articleTitle.value">Kết quả tìm kiếm của "{{articleTitle.value}}"</h1>
           <div class="scrollable">
             <table>
               <thead>
               <tr>
+                <th>Số thứ tự</th>
                 <th>Tên bài viết</th>
                 <th>Ngày đăng</th>
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let article of getCloneArticle$.articlesByPageIndex">
+              <tr *ngFor="let article of getCloneArticle$.articlesByPageIndex let i = index">
+                <td>{{i+1+pageIndex$*10}}</td>
                 <td style="padding: 1em"><a style="cursor: pointer" (click)="getArticleDetail(article)">{{article.title}}</a>
                 </td>
                 <td style="padding: 1em">{{article.utilTimestamp|date: 'yyyy-MM-dd'}}</td>
@@ -50,16 +52,16 @@
       <!-- ################################################################################################ -->
       <!-- ################################################################################################ -->
       <div class="pagination" *ngIf="!checkSearch&& getCloneArticle$.numberOfPages!=1">
-        <a>&laquo;</a>
+
         <a *ngFor="let page of arrayPage(getCloneArticle$.numberOfPages) let i = index"
-           (click)="getAllArticle(i)">{{i+1}}</a>
-        <a>&raquo;</a>s
+           (click)="getCloneArticle(i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
       </div>
       <div class="pagination" *ngIf="checkSearch&& getCloneArticle$.numberOfPages!=1">
-        <a>&laquo;</a>
+
         <a *ngFor="let page of arrayPage(getCloneArticle$.numberOfPages) let i = index"
-           (click)="searchArticle(articleTitle.value,i)">{{i+1}}</a>
-        <a>&raquo;</a>
+           (click)="searchArticle(articleTitle.value,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
       </div>
       <!-- ################################################################################################ -->
     </div>

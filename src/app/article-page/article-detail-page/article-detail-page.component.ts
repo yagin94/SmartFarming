@@ -31,7 +31,7 @@ export class ArticleDetailPageComponent implements OnInit {
   editComment$: Comments;
   compare$: number;
   loading = true;
-
+  arrays = '';
   constructor(private route: ActivatedRoute,
               private router: Router,
               private dataShareService: DataShareService,
@@ -99,8 +99,18 @@ export class ArticleDetailPageComponent implements OnInit {
   editArticle(article: Article) {
     this.editArticle$ = article;
     this.dataShareService.setShareData(article);
+    let i = 0;
+    for (const a of this.editArticle$.tags) {
+      if (i === 0) {
+        this.arrays += a.name;
+        i++;
+        continue;
+      }
+      this.arrays += ',' + a.name;
+      i++;
+    }
     // this.router.navigate(['./article-post-page'], {queryParams: {id: article.articleId}});
-    window.location.replace(`/article-post-page?userId=${article.appUser.userId}&id=${article.articleId}`);
+    window.location.replace(`/article-post-page?userId=${article.appUser.userId}&id=${article.articleId}&tag=${this.arrays}`);
   }
 
   addComment(ansewerContent: string): void {
@@ -221,6 +231,9 @@ export class ArticleDetailPageComponent implements OnInit {
   userDetail(userId: number) {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
   }
+  userDetails() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
   checkAuthenAdmin() {
     if (localStorage.getItem('currentAppUser') != null) {
       if (JSON.parse(localStorage.getItem('currentAppUser')).role === 'ADMIN') {
@@ -235,4 +248,5 @@ export class ArticleDetailPageComponent implements OnInit {
   getArticleByTag(tag: Tag) {
     window.location.replace(`/article-page/app-trang-chinh?tagid=${tag.tagId}`);
   }
+
 }

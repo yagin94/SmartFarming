@@ -19,6 +19,8 @@ export class AllTagUserPageComponent implements OnInit {
   data: any;
   loading = true;
   user$: AppUser;
+  selectedIndex = 0;
+
   constructor(private userDetailPageService: UserDetailPageService,
               private route: ActivatedRoute,
               private router: Router,
@@ -38,8 +40,11 @@ export class AllTagUserPageComponent implements OnInit {
 
 
   }
-
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
   getAllTagOfUser(userId: number, pageNumber: number): void {
+    this.pageNumber = pageNumber;
     this.userDetailPageService.getAllTagOfUser(userId, pageNumber).subscribe
     (getAllTagOfUser => this.getAllTagOfUser$ = getAllTagOfUser);
   }
@@ -47,4 +52,7 @@ export class AllTagUserPageComponent implements OnInit {
     return Array(numberOfPage);
   }
 
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+  }
 }

@@ -27,6 +27,7 @@ export class ManagerPageComponent implements OnInit {
   getReport$: ReportUser;
   getObjectReport$: GetObjectReport;
   getObjectTag$: GetObjectTag;
+  getTagSearchUserManage$: GetObjectTag;
   getUserByTag$: SearchUserByTag[];
   reportDetail = false;
   tagDetail = false;
@@ -45,6 +46,11 @@ export class ManagerPageComponent implements OnInit {
   pageIndexArticleSearch$ = 0;
   getArticle$: any;
   pageIndexReport$ = 0;
+  sortArticleBy$ = 'date';
+  getQuestionSearch: any;
+  pageIndexTagManage$ = 0;
+  questionSeachIndex = 0;
+  questionSearchIndexCheckString = '';
   /**=====================*/
   isFlatShowView = false;
   isFlatShowUser = false;
@@ -54,11 +60,13 @@ export class ManagerPageComponent implements OnInit {
   isFlatShowQuestion = false;
   isFlatShowAllUser = false;
   checkSearch = false;
+  checkSearchQuestion = false;
 
   dateChart = '';
   monthChart = '';
   yearChart = '';
   periodChart = '';
+  selectedIndex = 0;
 
   keyword = 'name';
   data1 = [
@@ -90,17 +98,15 @@ export class ManagerPageComponent implements OnInit {
     this.getReport$ = new ReportUser();
     this.getObject$ = new GetObject();
     this.getObjectTag$ = new GetObjectTag();
+    this.getTagSearchUserManage$ = new GetObjectTag();
     this.getAllarticle$ = new GetAllArticle();
     this.getAllUser$ = new GetAllUser();
     this.getReportUser$ = new GetReportUser();
     this.getArticle$ = new GetAllArticle();
     this.allView$ = 0;
     this.getAllView();
-    this.getAllTag(this.sortTagBy$, this.pageIndex$);
-    this.getQa(this.sortBy$, this.pageIndex$);
-    this.getReport(this.pageIndex$);
-    this.getAllarticle(this.pageIndexArticle$);
-    this.getAllUser(this.pageIndexAllUser$);
+
+
   }
 
   constructor(private qaService: QaService,
@@ -120,10 +126,19 @@ export class ManagerPageComponent implements OnInit {
    * ===========================Question Manager=============================================
    */
   getQa(sortBy: string, pageIndex: number): void {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
     this.qaService.getQa(sortBy, pageIndex).subscribe(getObject => {
 
       this.getObject$ = getObject;
-      console.log(this.getObject$.qa);
+    });
+  }
+
+  getQaSearch(sortBy: string, pageIndex: number): void {
+    this.pageIndex$ = pageIndex;
+    this.qaService.getQa(sortBy, pageIndex).subscribe(getObject => {
+
+      this.getObject$ = getObject;
     });
   }
 
@@ -134,13 +149,6 @@ export class ManagerPageComponent implements OnInit {
   }
 
   /**=======================article manager=====================================*/
-  // getArticle(sortBy: string, pageIndex: number): void {
-  //   this.qaService.getQa(sortBy, pageIndex).subscribe(getObject => {
-  //
-  //     this.getObject$ = getObject;
-  //     console.log(this.getObject$.qa);
-  //   });
-  // }
 
   sortArticleBy(value: string) {
     this.sortBy$ = value;
@@ -150,11 +158,10 @@ export class ManagerPageComponent implements OnInit {
 
   /**=======================tag manager=========================================*/
   getAllTag(sortBy: string, pageIndex: number): void {
-    console.log('valueGet', sortBy);
+    this.pageIndexTagManage$ = pageIndex;
     this.managerService.getAllTag(sortBy, pageIndex).subscribe(getObject => {
 
       this.getObjectTag$ = getObject;
-      console.log(this.getObject$);
     });
   }
 
@@ -164,7 +171,7 @@ export class ManagerPageComponent implements OnInit {
       this.tagDetail = true;
       this.tagUserDetail = false;
       this.managerService.getSearchTag('upvoteCount', pageIndex, textSearch).subscribe(object =>
-        this.getObjectTag$ = object);
+        this.getTagSearchUserManage$ = object);
     }
   }
 
@@ -186,6 +193,7 @@ export class ManagerPageComponent implements OnInit {
 
   /**=======================getReport============================================*/
   getReport(pageIndex: number) {
+    this.pageIndexReport$ = pageIndex;
     this.managerService.getReport(pageIndex).subscribe(getObject => {
       this.getReportUser$ = getObject;
     });
@@ -227,7 +235,6 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowQuestion = false;
         break;
       case 1:
-        console.log('this.isFlatShowAllUser:', this.isFlatShowAllUser);
         this.isFlatShowAllUser = false;
         this.isFlatShowView = false;
         this.isFlatShowUser = true;
@@ -235,6 +242,7 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowArticle = false;
         this.isFlatShowtags = false;
         this.isFlatShowQuestion = false;
+        this.getAllUser(0);
         break;
       case 2:
         this.isFlatShowView = false;
@@ -243,6 +251,7 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowArticle = false;
         this.isFlatShowtags = false;
         this.isFlatShowQuestion = false;
+        this.getReport(0);
         break;
       case 3:
         this.isFlatShowView = false;
@@ -251,6 +260,7 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowArticle = true;
         this.isFlatShowtags = false;
         this.isFlatShowQuestion = false;
+        this.getAllarticle(this.sortArticleBy$, 0);
         break;
       case 4:
         this.isFlatShowView = false;
@@ -259,6 +269,7 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowArticle = false;
         this.isFlatShowtags = true;
         this.isFlatShowQuestion = false;
+        this.getAllTag(this.sortTagBy$, 0);
         break;
       case 5:
         this.isFlatShowView = false;
@@ -267,6 +278,7 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowArticle = false;
         this.isFlatShowtags = false;
         this.isFlatShowQuestion = true;
+        this.getQa(this.sortBy$, 0);
         break;
     }
   }
@@ -280,8 +292,10 @@ export class ManagerPageComponent implements OnInit {
     this.router.navigate(['./qa-page-detail'], {queryParams: {userId: qa.appUser.userId, id: qa.questionId}});
   }
 
-  getAllarticle(pageIndex: number) {
-    this.managerService.getAllarticle(pageIndex).subscribe(getObject => {
+  getAllarticle(sortBy: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndexArticle$ = pageIndex;
+    this.managerService.getAllarticle(sortBy, pageIndex).subscribe(getObject => {
       this.getAllarticle$ = getObject;
     });
   }
@@ -402,16 +416,39 @@ export class ManagerPageComponent implements OnInit {
   }
 
   searchArticle(textSearch: string, pageIndexArticleSearch: number) {
+    console.log('pageIndexArticleSearch', pageIndexArticleSearch);
+    this.selectedIndex = 0;
+    this.pageIndexArticleSearch$ = pageIndexArticleSearch;
     this.checkSearch = true;
     if (textSearch) {
       textSearch.trim();
       this.managerService.searchArticle(pageIndexArticleSearch, textSearch).subscribe(getObject => {
         this.getArticle$ = getObject;
-        console.log('search', this.getArticle$.numberOfPages);
       });
     }
   }
 
+  searchQuestion(textSearch: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
+    console.log('pageIndex', pageIndex);
+    this.checkSearchQuestion = true;
+    if (textSearch) {
+      textSearch.trim();
+      this.managerService.searchQa(textSearch, 'date', pageIndex).subscribe(getObject => {
+        this.getQuestionSearch = getObject;
+      });
+    }
+  }
+  userDetails() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
+  }
 
   /** Suggest tag*/
   selectEvent(item) {
@@ -425,5 +462,35 @@ export class ManagerPageComponent implements OnInit {
 
   onFocused(e) {
     // do something when input is focused
+  }
+
+  timePeriod(value: string) {
+    this.periodChart = value;
+  }
+
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+  }
+
+  getSortByArticle(sortBy: string) {
+    this.sortArticleBy$ = sortBy;
+    this.getAllarticle(this.sortArticleBy$, this.pageIndexArticle$);
+  }
+
+  showAllQuestion() {
+    this.checkSearchQuestion = false;
+  }
+
+
+  deleteReport(reportUser: ReportsByPageIndex) {
+    if (confirm('Bạn có chắc chắn muốn xóa báo cáo không?')) {
+      this.managerService.deleteReport(reportUser.reportId).subscribe(onsucess => {
+          alert('Xóa báo cáo thành công!');
+        },
+        failDeleteReport => {
+          alert('Xóa báo cáo  thất bại!');
+        });
+    }
+    this.getReport(this.pageIndexReport$);
   }
 }

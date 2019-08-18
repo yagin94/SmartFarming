@@ -56,22 +56,25 @@
             <div class="scrollable">
               <table class="scrollable">
                 <tr style="text-align: center">
+                  <td>Stt</td>
                   <td>Tên tag</td>
                   <td>Lượt xem</td>
                   <td>Tổng điểm</td>
                 </tr>
-                <tr style="text-align: center" *ngFor="let tag of getAllTagOfUser$.tagsByPageIndex">
+                <tr style="text-align: center" *ngFor="let tag of getAllTagOfUser$.tagsByPageIndex let i = index" >
+                  <td>{{i+1+pageNumber*10}}</td>
                   <td>{{tag.name}}</td>
                   <td>{{tag.viewCount}}</td>
                   <td>{{tag.reputation}}</td>
                 </tr>
               </table>
               <div class="phan-trang clear" *ngIf="getAllTagOfUser$.numberOfPages != 1">
-                <div class="pagination">
-                  <a>&laquo;</a>
+                <div class="pagination" style="background-color: lightblue ;">
+
                   <a *ngFor="let page of arrayPage(getAllTagOfUser$.numberOfPages) let i = index"
-                     (click)="getAllTagOfUser(user$.userId,i)">{{i+1}}</a>
-                  <a>&raquo;</a>
+                     (click)="getAllTagOfUser(user$.userId,i);setRow(i)"
+                     [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+
                 </div>
               </div>
             </div>

@@ -186,6 +186,7 @@
   height: 40px;
   width: 40px;
   clear: bottom;
+  cursor: pointer;
 }
 
 .overlay::after {
@@ -393,7 +394,7 @@
 }
 #menu-sap-xep{
   float: right;
-  width: 17.5rem ;
+  width: 30rem ;
   margin-top: 2%;
 }
 #menu-sap-xep span{

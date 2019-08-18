@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
               private headerService: HeaderService,
               private http: HttpClient, private globals: Globals, private router: Router) {
   }
+
   ngOnInit() {
     //this.globals.lo.subscribe(re => this.loadingC = re);
     console.log(localStorage.getItem('currentAppUser'));
@@ -144,7 +145,7 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('currentAppUser');
     // localStorage.removeItem('currentUser');
     // console.log(localStorage.getItem('currentAppUser'));
-     location.replace(window.location.href);
+    location.replace(window.location.href);
 
   }
 
@@ -185,11 +186,14 @@ export class HeaderComponent implements OnInit {
   }
 
   seeNotif(notif: Notifications) {
-    // this.router.navigate(['/qa-page-detail'], {queryParams: {id: questionId}});
     if (notif.question) {
-      window.location.replace(`http://localhost:4200/qa-page-detail?id=${notif.question.questionId}`);
+      if (notif.deleteQuestion ) {
+        window.location.replace(`/**`);
+      } else {
+        window.location.replace(`http://localhost:4200/qa-page-detail?id=${notif.question.questionId}&&userId=${notif.question.appUser.userId}`);
+      }
     } else {
-      window.location.replace(`http://localhost:4200/article-detail-page?id=${notif.article.articleId}`);
+        window.location.replace(`http://localhost:4200/article-detail-page?id=${notif.article.articleId}&&userId=${notif.article.appUser.userId}`);
     }
   }
 

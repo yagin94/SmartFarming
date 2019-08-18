@@ -16,6 +16,7 @@ export class SauBenhComponent implements OnInit {
   pageIndex$ = 0;
   checkSearch = false;
   loading = true;
+  selectedIndex = 0;
   constructor(private router: Router, private bugService: BugService) { }
   click() {
     this.loading = true;
@@ -29,7 +30,7 @@ export class SauBenhComponent implements OnInit {
   }
   getBugArticle(pageIndex$: number) {
     this.pageIndex$ = pageIndex$;
-    this.bugService.getBugArticle(this.pageIndex$).subscribe(object => {
+    this.bugService.getBugArticle(pageIndex$).subscribe(object => {
       this.getBugArticle$ = object;
       console.log(this.getBugArticle$);
     });
@@ -39,6 +40,8 @@ export class SauBenhComponent implements OnInit {
   }
 
   searchArticle(textSearch: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
     this.checkSearch = true;
     if (textSearch) {
       textSearch.trim();
@@ -46,5 +49,18 @@ export class SauBenhComponent implements OnInit {
         this.getBugArticle$ = getObject;
       });
     }
+  }
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
+  }
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+    console.log(`=====================`, this.selectedIndex);
   }
 }

@@ -18,6 +18,7 @@ export class KyThuatNhanGiongComponent implements OnInit {
   getCloneArticle$ = new GetAllArticle();
   pageIndex$ = 0;
   checkSearch = false;
+  selectedIndex = 0;
   constructor(private router: Router, private cloneService: CloneService) { }
   click() {
     this.loading = true;
@@ -31,7 +32,7 @@ export class KyThuatNhanGiongComponent implements OnInit {
   }
   getCloneArticle(pageIndex$: number) {
     this.pageIndex$ = pageIndex$;
-    this.cloneService.getCloneArticle(this.pageIndex$).subscribe(object => {
+    this.cloneService.getCloneArticle(pageIndex$).subscribe(object => {
       this.getCloneArticle$ = object;
       console.log(this.getCloneArticle$);
     });
@@ -41,6 +42,8 @@ export class KyThuatNhanGiongComponent implements OnInit {
   }
 
   searchArticle(textSearch: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
     this.checkSearch = true;
     if (textSearch) {
       textSearch.trim();
@@ -48,5 +51,18 @@ export class KyThuatNhanGiongComponent implements OnInit {
         this.getCloneArticle$ = getObject;
       });
     }
+  }
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
+  }
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+    console.log(`=====================`, this.selectedIndex);
   }
 }

@@ -31,7 +31,8 @@
             </ul>
           </li>
           <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
-          <!--<li><a (click)="click()">Liên hệ</a></li>-->
+          <li *ngIf="isLoggedIn()"><a (click)="userDetails()" style="cursor: pointer">Trang cá nhân</a></li>
+
 
         </ul>
 
@@ -81,12 +82,12 @@
     <section class="hoc container clear" style="padding-bottom: 0%;">
       <!-- ################################################################################################ -->
       <div class="sectiontitle">
-        <h6 class="heading" style="font-family: Arial">Kết quả tìm kiếm cho {{searchText}}</h6>
+        <h6 class="heading" style="font-family: Arial; text-transform: none">Kết quả tìm kiếm cho "{{searchText}}"</h6>
       </div>
       <div class="group testimonials">
         <div class="one_half first">
           <p class="customP">Top kiến thức liên quan</p>
-          <div class="topFive">
+          <div *ngIf="getTopArticle$" class="topFive">
             <!--##################################################3-->
             <div class="arcticle" *ngFor="let article of getTopArticle$.articlesByPageIndex">
               <!--<img src="../../assets/images/demo/100x100.png" class="arcticleImage">-->
@@ -98,17 +99,28 @@
 
             <!--##################################################3-->
           </div>
+          <div *ngIf="getTopArticle$.numberOfPages==0" class="topFive" style="text-align: center">
+            <!--##################################################3-->
+            Không có kết quả tìm kiếm
+
+            <!--##################################################3-->
+          </div>
         </div>
         <div class="one_half">
           <p class="customP">Top câu hỏi liên quan</p>
-          <div class="topFive">
+          <div *ngIf="getTopQuestion$"class="topFive">
             <div class="question" *ngFor="let qa of getTopQuestion$.qa">
               <!--<img src="../../assets/images/demo/100x100.png" class="arcticleImage">-->
               <a class="clickTitle" (click)="goToQuestionDetail(qa)">Tiêu đề {{qa.title}}</a>
               <p>Thời gian: {{qa.utilTimestamp | date: 'yyyy-MM-dd' }}</p>
               <p>Lượt xem: {{qa.viewCount}}</p>
             </div>
+          </div>
+          <div *ngIf="getTopQuestion$.numberOfPages==0" class="topFive" style="text-align: center">
+            <!--##################################################3-->
+            Không có kết quả tìm kiếm
 
+            <!--##################################################3-->
           </div>
         </div>
       </div>

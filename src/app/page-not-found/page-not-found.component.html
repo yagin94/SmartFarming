@@ -1,5 +1,62 @@
-////////////////////////Thanh Search Goi Y o day/////////////////////////////
-
+<!--<app-header></app-header>-->
+<!-- Phan Link dia chi lien ket hoi dap ... -->
 <!-- ################################################################################################ -->
-<!-- footer-->
-////////////////////////////////////////////den day thoi/////////////////////////////////////////////
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- Phan trang chu hien thi thong tin, background ....-->
+<div class="bgded overlay" style="background-image:url('../../assets/images/demo/backgrounds/01.png');">
+  <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+               [template]="loadingTemplate"></ngx-loading>
+  <!-- ################################################################################################ -->
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1><a style="font-size: 17px; color: #F7AF9D;letter-spacing: 5px; font-family: 'Open Sans Condensed', sans-serif; font-weight: 700;  text-align: center; text-transform: uppercase;" href="index.html">FPT developer Team</a></h1>
+      </div>
+
+      <nav id="mainav" class="fl_right">
+        <ul class="clear" style="margin-top: 3%;font-size: 17px">
+          <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
+          <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
+            <ul>
+              <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
+              <li><a href="article-page/app-thu-hoach-va-bao-quan" (click)="click()">Thu hoạch & Bảo quản</a></li>
+              <li><a href="article-page/app-phan-bon" (click)="click()">Phân bón</a></li>
+              <li><a href="article-page/app-thuoc-bao-ve-thuc-vat" (click)="click()">Thuốc bảo vệ thực vật</a></li>
+              <li><a href="article-page/app-sau-benh" (click)="click()">Sâu bệnh</a></li>
+              <li><a href="article-page/app-ky-thuat-nhan-giong" (click)="click()">Kỹ thuật nhân giống</a></li>
+              <li><a href="article-page/app-giong-cay" (click)="click()">Giống cây</a></li>
+              <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
+            </ul>
+          </li>
+          <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+          <li *ngIf="isLoggedIn()"><a (click)="userDetails()" style="cursor: pointer">Trang cá nhân</a></li>
+
+
+        </ul>
+
+      </nav>
+      <!-- ################################################################################################ -->
+    </header>
+  </div>
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+
+  <!-- ################################################################################################ -->
+  <!--/*For developer*/-->
+  <div class="wrapper row3" #benefit style="height: 25em">
+<h1 style="text-align: center; padding: 4em ;text-transform: none">Kết quả bạn yêu cầu đã không còn tồn tại !</h1>
+  </div>
+
+  <!-- ########################################################################################-->
+</div>
+<!-- Phan trang chu hien thi thong tin, background ....-->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+
+
+

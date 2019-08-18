@@ -16,6 +16,7 @@ export class PhanBonComponent implements OnInit {
   pageIndex$ = 0;
   checkSearch = false;
   loading = true;
+  selectedIndex = 0;
   constructor(private router: Router, private dungService: DungService) { }
 
   ngOnInit() {
@@ -27,7 +28,7 @@ export class PhanBonComponent implements OnInit {
   }
   getDungArticle(pageIndex$: number) {
     this.pageIndex$ = pageIndex$;
-    this.dungService.getDungArticle(this.pageIndex$).subscribe(object => {
+    this.dungService.getDungArticle(pageIndex$).subscribe(object => {
       this.getDungArticle$ = object;
       console.log(this.getDungArticle$);
     });
@@ -37,6 +38,8 @@ export class PhanBonComponent implements OnInit {
   }
 
   searchArticle(textSearch: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
     this.checkSearch = true;
     if (textSearch) {
       textSearch.trim();
@@ -44,5 +47,18 @@ export class PhanBonComponent implements OnInit {
         this.getDungArticle$ = getObject;
       });
     }
+  }
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
+  }
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+    console.log(`=====================`, this.selectedIndex);
   }
 }

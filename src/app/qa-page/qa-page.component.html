@@ -101,7 +101,9 @@
 
                   </div>
                   <footer class="question-footer">
-                    <div><i class="fa fa-li"></i><a>{{object.appUser.reputation}} like</a></div>
+                    <div *ngIf="object.upvoteCount != null"><i class="fa fa-li"></i><a >{{object.upvoteCount}} like</a></div>
+                    <div *ngIf="object.upvoteCount == null"><i class="fa fa-li"></i><a >0 like</a></div>
+
                     <div><a>{{getNumber(object.answers)}} trả lời</a></div>
                     <div><a>{{object.viewCount}} lượt xem</a></div>
                   </footer>
@@ -119,7 +121,7 @@
                   <a>&raquo;</a>
                 </div>
                 <div class="pagination" *ngIf="checkPaging$=='tag'&& getObject$.numberOfPages != 1">
-                  <a>&laquo;</a>
+
                   <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
                      (click)="getQaByTag(sortBy$,tagId,i)" onclick="setStyle()" id="numberIndex">{{i+1}}</a>
                   <a>&raquo;</a>

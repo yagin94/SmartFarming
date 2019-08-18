@@ -17,6 +17,8 @@ export class TrangChinhComponent implements OnInit {
   loading = true;
   data: any;
   checkPaging$: string;
+  selectedIndex = 0;
+
   constructor(private trangChinhService: TrangChinhService,
               private router: Router,
               private route: ActivatedRoute) {
@@ -43,12 +45,15 @@ export class TrangChinhComponent implements OnInit {
       console.log(this.getAllArticle$);
     });
   }
+
   getArticleByTag(tagId: number, pageIndex: number) {
+    this.pageIndex$ = pageIndex;
     this.checkPaging$ = 'tag';
     this.trangChinhService.getArticleByTag(tagId, pageIndex).subscribe(object => {
       this.getAllArticle$ = object;
     });
   }
+
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
   }
@@ -58,6 +63,8 @@ export class TrangChinhComponent implements OnInit {
   }
 
   searchArticle(textSearch: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
     this.checkSearch = true;
     if (textSearch) {
       textSearch.trim();
@@ -65,5 +72,21 @@ export class TrangChinhComponent implements OnInit {
         this.getAllArticle$ = getObject;
       });
     }
+  }
+
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+    console.log(`=====================`, this.selectedIndex);
+  }
+
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
   }
 }

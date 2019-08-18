@@ -7,6 +7,7 @@ import {CKEditor4} from 'ckeditor4-angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {NgxLoadingComponent} from 'ngx-loading';
+
 @Component({
   providers: [HeaderComponent, QaService, DataShareService],
   selector: 'app-qa-page-post',
@@ -19,7 +20,7 @@ export class QaPagePostComponent implements OnInit {
   getObjectTopUser$ = new GetObjectTopUser();
   getObjectTopQa$ = new GetObjectTopQa();
   qa$: Qa[];
-  qa: Qa;
+  qa: Qa = new Qa('', '', new AppUser(), [], [], '', [], 0);
   appUser$: AppUser;
   tags: Tag[];
   tag: Tag;
@@ -41,7 +42,7 @@ export class QaPagePostComponent implements OnInit {
   loading = true;
   ownerUserId: number;
   getTagSuggest$ = new GetObjectTopTag();
-
+  arrays: string;
 
 
   constructor(private qaService: QaService,
@@ -49,9 +50,11 @@ export class QaPagePostComponent implements OnInit {
               private router: Router,
               private dataShareService: DataShareService) {
   }
+
   click() {
     this.loading = true;
   }
+
   ngOnInit() {
     this.loading = false;
     this.ckeConfig = {
@@ -65,6 +68,7 @@ export class QaPagePostComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.data = params['id'];
       this.ownerUserId = params['userId'];
+      this.arrays = params['tag'];
     });
     if (this.data != null && this.ownerUserId != null) {
       this.getQaDetail(this.data, this.ownerUserId);
@@ -82,6 +86,20 @@ export class QaPagePostComponent implements OnInit {
 
   abcd() {
     console.log('=====', this.data);
+  }
+
+  // userDetail() {
+  //   this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  // }
+  userDetails() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
   }
 
   getQaDetail(questionId: number, ownerId: number): void {
@@ -135,7 +153,7 @@ export class QaPagePostComponent implements OnInit {
     const f = this.fileDownloadUris$;
     const n = this.userName$;
     console.log(this.appUser$);
-    const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n);
+    const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n, [],0);
     console.log(newQa);
     console.log(this.model.editorData);
     this.qaService.addQa(newQa).subscribe(
@@ -182,7 +200,7 @@ export class QaPagePostComponent implements OnInit {
     const f = this.fileDownloadUris$;
     const n = this.userName$;
     console.log(this.appUser$);
-    const newQa: Qa = new Qa(title, this.model.default, a, t, f, n);
+    const newQa: Qa = new Qa(title, this.model.default, a, t, f, n, [],0);
     console.log(newQa);
     this.qaService.updateQuestion(this.data, newQa).subscribe(
       onSuccess => {
@@ -195,12 +213,6 @@ export class QaPagePostComponent implements OnInit {
     );
   }
 
-  isLoggedIn() {
-    if (localStorage.getItem('currentAppUser')) {
-      return true;
-    }
-    return false;
-  }
 
   getNumber(object: Answers) {
     return Object.keys(object).length;
@@ -212,7 +224,7 @@ export class QaPagePostComponent implements OnInit {
 
     this.dataShareService.setShareData(qa);
     console.log(qa);
-    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId,userId: qa.appUser.userId}});
+    this.router.navigate(['./qa-page-detail'], {queryParams: {id: qa.questionId, userId: qa.appUser.userId}});
     // console.log(this.dataShareService.getShareData());
   }
 
@@ -220,5 +232,8 @@ export class QaPagePostComponent implements OnInit {
     this.router.navigate(['./qa-page'], {queryParams: {id: tagId}});
   }
 
+  userDetail(userId: number) {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+  }
 
 }

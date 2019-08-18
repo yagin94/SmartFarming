@@ -2,6 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Article} from './article.model';
 import {ArticleService} from './article.service';
 import {NgxLoadingComponent} from 'ngx-loading';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-article-page',
   templateUrl: './article-page.component.html',
@@ -13,7 +14,7 @@ export class ArticlePageComponent implements OnInit {
   checkAdd$ = 0;
   editArticle$: Article;
   loading = true;
-  constructor(private articleService: ArticleService) {}
+  constructor(private articleService: ArticleService, private router: Router) {}
   click() {
     this.loading = true;
   }
@@ -61,5 +62,14 @@ export class ArticlePageComponent implements OnInit {
       });
       // this.editArticle$ = undefined;
     }
+  }
+  userDetails() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
   }
 }

@@ -28,10 +28,12 @@ export class GetObjectQaByTag {
 export class ReportUser {
   numberOfPages: number;
   reportsByPageIndex: ReportsByPageIndex;
-  constructor(){
+
+  constructor() {
 
   }
 }
+
 export class ReportsByPageIndex {
   reportId: number;
   appUser: AppUser;
@@ -57,14 +59,17 @@ export class Qa {
   utilTimestamp: string;
   userName: string;
   report: ReportsByPageIndex;
+  upvoteCount: number;
 
-  constructor(title: string, content: string, appUser: AppUser, tags: Tag[], fileDownloadUris: string[], userName: string) {
+  constructor(title: string, content: string, appUser: AppUser, tags: Tag[], fileDownloadUris: string[], userName: string, upvotedUserIds: number[], upvoteCount: number) {
     this.title = title;
     this.content = content;
     this.appUser = appUser;
     this.tags = tags;
     this.fileDownloadUris = fileDownloadUris;
     this.userName = userName;
+    this.upvotedUserIds = upvotedUserIds;
+    this.upvoteCount = upvoteCount;
   }
 }
 

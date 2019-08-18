@@ -17,6 +17,7 @@ export class GiongCayComponent implements OnInit {
   getTypeArticle$ = new GetAllArticle();
   pageIndex$ = 0;
   checkSearch = false;
+  selectedIndex = 0;
   constructor(private router: Router, private typeService: TypeService) {
   }
   click() {
@@ -43,6 +44,8 @@ export class GiongCayComponent implements OnInit {
   }
 
   searchArticle(textSearch: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
     this.checkSearch = true;
     if (textSearch) {
       textSearch.trim();
@@ -50,5 +53,18 @@ export class GiongCayComponent implements OnInit {
         this.getTypeArticle$ = getObject;
       });
     }
+  }
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
+  }
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+    console.log(`=====================`, this.selectedIndex);
   }
 }

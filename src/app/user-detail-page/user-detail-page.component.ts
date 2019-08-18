@@ -74,6 +74,9 @@ export class UserDetailPageComponent implements OnInit {
   click() {
     this.loading = true;
   }
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
   drawChart(dataChart1: any, dataChart2, dataChart3) {
     var chart = new CanvasJS.Chart('chartContainerUser', {
       theme: 'light1', // "light2", "dark1", "dark2"
@@ -93,12 +96,17 @@ export class UserDetailPageComponent implements OnInit {
         },
         {
           // Change type to "bar", "area", "spline", "pie",etc.
-          type: 'line',
-          name: 'Lượt xem',
+          type: 'column',
+          name: 'Câu trả lời',
           showInLegend: true,
           dataPoints: dataChart2
         },
-
+        // {
+        //   type: 'line',
+        //   name: 'Từ khóa',
+        //   showInLegend: true,
+        //   dataPoints: dataChart3
+        // }
       ]
     });
     chart.render();
@@ -119,11 +127,11 @@ export class UserDetailPageComponent implements OnInit {
         this.appUser$ = appUser;
         this.totalScore$ = this.appUser$.reputation;
         this.getUserDetail();
-        this.getTopTagOfUser();
+        this.getTopTagOfUser(userId);
 
-        this.getTopQuestionOfUser(this.sortBy$, this.appUser$.userId);
+        this.getTopQuestionOfUser(this.sortBy$, userId);
 
-        this.getTotalTagOfUser(this.appUser$.userId);
+        this.getTotalTagOfUser(userId);
       });
   }
 
@@ -149,7 +157,8 @@ export class UserDetailPageComponent implements OnInit {
           totalQues += parseInt(item.numberOfQuestion);
           totalAns += parseInt(item.numberOfAnswer);
           dataQa.push({label: item.date, y: item.numberOfQuestion});
-          dataAnser.push({label: item.date, y: item.totalQuestionViewCount});
+          dataAnser.push({label: item.date, y: item.numberOfAnswer});
+          dataTag.push({label: item.date, y: item.num});
         });
         this.totalQuestionOfuser$ = totalQues;
         this.totalAnswerOfUser$ = totalAns;
@@ -159,17 +168,16 @@ export class UserDetailPageComponent implements OnInit {
 
   }
 
-  getTopTagOfUser(): void {
-    this.userDetailPageService.getTopTagOfUser(this.appUser$.userId).subscribe(getTopTagOfUser => {
+  getTopTagOfUser(userId: number): void {
+    console.log('top tag of user',userId);
+    this.userDetailPageService.getTopTagOfUser(userId).subscribe(getTopTagOfUser => {
       this.getTopTagOfUser$ = getTopTagOfUser;
-      console.log(this.getTopTagOfUser$);
     });
   }
 
 
   getTopQuestionOfUser(sortBy: string, userId: number): void {
-    console.log('tinhnx',sortBy);
-    console.log('tinhnx',userId);
+    console.log('top question of user', userId);
     this.userDetailPageService.getTopQuestionOfUser(sortBy, userId).subscribe
     (getTopQuestionOfUser => this.getTopQuestionOfUser$ = getTopQuestionOfUser);
   }
@@ -244,7 +252,7 @@ export class UserDetailPageComponent implements OnInit {
   }
 
   questionDetail(qa: Qa) {
-    this.router.navigate(['/qa-page-detail'], {queryParams: {id: qa.questionId}});
+    this.router.navigate(['/qa-page-detail'], {queryParams: {id: qa.questionId, userId: qa.appUser.userId}});
   }
 
   goToAllQuestionuser() {

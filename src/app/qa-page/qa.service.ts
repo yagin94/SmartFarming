@@ -40,8 +40,8 @@ export class QaService {
     return this.http.get<GetObjectTopQa>(`http://localhost:8080/question/viewRelatedQuestions/${questionId}`);
   }
 
-  getTopUserRelate(questionId: number, userId: number): Observable<GetUserRelateQa> {
-    return this.http.get<GetUserRelateQa>(`http://localhost:8080/question/viewDetailRelatedUser/${questionId}/${userId}`);
+  getTopUserRelate(questionId: number, userId: number): Observable<GetUserRelateQa[]> {
+    return this.http.get<GetUserRelateQa[]>(`http://localhost:8080/question/viewDetailRelatedUser/${questionId}/${userId}`);
   }
 
   getListUserRelate(questionId: number): Observable<AppUser> {
@@ -126,5 +126,14 @@ export class QaService {
   getTagSuggest(text: TextSearch): Observable<GetObjectTopTag> {
     return this.http.post<GetObjectTopTag>(' http://localhost:8080/tag/searchTagsWhileTyping', text);
   }
+
+  deleteQuestion(questionId: number) {
+    return this.http.delete(`http://localhost:8080/admin/deleteQuestion/${questionId}`);
+  }
+
+  deleteAnswerByAdmin(answerId: number) {
+    return this.http.delete(`http://localhost:8080/admin/deleteAnswerToQuestion/${answerId}`);
+  }
+
 
 }

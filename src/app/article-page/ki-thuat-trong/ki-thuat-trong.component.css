@@ -12,7 +12,7 @@
   padding: 8px 16px;
   text-decoration: none;
   text-align: center;
-  background-color: lightblue !important;
+  background-color: lightblue ;
 
 }
 
@@ -44,4 +44,8 @@
 }
 .button-search:hover{
   background-color: rgba(0, 150, 136, 0.8);
+}
+.highlight {
+  background-color: #32e6f1 !important;
+  color: white !important;
 }

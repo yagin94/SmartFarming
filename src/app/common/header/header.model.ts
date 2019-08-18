@@ -7,6 +7,9 @@ export class Notifications {
   message: string;
   question: Qa;
   article: Article;
+  deleteAnswer: boolean;
+  deleteComment: boolean;
+  deleteQuestion: boolean;
   utilTimestamp: string;
   seen: boolean;
   fromAdmin: boolean

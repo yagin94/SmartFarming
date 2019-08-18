@@ -22,8 +22,8 @@ export class HomePageComponent implements OnInit {
   loading = true;
   user: SocialUser;
   showTopSearch$ = false;
-  getTopArticle$: GetTopArticle;
-  getTopQuestion$: GetTopQuestion;
+  getTopArticle$ = new GetTopArticle();
+  getTopQuestion$ = new GetTopQuestion();
   searchText: string;
 
   constructor(private authService: AuthService, private http: HttpClient, private homePageService: HomePageService,
@@ -105,6 +105,7 @@ click() {
   getTopQuestion(search: string): void {
     this.homePageService.getTopQestion(search).subscribe(getTopQuestion => {
       this.getTopQuestion$ = getTopQuestion;
+      console.log(this.getTopQuestion$);
       this.showTopSearch$ = true;
     });
   }
@@ -115,5 +116,14 @@ click() {
 
   goToArticleDetail(qa: Article) {
     this.router.navigate(['./article-detail-page'], {queryParams: {id: qa.articleId, userId: qa.appUser.userId}});
+  }
+  userDetails() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
   }
 }

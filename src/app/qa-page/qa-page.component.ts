@@ -53,6 +53,7 @@ export class QaPageComponent implements OnInit {
   data: any;
   loadingPostQa = false;
   loading = true;
+  selectedIndex = 0;
 
   constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
               private globals: Globals,
@@ -84,7 +85,15 @@ export class QaPageComponent implements OnInit {
     // const authToken2 = localStorage.getItem('currentAppUser');
     // console.log('======', authToken1);
   }
-
+  userDetails() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
+  }
   abc() {
     this.globals.test = 'nonono';
     console.log(this.globals.test);
@@ -134,6 +143,15 @@ export class QaPageComponent implements OnInit {
       this.getQaByTag(this.sortBy$, this.tagId, this.pageIndex$);
     }
   }
+  sortByUpvote(){
+    if (this.checkPaging$ == 'viewAndDate') {
+      this.sortBy$ = 'upvoteCount';
+      this.getQa(this.sortBy$, this.pageIndex$);
+    } else if (this.checkPaging$ == 'tag') {
+      this.sortBy$ = 'upvoteCount';
+      this.getQaByTag(this.sortBy$, this.tagId, this.pageIndex$);
+    }
+  }
 
   /**==========================================================================================*/
   getTopQa(): void {
@@ -143,19 +161,12 @@ export class QaPageComponent implements OnInit {
   getTopTag(): void {
     this.qaService.getTopTag().subscribe(getObjectTopTag => {
       this.getObjectTopTag$ = getObjectTopTag;
-      console.log('--------------------',this.getObjectTopTag$.tagsByPageIndex);
+      console.log('--------------------', this.getObjectTopTag$.tagsByPageIndex);
     });
   }
 
   getTopUser(): void {
     this.qaService.getTopUser().subscribe(getObjectTopUser => this.getObjectTopUser$ = getObjectTopUser);
-  }
-
-  isLoggedIn() {
-    if (localStorage.getItem('currentUser')) {
-      return true;
-    }
-    return false;
   }
 
   addQa(title, content: string): void {
@@ -264,5 +275,8 @@ export class QaPageComponent implements OnInit {
 
   userDetail(userId: number) {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
+  }
+  setRow(_index: number) {
+    this.selectedIndex = _index;
   }
 }

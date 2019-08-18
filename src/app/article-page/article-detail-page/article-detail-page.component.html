@@ -15,8 +15,8 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear" style="margin-top: 3%;font-size: 17px">
-          <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
-          <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
+          <li><a href="index.html"(click)="click()">Trang chủ</a></li>
+          <li class="active"><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
             <ul>
               <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
               <li><a href="article-page/app-thu-hoach-va-bao-quan" (click)="click()">Thu hoạch & Bảo quản</a></li>
@@ -29,7 +29,8 @@
             </ul>
           </li>
           <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
-          <!--<li><a (click)="click()">Liên hệ</a></li>-->
+          <li *ngIf="isLoggedIn()"><a (click)="userDetails()" style="cursor: pointer">Trang cá nhân</a></li>
+
 
         </ul>
 
@@ -102,8 +103,8 @@
       <!-- ################################################################################################ -->
       <h1><p>{{article$.title}}</p></h1>
       <div *ngIf="checkAdmin=='ADMIN'" class="group btmspace-50 demo" style="width: 50%; cursor: pointer">
-        <a class="one_half first" style="font-size: large" (click)="editArticle(article$)">chỉnh sửa bài viết</a>
-        <a class="one_half" style="font-size: large" (click)="deleteArticle(article$.articleId)">xóa bài viết</a>
+          <a class="one_half first" style="font-size: large" (click)="editArticle(article$)">Chỉnh sửa bài viết</a>
+        <a class="one_half" style="font-size: large" (click)="deleteArticle(article$.articleId)">Xóa bài viết</a>
       </div>
       <div class="tag">
         Từ khóa:

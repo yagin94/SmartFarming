@@ -16,32 +16,41 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
   pageIndex$ = 0;
   checkSearch = false;
   loading = true;
+  selectedIndex = 0;
+
   constructor(private drugService: DrugService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   click() {
     this.loading = true;
   }
+
   ngOnInit() {
     this.loading = false;
     this.getDrugArticle(this.pageIndex$);
   }
+
   getDrugArticle(pageIndex$: number) {
     this.pageIndex$ = pageIndex$;
-    this.drugService.getDrugArticle(this.pageIndex$).subscribe(object => {
+    this.drugService.getDrugArticle(pageIndex$).subscribe(object => {
       this.getDrugArticle$ = object;
       console.log(this.getDrugArticle$);
     });
   }
+
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);
   }
+
   getArticleDetail(article: Article) {
     this.router.navigate(['./article-detail-page'], {queryParams: {id: article.articleId, userId: article.appUser.userId}});
   }
 
   searchArticle(textSearch: string, pageIndex: number) {
+    this.selectedIndex = 0;
+    this.pageIndex$ = pageIndex;
     this.checkSearch = true;
     if (textSearch) {
       textSearch.trim();
@@ -49,5 +58,21 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
         this.getDrugArticle$ = getObject;
       });
     }
+  }
+
+  userDetail() {
+    this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
+  }
+
+  isLoggedIn() {
+    if (localStorage.getItem('currentAppUser')) {
+      return true;
+    }
+    return false;
+  }
+
+  setRow(_index: number) {
+    this.selectedIndex = _index;
+    console.log(`=====================`, this.selectedIndex);
   }
 }

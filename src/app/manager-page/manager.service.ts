@@ -45,8 +45,8 @@ export class ManagerService {
     return this.http.get<number>(`http://localhost:8080/admin/totalWebSiteViewCount`);
   }
 
-  getAllarticle(pageNumber: number): Observable<GetAllArticle> {
-    return this.http.get<GetAllArticle>(`http://localhost:8080/article/viewArticles/date/${pageNumber}`);
+  getAllarticle(sortBy: string, pageNumber: number): Observable<GetAllArticle> {
+    return this.http.get<GetAllArticle>(`http://localhost:8080/article/viewArticles/${sortBy}/${pageNumber}`);
   }
 
   getAllUser(pageNumber: number): Observable<GetAllUser> {
@@ -64,5 +64,17 @@ export class ManagerService {
   searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
     const param = {textSearch};
     return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);
+  }
+
+  searchQa(textSearch: string, type: string, pageIndex: number): Observable<GetObject> {
+    const params = {textSearch};
+
+    return this.http.post<GetObject>(`http://localhost:8080/question/searchQuestions/${type}/${pageIndex}`, params);
+  }
+
+
+
+  deleteReport(reportId: number) {
+    return this.http.delete(`http://localhost:8080/admin/deleteReport/${reportId}`);
   }
 }

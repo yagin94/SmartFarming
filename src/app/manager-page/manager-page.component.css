@@ -18,7 +18,6 @@
   padding: 8px 16px;
   text-decoration: none;
   text-align: center;
-  background-color: lightblue !important;
 
 }
 
@@ -450,4 +449,12 @@ svg {
   border: 1px solid #ccc !important;
   border-radius: 4px;
   box-sizing: border-box;
+}
+.highlight {
+  background-color: #3e3bf1 !important;
+  color: white !important;
+}
+.highlight {
+  background-color: #3e3bf1 !important;
+  color: white !important;
 }

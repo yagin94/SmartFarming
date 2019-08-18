@@ -5,7 +5,8 @@
 <!-- ################################################################################################ -->
 <!-- Phan trang chu hien thi thong tin, background ....-->
 <div>
-  <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+  <ngx-loading [show]="loading"
+               [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
                [template]="loadingTemplate"></ngx-loading>
   <div class="bgded overlay" style="background: #f2f2f2 !important;">
     <!-- ################################################################################################ -->
@@ -16,13 +17,15 @@
           <h1 style="margin-left: -28%"><a href="index.html">FPT developer Team</a></h1>
         </div>
         <div style="float: left;padding: 0 5px;margin-left: -3%;">
-          <input #questionTitle (keyup.enter)="searchQa(questionTitle.value, pageIndex$)" style="color: black;margin-top: 2.25rem;width: 19rem;">
-          <input title="Search" value="" type="submit" class="button-search" style="margin-top: -1.75rem;margin-left: 19rem"
+          <input #questionTitle (keyup.enter)="searchQa(questionTitle.value, pageIndex$)"
+                 style="color: black;margin-top: 2.25rem;width: 19rem;">
+          <input title="Search" value="" type="submit" class="button-search"
+                 style="margin-top: -1.75rem;margin-left: 19rem"
                  (click)="searchQa(questionTitle.value, pageIndex$)">
         </div>
-        <nav id="mainav" class="fl_right" >
+        <nav id="mainav" class="fl_right">
           <ul class="clear" style="margin-top: 3%;font-size: 17px">
-            <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
+            <li><a href="index.html"(click)="click()">Trang chủ</a></li>
             <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
               <ul>
                 <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
@@ -35,8 +38,8 @@
                 <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
               </ul>
             </li>
-            <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
-            <!--<li><a (click)="click()">Liên hệ</a></li>-->
+            <li class="active"><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+            <li *ngIf="isLoggedIn()"><a (click)="userDetails()" style="cursor: pointer">Trang cá nhân</a></li>
 
           </ul>
 
@@ -57,15 +60,18 @@
           <div id="menu-sap-xep" *ngIf="!checkSearch">
             <span id="sort-qa-like" onclick="sortQA_like()" (click)="sortByView()"
                   style="background-color: #FBFBFB;cursor: pointer;">Nhiều lượt xem</span>
+            <span id="sort-qa-upvote" onclick="sortQA_upvote()" (click)="sortByUpvote()"
+                  style="background-color: gainsboro;cursor: pointer;">Nhiều lượt thích</span>
             <span id="sort-qa-time" onclick="sortQA_time()" (click)="sortByDate()"
                   style="background-color: gainsboro;cursor: pointer;">Thời gian đăng</span>
           </div>
-          <h1 *ngIf="checkSearch">Kết quả tìm kiếm của "{{questionTitle.value}}"</h1>
-          <div style="margin-top: 2%;">
+          <h3 *ngIf="checkSearch" style="text-transform: none;">Kết quả tìm kiếm của "{{questionTitle.value}}"</h3>
+          <div style="margin-top: 2.5%; border-top: 3px solid #f1f1f1;">
             <ul>
 
               <!--QA -->
-              <li *ngFor="let object of getObject$.qa" style="color: black;margin-bottom: 0px;border-bottom: groove;">
+              <li *ngFor="let object of getObject$.qa"
+                  style="color: black;margin-bottom: 0px;border-bottom: groove;list-style-type: none;">
                 <article style="padding-top: 2%">
                   <header>
                     <figure class="avatar" style="float: left; cursor: pointer"><img
@@ -74,12 +80,14 @@
                       <img *ngIf="object.appUser==null"
                            src="../../assets/images/demo/avatar.png" alt="">
                       <img *ngIf="object.appUser!=null&&object.appUser.anonymous==false"
-                           src="{{object.appUser.socialUser.photoUrl}}" alt="" (click)="userDetail(object.appUser.userId)">
+                           src="{{object.appUser.socialUser.photoUrl}}" alt=""
+                           (click)="userDetail(object.appUser.userId)">
                     </figure>
                     <address style="text-align: left;color: dodgerblue;margin-left: 7%;">
                       <a *ngIf="object.appUser!=null&&object.appUser.anonymous==true">anonymous </a>
                       <a *ngIf="object.appUser==null">anonymous </a>
-                      <a *ngIf="object.appUser!=null&&object.appUser.anonymous==false" (click)="userDetail(object.appUser.userId)">{{object.appUser.socialUser.name}}</a>
+                      <a *ngIf="object.appUser!=null&&object.appUser.anonymous==false"
+                         (click)="userDetail(object.appUser.userId)">{{object.appUser.socialUser.name}}</a>
                       <time style="font-size: 13px;float: right; "><span
                         style="color: #7c7f85 !important;">Ngày đăng:</span>{{object.utilTimestamp
                         | date: 'yyyy-MM-dd'}}
@@ -91,8 +99,8 @@
                     </h3>
                   </header>
                   <!--<div class="comcont">-->
-                    <!--<p style="max-width: 100% !important;text-align: left;color: grey"-->
-                       <!--innerHTML="{{object.content}}"></p>-->
+                  <!--<p style="max-width: 100% !important;text-align: left;color: grey"-->
+                  <!--innerHTML="{{object.content}}"></p>-->
                   <!--</div>-->
                   <div class="question-tag">
 
@@ -111,20 +119,22 @@
               </li>
               <div class="phan-trang clear">
                 <div class="pagination" *ngIf="checkPaging$=='viewAndDate' && getObject$.numberOfPages != 1">
-                  <a>&laquo;</a>
-                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="getQa(sortBy$,i)">{{i+1}}</a>
-                  <a>&raquo;</a>
+                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
+                     (click)="getQa(sortBy$,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
                 </div>
                 <div class="pagination" *ngIf="checkPaging$=='search' && getObject$.numberOfPages != 1">
-                  <a>&laquo;</a>
-                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index" (click)="searchQa(questionTitle.value, i)">{{i}}</a>
-                  <a>&raquo;</a>
+
+                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
+                     (click)="searchQa(questionTitle.value, i);setRow(i)"
+                     [ngClass]="{'highlight': selectedIndex === i}">{{i}}</a>
+
                 </div>
                 <div class="pagination" *ngIf="checkPaging$=='tag'&& getObject$.numberOfPages != 1">
 
                   <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
-                     (click)="getQaByTag(sortBy$,tagId,i)" onclick="setStyle()" id="numberIndex">{{i+1}}</a>
-                  <a>&raquo;</a>
+                     (click)="getQaByTag(sortBy$,tagId,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}"
+                     onclick="setStyle()" id="numberIndex">{{i+1}}</a>
+
                 </div>
               </div>
 
@@ -154,9 +164,11 @@
               <img src="../../assets/images/question_icon.png" style="height: 20px;padding-right: 15px;">Top câu hỏi
             </p>
             <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
-              <li>
-                <span *ngIf="item.appUser.socialUser != null"><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
-                <span *ngIf="item.appUser.socialUser == null"><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <li style="list-style-type: none;">
+                <span *ngIf="item.appUser.socialUser != null"><a (click)="userDetail(item.appUser.userId)"><img
+                  src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
+                <span *ngIf="item.appUser.socialUser == null"><a><img src="../../assets/images/demo/avatar.png"
+                                                                      class="image-user"> </a></span>
                 <div class="title-article"><a (click)="edit(item)" style="cursor: pointer"> {{item.title}}</a></div>
                 <div>
                   <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
@@ -183,9 +195,10 @@
             <img src="../../assets/images/users.png" style="height: 20px;padding-right: 15px;">Top người dùng
           </p>
           <ul class="top-user">
-            <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex">
-              <span><a><img src="{{item.socialUser.photoUrl}}" class="image-user"> </a></span>
-              <div class="title-article"><a>{{item.socialUser.firstName}}</a></div>
+            <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex" style="list-style-type: none;">
+              <span><a (click)="userDetail(item.userId)"><img src="{{item.socialUser.photoUrl}}"
+                                                              class="image-user"> </a></span>
+              <div class="title-article"><a (click)="userDetail(item.userId)">{{item.socialUser.firstName}}</a></div>
               <span style="padding: 0 35px;"><a>{{item.reputation}} điểm</a></span>
             </li>
           </ul>

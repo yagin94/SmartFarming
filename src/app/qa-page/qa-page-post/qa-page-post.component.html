@@ -5,7 +5,8 @@
 <!-- ################################################################################################ -->
 <!-- Phan trang chu hien thi thong tin, background ....-->
 <div class="bgded overlay" style="background: #f2f2f2 !important;">
-  <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
+  <ngx-loading [show]="loading"
+               [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"
                [template]="loadingTemplate"></ngx-loading>
   <!-- ################################################################################################ -->
   <div class="wrapper row1" style="background: rgba(0,0,0,.6)">
@@ -16,7 +17,7 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear" style="margin-top: 3%;font-size: 17px">
-          <li class="active"><a href="index.html"(click)="click()">Trang chủ</a></li>
+          <li><a href="index.html"(click)="click()">Trang chủ</a></li>
           <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
             <ul>
               <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
@@ -29,8 +30,8 @@
               <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
             </ul>
           </li>
-          <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
-          <!--<li><a (click)="click()">Liên hệ</a></li>-->
+          <li class="active"><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+          <li *ngIf="isLoggedIn()"><a (click)="userDetails()" style="cursor: pointer">Trang cá nhân</a></li>
 
         </ul>
 
@@ -46,7 +47,7 @@
   <main class="hoc container clear" style="padding-top: 0%;background-color: #FFFFFF;max-width: 75%;width: 100%;">
 
     <!--Content -->
-    <div class="content three_quarter first" style=" margin-left: 1.5%;" >
+    <div class="content three_quarter first" style=" margin-left: 1.5%;">
       <div class="">
         <h2 style="text-transform: none;text-align: center">Đăng câu hỏi</h2>
         <form action="#" method="post" *ngIf="!data">
@@ -58,16 +59,16 @@
           </div>
           <div class="block clear" style="">
             <label>Nội dung <span>*</span></label>
-            <ckeditor [config]="ckeConfig" [(ngModel)]="model.editorData" [ngModelOptions]="{standalone: true}"></ckeditor>
+            <ckeditor [config]="ckeConfig" [(ngModel)]="model.editorData"
+                      [ngModelOptions]="{standalone: true}"></ckeditor>
             <h5 style="text-transform: none;">Nhập từ khóa và enter (tối đa 5 từ khóa)</h5>
             <div>
               <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
             </div>
 
 
-
             <div class="button" style="">
-              <input  type="submit" name="submit" value="Đăng câu hỏi"
+              <input type="submit" name="submit" value="Đăng câu hỏi"
                      (click)="addQa(inputTitle.value,tagInput.value)">
             </div>
           </div>
@@ -85,14 +86,14 @@
             <h5 style="text-transform: none;">Nhập từ khóa và enter (tối đa 5 từ khóa)</h5>
             <div>
 
-              <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi"
-                     #tagInput >
+              <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" value="{{arrays}}"
+                     #tagInput>
             </div>
 
 
             <div class="button" style="">
-              <input  type="submit" name="submit" value="Cập nhật câu hỏi"
-                      (click)="updateQuestion(inputTitle.value,tagInput.value)" style="margin-left: 2%;">
+              <input type="submit" name="submit" value="Cập nhật câu hỏi"
+                     (click)="updateQuestion(inputTitle.value,tagInput.value)" style="margin-left: 2%;">
             </div>
           </div>
         </form>
@@ -119,12 +120,14 @@
           </p>
           <ul *ngFor="let item of getObjectTopQa$.qa" id="top-question" style="padding-top: 25px;padding-left: 5px;">
             <li>
-              <span *ngIf="item.appUser.socialUser != null"><a><img src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
-              <span *ngIf="item.appUser.socialUser == null"><a><img src="../../assets/images/demo/avatar.png" class="image-user"> </a></span>
+              <span *ngIf="item.appUser.socialUser != null"><a (click)="userDetail(item.appUser.userId)"><img
+                src="{{item.appUser.socialUser.photoUrl}}" class="image-user"> </a></span>
+              <span *ngIf="item.appUser.socialUser == null"><a><img src="../../assets/images/demo/avatar.png"
+                                                                    class="image-user"> </a></span>
               <div class="title-article"><a (click)="edit(item)" style="cursor: pointer"> {{item.title}}</a></div>
               <div>
-                <span class="top-article-view"><a >{{getNumber(item.answers)}} trả lời</a></span>
-                <span class="top-article-view"><a >{{item.viewCount}} lượt xem</a></span>
+                <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
+                <span class="top-article-view"><a>{{item.viewCount}} lượt xem</a></span>
               </div>
             </li>
           </ul>
@@ -135,7 +138,8 @@
           <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top tags
         </p>
         <div class="question-tag">
-          <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;" (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
+          <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
+             (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
         </div>
 
       </div>
@@ -147,8 +151,8 @@
         </p>
         <ul class="top-user">
           <li *ngFor="let item of getObjectTopUser$.appUsersByPageIndex">
-            <span><a><img src="{{item.socialUser.photoUrl}}" class="image-user"> </a></span>
-            <div class="title-article"><a>{{item.socialUser.firstName}}</a></div>
+            <span><a (click)="userDetail(item.userId)"><img src="{{item.socialUser.photoUrl}}" class="image-user"> </a></span>
+            <div class="title-article"><a (click)="userDetail(item.userId)">{{item.socialUser.firstName}}</a></div>
             <span style="padding: 0 35px;"><a>{{item.reputation}} điểm</a></span>
           </li>
         </ul>

@@ -86,7 +86,7 @@
             </div>
             <!--Like -->
             <div class="question-footer">
-              <div *ngIf="!checkLikeButton$ && qa$.upvoteCount != null" style="padding-top: 3px; cursor: pointer"
+              <div *ngIf="!checkLikeButton$" style="padding-top: 3px; cursor: pointer"
                    (click)="upvoteQuestion(qa$.questionId)"><i class="fa fa-heart-o icon-like"></i>
                 <a> Thích</a></div>
               <!--<div *ngIf="!checkLikeButton$ && qa$.upvoteCount == null" style="padding-top: 3px; cursor: pointer"-->

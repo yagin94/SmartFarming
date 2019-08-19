@@ -12,7 +12,7 @@ import {
   Qa,
   Tag,
   AddupvoteQa,
-  AddupvoteAn, ReportObj, ResponseReport, GetUserRelateQa, Tags, ReportsByPageIndex
+  AddupvoteAn, ReportObj, ResponseReport, GetUserRelateQa, Tags, ReportsByPageIndex, UserRelate
 } from '../qa.model';
 import {DataShareService} from '../../share-data-service/date-share-service';
 import {HeaderComponent} from '../../common/header/header.component';
@@ -75,6 +75,9 @@ export class QaPageDetailComponent implements OnInit {
   index$ = 0;
   arrays = '';
   checkAnswer$ = false;
+  /**thu nghiem phuong phap test moi*/
+  test: any;
+  getAllInforUserRelate = new UserRelate();
 
   constructor(
     private qaService: QaService,
@@ -133,32 +136,102 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   getUserRelate(questionId: number): void {
-    this.qaService.getListUserRelate(questionId).subscribe(listUserRelate => {
-      this.listUserRelate$ = listUserRelate;
-      console.log('getUserRelate', this.listUserRelate$);
+    this.qaService.getAllInforUserRelate(questionId).subscribe(listUserRelate => {
+      this.getAllInforUserRelate = listUserRelate;
     });
   }
 
+
   getTopUserDetail(userId: number, i: number): void {
-    console.log('i',i);
+    console.log('i', i);
+    console.log('userId', userId);
     this.qaService.getTopUserRelate(this.data, userId).subscribe(getObjectTopUser => {
-      if (i === 0) {
-        this.getUserRelateQa$ = getObjectTopUser;
-      } else if (i === 1) {
-        this.getUserRelateQa1$ = getObjectTopUser;
-      } else if (i === 2) {
-        this.getUserRelateQa2$ = getObjectTopUser;
-      } else if (i === 3) {
-        this.getUserRelateQa3$ = getObjectTopUser;
-      } else if (i === 4) {
-        this.getUserRelateQa4$ = getObjectTopUser;
-      }
-        var tag = document.getElementById('tagUser' + i);
+        if (i === 0) {
+          this.getUserRelateQa$ = getObjectTopUser;
+
+        } else if (i === 1) {
+          this.getUserRelateQa1$ = getObjectTopUser;
+        } else if (i === 2) {
+          this.getUserRelateQa2$ = getObjectTopUser;
+        } else if (i === 3) {
+          this.getUserRelateQa3$ = getObjectTopUser;
+        } else if (i === 4) {
+          this.getUserRelateQa4$ = getObjectTopUser;
+        }
+        var tag = document.getElementById('tagUser0');
+        var tag1 = document.getElementById('tagUser1');
+        var tag2 = document.getElementById('tagUser2');
+        var tag3 = document.getElementById('tagUser3');
+        var tag4 = document.getElementById('tagUser4');
         if (tag.style.display === 'none') {
           tag.style.display = 'block';
+          tag1.style.display = 'none';
+          tag2.style.display = 'none';
+          tag3.style.display = 'none';
+          tag4.style.display = 'none';
         }
         else if (tag.style.display === 'block') {
           tag.style.display = 'none';
+          tag1.style.display = 'none';
+          tag2.style.display = 'none';
+          tag3.style.display = 'none';
+          tag4.style.display = 'none';
+        }
+        else if (tag1.style.display === 'none') {
+          tag.style.display = 'none';
+          tag1.style.display = 'block';
+          tag2.style.display = 'none';
+          tag3.style.display = 'none';
+          tag4.style.display = 'none';
+        }
+        else if (tag1.style.display === 'block') {
+          tag.style.display = 'none';
+          tag1.style.display = 'none';
+          tag2.style.display = 'none';
+          tag3.style.display = 'none';
+          tag4.style.display = 'none';
+        }
+        else if (tag2.style.display === 'none') {
+          tag.style.display = 'none';
+          tag1.style.display = 'none';
+          tag2.style.display = 'block';
+          tag3.style.display = 'none';
+          tag4.style.display = 'none';
+        }
+        else if (tag2.style.display === 'block') {
+          tag.style.display = 'none';
+          tag1.style.display = 'none';
+          tag2.style.display = 'none';
+          tag3.style.display = 'none';
+          tag4.style.display = 'none';
+        }
+        else if (tag3.style.display === 'none') {
+          tag.style.display = 'none';
+          tag1.style.display = 'none';
+          tag2.style.display = 'none';
+          tag3.style.display = 'block';
+          tag4.style.display = 'none';
+        }
+        else if (tag3.style.display === 'block') {
+          tag.style.display = 'none';
+          tag1.style.display = 'none';
+          tag2.style.display = 'none';
+          tag3.style.display = 'none';
+          tag4.style.display = 'none';
+        }
+        else if (tag4.style.display === 'none') {
+          tag.style.display = 'none';
+          tag1.style.display = 'none';
+          tag2.style.display = 'none';
+          tag3.style.display = 'none';
+          tag4.style.display = 'block';
+        }
+        else if (tag4.style.display === 'block') {
+          tag.style.display = 'none';
+          tag1.style.display = 'none';
+          tag2.style.display = 'none';
+          tag3.style.display = 'none';
+          tag4.style.display = 'none';
         }
       }
     );
@@ -223,24 +296,6 @@ export class QaPageDetailComponent implements OnInit {
               this.checkLikeButton$ = true;
             }
           }
-        }
-      }
-      if (this.qa$.answers != null) {
-        for (const answer of this.qa$.answers) {
-          if (answer.upvotedUserIds != null) {
-            for (const userId of answer.upvotedUserIds) {
-              if (JSON.parse(localStorage.getItem('currentAppUser'))) {
-                if (userId === JSON.parse(localStorage.getItem('currentAppUser')).userId) {
-                  this.checkAnswer$ = true;
-                }
-              } else {
-                if (userId === JSON.parse(localStorage.getItem('anonymousUser')).userId) {
-                  this.checkAnswer$ = true;
-                }
-              }
-            }
-          }
-
         }
       }
       this.checkAuthen();
@@ -476,4 +531,108 @@ export class QaPageDetailComponent implements OnInit {
     return Object.keys(upvotedUserIds).length;
   }
 
+  checklike(answer: Answers) {
+    if (localStorage.getItem('currentAppUser')) {
+      if (answer.upvotedUserIds.includes(JSON.parse(localStorage.getItem('currentAppUser')).userId)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (answer.upvotedUserIds.includes(JSON.parse(localStorage.getItem('anonymousUser')).userId)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  getDetailInforUserRelate(index: number) {
+    console.log('index',index);
+    // var tag = document.getElementById('tagUser' + index);
+    // console.log('tag',tag);
+    // if (tag != null) {
+    //   if (tag.style.display === 'none') {
+    //     tag.style.display = 'block';
+    //   }
+    //   else if (tag.style.display === 'block') {
+    //     tag.style.display = 'none';
+    //   }
+    // }
+    var tag = document.getElementById('tagUser0');
+    var tag1 = document.getElementById('tagUser1');
+    var tag2 = document.getElementById('tagUser2');
+    var tag3 = document.getElementById('tagUser3');
+    var tag4 = document.getElementById('tagUser4');
+    if (tag.style.display === 'none') {
+      tag.style.display = 'block';
+      tag1.style.display = 'none';
+      tag2.style.display = 'none';
+      tag3.style.display = 'none';
+      tag4.style.display = 'none';
+    }
+    else if (tag.style.display === 'block') {
+      tag.style.display = 'none';
+      tag1.style.display = 'none';
+      tag2.style.display = 'none';
+      tag3.style.display = 'none';
+      tag4.style.display = 'none';
+    }
+    else if (tag1.style.display === 'none') {
+      tag.style.display = 'none';
+      tag1.style.display = 'block';
+      tag2.style.display = 'none';
+      tag3.style.display = 'none';
+      tag4.style.display = 'none';
+    }
+    else if (tag1.style.display === 'block') {
+      tag.style.display = 'none';
+      tag1.style.display = 'none';
+      tag2.style.display = 'none';
+      tag3.style.display = 'none';
+      tag4.style.display = 'none';
+    }
+    else if (tag2.style.display === 'none') {
+      tag.style.display = 'none';
+      tag1.style.display = 'none';
+      tag2.style.display = 'block';
+      tag3.style.display = 'none';
+      tag4.style.display = 'none';
+    }
+    else if (tag2.style.display === 'block') {
+      tag.style.display = 'none';
+      tag1.style.display = 'none';
+      tag2.style.display = 'none';
+      tag3.style.display = 'none';
+      tag4.style.display = 'none';
+    }
+    else if (tag3.style.display === 'none') {
+      tag.style.display = 'none';
+      tag1.style.display = 'none';
+      tag2.style.display = 'none';
+      tag3.style.display = 'block';
+      tag4.style.display = 'none';
+    }
+    else if (tag3.style.display === 'block') {
+      tag.style.display = 'none';
+      tag1.style.display = 'none';
+      tag2.style.display = 'none';
+      tag3.style.display = 'none';
+      tag4.style.display = 'none';
+    }
+    else if (tag4.style.display === 'none') {
+      tag.style.display = 'none';
+      tag1.style.display = 'none';
+      tag2.style.display = 'none';
+      tag3.style.display = 'none';
+      tag4.style.display = 'block';
+    }
+    else if (tag4.style.display === 'block') {
+      tag.style.display = 'none';
+      tag1.style.display = 'none';
+      tag2.style.display = 'none';
+      tag3.style.display = 'none';
+      tag4.style.display = 'none';
+    }
+  }
 }

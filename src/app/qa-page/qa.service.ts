@@ -11,7 +11,7 @@ import {
   GetObjectTopTag,
   GetObjectTopQa,
   GetObjectQaByTag,
-  AddupvoteQa, ReportObj, GetUserRelateQa
+  AddupvoteQa, ReportObj, GetUserRelateQa, UserRelate
 } from './qa.model';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
@@ -44,8 +44,8 @@ export class QaService {
     return this.http.get<GetUserRelateQa[]>(`http://localhost:8080/question/viewDetailRelatedUser/${questionId}/${userId}`);
   }
 
-  getListUserRelate(questionId: number): Observable<AppUser> {
-    return this.http.get<AppUser>(`http://localhost:8080/question/viewRelatedUsersByQuestion/${questionId}`);
+  getListUserRelate(questionId: number): Observable<AppUser[]> {
+    return this.http.get<AppUser[]>(`http://localhost:8080/question/viewRelatedUsersByQuestion/${questionId}`);
   }
 
   getTopUser(): Observable<GetObjectTopUser> {
@@ -135,8 +135,11 @@ export class QaService {
     return this.http.delete(`http://localhost:8080/admin/deleteAnswerToQuestion/${answerId}`);
   }
 
-  getTagById(tagId: number): Observable<Tag>{
+  getTagById(tagId: number): Observable<Tag> {
     return this.http.get<Tag>(`http://localhost:8080/tag/findTagById/${tagId}`);
   }
 
+  getAllInforUserRelate(questionId: number): Observable<UserRelate> {
+    return this.http.get<UserRelate>(`http://localhost:8080/question/viewRelatedUsersByQuestion/${questionId}`);
+  }
 }

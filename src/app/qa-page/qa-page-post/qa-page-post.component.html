@@ -63,7 +63,7 @@
                       [ngModelOptions]="{standalone: true}"></ckeditor>
             <h5 style="text-transform: none;">Nhập từ khóa và enter (tối đa 5 từ khóa)</h5>
             <div>
-              <input type="text" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
+              <input type="text" data-role="tagsinput" [max]="5"  placeholder="Nhập từ khóa cho câu hỏi" #tagInput>
             </div>
 
 

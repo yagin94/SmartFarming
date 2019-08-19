@@ -64,6 +64,7 @@ export class ArticlePostPageComponent implements OnInit {
 
   addArticle(title: string, array: string, selected: string) {
     this.tags = [];
+    let arrayTagCheck = [];
     this.subString = [];
     this.subString = array.split(',');
     for (let i = 0; i < this.subString.length; i++) {
@@ -71,23 +72,30 @@ export class ArticlePostPageComponent implements OnInit {
       if (this.tags.length < 5) {
         this.tags.push(this.tag);
       }
-    }
-    const a: AddArticle = new AddArticle();
-    a.title = title;
-    a.content = this.model.editorData;
-    a.appUser = new AppUser();
-    a.appUser.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
-    a.tags = this.tags;
-    a.uploadedFiles = [];
-    a.category = selected;
-    if (this.checkAdd(a.title, array)) {
-      console.log(`LOL`);
-      this.articlePostService.addArticle(a).subscribe();
-      window.location.replace(`/article-page/app-trang-chinh`);
-    } else {
-      return false;
-    }
+      arrayTagCheck.push(this.tag);
 
+    }
+    if (arrayTagCheck.length > 5) {
+      alert('Tối đa 5 tag');
+      return;
+    } else {
+      alert('sao vao roi lai vao day');
+      const a: AddArticle = new AddArticle();
+      a.title = title;
+      a.content = this.model.editorData;
+      a.appUser = new AppUser();
+      a.appUser.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
+      a.tags = this.tags;
+      a.uploadedFiles = [];
+      a.category = selected;
+      if (this.checkAdd(a.title, array)) {
+        console.log(`LOL`);
+        this.articlePostService.addArticle(a).subscribe();
+        window.location.replace(`/article-page/app-trang-chinh`);
+      } else {
+        return false;
+      }
+    }
   }
 
   getArticleDetail(userId: number, articleId: number) {
@@ -109,6 +117,9 @@ export class ArticlePostPageComponent implements OnInit {
       this.tag = new Tag(this.subString[i], 'dfasdfasdfasdf');
       if (this.tags.length < 5) {
         this.tags.push(this.tag);
+      }
+      if (this.tags.length > 5) {
+        alert('Tối đa 5 tag');
       }
     }
     const a: AddArticle = new AddArticle();

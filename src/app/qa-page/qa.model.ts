@@ -216,6 +216,11 @@ export class ResponseReport {
   utilTimestamp: string;
 }
 
+export class UserRelate {
+  appUser: AppUser;
+  appUserTags: GetUserRelateQa[];
+}
+
 export class GetUserRelateQa {
   appUserTagId: number;
   appUser: AppUser;

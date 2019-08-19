@@ -127,6 +127,7 @@ export class QaPagePostComponent implements OnInit {
     this.subString = [];
     this.qa$ = [];
     this.tags = [];
+    let arrayTags = [];
     this.appUser$ = new AppUser();
     this.fileDownloadUris$ = [];
     this.subString = array.split(',');
@@ -135,38 +136,55 @@ export class QaPagePostComponent implements OnInit {
       if (this.tags.length < 5) {
         this.tags.push(this.tag);
       }
+      arrayTags.push(this.tag);
     }
-    if (this.isLoggedIn()) {
-      this.appUser$.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
-      this.userName$ = JSON.parse(localStorage.getItem('currentUser')).name;
-    } else {
-      this.userName$ = 'anonymous';
-      this.appUser$.anonymous = true;
-    }
-    this.fileDownloadUris$ = ['abc'];
-    title = title.trim();
-    if (!title) {
+    if (arrayTags.length > 5) {
+      alert('Tối đa 5 từ khóa');
       return;
-    }
-    const t: Tag[] = this.tags;
-    const a: AppUser = this.appUser$;
-    const f = this.fileDownloadUris$;
-    const n = this.userName$;
-    console.log(this.appUser$);
-    const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n, [],0);
-    console.log(newQa);
-    console.log(this.model.editorData);
-    this.qaService.addQa(newQa).subscribe(
-      onSuccess => {
-        alert('added');
-        this.qa$.push(newQa);
-        this.loadingPostQa = false;
-        location.replace(`/qa-page`);
-      },
-      onFail => {
-        alert('can not add question');
+    } else {
+      if (this.isLoggedIn()) {
+        this.appUser$.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
+        this.userName$ = JSON.parse(localStorage.getItem('currentUser')).name;
+      } else {
+        this.userName$ = 'anonymous';
+        this.appUser$.anonymous = true;
       }
-    );
+      this.fileDownloadUris$ = ['abc'];
+      title = title.trim();
+      if (!title) {
+        return;
+      }
+      const t: Tag[] = this.tags;
+      const a: AppUser = this.appUser$;
+      const f = this.fileDownloadUris$;
+      const n = this.userName$;
+      if (this.checkAdd(title, this.model.editorData)) {
+        const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n, [], 0);
+        this.qaService.addQa(newQa).subscribe(
+          onSuccess => {
+            alert('added');
+            this.qa$.push(newQa);
+            this.loadingPostQa = false;
+            location.replace(`/qa-page`);
+          },
+          onFail => {
+            alert('can not add question');
+          }
+        );
+      }
+    }
+
+
+  }
+
+  checkAdd(title: string, array: string) {
+    if (title.trim() === '' || array.trim() === '') {
+      alert('Tiêu đề bài viết hoặc tag bài viết không được để trống');
+      return false;
+    } else {
+      return true;
+    }
+
   }
 
   updateQuestion(title: string, array: string) {
@@ -182,6 +200,9 @@ export class QaPagePostComponent implements OnInit {
       if (this.tags.length < 5) {
         this.tags.push(this.tag);
       }
+      if (this.tags.length > 5) {
+        alert('Tối đa 5 tag');
+      }
     }
     if (this.isLoggedIn()) {
       this.appUser$.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
@@ -200,7 +221,7 @@ export class QaPagePostComponent implements OnInit {
     const f = this.fileDownloadUris$;
     const n = this.userName$;
     console.log(this.appUser$);
-    const newQa: Qa = new Qa(title, this.model.default, a, t, f, n, [],0);
+    const newQa: Qa = new Qa(title, this.model.default, a, t, f, n, [], 0);
     console.log(newQa);
     this.qaService.updateQuestion(this.data, newQa).subscribe(
       onSuccess => {

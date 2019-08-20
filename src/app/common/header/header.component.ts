@@ -91,8 +91,8 @@ export class HeaderComponent implements OnInit {
         this.sendToRestApiMethod(this.user.idToken);
         this.loadingC = false;
       }).catch((x) => {
+        this.loadingC = false;
     });
-
   }
 
   getAuthorizationToken() {

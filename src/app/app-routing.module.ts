@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from '@angular/router';
 import {HomePageComponent} from './home-page/home-page.component';
 import {ArticlePageComponent} from './article-page/article-page.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
@@ -23,7 +23,7 @@ import {GiongCayComponent} from './article-page/giong-cay/giong-cay.component';
 import {AllTagUserPageComponent} from './user-detail-page/all-tag-user-page/all-tag-user-page.component';
 import {AllQuestionUserPageComponent} from './user-detail-page/all-question-user-page/all-question-user-page.component';
 import {KyThuatNhanGiongComponent} from './article-page/ky-thuat-nhan-giong/ky-thuat-nhan-giong.component';
-
+import {AuthGuard} from './common/auth.guard';
 
 
 const routes: Routes = [
@@ -35,14 +35,14 @@ const routes: Routes = [
     path: 'article-page',
     component: ArticlePageComponent,
     children: [
-      { path: 'app-ki-thuat-trong', component:  KiThuatTrongComponent },
-      { path: 'app-phan-bon', component:  PhanBonComponent },
-      { path: 'app-trang-chinh', component:  TrangChinhComponent },
-      { path: 'app-thuoc-bao-ve-thuc-vat', component:  ThuocBaoVeThucVatComponent },
-      { path: 'app-sau-benh', component:  SauBenhComponent },
-      { path: 'app-giong-cay', component: GiongCayComponent },
-      { path: 'app-thu-hoach-va-bao-quan', component: ThuHoachVaBaoQuanComponent},
-      { path: 'app-ky-thuat-nhan-giong', component: KyThuatNhanGiongComponent}
+      {path: 'app-ki-thuat-trong', component: KiThuatTrongComponent},
+      {path: 'app-phan-bon', component: PhanBonComponent},
+      {path: 'app-trang-chinh', component: TrangChinhComponent},
+      {path: 'app-thuoc-bao-ve-thuc-vat', component: ThuocBaoVeThucVatComponent},
+      {path: 'app-sau-benh', component: SauBenhComponent},
+      {path: 'app-giong-cay', component: GiongCayComponent},
+      {path: 'app-thu-hoach-va-bao-quan', component: ThuHoachVaBaoQuanComponent},
+      {path: 'app-ky-thuat-nhan-giong', component: KyThuatNhanGiongComponent}
     ]
   },
   {
@@ -63,7 +63,9 @@ const routes: Routes = [
   },
   {
     path: 'manage-page',
-    component: ManagerPageComponent
+    component: ManagerPageComponent,
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'user-detail-page',
@@ -71,12 +73,13 @@ const routes: Routes = [
   },
   // { path: '',   redirectTo: '/home-page', pathMatch: 'full' },
   {
-  path: 'article-detail-page',
-  component: ArticleDetailPageComponent
+    path: 'article-detail-page',
+    component: ArticleDetailPageComponent
   },
   {
     path: 'article-post-page',
-    component: ArticlePostPageComponent
+    component: ArticlePostPageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'qa-page',
@@ -94,19 +97,23 @@ const routes: Routes = [
   //   path: 'qa-detail-page',
   //   component: QaDetailPageComponent,
   // },
-  { path: '',   redirectTo: '/home-page', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
+  {path: '', redirectTo: '/home-page', pathMatch: 'full'},
+  {path: '**', component: PageNotFoundComponent}
 ];
-  @NgModule({
+
+@NgModule({
   imports: [
     CommonModule,
     RouterModule.forRoot(routes, {
-      anchorScrolling: 'enabled'}),
+      anchorScrolling: 'enabled'
+    }),
     ScrollToModule.forRoot()
   ],
   declarations: [],
   exports: [
     RouterModule
-  ]
+  ],
+  providers: [AuthGuard]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

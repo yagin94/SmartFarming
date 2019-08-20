@@ -44,7 +44,7 @@ export class QaPageComponent implements OnInit {
   editAnswer$: Answers;
   answer$: any;
   pageIndex$ = 0;
-  sortBy$ = 'viewCount';
+  sortBy$ = 'date';
   user: SocialUser;
   topQa$: Qa[];
   topTag$: Tag[];
@@ -54,7 +54,8 @@ export class QaPageComponent implements OnInit {
   loadingPostQa = false;
   loading = true;
   selectedIndex = 0;
-  tag$ = new Tag('','');
+  tag$ = new Tag('', '');
+  keySearchQuestion$ = '';
 
   constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
               private globals: Globals,
@@ -78,7 +79,10 @@ export class QaPageComponent implements OnInit {
       console.log('here!!!!');
       this.getQaByTag(this.sortBy$, this.data, this.pageIndex$);
     }
-    this.getTagByTagId();
+    if (this.data != null) {
+      this.getTagByTagId();
+    }
+
     this.getTopQa();
     this.getTopTag();
     this.getTopUser();
@@ -86,15 +90,18 @@ export class QaPageComponent implements OnInit {
     // const authToken2 = localStorage.getItem('currentAppUser');
     // console.log('======', authToken1);
   }
+
   userDetails() {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
   }
+
   isLoggedIn() {
     if (localStorage.getItem('currentAppUser')) {
       return true;
     }
     return false;
   }
+
   abc() {
     this.globals.test = 'nonono';
     console.log(this.globals.test);
@@ -118,12 +125,20 @@ export class QaPageComponent implements OnInit {
   }
 
   getQaByTag(sortBy: string, tagId: number, pageIndex: number): void {
+
     this.tagId = tagId;
     this.checkPaging$ = 'tag';
     this.qaService.getQaByTag(sortBy, tagId, pageIndex).subscribe(getObjectQaByTag => {
       this.getObject$ = getObjectQaByTag;
 
     });
+  }
+
+  getQaByTagIndex(sortBy: string, tagId: number, pageIndex: number, nameTag: string): void {
+    this.checkSearch = true;
+    this.keySearchQuestion$ = nameTag;
+    this.getQaByTag(sortBy, tagId, pageIndex);
+
   }
 
   /**=======================================================================*/
@@ -147,7 +162,8 @@ export class QaPageComponent implements OnInit {
       this.getQaByTag(this.sortBy$, this.tagId, this.pageIndex$);
     }
   }
-  sortByUpvote(){
+
+  sortByUpvote() {
     if (this.checkPaging$ == 'viewAndDate') {
       this.sortBy$ = 'upvoteCount';
       this.getQa(this.sortBy$, this.pageIndex$);
@@ -204,15 +220,26 @@ export class QaPageComponent implements OnInit {
   }
 
   searchQa(searchTerm: string, pageIndex: number) {
-    this.checkPaging$ = 'search';
-    this.checkSearch = true;
-    console.log('=========================', searchTerm);
-    if (searchTerm) {
-      searchTerm.trim();
-      this.qaService.searchQa(searchTerm, 'date', pageIndex).subscribe(getObject => {
-        this.getObject$ = getObject;
-      });
+    if (searchTerm !== '') {
+      this.keySearchQuestion$ = searchTerm;
+      this.checkPaging$ = 'search';
+      this.checkSearch = true;
+      if (searchTerm) {
+        searchTerm.trim();
+        this.qaService.searchQa(searchTerm, 'date', pageIndex).subscribe(getObject => {
+          this.getObject$ = getObject;
+
+        });
+      }
+    } else {
+      this.checkPaging$ = 'viewAndDate';
+      this.checkSearch = false;
+      this.sortBy$ = 'date';
+      this.pageIndex$ = 0;
+      this.selectedIndex = 0;
+      this.getQa(this.sortBy$, this.pageIndex$);
     }
+
   }
 
   // addAnswers(content: string): void {
@@ -280,11 +307,13 @@ export class QaPageComponent implements OnInit {
   userDetail(userId: number) {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: userId}});
   }
+
   setRow(_index: number) {
     this.selectedIndex = _index;
   }
 
-  getTagByTagId(){
+  getTagByTagId() {
+
     this.qaService.getTagById(this.data).subscribe(getObject => {
 
       this.tag$ = getObject;

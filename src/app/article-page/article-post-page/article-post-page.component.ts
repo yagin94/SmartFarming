@@ -76,10 +76,8 @@ export class ArticlePostPageComponent implements OnInit {
 
     }
     if (arrayTagCheck.length > 5) {
-      alert('Tối đa 5 tag');
       return;
     } else {
-      alert('sao vao roi lai vao day');
       const a: AddArticle = new AddArticle();
       a.title = title;
       a.content = this.model.editorData;
@@ -90,7 +88,9 @@ export class ArticlePostPageComponent implements OnInit {
       a.category = selected;
       if (this.checkAdd(a.title, array)) {
         console.log(`LOL`);
-        this.articlePostService.addArticle(a).subscribe();
+        this.articlePostService.addArticle(a).subscribe(result => {
+          alert('Đăng bài viết thành công');
+        });
         window.location.replace(`/article-page/app-trang-chinh`);
       } else {
         return false;
@@ -110,6 +110,7 @@ export class ArticlePostPageComponent implements OnInit {
   }
 
   updateArticle(title: string, array: string, selected: string) {
+    console.log(array);
     this.tags = [];
     this.subString = [];
     this.subString = array.split(',');
@@ -125,6 +126,7 @@ export class ArticlePostPageComponent implements OnInit {
     const a: AddArticle = new AddArticle();
     a.title = title;
     a.content = this.model.default;
+    a.appUser = new AppUser();
     a.appUser = new AppUser();
     a.appUser.userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
     a.tags = this.tags;

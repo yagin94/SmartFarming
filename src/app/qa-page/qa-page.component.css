@@ -218,16 +218,9 @@
 .top-article-view {
   font-size: 10px;
   margin: 20% 0 0 15%;
-
+  cursor: default;
 }
 
-.top-article-view a {
-  color: saddlebrown !important;
-}
-
-.top-article-view a:hover {
-  color: #2d6ff7 !important;
-}
 
 .title-article {
   margin-left: 30px;

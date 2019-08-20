@@ -162,7 +162,7 @@ export class QaPagePostComponent implements OnInit {
         const newQa: Qa = new Qa(title, this.model.editorData, a, t, f, n, [], 0);
         this.qaService.addQa(newQa).subscribe(
           onSuccess => {
-            alert('added');
+            alert('Đăng câu hỏi thành công!');
             this.qa$.push(newQa);
             this.loadingPostQa = false;
             location.replace(`/qa-page`);

@@ -246,7 +246,7 @@ export class ArticleDetailPageComponent implements OnInit {
     }
   }
   getArticleByTag(tag: Tag) {
-    window.location.replace(`/article-page/app-trang-chinh?tagid=${tag.tagId}`);
+    window.location.replace(`/article-page/app-trang-chinh?tagid=${tag.tagId}&&tagName=${tag.name}`);
   }
 
 }

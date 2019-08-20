@@ -114,10 +114,10 @@
             </div>
             <label>Chọn từ khóa</label>
             <div>
-              <input type="text" id="tagField" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" value="{{arrays}}" #tagAInput required>
+              <input type="text" id="tagField" data-role="tagsinput" placeholder="Nhập từ khóa cho câu hỏi" value="{{arrays}}" #tagInput required>
             </div>
             <div class="button" style="">
-              <input type="submit" name="submit" value="Đăng bài" (click)="updateArticle(inputATitle.value, tagAInput.value, selectedValue$)">
+              <input type="submit" name="submit" value="Đăng bài" (click)="updateArticle(inputATitle.value, tagInput.value, selectedValue$)">
             </div>
           </div>
         </form>

@@ -19,9 +19,7 @@
   text-transform: none !important;
 }
 
-.title-qa:hover {
-  color: blue !important;
-}
+
 
 /* tag*/
 .question-tag {
@@ -200,7 +198,7 @@
   text-align: start !important;
   margin-left: 7px !important;
   margin-right: 7px !important;
-  border-bottom: 2px solid #395665;
+  /*border-bottom: 2px solid #395665;*/
 }
 
 .top-article ul {
@@ -216,16 +214,10 @@
 .top-article-view {
   font-size: 10px;
   margin: 20% 0 0 15%;
+  cursor: default ;
 
 }
 
-.top-article-view a {
-  color: saddlebrown !important;
-}
-
-.top-article-view a:hover {
-  color: #2d6ff7 !important;
-}
 
 .title-article {
   margin-left: 50px;
@@ -334,7 +326,7 @@
   padding-bottom: 10px;
   border-bottom: 1px solid #e1e3e3;
   margin: 0px 7px !important;
-  border-bottom: 2px solid #395665;
+  /*border-bottom: 2px solid #395665;*/
 }
 /*top user*/
 
@@ -419,6 +411,7 @@ img {
   max-width: 300px;
   padding: 10px;
   background-color: white;
+  margin-bottom: 0%;
 }
 
 /* Full-width input fields */

@@ -39,6 +39,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let article of getBugArticle$.articlesByPageIndex let i = index">
+                <td>{{i+1+pageIndex$*10}}</td>
                 <td style="padding: 1em"><a style="cursor: pointer" (click)="getArticleDetail(article)">{{article.title}}</a>
                 </td>
                 <td style="padding: 1em">{{article.utilTimestamp|date: 'yyyy-MM-dd'}}</td>

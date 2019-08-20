@@ -203,10 +203,10 @@
                           style="padding-top: 3px;" class="btn like"><i class="fa fa-heart icon-like"></i><a>
                     0 Đã thích</a>
                   </button>
-                  <button style="padding-top: 3px;" class="btn like share"><i class="fa fa-share"></i><a
-                    (click)="facebookSharing(shareObj)">
-                    Chia sẻ</a>
-                  </button>
+                  <!--<button style="padding-top: 3px;" class="btn like share"><i class="fa fa-share"></i><a-->
+                    <!--(click)="facebookSharing(shareObj)">-->
+                    <!--Chia sẻ</a>-->
+                  <!--</button>-->
                   <div *ngIf="checkAdmin =='ADMIN'"
                        style="border: none;cursor: pointer;width: fit-content;text-align: left;margin-left: 2%;"><i
                     class="fa fa-remove"></i><a
@@ -230,7 +230,7 @@
 
         <!--add answer -->
         <div>
-          <div>
+          <div style="padding: 0% 0% 0% 3%;">
             <h3 #editAns>Ý kiến của bạn</h3>
             <form *ngIf="!checkEditAnswer">
               <div class="centent-comment">
@@ -270,21 +270,7 @@
       </div>
       <div class="sdb_holder" style="margin-bottom: 0px;">
         <article class="top-article">
-          <ul class="title-menu-right">
-
-          </ul>
-
-          <!--Top tag -->
-          <div class="top-tag">
-            <p class="title-menu-right">
-              <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top từ khóa
-            </p>
-            <div class="question-tag">
-              <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
-                 (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
-            </div>
-
-          </div>
+          <!--<ul class="title-menu-right"></ul>-->
 
           <!--Top question -->
           <h4 style="text-transform: none;text-align: center;">Thông tin liên quan</h4>
@@ -302,8 +288,8 @@
                                                                     class="image-user"> </a></span>
               <div class="title-article"><a (click)="navigate(item)" style="cursor: pointer"> {{item.title}}</a></div>
               <div style="text-align: center">
-                <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
-                <span class="top-article-view"><a>{{item.viewCount}} lượt xem</a></span>
+                <span class="top-article-view">{{getNumber(item.answers)}} trả lời</span>
+                <span class="top-article-view">{{item.viewCount}} lượt xem</span>
               </div>
             </li>
           </ul>
@@ -312,7 +298,7 @@
 
 
       <!--Top user -->
-      <div ng-app="myApp">
+      <div ng-app="myApp" style="border-bottom: 2px solid #395665;">
         <p class="title-menu-right" style="padding-left: 4%;">
           <img src="../../assets/images/users.png" style="height: 20px;padding-right: 15px;">Top người dùng liên quan
         </p>
@@ -325,8 +311,8 @@
             <div class="title-article">
               <a *ngIf="item.appUser.socialUser != null" (click)="userDetail(item.appUser.userId)" style="cursor: pointer">
                 {{item.appUser.socialUser.name}}</a>
-              <a *ngIf="item.appUser.socialUser == null" (click)="userDetail(item.appUser.userId)" style="cursor: pointer">Anonymus
-                {{item.appUser.userId}}</a>
+              <span *ngIf="item.appUser.socialUser == null" (click)="userDetail(item.appUser.userId)" style="cursor: pointer">Anonymus
+                {{item.appUser.userId}}</span>
               <!--<a (click)="userDetail(item.userId)">{{item.socialUser.name}}</a>-->
               <p>Điểm: {{item.appUser.reputation}}</p>
               <!--<p (click)="getDetailInforUserRelate(i)" style="cursor: pointer;">-->
@@ -343,36 +329,21 @@
             </template>
           </li>
 
-          <!--<template id="tagUser1" style="display: none;" *ngIf="getUserRelateQa1$ != null">-->
-              <!--<span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa1$">-->
-              <!--<p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>-->
-              <!--<p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>-->
-              <!--<p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>-->
-              <!--</span>-->
-          <!--</template>-->
-          <!--<template id="tagUser2" style="display: none;" *ngIf="getUserRelateQa2$ != null">-->
-              <!--<span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa2$">-->
-              <!--<p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>-->
-              <!--<p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>-->
-              <!--<p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>-->
-              <!--</span>-->
-          <!--</template>-->
-          <!--<template id="tagUser3" style="display: none;" *ngIf="getUserRelateQa3$ != null">-->
-              <!--<span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa3$">-->
-              <!--<p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>-->
-              <!--<p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>-->
-              <!--<p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>-->
-              <!--</span>-->
-          <!--</template>-->
-          <!--<template id="tagUser4" style="display: none;" *ngIf="getUserRelateQa4$ != null">-->
-              <!--<span style="padding: 0 50px;" *ngFor="let tagUser of getUserRelateQa4$">-->
-              <!--<p class="topUser">Tên tag: <a (click)="getQaByTag(tagUser.tag.tagId)">{{tagUser.tag.name}}</a></p>-->
-              <!--<p class="topUser">Lượt xem: {{tagUser.appUser.viewCount}} </p>-->
-              <!--<p class="topUser">Tổng điểm: {{tagUser.appUser.reputation}} </p>-->
-              <!--</span>-->
-          <!--</template>-->
         </ul>
       </div>
+
+      <!--Top tag -->
+      <div class="top-tag">
+        <p class="title-menu-right">
+          <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top từ khóa
+        </p>
+        <div class="question-tag">
+          <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
+             (click)="getQaByTag(tag.tagId)">{{tag.name}}</p>
+        </div>
+
+      </div>
+
       <!-- ################################################################################################ -->
     </div>
     <!-- ################################################################################################ -->

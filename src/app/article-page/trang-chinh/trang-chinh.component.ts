@@ -16,6 +16,7 @@ export class TrangChinhComponent implements OnInit {
   checkSearch = false;
   loading = true;
   data: any;
+  tagName: any;
   checkPaging$: string;
   selectedIndex = 0;
 
@@ -27,7 +28,8 @@ export class TrangChinhComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.route.queryParams.subscribe(params => {
-      this.data = params.tagid;
+      this.data = params['tagid'];
+      this.tagName = params['tagName']
       console.log(this.data);
     });
     if (this.data == null) {
@@ -66,12 +68,10 @@ export class TrangChinhComponent implements OnInit {
     this.selectedIndex = 0;
     this.pageIndex$ = pageIndex;
     this.checkSearch = true;
-    if (textSearch) {
       textSearch.trim();
       this.trangChinhService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
         this.getAllArticle$ = getObject;
       });
-    }
   }
 
   setRow(_index: number) {

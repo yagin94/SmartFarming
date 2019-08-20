@@ -25,8 +25,8 @@
         </div>
         <nav id="mainav" class="fl_right">
           <ul class="clear" style="margin-top: 3%;font-size: 17px">
-            <li><a href="index.html"(click)="click()">Trang chủ</a></li>
-            <li><a class="drop" href="article-page/app-trang-chinh"(click)="click()">Kiến thức</a>
+            <li><a href="index.html" (click)="click()">Trang chủ</a></li>
+            <li><a class="drop" href="article-page/app-trang-chinh" (click)="click()">Kiến thức</a>
               <ul>
                 <li><a href="article-page/app-ki-thuat-trong" (click)="click()">Kỹ thuật trồng</a></li>
                 <li><a href="article-page/app-thu-hoach-va-bao-quan" (click)="click()">Thu hoạch & Bảo quản</a></li>
@@ -38,7 +38,7 @@
                 <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
               </ul>
             </li>
-            <li class="active"><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+            <li class="active"><a href="/qa-page" routerLinkActive="active" (click)="click()">Hỏi - Đáp</a></li>
             <li *ngIf="isLoggedIn()"><a (click)="userDetails()" style="cursor: pointer">Trang cá nhân</a></li>
 
           </ul>
@@ -57,16 +57,18 @@
       <div class="content three_quarter first">
         <!-- ################################################################################################ -->
         <div style="display: grid;">
-          <h4 style="text-transform: none;font-weight: unset;" *ngIf="data != null">Những câu hỏi liên quan đến từ khóa "<strong>{{tag$.name}}</strong>" </h4>
+          <h4 style="text-transform: none;font-weight: unset;" *ngIf="data != null">Những câu hỏi liên quan đến từ khóa
+            "<strong>{{tag$.name}}</strong>" </h4>
           <div id="menu-sap-xep" *ngIf="!checkSearch">
+            <span id="sort-qa-time" onclick="sortQA_time()" (click)="sortByDate()"
+                  style="background-color: #FBFBFB;cursor: pointer;">Thời gian đăng</span>
             <span id="sort-qa-like" onclick="sortQA_like()" (click)="sortByView()"
-                  style="background-color: #FBFBFB;cursor: pointer;">Nhiều lượt xem</span>
+                  style="background-color: gainsboro;cursor: pointer;">Nhiều lượt xem</span>
             <span id="sort-qa-upvote" onclick="sortQA_upvote()" (click)="sortByUpvote()"
                   style="background-color: gainsboro;cursor: pointer;">Nhiều lượt thích</span>
-            <span id="sort-qa-time" onclick="sortQA_time()" (click)="sortByDate()"
-                  style="background-color: gainsboro;cursor: pointer;">Thời gian đăng</span>
+
           </div>
-          <h3 *ngIf="checkSearch" style="text-transform: none;">Kết quả tìm kiếm của "{{questionTitle.value}}"</h3>
+          <h3 *ngIf="checkSearch" style="text-transform: none;">Kết quả tìm kiếm của "{{keySearchQuestion$}}"</h3>
           <div style="margin-top: 2.5%; border-top: 3px solid #f1f1f1;">
             <ul>
 
@@ -110,11 +112,12 @@
 
                   </div>
                   <footer class="question-footer">
-                    <div *ngIf="object.upvoteCount != null"><i class="fa fa-li"></i><a >{{object.upvoteCount}} like</a></div>
-                    <div *ngIf="object.upvoteCount == null"><i class="fa fa-li"></i><a >0 like</a></div>
+                    <div *ngIf="object.upvoteCount != null" style="cursor: default"><i class="fa fa-li"></i>{{object.upvoteCount}} lượt thích
+                    </div>
+                    <div *ngIf="object.upvoteCount == null" style="cursor: default"><i class="fa fa-li"></i>0 lượt thích</div>
 
-                    <div><a>{{getNumber(object.answers)}} trả lời</a></div>
-                    <div><a>{{object.viewCount}} lượt xem</a></div>
+                    <div style="cursor: default">{{getNumber(object.answers)}} trả lời</div>
+                    <div style="cursor: default">{{object.viewCount}} lượt xem</div>
                   </footer>
                 </article>
               </li>
@@ -127,7 +130,7 @@
 
                   <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
                      (click)="searchQa(questionTitle.value, i);setRow(i)"
-                     [ngClass]="{'highlight': selectedIndex === i}">{{i}}</a>
+                     [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
 
                 </div>
                 <div class="pagination" *ngIf="checkPaging$=='tag'&& getObject$.numberOfPages != 1">
@@ -172,8 +175,8 @@
                                                                       class="image-user"> </a></span>
                 <div class="title-article"><a (click)="edit(item)" style="cursor: pointer"> {{item.title}}</a></div>
                 <div>
-                  <span class="top-article-view"><a>{{getNumber(item.answers)}} trả lời</a></span>
-                  <span class="top-article-view"><a>{{item.viewCount}} lượt xem</a></span>
+                  <span class="top-article-view">{{getNumber(item.answers)}} trả lời</span>
+                  <span class="top-article-view">{{item.viewCount}} lượt xem</span>
                 </div>
               </li>
             </ul>
@@ -185,7 +188,7 @@
           </p>
           <div class="question-tag">
             <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
-               (click)="getQaByTag(sortBy$, tag.tagId, pageIndex$)">{{tag.name}}</p>
+               (click)="getQaByTagIndex(sortBy$, tag.tagId, pageIndex$,tag.name)">{{tag.name}}</p>
           </div>
 
         </div>
@@ -200,7 +203,7 @@
               <span><a (click)="userDetail(item.userId)"><img src="{{item.socialUser.photoUrl}}"
                                                               class="image-user"> </a></span>
               <div class="title-article"><a (click)="userDetail(item.userId)">{{item.socialUser.firstName}}</a></div>
-              <span style="padding: 0 35px;"><a>{{item.reputation}} điểm</a></span>
+              <span style="padding: 0 35px;cursor: default">{{item.reputation}} điểm</span>
             </li>
           </ul>
         </div>

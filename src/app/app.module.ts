@@ -43,6 +43,8 @@ import {AllTagUserPageComponent} from './user-detail-page/all-tag-user-page/all-
 import {AllQuestionUserPageComponent} from './user-detail-page/all-question-user-page/all-question-user-page.component';
 import { FooterComponent } from './common/footer/footer.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import {AuthGuard} from './common/auth.guard';
+
 export function getAuthServiceConfigs() {
   let configs = new SocialServiceConfig()
     .addFacebook('760042107748144')
@@ -113,7 +115,7 @@ export function provideConfig() {
     {
       provide: SocialServiceConfig,
       useFactory: getAuthServiceConfigs
-    },
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -188,12 +188,14 @@ export class HeaderComponent implements OnInit {
       window.location.replace(`/**`);
     }
     else if (notif.question) {
-        this.headerService.seenNoti(notif.notificationId).subscribe(onsuccess => {
-        });
-        window.location.replace(`http://localhost:4200/qa-page-detail?id=${notif.question.questionId}&&userId=${notif.question.appUser.userId}`);
+      this.headerService.seenNoti(notif.notificationId).subscribe(onsuccess => {
+      });
+      window.location.replace(
+        `http://localhost:4200/qa-page-detail?id=${notif.question.questionId}&&userId=${notif.question.appUser.userId}`);
     } else {
       this.headerService.seenNoti(notif.notificationId);
-      window.location.replace(`http://localhost:4200/article-detail-page?id=${notif.article.articleId}&&userId=${notif.article.appUser.userId}`);
+      window.location.replace(
+        `http://localhost:4200/article-detail-page?id=${notif.article.articleId}&&userId=${notif.article.appUser.userId}`);
     }
   }
 

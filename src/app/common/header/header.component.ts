@@ -9,7 +9,6 @@ import {Local} from 'protractor/built/driverProviders';
 import {HeaderService} from './header.service';
 import {GetNotif, Notifications} from './header.model';
 import {Observable} from 'rxjs';
-import * as $ from 'jquery';
 
 
 @Component({
@@ -185,14 +184,13 @@ export class HeaderComponent implements OnInit {
 
   seeNotif(notif: Notifications) {
     console.log('noti', notif.notificationId);
-    if (notif.question) {
-      if (notif.deleteQuestion) {
-        window.location.replace(`/**`);
-      } else {
+    if (notif.deleteQuestion) {
+      window.location.replace(`/**`);
+    }
+    else if (notif.question) {
         this.headerService.seenNoti(notif.notificationId).subscribe(onsuccess => {
         });
         window.location.replace(`http://localhost:4200/qa-page-detail?id=${notif.question.questionId}&&userId=${notif.question.appUser.userId}`);
-      }
     } else {
       this.headerService.seenNoti(notif.notificationId);
       window.location.replace(`http://localhost:4200/article-detail-page?id=${notif.article.articleId}&&userId=${notif.article.appUser.userId}`);

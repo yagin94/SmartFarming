@@ -1,0 +1,30 @@
+.ul1{
+  overflow: auto;
+  width: 35rem !important;
+  height: 20rem;
+}
+
+.ul2{
+  margin-left: 11em !important;
+  width: 12rem !important;
+  text-align: left !important;
+  height: fit-content;
+}
+.ul2 li{
+  height: 28px !important;
+  padding: 0% auto;
+}
+
+.badge{
+  position: absolute;
+  top: 10px;
+  right: -15px;
+  padding: 5% !important;
+  border-radius: 50%;
+  background-color: #ff613e;
+  color: white;
+}
+.highlight {
+  background-color: #3e3bf1 !important;
+  color: white !important;
+}

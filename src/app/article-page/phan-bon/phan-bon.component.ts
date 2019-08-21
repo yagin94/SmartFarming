@@ -17,11 +17,22 @@ export class PhanBonComponent implements OnInit {
   checkSearch = false;
   loading = true;
   selectedIndex = 0;
+  p = 1;
+  collection: Article[];
+  index = 1;
   constructor(private router: Router, private dungService: DungService) { }
 
   ngOnInit() {
     this.loading = false;
     this.getDungArticle(this.pageIndex$);
+  }
+  getPageAll(page: number) {
+    this.p = page;
+    this.getDungArticle(this.p - 1);
+  }
+  getPageSearch(page: number, textSearch: string) {
+    this.p = page;
+    this.searchArticle(textSearch , this.p - 1);
   }
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);

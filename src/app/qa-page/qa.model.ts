@@ -2,6 +2,7 @@ import {SocialUser} from 'angularx-social-login';
 
 export class GetObject {
   qa: Qa;
+  numberOfContents: number;
   numberOfPages: number;
 }
 
@@ -22,6 +23,7 @@ export class GetObjectTopQa {
 
 export class GetObjectQaByTag {
   qa: Qa;
+  numberOfContents: number;
   numberOfPages: number;
 }
 

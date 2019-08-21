@@ -16,6 +16,9 @@ export class KiThuatTrongComponent implements OnInit {
   checkSearch = false;
   loading = true;
   selectedIndex = 0 ;
+  p = 1;
+  collection: Article[];
+  index = 1;
   constructor(private router: Router, private growService: GrowService) {
   }
   click() {
@@ -25,7 +28,14 @@ export class KiThuatTrongComponent implements OnInit {
     this.loading = false;
     this.getGrowArticle(this.pageIndex$);
   }
-
+  getPageAll(page: number) {
+    this.p = page;
+    this.getGrowArticle(this.p - 1);
+  }
+  getPageSearch(page: number, textSearch: string) {
+    this.p = page;
+    this.searchArticle(textSearch , this.p - 1);
+  }
   getGrowArticle(pageIndex$: number) {
     this.pageIndex$ = pageIndex$;
     this.growService.getGrowArticle(pageIndex$).subscribe(object => {

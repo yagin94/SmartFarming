@@ -18,6 +18,9 @@ export class GiongCayComponent implements OnInit {
   pageIndex$ = 0;
   checkSearch = false;
   selectedIndex = 0;
+  p = 1;
+  collection: Article[];
+  index = 1;
   constructor(private router: Router, private typeService: TypeService) {
   }
   click() {
@@ -27,7 +30,14 @@ export class GiongCayComponent implements OnInit {
     this.loading = false;
     this.getTypeArticle(this.pageIndex$);
   }
-
+  getPageAll(page: number) {
+    this.p = page;
+    this.getTypeArticle(this.p - 1);
+  }
+  getPageSearch(page: number, textSearch: string) {
+    this.p = page;
+    this.searchArticle(textSearch , this.p - 1);
+  }
   getTypeArticle(pageIndex$: number) {
     this.pageIndex$ = pageIndex$;
     this.typeService.getTypeArticle(this.pageIndex$).subscribe(object => {

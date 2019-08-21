@@ -11,6 +11,7 @@ export class GetObjectReport {
 
 export class GetObjectTag {
   tagsByPageIndex: Tag;
+  numberOfContents: number;
   numberOfPages: number;
 
   constructor() {
@@ -26,6 +27,7 @@ export class TextSearch {
 
 export class GetAllArticle {
   numberOfPages: number;
+  numberOfContents: number;
   articlesByPageIndex: Article;
   constructor() {
   }
@@ -34,6 +36,7 @@ export class GetAllArticle {
 export class GetAllUser {
   numberOfPages: number;
   appUsersByPageIndex: AppUser;
+  numberOfContents: number;
   constructor() {
   }
 }

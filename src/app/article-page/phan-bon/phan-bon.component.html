@@ -38,8 +38,9 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let article of getDungArticle$.articlesByPageIndex let i = index">
-                <td>{{i+1+pageIndex$*10}}</td>
+              <tr
+                *ngFor="let article of getDungArticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: p, totalItems: getDungArticle$.numberOfContents } let i = index">
+                <td>{{i+1+ pageIndex$*10}}</td>
                 <td style="padding: 1em"><a style="cursor: pointer" (click)="getArticleDetail(article)">{{article.title}}</a>
                 </td>
                 <td style="padding: 1em">{{article.utilTimestamp|date: 'yyyy-MM-dd'}}</td>
@@ -51,17 +52,11 @@
       </div>
       <!-- ################################################################################################ -->
       <!-- ################################################################################################ -->
-      <div class="pagination" *ngIf="!checkSearch&& getDungArticle$.numberOfPages!=1">
-
-        <a *ngFor="let page of arrayPage(getDungArticle$.numberOfPages) let i = index"
-           (click)="getDungArticle(i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
-
+      <div class="my-pagination" *ngIf="!checkSearch&& getDungArticle$.numberOfPages!=1">
+        <pagination-controls (pageChange)="getPageAll($event)"></pagination-controls>
       </div>
-      <div class="pagination" *ngIf="checkSearch&& getDungArticle$.numberOfPages!=1">
-
-        <a *ngFor="let page of arrayPage(getDungArticle$.numberOfPages) let i = index"
-           (click)="searchArticle(articleTitle.value,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
-
+      <div class="my-pagination" *ngIf="checkSearch&& getDungArticle$.numberOfPages!=1">
+        <pagination-controls (pageChange)="getPageSearch($event, articleTitle.value)"></pagination-controls>
       </div>
       <!-- ################################################################################################ -->
     </div>

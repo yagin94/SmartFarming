@@ -44,6 +44,7 @@ import {AllQuestionUserPageComponent} from './user-detail-page/all-question-user
 import { FooterComponent } from './common/footer/footer.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import {AuthGuard} from './common/auth.guard';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 export function getAuthServiceConfigs() {
   let configs = new SocialServiceConfig()
@@ -94,6 +95,7 @@ export function provideConfig() {
     FooterComponent
   ],
   imports: [
+    NgxPaginationModule,
     AutocompleteLibModule,
     CKEditorModule,
     NgxSocialButtonModule,

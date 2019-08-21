@@ -9,6 +9,7 @@ import {Local} from 'protractor/built/driverProviders';
 import {HeaderService} from './header.service';
 import {GetNotif, Notifications} from './header.model';
 import {Observable} from 'rxjs';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit {
   pageIndex = 0;
   loadingC: boolean;
   checkNotif = true;
+  notiUnseen = 0;
 
   constructor(private authService: AuthService,
               private headerService: HeaderService,
@@ -34,8 +36,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.globals.lo.subscribe(re => this.loadingC = re);
-    console.log(localStorage.getItem('currentAppUser'));
     this.getUserByIpAddress();
     if (localStorage.getItem('currentAppUser')) {
       this.id = JSON.parse(localStorage.getItem('currentAppUser')).userId;
@@ -45,6 +45,7 @@ export class HeaderComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.user = user;
     });
+    this.getUnseenNoti();
     this.getNotif();
   }
 
@@ -74,10 +75,7 @@ export class HeaderComponent implements OnInit {
       }).subscribe(app => {
         localStorage.setItem('currentAppUser', JSON.stringify(app));
         this.checkAdmin = app.role;
-        console.log('HienND', localStorage.getItem('currentAppUser'));
 
-
-        console.log('header ', this.id);
       }
     );
     window.location.replace(window.location.href);
@@ -91,7 +89,7 @@ export class HeaderComponent implements OnInit {
         this.sendToRestApiMethod(this.user.idToken);
         this.loadingC = false;
       }).catch((x) => {
-        this.loadingC = false;
+      this.loadingC = false;
     });
   }
 
@@ -186,14 +184,18 @@ export class HeaderComponent implements OnInit {
   }
 
   seeNotif(notif: Notifications) {
+    console.log('noti', notif.notificationId);
     if (notif.question) {
-      if (notif.deleteQuestion ) {
+      if (notif.deleteQuestion) {
         window.location.replace(`/**`);
       } else {
+        this.headerService.seenNoti(notif.notificationId).subscribe(onsuccess => {
+        });
         window.location.replace(`http://localhost:4200/qa-page-detail?id=${notif.question.questionId}&&userId=${notif.question.appUser.userId}`);
       }
     } else {
-        window.location.replace(`http://localhost:4200/article-detail-page?id=${notif.article.articleId}&&userId=${notif.article.appUser.userId}`);
+      this.headerService.seenNoti(notif.notificationId);
+      window.location.replace(`http://localhost:4200/article-detail-page?id=${notif.article.articleId}&&userId=${notif.article.appUser.userId}`);
     }
   }
 
@@ -224,4 +226,14 @@ export class HeaderComponent implements OnInit {
     console.log(this.globals.lo);
     console.log(this.globals.load);
   }
+
+
+  // noinspection JSAnnotator
+  getUnseenNoti() {
+    this.headerService.getUnseenNoti(JSON.parse(localStorage.getItem('currentAppUser')).userId).subscribe(noti => {
+      this.notiUnseen = noti;
+      console.log('noti', this.notiUnseen);
+    });
+  }
+
 }

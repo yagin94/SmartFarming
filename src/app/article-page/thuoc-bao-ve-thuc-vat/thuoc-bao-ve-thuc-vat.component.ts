@@ -17,7 +17,9 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
   checkSearch = false;
   loading = true;
   selectedIndex = 0;
-
+  p = 1;
+  collection: Article[];
+  index = 1;
   constructor(private drugService: DrugService,
               private router: Router,
               private route: ActivatedRoute) {
@@ -31,7 +33,14 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
     this.loading = false;
     this.getDrugArticle(this.pageIndex$);
   }
-
+  getPageAll(page: number) {
+    this.p = page;
+    this.getDrugArticle(this.p - 1);
+  }
+  getPageSearch(page: number, textSearch: string) {
+    this.p = page;
+    this.searchArticle(textSearch , this.p - 1);
+  }
   getDrugArticle(pageIndex$: number) {
     this.pageIndex$ = pageIndex$;
     this.drugService.getDrugArticle(pageIndex$).subscribe(object => {

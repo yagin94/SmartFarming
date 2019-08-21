@@ -21,8 +21,18 @@ export class HeaderService {
   unsubscribeNotif(noti: Notifications): Observable<Notifications> {
     return this.http.post<Notifications>(`http://localhost:8080/notification/unsubscribe`, noti);
   }
+
   deleteNotif(id: number): Observable<{}> {
     return this.http.delete<{}>(`http://localhost:8080/notification/delete/${id}`);
+  }
+
+  getUnseenNoti(id: number): Observable<number> {
+    return this.http.get<number>(` http://localhost:8080/notification/viewNumberOfUnseenNotification/${id}`);
+  }
+
+  seenNoti(id: number): Observable<Notifications> {
+    return this.http.get<Notifications>(`http://localhost:8080/notification/viewOneNotification/${id}`);
+
   }
 }
 

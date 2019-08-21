@@ -17,6 +17,9 @@ export class ThuHoachVaBaoQuanComponent implements OnInit {
   checkSearch = false;
   loading = true;
   selectedIndex = 0;
+  p = 1;
+  collection: Article[];
+  index = 1;
   constructor(private router: Router, private takeService: TakeService) { }
   click() {
     this.loading = true;
@@ -24,6 +27,14 @@ export class ThuHoachVaBaoQuanComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.getTakeArticle(this.pageIndex$);
+  }
+  getPageAll(page: number) {
+    this.p = page;
+    this.getTakeArticle(this.p - 1);
+  }
+  getPageSearch(page: number, textSearch: string) {
+    this.p = page;
+    this.searchArticle(textSearch , this.p - 1);
   }
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);

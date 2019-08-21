@@ -3,6 +3,7 @@ import {TrangChinhService} from './trang-chinh.service';
 import {GetAllArticle} from './trang-chinh.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Article} from '../article.model';
+import index from '@angular/cli/lib/cli';
 
 @Component({
   providers: [TrangChinhService],
@@ -19,6 +20,9 @@ export class TrangChinhComponent implements OnInit {
   tagName: any;
   checkPaging$: string;
   selectedIndex = 0;
+  p = 1;
+  collection: Article[];
+  index = 1;
 
   constructor(private trangChinhService: TrangChinhService,
               private router: Router,
@@ -27,9 +31,10 @@ export class TrangChinhComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
+    this.getAllArticle$.articlesByPageIndex = [];
     this.route.queryParams.subscribe(params => {
       this.data = params['tagid'];
-      this.tagName = params['tagName']
+      this.tagName = params['tagName'];
       console.log(this.data);
     });
     if (this.data == null) {
@@ -39,12 +44,26 @@ export class TrangChinhComponent implements OnInit {
     }
   }
 
+  getPageAll(page: number) {
+    this.p = page;
+    this.getAllArticle(this.p - 1);
+  }
+  getPageSearch(page: number, textSearch: string) {
+    this.p = page;
+    this.searchArticle(textSearch , this.p - 1);
+  }
+  getPageTag(page: number) {
+    this.p = page;
+    this.getArticleByTag(this.data, this.p - 1);
+  }
   getAllArticle(pageIndex$: number) {
+    console.log(this.p);
     this.checkPaging$ = 'home';
     this.pageIndex$ = pageIndex$;
     this.trangChinhService.getAllArticle(this.pageIndex$).subscribe(object => {
       this.getAllArticle$ = object;
       console.log(this.getAllArticle$);
+      this.collection = this.getAllArticle$.articlesByPageIndex;
     });
   }
 
@@ -53,6 +72,7 @@ export class TrangChinhComponent implements OnInit {
     this.checkPaging$ = 'tag';
     this.trangChinhService.getArticleByTag(tagId, pageIndex).subscribe(object => {
       this.getAllArticle$ = object;
+      console.log('===========HH===============', this.getAllArticle$);
     });
   }
 
@@ -65,13 +85,14 @@ export class TrangChinhComponent implements OnInit {
   }
 
   searchArticle(textSearch: string, pageIndex: number) {
+    this.checkPaging$ = 'home';
     this.selectedIndex = 0;
     this.pageIndex$ = pageIndex;
     this.checkSearch = true;
-      textSearch.trim();
-      this.trangChinhService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
-        this.getAllArticle$ = getObject;
-      });
+    textSearch.trim();
+    this.trangChinhService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
+      this.getAllArticle$ = getObject;
+    });
   }
 
   setRow(_index: number) {

@@ -56,7 +56,7 @@
               </tr>
               <tr>
                 <td (click)="showView(3)">Thống kê bài viết</td>
-                <td (click)="showView(4)">Thống kê tags</td>
+                <td (click)="showView(4)">Thống kê từ khóa</td>
                 <td (click)="showView(5)">Thống kê câu hỏi</td>
               </tr>
 
@@ -191,7 +191,7 @@
                 <div id=" table-wrapper"><!-- -->
                   <!-- show All user -->
                   <div *ngIf="isFlatShowAllUser">
-                    <h5 style="text-transform: none">Tất cả người dùng</h5>
+                    <h5 style="text-transform: none">Tất cả người dùng ({{getAllUser$.numberOfContents}} người dùng)</h5>
                     <table style="text-align: center;" class="tagInShowUser">
                       <tbody>
                       <tr class="" style="">
@@ -379,10 +379,10 @@
                     <select (change)="getSortByArticle($event.target.value)">
                       <option value="date">Sắp xếp theo thời gian</option>
                       <option value="viewCount">Sắp xếp theo lượt xem</option>
-                      <option value="upvoteCount">Sắp xếp theo lượt thích</option>
+                      <!--<option value="upvoteCount">Sắp xếp theo lượt thích</option>-->
                     </select>
                   </div>
-                  <h5 style="text-transform: none">Tất cả bài viết </h5>
+                  <h5 style="text-transform: none">Tất cả bài viết ({{getAllarticle$.numberOfContents}} bài viết)</h5>
                   <table class="scrollable ">
                     <tr style="text-align: center">
                       <td>STT</td>
@@ -456,7 +456,8 @@
 
               <!--Show tags -->
               <div *ngIf="isFlatShowtags" id="tags">
-                <h4 style="text-transform: none;text-align: center;">Thống kê tag</h4>
+                <h4 style="text-transform: none;text-align: center;">Thống kê từ khóa</h4>
+                <h5 style="text-transform: none;">Tất cả từ khóa ({{getObjectTag$.numberOfContents}} từ khóa)</h5>
                 <h5 style="text-transform: none;">Sắp xếp theo
                   <select style="width: fit-content;margin: 0;" (change)="sortTagBy($event.target.value)">
                     <option value="viewCount">Lượt xem</option>
@@ -473,7 +474,7 @@
                     <td>Lượt xem 7 ngày trước</td>
                   </tr>
                   <tr style="text-align: center" *ngFor="let object of getObjectTag$.tagsByPageIndex let i = index">
-                    <td>{{i+1+pageIndexReport$*10}}</td>
+                    <td>{{i+1+pageIndexTagManage$*10}}</td>
                     <td>{{object.name}}</td>
                     <td>{{object.viewCount}}</td>
                     <td>{{object.reputation}}</td>
@@ -488,8 +489,8 @@
                        [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
 
                   </div>
-                  <h6 style="text-transform: none"><a (click)="showAllQuestion()" style="cursor: pointer">Xem tất cả câu
-                    hỏi</a></h6>
+                  <!--<h6 style="text-transform: none"><a (click)="showAllQuestion()" style="cursor: pointer">Xem tất cả câu-->
+                    <!--hỏi</a></h6>-->
                 </div>
               </div>
 
@@ -514,7 +515,7 @@
                       </select>
                     </h5>
                   </div>
-                  <h5 style="text-transform: none;">Tất cả câu hỏi</h5>
+                  <h5 style="text-transform: none;">Tất cả câu hỏi ({{getObject$.numberOfContents}} câu hỏi)</h5>
                   <table class="scrollable">
                     <tr style="text-align: center">
                       <td>STT</td>
@@ -535,10 +536,10 @@
                       <td style="text-align: left;" *ngIf="object.appUser.socialUser == null">Anonymus
                         {{object.appUser.userId}}
                       </td>
-                      <td style="text-align: left;">{{object.viewCount}}</td>
-                      <td style="text-align: left;">{{getNumber(object.answers)}}</td>
-                      <td style="text-align: left;" *ngIf="object.reputation != null">{{object.reputation}}</td>
-                      <td style="text-align: left;" *ngIf="object.reputation == null">0</td>
+                      <td style="text-align: center;">{{object.viewCount}}</td>
+                      <td style="text-align: center;">{{getNumber(object.answers)}}</td>
+                      <td style="text-align: center;" *ngIf="object.reputation != null">{{object.reputation}}</td>
+                      <td style="text-align: center;" *ngIf="object.reputation == null">0</td>
                       <td style="text-align: left;"> {{object.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
                     </tr>
                   </table>
@@ -574,11 +575,11 @@
                       <td style="text-align: left;" *ngIf="object.appUser.socialUser == null">Anonymus
                         {{object.appUser.userId}}
                       </td>
-                      <td style="text-align: left;">{{object.viewCount}}</td>
-                      <td style="text-align: left;">{{getNumber(object.answers)}}</td>
+                      <td style="text-align: center;">{{object.viewCount}}</td>
+                      <td style="text-align: center;">{{getNumber(object.answers)}}</td>
 
-                      <td style="text-align: left;" *ngIf="object.reputation != null">{{object.reputation}}</td>
-                      <td style="text-align: left;" *ngIf="object.reputation == null">0</td>
+                      <td style="text-align: center;" *ngIf="object.reputation != null">{{object.reputation}}</td>
+                      <td style="text-align: center;" *ngIf="object.reputation == null">0</td>
                       <td style="text-align: left;">{{object.utilTimestamp | date: 'yyyy-MM-dd'}}</td>
                     </tr>
                   </table>

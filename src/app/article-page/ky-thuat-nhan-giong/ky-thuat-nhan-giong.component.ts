@@ -19,6 +19,9 @@ export class KyThuatNhanGiongComponent implements OnInit {
   pageIndex$ = 0;
   checkSearch = false;
   selectedIndex = 0;
+  p = 1;
+  collection: Article[];
+  index = 1;
   constructor(private router: Router, private cloneService: CloneService) { }
   click() {
     this.loading = true;
@@ -26,6 +29,14 @@ export class KyThuatNhanGiongComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
      this.getCloneArticle(this.pageIndex$);
+  }
+  getPageAll(page: number) {
+    this.p = page;
+    this.getCloneArticle(this.p - 1);
+  }
+  getPageSearch(page: number, textSearch: string) {
+    this.p = page;
+    this.searchArticle(textSearch , this.p - 1);
   }
   arrayPage(numberOfPage: number): any[] {
     return Array(numberOfPage);

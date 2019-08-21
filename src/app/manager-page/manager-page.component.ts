@@ -34,7 +34,7 @@ export class ManagerPageComponent implements OnInit {
   tagUserDetail = false;
   pageIndex$ = 0;
   pageIndexArticle$ = 0;
-  pageIndexAllUser$ = 0;
+  pageIndexAllTag$ = 0;
   sortBy$ = 'viewCount';
   sortTagBy$ = 'viewCount';
   allView$: number;
@@ -126,6 +126,7 @@ export class ManagerPageComponent implements OnInit {
    * ===========================Question Manager=============================================
    */
   getQa(sortBy: string, pageIndex: number): void {
+    this.checkSearchQuestion = false;
     this.selectedIndex = 0;
     this.pageIndex$ = pageIndex;
     this.qaService.getQa(sortBy, pageIndex).subscribe(getObject => {
@@ -145,7 +146,7 @@ export class ManagerPageComponent implements OnInit {
   sortBy(value: string) {
     this.sortBy$ = value;
     console.log(value);
-    this.getQa(this.sortBy$, this.pageIndex$);
+    this.getQa(this.sortBy$, 0);
   }
 
   /**=======================article manager=====================================*/
@@ -159,6 +160,7 @@ export class ManagerPageComponent implements OnInit {
   /**=======================tag manager=========================================*/
   getAllTag(sortBy: string, pageIndex: number): void {
     this.pageIndexTagManage$ = pageIndex;
+    this.selectedIndex = 0;
     this.managerService.getAllTag(sortBy, pageIndex).subscribe(getObject => {
 
       this.getObjectTag$ = getObject;
@@ -186,9 +188,10 @@ export class ManagerPageComponent implements OnInit {
   }
 
   sortTagBy(value: string) {
+    this.pageIndexTagManage$ = 0;
+    this.selectedIndex = 0;
     this.sortTagBy$ = value;
-    console.log('valueSortby', value);
-    this.getAllTag(value, this.pageIndex$);
+    this.getAllTag(value, 0);
   }
 
   /**=======================getReport============================================*/
@@ -269,6 +272,7 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowArticle = false;
         this.isFlatShowtags = true;
         this.isFlatShowQuestion = false;
+
         this.getAllTag(this.sortTagBy$, 0);
         break;
       case 5:
@@ -474,7 +478,7 @@ export class ManagerPageComponent implements OnInit {
 
   getSortByArticle(sortBy: string) {
     this.sortArticleBy$ = sortBy;
-    this.getAllarticle(this.sortArticleBy$, this.pageIndexArticle$);
+    this.getAllarticle(this.sortArticleBy$, 0);
   }
 
   showAllQuestion() {

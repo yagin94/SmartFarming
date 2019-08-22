@@ -43,7 +43,7 @@
 
     <div class="content-right">
       <!--Content -->
-      <nav id="comments" style="width: 100%;"><!--float: left !important;margin-left: 20%;-->
+      <nav style="width: 100%;"><!--float: left !important;margin-left: 20%;-->
         <div class="manage-display">
           <!--//thống kê-->
           <div class="col-md-12 row" style="margin-left: 0%">
@@ -185,14 +185,14 @@
 
                   </form>
 
-                  <h6><a (click)="getAllUser(0)" style="cursor: pointer;">Xem tất cả người dùng ở đây</a></h6>
+                  <h6><a (click)="showAlluser(); getAllUser(0)" style="cursor: pointer;">Xem tất cả người dùng ở đây</a></h6>
                 </div>
 
                 <div id=" table-wrapper"><!-- -->
                   <!-- show All user -->
                   <div *ngIf="isFlatShowAllUser">
                     <h5 style="text-transform: none">Tất cả người dùng ({{getAllUser$.numberOfContents}} người dùng)</h5>
-                    <table style="text-align: center;" class="tagInShowUser">
+                    <table style="text-align: center;" class="">
                       <tbody>
                       <tr class="" style="">
                         <td>STT</td>
@@ -201,8 +201,8 @@
                         <td>Lượt xem</td>
                         <td>Tông điểm</td>
                       </tr>
-                      <tr class="" *ngFor="let userAll of getAllUser$.appUsersByPageIndex">
-                        <td></td>
+                      <tr class="" *ngFor="let userAll of getAllUser$.appUsersByPageIndex | paginate: { itemsPerPage: 4, currentPage: pAllUser, totalItems: getAllUser$.numberOfContents } let i = index">
+                        <td>{{i+1+allUserIndex*4}}</td>
 
                         <td class="" *ngIf="userAll.socialUser != null" style="text-align: left"><a
                           (click)="userDetail(userAll.userId)">{{userAll.socialUser.name}}</a>
@@ -219,19 +219,19 @@
                       </tbody>
                     </table>
                     <div class="phan-trang clear" *ngIf="getAllUser$.numberOfPages != 1">
-                      <div class="pagination" style="background-color: lightblue">
+                      <div class="my-pagination" >
 
-                        <a *ngFor="let page of arrayPage(getAllUser$.numberOfPages) let i = index"
-                           (click)="getAllUser(i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}"
-                           onclick="setStyle()" id="numberIndex">{{i+1}}</a>
-
+                        <!--<a *ngFor="let page of arrayPage(getAllUser$.numberOfPages) let i = index"-->
+                           <!--(click)="getAllUser(i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}"-->
+                           <!--onclick="setStyle()" id="numberIndex">{{i+1}}</a>-->
+                        <pagination-controls (pageChange)="getPageAllUser($event)"></pagination-controls>
                       </div>
                     </div>
                   </div>
                   <!-- show All user -->
 
                   <div *ngIf="tagDetail">
-                    <h5 style="text-transform: none">Thông tin tag(bấm để hiện người dùng)</h5>
+                    <h5 style="text-transform: none">Thông tin tag (bấm để hiện người dùng)</h5>
                     <table class="scrollable tagInShowUser">
                       <tr style="text-align: center">
                         <td>STT</td>
@@ -239,7 +239,7 @@
                         <td>Lượt xem</td>
                         <td>Số điểm</td>
                       </tr>
-                      <tr style="text-align: center" *ngFor="let object of getTagSearchUserManage$.tagsByPageIndex"
+                      <tr style="text-align: center" *ngFor="let object of getTagSearchUserManage$.tagsByPageIndex "
                           (click)="getUserByTag(object.tagId)">
                         <td></td>
                         <td><a>{{object.name}}</a></td>
@@ -257,6 +257,7 @@
                         <td>STT</td>
                         <td>Tên tài khoản</td>
                         <td>Email/ Facebook</td>
+                        <td>Lượt xem</td>
                         <td>Tông điểm</td>
                       </tr>
                       <tr class="" *ngFor="let user of getUserByTag$">
@@ -264,6 +265,7 @@
                         <td class="" style="text-align: left"><a (click)="userDetail(user.appUser.userId)">{{user.appUser.socialUser.name}}</a>
                         </td>
                         <td class=" " style="text-align: left">{{user.appUser.socialUser.email}}</td>
+                        <td>{{user.appUser.viewCount}} </td>
                         <td class=" ">{{user.appUser.reputation}}</td>
                       </tr>
                       </tbody>
@@ -280,34 +282,39 @@
                 <h4 style="text-transform: none;text-align: center;">Thống kê báo cáo</h4>
                 <ul id="showReport">
                   <h5 style="text-transform: none;">Người dùng gửi report</h5>
-                  <table class="scrollable tagInShowUser">
+                  <table class="scrollable">
                     <tr style="text-align: center">
                       <td>STT</td>
                       <td>Tên tài khoản</td>
                       <td>Loại tài khoản</td>
                       <td>Số lần gửi report</td>
                     </tr>
-                    <tr style="text-align: center" *ngFor="let report of getReportUser$.userAndReportTimes"
+                    <tr style="text-align: center"
+                        *ngFor="let report of getReportUser$.userAndReportTimes  let i = index"
                         (click)="getReportDetail(report.userId,0)">
-                      <td></td>
+                      <td>{{i+1+pageIndexReport$*2}}</td>
                       <td *ngIf="report.fullName != null"><a style="cursor: pointer;">{{report.fullName}}</a></td>
-                      <td *ngIf="report.fullName == null"><a style="cursor: pointer;">Anonymus {{report.userId}}</a></td>
+                      <td *ngIf="report.fullName == null"><a style="cursor: pointer;">Anonymus {{report.userId}}</a>
+                      </td>
                       <td>{{report.role}}</td>
                       <td>{{report.numberOfReports}}</td>
                     </tr>
                   </table>
-                  <div class="phan-trang clear"
-                       *ngIf="getReportUser$.numberOfPages != 1 && getReportUser$.numberOfPages != null">
-                    <div class="pagination" style="background-color: lightblue">
+                  <!--<div class="phan-trang clear"-->
+                       <!--*ngIf="getReportUser$.numberOfPages != 1 && getReportUser$.numberOfPages != null">-->
+                    <!--<div class="my-pagination">-->
 
-                      <a *ngFor="let page of arrayPage(getReportUser$.numberOfPages) let i = index"
-                         (click)="getReport(i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
-
-                    </div>
-                  </div>
+                      <!--&lt;!&ndash;<a *ngFor="let page of arrayPage(getReportUser$.numberOfPages) let i = index"&ndash;&gt;-->
+                      <!--&lt;!&ndash;(click)="getReport(i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>&ndash;&gt;-->
+                      <!--<pagination-controls (pageChange)="resetIndexReport(); getPageAllReportUser($event)"></pagination-controls>-->
+                    <!--</div>-->
+                  <!--</div>-->
                   <form *ngIf="reportDetail">
-                    <h5>Chi tiết các báo cáo</h5>
-                    <div *ngFor="let reportUser of getReport$.reportsByPageIndex">
+                    <h5 *ngIf="choosenUser.socialUser != null" style="text-transform: none">Chi tiết các báo cáo của "<strong>{{choosenUser.socialUser.name}}</strong>"</h5>
+                    <h5 *ngIf="choosenUser.socialUser == null" style="text-transform: none">Chi tiết các báo cáo của "<strong>Anonymus {{choosenUser.userId}}</strong>"</h5>
+
+                    <div
+                      *ngFor="let reportUser of getReport$.reportsByPageIndex | paginate: { itemsPerPage: 3, currentPage: qReportUserDetail, totalItems: getReport$.numberOfContents }">
                       <table class="table-report" style="margin-bottom: 0%">
                         <tr class="table-report-first">
                           <td class="label-report">Người báo cáo :</td>
@@ -341,25 +348,22 @@
                           <td class="content-report" colspan="3"><a (click)="gotoDetailPage(reportUser.question)">{{reportUser.question.title}}</a>
                           </td>
                         </tr>
-
-
                       </table>
                       <button (click)="deleteReport(reportUser)">Xóa báo cáo</button>
 
                     </div>
 
                   </form>
-                  <div class="phan-trang clear"
-                       *ngIf="getReport$.numberOfPages != 1 && getReport$.numberOfPages != null">
-                    <div class="pagination" style="background-color: lightblue">
 
-                      <a *ngFor="let page of arrayPage(getReport$.numberOfPages) let i = index"
-                         (click)="getReportDetail(getReport$.reportsByPageIndex.appUser.userId,i);setRow(i)"
-                         [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
-
-                    </div>
-                  </div>
                 </ul>
+                <div class="phan-trang clear"
+                     *ngIf="getReport$.numberOfPages != 1 && getReport$.numberOfPages != null">
+                  <div class="my-pagination">
+                    <pagination-controls
+                      (pageChange)="getPageAllReportUserDetail($event, choosenUser.userId)">
+                    </pagination-controls>
+                  </div>
+                </div>
               </div>
 
               <!--Show artile -->
@@ -367,10 +371,11 @@
                 <h4 style="text-transform: none;text-align: center">Thống kê bài viết</h4>
                 <div>
                   <h5 style="text-transform: none;">Tìm kiếm</h5>
-                  <input #articleTitle (keyup.enter)="searchArticle(articleTitle.value, pageIndexArticleSearch$)"
-                         class="searchArticle" style="float: left;">
+                  <input #articleTitle
+                         (keyup.enter)="resetSearchArticle();searchArticle(articleTitle.value, pageIndexArticleSearch$) "
+                         class="searchArticle" style="float: left;height: 41px;">
                   <button class="fa fa-search" style="height: 41px;width: 40px;margin-bottom: 9px"
-                          (click)="searchArticle(articleTitle.value, pageIndexArticleSearch$)"></button>
+                          (click)="searchArticle(articleTitle.value, pageIndexArticleSearch$); resetSearchArticle()"></button>
 
                 </div>
 
@@ -393,7 +398,7 @@
                       <td>Ngày đăng</td>
                     </tr>
                     <tr style="text-align: center"
-                        *ngFor="let article of getAllarticle$.articlesByPageIndex let i = index">
+                        *ngFor="let article of getAllarticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: pArticle, totalItems: getAllarticle$.numberOfContents } let i = index">
                       <td>{{i+1+pageIndexArticle$*10}}</td>
                       <td style="text-align: left;"><a (click)="goToArticlePage(article)" style="cursor: pointer;">{{article.title}}</a>
                       </td>
@@ -405,11 +410,12 @@
 
                   </table>
                   <div class="phan-trang clear" *ngIf="getAllarticle$.numberOfPages != 1">
-                    <div class="pagination" style="background-color: lightblue">
+                    <div class="my-pagination">
 
-                      <a *ngFor="let page of arrayPage(getAllarticle$.numberOfPages) let i = index"
-                         (click)="getAllarticle(sortArticleBy$,i);setRow(i)"
-                         [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+                      <!--<a *ngFor="let page of arrayPage(getAllarticle$.numberOfPages) let i = index"-->
+                      <!--(click)="getAllarticle(sortArticleBy$,i);setRow(i)"-->
+                      <!--[ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>-->
+                      <pagination-controls (pageChange)="getPageAllArticle($event)"></pagination-controls>
 
                     </div>
                   </div>
@@ -427,7 +433,7 @@
                       <td>Ngày đăng</td>
                     </tr>
                     <tr style="text-align: center"
-                        *ngFor="let article of getArticle$.articlesByPageIndex let i = index">
+                        *ngFor="let article of getArticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: pArticleSearch, totalItems: getArticle$.numberOfContents } let i = index">
                       <td>{{i+1+pageIndexArticleSearch$*10}}</td>
                       <td style="text-align: left;"><a (click)="goToArticlePage(article)" style="cursor: pointer;">{{article.title}}</a>
                       </td>
@@ -439,11 +445,13 @@
 
                   </table>
                   <div class="phan-trang clear" *ngIf="getArticle$.numberOfPages != 1">
-                    <div class="pagination" style="background-color: lightblue">
+                    <div class="my-pagination">
 
-                      <a *ngFor="let page of arrayPage(getArticle$.numberOfPages) let i = index"
-                         (click)="searchArticle(articleTitle.value,i);setRow(i)"
-                         [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+                      <!--<a *ngFor="let page of arrayPage(getArticle$.numberOfPages) let i = index"-->
+                      <!--(click)="searchArticle(articleTitle.value,i);setRow(i)"-->
+                      <!--[ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>-->
+                      <pagination-controls
+                        (pageChange)="getPageSearchArticle($event, articleTitle.value)"></pagination-controls>
 
                     </div>
                   </div>
@@ -473,7 +481,8 @@
                     <td>Số điểm</td>
                     <td>Lượt xem 7 ngày trước</td>
                   </tr>
-                  <tr style="text-align: center" *ngFor="let object of getObjectTag$.tagsByPageIndex let i = index">
+                  <tr style="text-align: center"
+                      *ngFor="let object of getObjectTag$.tagsByPageIndex | paginate: { itemsPerPage: 10, currentPage: qAllTag, totalItems: getObjectTag$.numberOfContents } let i = index">
                     <td>{{i+1+pageIndexTagManage$*10}}</td>
                     <td>{{object.name}}</td>
                     <td>{{object.viewCount}}</td>
@@ -482,15 +491,14 @@
                   </tr>
                 </table>
                 <div class="phan-trang clear" *ngIf="getObjectTag$.numberOfPages != 1">
-                  <div class="pagination" style="background-color: lightblue">
+                  <div class="my-pagination">
 
-                    <a *ngFor="let page of arrayPage(getObjectTag$.numberOfPages) let i = index"
-                       (click)="getAllTag(sortBy$,i);setRow(i)"
-                       [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+                    <!--<a *ngFor="let page of arrayPage(getObjectTag$.numberOfPages) let i = index"-->
+                    <!--(click)="getAllTag(sortBy$,i);setRow(i)"-->
+                    <!--[ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>-->
+                    <pagination-controls (pageChange)="getPageAllTag($event)"></pagination-controls>
 
                   </div>
-                  <!--<h6 style="text-transform: none"><a (click)="showAllQuestion()" style="cursor: pointer">Xem tất cả câu-->
-                    <!--hỏi</a></h6>-->
                 </div>
               </div>
 
@@ -499,10 +507,10 @@
                 <h4 style="text-transform: none;text-align: center;">Thống kê câu hỏi</h4>
                 <div>
                   <h5 style="text-transform: none;">Tìm kiếm</h5>
-                  <input #questionSearch (keyup.enter)="searchQuestion(questionSearch.value,0)"
-                         class="searchArticle" style="float: left;">
+                  <input #questionSearch (keyup.enter)="searchQuestion(questionSearch.value,0); resetSearchQa()"
+                         class="searchArticle" style="float: left;height: 41px;">
                   <button class="fa fa-search" style="height: 41px;width: 40px;margin-bottom: 9px"
-                          (click)="searchQuestion(questionSearch.value,0)"></button>
+                          (click)="searchQuestion(questionSearch.value,0); resetSearchQa()"></button>
                 </div>
 
                 <div *ngIf="!checkSearchQuestion">
@@ -526,7 +534,8 @@
                       <td>Số điểm</td>
                       <td>Ngày đăng</td>
                     </tr>
-                    <tr style="text-align: center" *ngFor="let object of getObject$.qa let i = index">
+                    <tr style="text-align: center"
+                        *ngFor="let object of getObject$.qa | paginate: { itemsPerPage: 10, currentPage: pQuestion, totalItems: getObject$.numberOfContents } let i = index">
                       <td>{{i+1+pageIndex$*10}}</td>
                       <td style="text-align: left;"><a (click)="gotoDetailPage(object)" style="cursor: pointer;">{{object.title}}</a>
                       </td>
@@ -544,16 +553,17 @@
                     </tr>
                   </table>
                   <div class="phan-trang clear" *ngIf="getObject$.numberOfPages != 1">
-                    <div class="pagination" style="background-color: lightblue">
+                    <div class="my-pagination">
 
-                      <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
-                         (click)="getQa(sortBy$,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+                      <!--<a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"-->
+                      <!--(click)="getQa(sortBy$,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>-->
+                      <pagination-controls (pageChange)="getPageAllQuestion($event)"></pagination-controls>
 
                     </div>
                   </div>
                 </div>
                 <div *ngIf="checkSearchQuestion">
-                  <h5 style="text-transform: none">Kết quả tìm kiếm của <strong>{{questionSearch.value}}</strong></h5>
+                  <h5 style="text-transform: none">Kết quả tìm kiếm của "<strong>{{questionSearch.value}}</strong>"</h5>
                   <table class="scrollable ">
 
                     <tr style="text-align: center">
@@ -565,7 +575,8 @@
                       <td>Số điểm</td>
                       <td>Ngày đăng</td>
                     </tr>
-                    <tr style="text-align: center" *ngFor="let object of getQuestionSearch.qa let i = index">
+                    <tr style="text-align: center"
+                        *ngFor="let object of getQuestionSearch.qa | paginate: { itemsPerPage: 10, currentPage: qQuestionSearch, totalItems: getQuestionSearch.numberOfContents } let i = index">
                       <td>{{i+1+pageIndex$*10}}</td>
                       <td style="text-align: left;"><a (click)="gotoDetailPage(object)" style="cursor: pointer;">{{object.title}}</a>
                       </td>
@@ -584,11 +595,12 @@
                     </tr>
                   </table>
                   <div class="phan-trang clear" *ngIf="getQuestionSearch.numberOfPages != 1">
-                    <div class="pagination" style="background-color: lightblue">
+                    <div class="my-pagination">
 
-                      <a *ngFor="let page of arrayPage(getQuestionSearch.numberOfPages) let i = index"
-                         (click)="searchQuestion(questionSearch.value,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
-
+                      <!--<a *ngFor="let page of arrayPage(getQuestionSearch.numberOfPages) let i = index"-->
+                      <!--(click)="searchQuestion(questionSearch.value,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>-->
+                      <pagination-controls
+                        (pageChange)="getPageSearchQuestion($event, questionSearch.value)"></pagination-controls>
                     </div>
                   </div>
                   <h6 style="text-transform: none"><a (click)="showAllQuestion()" style="cursor: pointer">Xem tất cả câu

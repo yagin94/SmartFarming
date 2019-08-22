@@ -24,6 +24,7 @@ export class AllQuestionUserPageComponent implements OnInit {
   user$ = new AppUser();
   selectedIndex = 0;
   numberOfQuestion$ = 0;
+  qAllQuestion = 1;
 
   constructor(private userDetailPageService: UserDetailPageService,
               private route: ActivatedRoute,
@@ -90,5 +91,15 @@ export class AllQuestionUserPageComponent implements OnInit {
       this.numberOfQuestion$ = (pageNumber - 1) * 10 + index;
     });
 
+  }
+
+  getPageAllQa(page: number) {
+    this.qAllQuestion = page;
+    this.getAllQuestionOfUser(this.sortBy$, this.user$.userId, this.qAllQuestion - 1);
+  }
+
+  resetIndex() {
+    this.qAllQuestion = 1;
+    this.pageNumber$ = 0;
   }
 }

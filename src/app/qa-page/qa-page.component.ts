@@ -56,6 +56,7 @@ export class QaPageComponent implements OnInit {
   selectedIndex = 0;
   tag$ = new Tag('', '');
   keySearchQuestion$ = '';
+  qQuestion = 1;
 
   constructor(private qaService: QaService, private dataShareService: DataShareService, private router: Router,
               private globals: Globals,
@@ -318,5 +319,24 @@ export class QaPageComponent implements OnInit {
 
       this.tag$ = getObject;
     });
+  }
+
+  getPageAllQa(page: number) {
+    this.qQuestion = page;
+    this.getQa(this.sortBy$, this.qQuestion - 1);
+  }
+
+  getPageSearchQa(page: number, textSearch: string) {
+    this.qQuestion = page;
+    this.searchQa(textSearch, this.qQuestion - 1);
+  }
+
+  getPageQaByTag(page: number, tagId: number) {
+    this.qQuestion = page;
+    this.getQaByTag(this.sortBy$, tagId, this.qQuestion - 1);
+  }
+
+  resetIndex(){
+    this.qQuestion = 0;
   }
 }

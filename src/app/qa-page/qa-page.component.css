@@ -359,3 +359,8 @@ img {
   background-color: #3e3bf1 !important;
   color: white !important;
 }
+.my-pagination /deep/ .ngx-pagination .current {
+  background: lightblue !important;
+  margin-bottom: 0% !important;
+  padding: 2%;
+}

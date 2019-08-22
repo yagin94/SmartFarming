@@ -26,7 +26,7 @@
         <li><a class="drop" routerLinkActive="active"
                style="cursor: pointer; text-transform: none;font-size: large;padding: 30% 0% 0% 15px;">Thông báo</a>
           <span class="badge" *ngIf="notiUnseen != 0">{{notiUnseen}}</span>
-          <ul *ngIf="!checkNotif">
+          <ul *ngIf="!checkNotif || notiUnseen == 0">
             <li>Không có thông báo nào</li>
           </ul>
 
@@ -40,7 +40,7 @@
                 <li><a style="cursor: pointer" (click)="unsubscribeNotif(notif)">Ngừng theo dõi bài viết này</a></li>
               </ul>
             </li>
-            <span id="more" style="cursor: pointer;">Xem thêm</span>
+            <span id="more" style="cursor: pointer;" *ngIf="checkNotif && notiUnseen != 0" (click)="viewMore()">Xem thêm</span>
           </ul>
 
         </li>

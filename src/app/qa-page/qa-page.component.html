@@ -17,11 +17,11 @@
           <h1 style="margin-left: -28%"><a href="index.html">FPT developer Team</a></h1>
         </div>
         <div style="float: left;padding: 0 5px;margin-left: -3%;">
-          <input #questionTitle (keyup.enter)="searchQa(questionTitle.value, pageIndex$)"
+          <input #questionTitle (keyup.enter)="resetIndex(); searchQa(questionTitle.value, pageIndex$)"
                  style="color: black;margin-top: 2.25rem;width: 19rem;">
           <input title="Search" value="" type="submit" class="button-search"
                  style="margin-top: -1.75rem;margin-left: 19rem"
-                 (click)="searchQa(questionTitle.value, pageIndex$)">
+                 (click)="resetIndex(); searchQa(questionTitle.value, pageIndex$)">
         </div>
         <nav id="mainav" class="fl_right">
           <ul class="clear" style="margin-top: 3%;font-size: 17px">
@@ -60,11 +60,11 @@
           <h4 style="text-transform: none;font-weight: unset;" *ngIf="data != null">Những câu hỏi liên quan đến từ khóa
             "<strong>{{tag$.name}}</strong>" </h4>
           <div id="menu-sap-xep" *ngIf="!checkSearch">
-            <span id="sort-qa-time" onclick="sortQA_time()" (click)="sortByDate()"
+            <span id="sort-qa-time" onclick="sortQA_time()" (click)="resetIndex();sortByDate()"
                   style="background-color: #FBFBFB;cursor: pointer;">Thời gian đăng</span>
-            <span id="sort-qa-like" onclick="sortQA_like()" (click)="sortByView()"
+            <span id="sort-qa-like" onclick="sortQA_like()" (click)="resetIndex();sortByView()"
                   style="background-color: gainsboro;cursor: pointer;">Nhiều lượt xem</span>
-            <span id="sort-qa-upvote" onclick="sortQA_upvote()" (click)="sortByUpvote()"
+            <span id="sort-qa-upvote" onclick="sortQA_upvote()" (click)="resetIndex();sortByUpvote()"
                   style="background-color: gainsboro;cursor: pointer;">Nhiều lượt thích</span>
 
           </div>
@@ -73,7 +73,7 @@
             <ul>
 
               <!--QA -->
-              <li *ngFor="let object of getObject$.qa"
+              <li *ngFor="let object of getObject$.qa | paginate: { itemsPerPage: 10, currentPage: qQuestion, totalItems: getObject$.numberOfContents }"
                   style="color: black;margin-bottom: 0px;border-bottom: groove;list-style-type: none;">
                 <article style="padding-top: 2%">
                   <header>
@@ -108,7 +108,7 @@
                   <div class="question-tag">
 
                     <p *ngFor="let tag of object.tags" style="padding: 0% 2% !important;font-size: 15px"
-                       (click)="getQaByTag(sortBy$, tag.tagId, pageIndex$)">{{tag.name}}</p>
+                       (click)="resetIndex();getQaByTag(sortBy$, tag.tagId, pageIndex$)">{{tag.name}}</p>
 
                   </div>
                   <footer class="question-footer">
@@ -122,23 +122,25 @@
                 </article>
               </li>
               <div class="phan-trang clear">
-                <div class="pagination" *ngIf="checkPaging$=='viewAndDate' && getObject$.numberOfPages != 1">
-                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
-                     (click)="getQa(sortBy$,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+                <div class="my-pagination" *ngIf="checkPaging$=='viewAndDate' && getObject$.numberOfPages != 1">
+                  <!--<a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"-->
+                     <!--(click)="getQa(sortBy$,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>-->
+                  <pagination-controls (pageChange)="getPageAllQa($event)"></pagination-controls>
                 </div>
-                <div class="pagination" *ngIf="checkPaging$=='search' && getObject$.numberOfPages != 1">
+                <div class="my-pagination" *ngIf="checkPaging$=='search' && getObject$.numberOfPages != 1">
 
-                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
-                     (click)="searchQa(questionTitle.value, i);setRow(i)"
-                     [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
+                  <!--<a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"-->
+                     <!--(click)="searchQa(questionTitle.value, i);setRow(i)"-->
+                     <!--[ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>-->
+                  <pagination-controls (pageChange)="getPageSearchQa($event, questionTitle.value)"></pagination-controls>
 
                 </div>
-                <div class="pagination" *ngIf="checkPaging$=='tag'&& getObject$.numberOfPages != 1">
+                <div class="my-pagination" *ngIf="checkPaging$=='tag'&& getObject$.numberOfPages != 1">
 
-                  <a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"
-                     (click)="getQaByTag(sortBy$,tagId,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}"
-                     onclick="setStyle()" id="numberIndex">{{i+1}}</a>
-
+                  <!--<a *ngFor="let page of arrayPage(getObject$.numberOfPages) let i = index"-->
+                     <!--(click)="getQaByTag(sortBy$,tagId,i);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}"-->
+                     <!--onclick="setStyle()" id="numberIndex">{{i+1}}</a>-->
+                  <pagination-controls (pageChange)="getPageQaByTag($event, tagId)"></pagination-controls>
                 </div>
               </div>
 
@@ -182,13 +184,14 @@
             </ul>
           </article>
         </div>
+
         <div class="top-tag">
           <p class="title-menu-right">
             <img src="../../assets/images/tag-icon.png" style="height: 20px;padding-right: 15px;">Top từ khóa
           </p>
           <div class="question-tag">
             <p *ngFor="let tag of getObjectTopTag$.tagsByPageIndex" style="font-size: unset;"
-               (click)="getQaByTagIndex(sortBy$, tag.tagId, pageIndex$,tag.name)">{{tag.name}}</p>
+               (click)="resetIndex();getQaByTagIndex(sortBy$, tag.tagId, pageIndex$,tag.name)">{{tag.name}}</p>
           </div>
 
         </div>

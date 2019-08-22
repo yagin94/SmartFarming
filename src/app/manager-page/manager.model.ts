@@ -43,6 +43,7 @@ export class GetAllUser {
 
 export class GetReportUser {
   numberOfPages: number;
+  numberOfContents: number;
   userAndReportTimes: Report;
 }
 export class Report {

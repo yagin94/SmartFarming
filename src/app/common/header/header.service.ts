@@ -34,6 +34,11 @@ export class HeaderService {
     return this.http.get<Notifications>(`http://localhost:8080/notification/viewOneNotification/${id}`);
 
   }
+
+
+  viewMoreNoti(userId: number, pageNumber: number): Observable<GetNotif> {
+    return this.http.get<GetNotif>(`http://localhost:8080/notification/viewMoreNotifications/${userId}/${pageNumber}`);
+  }
 }
 
 

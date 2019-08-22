@@ -57,7 +57,7 @@
 
             </div>
             <div>
-              Sắp xếp theo <select (change)="sortBy($event.target.value)">
+              Sắp xếp theo <select (change)="resetIndex();sortBy($event.target.value)">
               <option value="viewCount">Lượt xem</option>
               <option value="upvoteCount">Lượt thích</option>
               <option value="date">Thời gian</option>
@@ -73,7 +73,7 @@
                   <td>Lượt xem</td>
                   <td>Ngày đăng</td>
                 </tr>
-                <tr style="text-align: center" *ngFor="let qa of getAllQuestionOfUser$.qa let i= index">
+                <tr style="text-align: center" *ngFor="let qa of getAllQuestionOfUser$.qa | paginate: { itemsPerPage: 10, currentPage: qAllQuestion, totalItems: getAllQuestionOfUser$.numberOfContents } let i= index">
                   <td>{{i+1+pageNumber$*10}}</td>
                   <td style="text-align: left"><a (click)="goToQuestionDetail(qa)">{{qa.title}}</a></td>
                   <td class="" *ngIf="qa.upvoteCount != null">{{qa.upvoteCount}}</td>
@@ -85,12 +85,12 @@
 
               </table>
               <div class="phan-trang clear" *ngIf="getAllQuestionOfUser$.numberOfPages != 1">
-                <div class="pagination" style="background-color: lightblue ;">
+                <div class="my-pagination" >
 
-                  <a *ngFor="let page of arrayPage(getAllQuestionOfUser$.numberOfPages) let i = index"
-                     (click)="getAllQuestionOfUser(sortBy$,user$.userId,i);setRow(i)"
-                     [ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>
-
+                  <!--<a *ngFor="let page of arrayPage(getAllQuestionOfUser$.numberOfPages) let i = index"-->
+                     <!--(click)="getAllQuestionOfUser(sortBy$,user$.userId,i);setRow(i)"-->
+                     <!--[ngClass]="{'highlight': selectedIndex === i}">{{i+1}}</a>-->
+                  <pagination-controls (pageChange)="getPageAllQa($event)"></pagination-controls>
                 </div>
               </div>
 

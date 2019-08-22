@@ -24,6 +24,9 @@ export class SauBenhComponent implements OnInit {
   click() {
     this.loading = true;
   }
+  resetPage() {
+    this.p = 1;
+  }
   ngOnInit() {
     this.loading = false;
     this.getBugArticle(this.pageIndex$);
@@ -54,12 +57,10 @@ export class SauBenhComponent implements OnInit {
     this.selectedIndex = 0;
     this.pageIndex$ = pageIndex;
     this.checkSearch = true;
-    if (textSearch) {
       textSearch.trim();
       this.bugService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
         this.getBugArticle$ = getObject;
       });
-    }
   }
   userDetail() {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});

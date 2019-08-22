@@ -25,6 +25,7 @@ export class ArticlePostPageComponent implements OnInit {
   article$: Article = new Article();
   arrays = '';
   checkUpdate = false;
+  selectedEditValue$: string;
   public model = {
     editorData: '',
     default: ''
@@ -52,8 +53,8 @@ export class ArticlePostPageComponent implements OnInit {
     this.getArticleDetail(this.data2, this.data1);
   }
 
-  checkAdd(title: string, array: string) {
-    if (title.trim() === '' || array.trim() === '') {
+  checkAdd(title: string, content: string, array: string) {
+    if (title.trim() === '' || content.trim() === '' || array.trim() === '') {
       alert('Tiêu đề bài viết hoặc tag bài viết không được để trống');
       return false;
     } else {
@@ -67,15 +68,19 @@ export class ArticlePostPageComponent implements OnInit {
     let arrayTagCheck = [];
     this.subString = [];
     this.subString = array.split(',');
+    if ( this.subString.length > 5) {
+      alert('số tag không được vượt quá 5');
+      return;
+    }
     for (let i = 0; i < this.subString.length; i++) {
       this.tag = new Tag(this.subString[i], 'dfasdfasdfasdf');
       if (this.tags.length < 5) {
         this.tags.push(this.tag);
       }
       arrayTagCheck.push(this.tag);
-
     }
     if (arrayTagCheck.length > 5) {
+      alert('số tag không được vượt quá 5');
       return;
     } else {
       const a: AddArticle = new AddArticle();
@@ -86,7 +91,7 @@ export class ArticlePostPageComponent implements OnInit {
       a.tags = this.tags;
       a.uploadedFiles = [];
       a.category = selected;
-      if (this.checkAdd(a.title, array)) {
+      if (this.checkAdd(a.title, a.content, array)) {
         console.log(`LOL`);
         this.articlePostService.addArticle(a).subscribe(result => {
           alert('Đăng bài viết thành công');
@@ -114,6 +119,10 @@ export class ArticlePostPageComponent implements OnInit {
     this.tags = [];
     this.subString = [];
     this.subString = array.split(',');
+    if ( this.subString.length > 5) {
+      alert('số tag không được vượt quá 5');
+      return;
+    }
     for (let i = 0; i < this.subString.length; i++) {
       this.tag = new Tag(this.subString[i], 'dfasdfasdfasdf');
       if (this.tags.length < 5) {
@@ -132,8 +141,16 @@ export class ArticlePostPageComponent implements OnInit {
     a.tags = this.tags;
     a.uploadedFiles = [];
     a.category = selected;
-    this.articlePostService.updateArticle(this.data1, a).subscribe();
-    window.location.replace(`/article-detail-page?userId=${this.data2}&id=${this.data1}`);
+    if (this.checkAdd(a.title, a.content, array)) {
+      this.articlePostService.updateArticle(this.data1, a).subscribe(result => {
+        alert('Cập nhật bài viết thành công');
+      });
+
+      window.location.replace(`/article-detail-page?userId=${this.data2}&id=${this.data1}`);
+    } else {
+      return false;
+    }
+
   }
 
   userDetail() {

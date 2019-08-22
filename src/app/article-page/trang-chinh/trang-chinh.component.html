@@ -24,10 +24,10 @@
             <div style="font-size: 4em; padding: 1em;text-align: center">Các bài viết mới nhất</div>
             <h3>Tìm kiếm bài viết </h3>
             <div style="margin: 0rem 0rem 5rem 0rem;">
-              <input #articleTitle (keyup.enter)="searchArticle(articleTitle.value, 0)"
+              <input #articleTitle (keyup.enter)="resetPage();searchArticle(articleTitle.value, 0)"
                      style="color: black;margin-top: 2.25rem;width: 31rem;height: 2.5em">
               <input title="Search" value="" type="submit" class="button-search"
-                     style="margin-top: -2.3rem;margin-left: 31rem;height:2.5em ">
+                     style="margin-top: -2.3rem;margin-left: 31rem;height:2.5em " (click)="resetPage();searchArticle(articleTitle.value, 0)">
             </div>
             <h1 *ngIf="articleTitle.value">Kết quả tìm kiếm của "{{articleTitle.value}}"</h1>
             <h1 *ngIf="checkPaging$ == 'tag'&& !articleTitle.value">Kết quả tìm kiếm của "{{tagName}}"</h1>
@@ -35,14 +35,14 @@
               <table>
                 <thead>
                 <tr>
-                  <th>Số thứ tự</th>
-                  <th>Tên bài viết</th>
-                  <th>Ngày đăng</th>
+                  <th style="width: 10%">Số thứ tự</th>
+                  <th style="width: 70%">Tên bài viết</th>
+                  <th style="width: 20%">Ngày đăng</th>
                 </tr>
                 </thead>
                 <tbody *ngIf="!checkSearch&& checkPaging$ == 'home'">
                 <tr
-                  *ngFor="let article of getAllArticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: p, totalItems: getAllArticle$.numberOfContents } let i = index">
+                  *ngFor="let article of getAllArticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: pA, totalItems: getAllArticle$.numberOfContents } let i = index">
                   <td>{{i+1+ pageIndex$*10}}</td>
                   <td style="padding: 1em"><a style="cursor: pointer" (click)="getArticleDetail(article)">{{article.title}}</a>
                   </td>
@@ -51,7 +51,7 @@
                 </tbody>
                 <tbody *ngIf="checkSearch && checkPaging$ == 'home'">
                 <tr
-                  *ngFor="let article of getAllArticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: p, totalItems: getAllArticle$.numberOfContents } let i = index">
+                  *ngFor="let article of getAllArticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: pS, totalItems: getAllArticle$.numberOfContents } let i = index">
                   <td>{{i+1+ pageIndex$*10}}</td>
                   <td style="padding: 1em"><a style="cursor: pointer" (click)="getArticleDetail(article)">{{article.title}}</a>
                   </td>
@@ -60,7 +60,7 @@
                 </tbody>
                 <tbody *ngIf="!checkSearch && checkPaging$ == 'tag'">
                 <tr
-                  *ngFor="let article of getAllArticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: p, totalItems: getAllArticle$.numberOfContents } let i = index">
+                  *ngFor="let article of getAllArticle$.articlesByPageIndex | paginate: { itemsPerPage: 10, currentPage: pT, totalItems: getAllArticle$.numberOfContents } let i = index">
                   <td>{{i+1+ pageIndex$*10}}</td>
                   <td style="padding: 1em"><a style="cursor: pointer" (click)="getArticleDetail(article)">{{article.title}}</a>
                   </td>
@@ -73,13 +73,13 @@
         </div>
         <!-- ################################################################################################ -->
         <!-- ################################################################################################ -->
-        <div class="my-pagination" *ngIf="!checkSearch&& getAllArticle$.numberOfPages!=1&& checkPaging$ == 'home'">
+        <div class="my-pagination" *ngIf="!checkSearch&& checkPaging$ == 'home'">
           <pagination-controls (pageChange)="getPageAll($event)"></pagination-controls>
         </div>
-        <div class="my-pagination" *ngIf="checkSearch&& getAllArticle$.numberOfPages!=1 && checkPaging$ == 'home'">
+        <div class="my-pagination" *ngIf="checkSearch&& checkPaging$ == 'home'">
           <pagination-controls (pageChange)="getPageSearch($event, articleTitle.value)"></pagination-controls>
         </div>
-        <div class="my-pagination" *ngIf="!checkSearch&& getAllArticle$.numberOfPages!=1 && checkPaging$ == 'tag'">
+        <div class="my-pagination" *ngIf="!checkSearch&& checkPaging$ == 'tag'">
           <pagination-controls (pageChange)="getPageTag($event)"></pagination-controls>
         </div>
         <!-- ################################################################################################ -->

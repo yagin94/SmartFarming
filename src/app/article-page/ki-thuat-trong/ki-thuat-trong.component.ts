@@ -24,6 +24,9 @@ export class KiThuatTrongComponent implements OnInit {
   click() {
     this.loading = true;
   }
+  resetPage() {
+    this.p = 1;
+  }
   ngOnInit() {
     this.loading = false;
     this.getGrowArticle(this.pageIndex$);
@@ -55,12 +58,10 @@ export class KiThuatTrongComponent implements OnInit {
     this.selectedIndex = 0;
     this.pageIndex$ = pageIndex;
     this.checkSearch = true;
-    if (textSearch) {
       textSearch.trim();
       this.growService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
         this.getGrowArticle$ = getObject;
       });
-    }
   }
   userDetail() {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});

@@ -439,13 +439,13 @@ export class QaPageDetailComponent implements OnInit {
   }
 
   upvoteQuestion(questionId: number): void {
-    this.checkLikeButton$ = !this.checkLikeButton$;
     if (!localStorage.getItem('currentAppUser')) {
       alert('Bạn cần đăng nhập trước');
       return;
     } else {
       const u = new AddupvoteQa(JSON.parse(localStorage.getItem('currentAppUser')).userId);
       this.qaService.upvoteQuestion(questionId, u).subscribe(question => {
+        this.checkLikeButton$ = !this.checkLikeButton$;
         }
       );
       this.getQaDetail(this.data, this.ownerUser);

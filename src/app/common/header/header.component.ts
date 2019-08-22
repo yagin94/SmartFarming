@@ -28,6 +28,8 @@ export class HeaderComponent implements OnInit {
   loadingC: boolean;
   checkNotif = true;
   notiUnseen = 0;
+  currentPageNoti = 0;
+  arrayNoti$: any[];
 
   constructor(private authService: AuthService,
               private headerService: HeaderService,
@@ -170,7 +172,6 @@ export class HeaderComponent implements OnInit {
       const userId = JSON.parse(localStorage.getItem('currentAppUser')).userId;
       this.headerService.getNotification(userId, this.pageIndex).subscribe(res => {
         this.getNotif$ = res;
-        console.log(`================================================`, this.getNotif$);
       });
     } else if (localStorage.getItem('anonumousUser')) {
       const userId = JSON.parse(localStorage.getItem('anonumousUser')).userId;
@@ -217,6 +218,7 @@ export class HeaderComponent implements OnInit {
 
   deleteNotif(id: number) {
     this.headerService.deleteNotif(id).subscribe();
+    this.getUnseenNoti();
     this.getNotif();
   }
 
@@ -233,6 +235,13 @@ export class HeaderComponent implements OnInit {
     this.headerService.getUnseenNoti(JSON.parse(localStorage.getItem('currentAppUser')).userId).subscribe(noti => {
       this.notiUnseen = noti;
       console.log('noti', this.notiUnseen);
+    });
+  }
+
+  viewMore() {
+    console.log('vao day');
+    this.headerService.viewMoreNoti(this.id, this.currentPageNoti++).subscribe(res => {
+      this.getNotif$ = res;
     });
   }
 

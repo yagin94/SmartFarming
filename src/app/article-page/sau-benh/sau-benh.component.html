@@ -22,10 +22,10 @@
           <div style="font-size: 4em; padding: 1em;text-align: center">Các bài viết mới nhất</div>
           <h3>Tìm kiếm bài viết </h3>
           <div style="margin: 0rem 0rem 8rem 0rem;">
-            <input #articleTitle (keyup.enter)="searchArticle(articleTitle.value, 0)"
+            <input #articleTitle (keyup.enter)="resetPage();searchArticle(articleTitle.value, 0)"
                    style="color: black;margin-top: 2.25rem;width: 31rem;height: 2.5em">
             <input title="Search" value="" type="submit" class="button-search"
-                   style="margin-top: -2.3rem;margin-left: 31rem;height:2.5em ">
+                   style="margin-top: -2.3rem;margin-left: 31rem;height:2.5em " (click)="resetPage();searchArticle(articleTitle.value, 0)">
           </div>
           <h1 *ngIf="articleTitle.value">Kết quả tìm kiếm của "{{articleTitle.value}}"</h1>
           <div class="scrollable">

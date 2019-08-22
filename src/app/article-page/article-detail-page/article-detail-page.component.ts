@@ -86,11 +86,11 @@ export class ArticleDetailPageComponent implements OnInit {
       this.articleDelete$ = this.articleDelete$.filter(h => h !== id);
       this.articleDetailService.deleteArticle(id).subscribe(
         onSuccess => {
-          alert('Xóa câu hỏi thành công!!!');
+          alert('Xóa bài viết thành công!!!');
           window.history.back();
         },
         onFail => {
-          alert('Bạn không thể xóa câu hỏi này !!!');
+          alert('Bạn không thể xóa bài viết này !!!');
         }
       );
     }

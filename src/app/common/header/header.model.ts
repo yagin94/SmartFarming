@@ -18,5 +18,7 @@ export class Notifications {
 export class GetNotif {
   notificationsByPageIndex: Notifications;
   numberOfPages: number;
+  currentPage: number;
+  numberOfContents: number;
   constructor() {}
 }

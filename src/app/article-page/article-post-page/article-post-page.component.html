@@ -102,14 +102,8 @@
             <ckeditor [(ngModel)]="model.default" [ngModelOptions]="{standalone: true}"></ckeditor>
             <label>Chọn thể loại</label>
             <div>
-              <select [(ngModel)]="selectedValue$" [ngModelOptions]="{standalone: true}" >
-                <option>Kỹ thuật trồng</option>
-                <option>Thu hoạch bảo quản</option>
-                <option>Phân bón</option>
-                <option>Thuốc bảo vệ thực vật</option>
-                <option>Sâu bệnh</option>
-                <option>Kỹ thuật nhân giống</option>
-                <option>Giống cây</option>
+              <select disabled>
+                <option selected>{{article$.category}}</option>
               </select>
             </div>
             <label>Chọn từ khóa</label>

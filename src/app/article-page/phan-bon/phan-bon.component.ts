@@ -26,6 +26,9 @@ export class PhanBonComponent implements OnInit {
     this.loading = false;
     this.getDungArticle(this.pageIndex$);
   }
+  resetPage() {
+    this.p = 1;
+  }
   getPageAll(page: number) {
     this.p = page;
     this.getDungArticle(this.p - 1);
@@ -52,12 +55,10 @@ export class PhanBonComponent implements OnInit {
     this.selectedIndex = 0;
     this.pageIndex$ = pageIndex;
     this.checkSearch = true;
-    if (textSearch) {
       textSearch.trim();
       this.dungService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
         this.getDungArticle$ = getObject;
       });
-    }
   }
   userDetail() {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});

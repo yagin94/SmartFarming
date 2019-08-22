@@ -20,7 +20,9 @@ export class TrangChinhComponent implements OnInit {
   tagName: any;
   checkPaging$: string;
   selectedIndex = 0;
-  p = 1;
+  pA = 1;
+  pS = 1;
+  pT = 1;
   collection: Article[];
   index = 1;
 
@@ -45,19 +47,21 @@ export class TrangChinhComponent implements OnInit {
   }
 
   getPageAll(page: number) {
-    this.p = page;
-    this.getAllArticle(this.p - 1);
+    this.pA = page;
+    this.getAllArticle(this.pA - 1);
   }
+
   getPageSearch(page: number, textSearch: string) {
-    this.p = page;
-    this.searchArticle(textSearch , this.p - 1);
+    this.pS = page;
+    this.searchArticle(textSearch, this.pS - 1);
   }
+
   getPageTag(page: number) {
-    this.p = page;
-    this.getArticleByTag(this.data, this.p - 1);
+    this.pT = page;
+    this.getArticleByTag(this.data, this.pT - 1);
   }
+
   getAllArticle(pageIndex$: number) {
-    console.log(this.p);
     this.checkPaging$ = 'home';
     this.pageIndex$ = pageIndex$;
     this.trangChinhService.getAllArticle(this.pageIndex$).subscribe(object => {
@@ -93,6 +97,10 @@ export class TrangChinhComponent implements OnInit {
     this.trangChinhService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
       this.getAllArticle$ = getObject;
     });
+  }
+
+  resetPage() {
+    this.pS = 1;
   }
 
   setRow(_index: number) {

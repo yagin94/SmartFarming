@@ -29,6 +29,7 @@ export class GetObjectQaByTag {
 
 export class ReportUser {
   numberOfPages: number;
+  numberOfContents: number;
   reportsByPageIndex: ReportsByPageIndex;
 
   constructor() {

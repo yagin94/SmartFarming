@@ -49,7 +49,7 @@ export class ManagerPageComponent implements OnInit {
   sortArticleBy$ = 'date';
   getQuestionSearch: any;
   pageIndexTagManage$ = 0;
-  questionSeachIndex = 0;
+  allUserIndex = 0;
   questionSearchIndexCheckString = '';
   /**=====================*/
   isFlatShowView = false;
@@ -61,6 +61,7 @@ export class ManagerPageComponent implements OnInit {
   isFlatShowAllUser = false;
   checkSearch = false;
   checkSearchQuestion = false;
+  choosenUser = new AppUser();
 
   dateChart = '';
   monthChart = '';
@@ -68,29 +69,16 @@ export class ManagerPageComponent implements OnInit {
   periodChart = '';
   selectedIndex = 0;
 
-  keyword = 'name';
-  data1 = [
-    {
-      id: 1,
-      name: 'Tinh'
-    },
-    {
-      id: 2,
-      name: 'Ha'
-    }, {
-      id: 4,
-      name: 'Son'
-    }, {
-      id: 5,
-      name: 'Hien'
-    }, {
-      id: 6,
-      name: 'Quynh'
-    }, {
-      id: 7,
-      name: 'Lam'
-    },
-  ];
+  pArticle = 1;
+  pArticleSearch = 1;
+  pQuestion = 1;
+  qQuestionSearch = 1;
+  qAllTag = 1;
+  qSearchTag = 1;
+  qReportUser = 1;
+  qReportUserDetail = 1;
+  pAllUser = 1;
+
 
   init() {
     this.loading = false;
@@ -144,6 +132,7 @@ export class ManagerPageComponent implements OnInit {
   }
 
   sortBy(value: string) {
+    this.pQuestion = 1;
     this.sortBy$ = value;
     console.log(value);
     this.getQa(this.sortBy$, 0);
@@ -178,16 +167,15 @@ export class ManagerPageComponent implements OnInit {
   }
 
   getUserByTag(tagId: number) {
-    console.log('id', tagId);
     this.tagUserDetail = true;
     this.isFlatShowAllUser = false;
     this.managerService.getUserByTag(tagId).subscribe(object => {
       this.getUserByTag$ = object;
-      console.log('tinhnx', this.getUserByTag$);
     });
   }
 
   sortTagBy(value: string) {
+    this.qAllTag = 1;
     this.pageIndexTagManage$ = 0;
     this.selectedIndex = 0;
     this.sortTagBy$ = value;
@@ -196,6 +184,7 @@ export class ManagerPageComponent implements OnInit {
 
   /**=======================getReport============================================*/
   getReport(pageIndex: number) {
+    console.log('getReport', this.qReportUser);
     this.pageIndexReport$ = pageIndex;
     this.managerService.getReport(pageIndex).subscribe(getObject => {
       this.getReportUser$ = getObject;
@@ -204,9 +193,11 @@ export class ManagerPageComponent implements OnInit {
 
   getReportDetail(report: number, pageNumber: number) {
     console.log('click', report);
+    console.log('this.qReportUser', this.qReportUser);
     this.reportDetail = true;
     this.managerService.getReportDetail(report, pageNumber).subscribe(reportDetailuser => {
       this.getReport$ = reportDetailuser;
+      this.choosenUser = this.getReport$.reportsByPageIndex[0].appUser;
       console.log('detail', this.getReport$);
     });
   }
@@ -238,6 +229,7 @@ export class ManagerPageComponent implements OnInit {
         this.isFlatShowQuestion = false;
         break;
       case 1:
+
         this.isFlatShowAllUser = false;
         this.isFlatShowView = false;
         this.isFlatShowUser = true;
@@ -311,14 +303,18 @@ export class ManagerPageComponent implements OnInit {
 
 
   getAllUser(pageNumber: number) {
-    console.log('tinhnx', pageNumber);
-    this.isFlatShowAllUser = true;
+    this.allUserIndex = pageNumber;
+
     this.tagDetail = false;
     this.tagUserDetail = false;
     this.managerService.getAllUser(pageNumber).subscribe(object => {
       this.getAllUser$ = object;
-      console.log('tinhnx1', this.getAllUser$);
     });
+  }
+
+  showAlluser() {
+    this.isFlatShowAllUser = true;
+    this.pAllUser = 1;
   }
 
   userDetail(userId: number) {
@@ -444,9 +440,11 @@ export class ManagerPageComponent implements OnInit {
       });
     }
   }
+
   userDetails() {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});
   }
+
   isLoggedIn() {
     if (localStorage.getItem('currentAppUser')) {
       return true;
@@ -477,12 +475,14 @@ export class ManagerPageComponent implements OnInit {
   }
 
   getSortByArticle(sortBy: string) {
+    this.pArticle = 1;
     this.sortArticleBy$ = sortBy;
     this.getAllarticle(this.sortArticleBy$, 0);
   }
 
   showAllQuestion() {
     this.checkSearchQuestion = false;
+    this.pQuestion = 1;
   }
 
 
@@ -490,11 +490,68 @@ export class ManagerPageComponent implements OnInit {
     if (confirm('Bạn có chắc chắn muốn xóa báo cáo không?')) {
       this.managerService.deleteReport(reportUser.reportId).subscribe(onsucess => {
           alert('Xóa báo cáo thành công!');
+          this.getReport(this.pageIndexReport$);
+          this.getReportDetail(this.choosenUser.userId, 0);
         },
         failDeleteReport => {
           alert('Xóa báo cáo  thất bại!');
+          this.getReport(this.pageIndexReport$);
         });
     }
-    this.getReport(this.pageIndexReport$);
+
+  }
+
+  //21-08-2019 -------------------------------------------------------------------------------------
+  getPageAllArticle(page: number) {
+    this.pArticle = page;
+    this.getAllarticle(this.sortArticleBy$, this.pArticle - 1);
+  }
+
+  getPageSearchArticle(page: number, textSearch: string) {
+    this.pArticleSearch = page;
+    this.searchArticle(textSearch, this.pArticleSearch - 1);
+  }
+
+  getPageAllQuestion(page: number) {
+    this.pQuestion = page;
+    this.getQa(this.sortBy$, this.pQuestion - 1);
+  }
+
+  getPageSearchQuestion(page: number, textSearch: string) {
+    this.qQuestionSearch = page;
+    this.searchQuestion(textSearch, this.qQuestionSearch - 1);
+  }
+
+  getPageAllTag(page: number) {
+    this.qAllTag = page;
+    this.getAllTag(this.sortTagBy$, this.qAllTag - 1);
+  }
+
+  getPageAllReportUser(page: number) {
+    this.qReportUser = page;
+    this.getReport(this.qReportUser - 1);
+  }
+
+  resetIndexReport() {
+
+  }
+
+  getPageAllReportUserDetail(page: number, report: number) {
+    this.qReportUserDetail = page;
+    this.getReportDetail(report, this.qReportUserDetail - 1);
+  }
+
+  getPageAllUser(page: number) {
+    this.pAllUser = page;
+    this.getAllUser(this.pAllUser - 1);
+  }
+
+  resetSearchQa() {
+    this.qQuestionSearch = 1;
+  }
+
+  resetSearchArticle() {
+    this.pArticleSearch = 1;
+    this.pageIndexArticleSearch$ = 0;
   }
 }

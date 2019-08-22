@@ -23,6 +23,7 @@ export class AllTagUserPageComponent implements OnInit {
   user$ = new AppUser();
   selectedIndex = 0;
   numberOfTag$ = 0;
+  pAllTag = 1;
 
   constructor(private userDetailPageService: UserDetailPageService,
               private route: ActivatedRoute,
@@ -85,4 +86,11 @@ export class AllTagUserPageComponent implements OnInit {
     });
 
   }
+
+  getPageAllTag(page: number) {
+    this.pAllTag = page;
+    this.getAllTagOfUser(this.user$.userId, this.pAllTag - 1);
+  }
+
+  
 }

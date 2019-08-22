@@ -54,8 +54,8 @@
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
-<div class="wrapper row3">
-  <main class="hoc container clear">
+<div class="wrapper row3 special">
+  <main class="hoc container clear" style="min-width: 80%">
     <!-- main body -->
     <!-- ################################################################################################ -->
     <div class="sidebar one_quarter first">
@@ -72,15 +72,6 @@
           <li><a href="/article-page/app-giong-cay">Giống cây</a></li>
         </ul>
       </nav>
-      <div class="sdb_holder">
-        <article>
-          <h6>Top Kiến thức</h6>
-          <p> Những bài viết liên quan</p>
-          <ul>
-            <li *ngFor="let a of getAllArticle$.articlesByPageIndex"><a style="cursor: pointer" (click)="viewDetail(a)">{{a.title}}</a></li>
-          </ul>
-        </article>
-      </div>
       <div class="sdb_holder">
         <h6>Mọi thắc mắc liên hệ</h6>
         <address>
@@ -99,9 +90,9 @@
     </div>
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
-    <div class="content three_quarter">
+    <div class="content one_half" style="margin-left: 0%;width: 51%">
       <!-- ################################################################################################ -->
-      <h1><p>{{article$.title}}</p></h1>
+      <h1 style="text-transform: none"><p>{{article$.title}}</p></h1>
       <div *ngIf="checkAdmin=='ADMIN'" class="group btmspace-50 demo" style="width: 50%; cursor: pointer">
           <a class="one_half first" style="font-size: large" (click)="editArticle(article$)">Chỉnh sửa bài viết</a>
         <a class="one_half" style="font-size: large" (click)="deleteArticle(article$.articleId)">Xóa bài viết</a>
@@ -171,6 +162,17 @@
         </form>
       </div>
       <!-- ################################################################################################ -->
+    </div>
+    <div class="sidebar one_quarter" style="padding-right:0% ">
+      <div class="sdb_holder">
+        <article>
+          <h6>Top Kiến thức</h6>
+          <p> Những bài viết liên quan</p>
+          <ul>
+            <li *ngFor="let a of getAllArticle$.articlesByPageIndex"><a style="cursor: pointer" (click)="viewDetail(a)">{{a.title}}</a></li>
+          </ul>
+        </article>
+      </div>
     </div>
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->

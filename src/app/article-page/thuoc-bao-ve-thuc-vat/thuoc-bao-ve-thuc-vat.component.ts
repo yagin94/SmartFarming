@@ -28,7 +28,9 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
   click() {
     this.loading = true;
   }
-
+  resetPage() {
+    this.p = 1;
+  }
   ngOnInit() {
     this.loading = false;
     this.getDrugArticle(this.pageIndex$);
@@ -61,12 +63,10 @@ export class ThuocBaoVeThucVatComponent implements OnInit {
     this.selectedIndex = 0;
     this.pageIndex$ = pageIndex;
     this.checkSearch = true;
-    if (textSearch) {
       textSearch.trim();
       this.drugService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
         this.getDrugArticle$ = getObject;
       });
-    }
   }
 
   userDetail() {

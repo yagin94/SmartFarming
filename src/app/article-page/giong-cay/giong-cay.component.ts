@@ -26,6 +26,9 @@ export class GiongCayComponent implements OnInit {
   click() {
     this.loading = true;
   }
+  resetPage() {
+    this.p = 1;
+  }
   ngOnInit() {
     this.loading = false;
     this.getTypeArticle(this.pageIndex$);
@@ -57,12 +60,10 @@ export class GiongCayComponent implements OnInit {
     this.selectedIndex = 0;
     this.pageIndex$ = pageIndex;
     this.checkSearch = true;
-    if (textSearch) {
       textSearch.trim();
       this.typeService.searchArticle(pageIndex, textSearch).subscribe(getObject => {
         this.getTypeArticle$ = getObject;
       });
-    }
   }
   userDetail() {
     this.router.navigate(['/user-detail-page'], {queryParams: {id: JSON.parse(localStorage.getItem(`currentAppUser`)).userId}});

@@ -56,6 +56,7 @@ export class GetTopTagOfUser {
 }
 
 export class GetAllTagOfUser {
+  numberOfContents: number;
   tagsByPageIndex: Tag;
   numberOfPages: number;
 }
@@ -64,6 +65,7 @@ export class GetTopQuestionOfUser {
   numberOfPages: number;
 }
 export class GetAllQuestionOfUser {
+  numberOfContents: number;
   qa: QaAllQuestion;
   numberOfPages: number;
 }

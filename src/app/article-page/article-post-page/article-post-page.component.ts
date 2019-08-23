@@ -121,7 +121,6 @@ export class ArticlePostPageComponent implements OnInit {
     this.subString = array.split(',');
     if ( this.subString.length > 5) {
       alert('số tag không được vượt quá 5');
-      return;
     }
     for (let i = 0; i < this.subString.length; i++) {
       this.tag = new Tag(this.subString[i], 'dfasdfasdfasdf');

@@ -117,7 +117,7 @@ export class QaPageDetailComponent implements OnInit {
     console.log(this.globals.test);
   }
 
-  getNumber(object: Answers) {
+  getNumber(object: Answers[]) {
     if (object != null) {
       return Object.keys(object).length;
     }

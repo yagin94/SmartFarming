@@ -20,7 +20,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 
 export class QaService {
-  QaUrl = 'http://localhost:8080/question/searchQuestions';
+  host = 'http://104.199.153.91:8080';
 
   constructor(private http: HttpClient) {
   }
@@ -28,52 +28,52 @@ export class QaService {
   /** GET question from the server */
   /** Sort by date or view count*/
   getQa(sortBy: string, pageIndex: number): Observable<GetObject> {
-    return this.http.get<GetObject>(`http://localhost:8080/question/viewQuestions/${sortBy}/${pageIndex}`);
+    return this.http.get<GetObject>(this.host + `/question/viewQuestions/${sortBy}/${pageIndex}`);
   }
 
   /** GET top questions,user,tag from server*/
   getTopQa(): Observable<GetObjectTopQa> {
-    return this.http.get<GetObjectTopQa>(`http://localhost:8080/question/viewTop3QuestionsByViewCount`);
+    return this.http.get<GetObjectTopQa>(this.host + `/question/viewTop3QuestionsByViewCount`);
   }
 
   getTopQaRelate(questionId: number): Observable<GetObjectTopQa> {
-    return this.http.get<GetObjectTopQa>(`http://localhost:8080/question/viewRelatedQuestions/${questionId}`);
+    return this.http.get<GetObjectTopQa>(this.host + `/question/viewRelatedQuestions/${questionId}`);
   }
 
   getTopUserRelate(questionId: number, userId: number): Observable<GetUserRelateQa[]> {
-    return this.http.get<GetUserRelateQa[]>(`http://localhost:8080/question/viewDetailRelatedUser/${questionId}/${userId}`);
+    return this.http.get<GetUserRelateQa[]>(this.host + `/question/viewDetailRelatedUser/${questionId}/${userId}`);
   }
 
   getListUserRelate(questionId: number): Observable<AppUser[]> {
-    return this.http.get<AppUser[]>(`http://localhost:8080/question/viewRelatedUsersByQuestion/${questionId}`);
+    return this.http.get<AppUser[]>(this.host + `/question/viewRelatedUsersByQuestion/${questionId}`);
   }
 
   getTopUser(): Observable<GetObjectTopUser> {
-    return this.http.get<GetObjectTopUser>(`http://localhost:8080/userDetail/viewTop3UsersByReputation`);
+    return this.http.get<GetObjectTopUser>(this.host + `/userDetail/viewTop3UsersByReputation`);
   }
 
   getTopTag(): Observable<GetObjectTopTag> {
-    return this.http.get<GetObjectTopTag>(`http://localhost:8080/tag/viewTop5TagsByViewCount`);
+    return this.http.get<GetObjectTopTag>(this.host + `/tag/viewTop5TagsByViewCount`);
   }
 
   /** Get questions by tag*/
   getQaByTag(sortBy: string, tagId: number, pageIndex: number): Observable<GetObjectQaByTag> {
-    return this.http.get<GetObjectQaByTag>(`http://localhost:8080/question/viewQuestionsByTag/${sortBy}/${tagId}/${pageIndex}`);
+    return this.http.get<GetObjectQaByTag>(this.host + `/question/viewQuestionsByTag/${sortBy}/${tagId}/${pageIndex}`);
   }
 
   /** GET 1 question from the server */
   getQaDetail(questionId: number, userID: number): Observable<Qa> {
-    return this.http.get<Qa>(`http://localhost:8080/question/viewQuestion/${userID}/${questionId}`);
+    return this.http.get<Qa>(this.host + `/question/viewQuestion/${userID}/${questionId}`);
   }
 
   /** POST: add a new question to the database */
   addQa(qa: Qa): Observable<Qa> {
-    return this.http.post<Qa>('http://localhost:8080/question/addQuestion', qa);
+    return this.http.post<Qa>(this.host + '/question/addQuestion', qa);
   }
 
   /** DELETE: delete the article from the server */
   deleteQa(id: number): Observable<{}> {
-    const url = `http://localhost:8080/question/deleteQuestion/${id}`;
+    const url = this.host + `/question/deleteQuestion/${id}`;
     return this.http.delete(url);
   }
 
@@ -81,41 +81,41 @@ export class QaService {
   searchQa(textSearch: string, type: string, pageIndex: number): Observable<GetObject> {
     const params = {textSearch};
 
-    return this.http.post<GetObject>(`${this.QaUrl}/${type}/${pageIndex}`, params);
+    return this.http.post<GetObject>(this.host + '/question/searchQuestions/' + `${type}/${pageIndex}`, params);
   }
 
   reportQa(id: number, reportObj: ReportObj): Observable<{}> {
-    const url = `http://localhost:8080/question/reportQuestion/${id}`;
+    const url = this.host + `/question/reportQuestion/${id}`;
     return this.http.post(url, reportObj);
   }
 
   /** PUT: update the question on the server. Returns the updated article upon success. */
   updateQuestion(id: number, question: Qa): Observable<Qa> {
-    return this.http.put<Qa>(`http://localhost:8080/question/updateQuestion/${id}`, question);
+    return this.http.put<Qa>(this.host + `/question/updateQuestion/${id}`, question);
   }
 
   upvoteQuestion(questionId: number, userId: AddupvoteQa): Observable<{}> {
-    return this.http.post<{}>(`http://localhost:8080/upvote/question/${questionId}`, userId);
+    return this.http.post<{}>(this.host + `/upvote/question/${questionId}`, userId);
   }
 
   /** POST: add a new answer to the database */
   addAnswer(answer: AddAnsObj): Observable<Answers> {
-    return this.http.post<Answers>('http://localhost:8080/answer/addAnswerToQuestion', answer);
+    return this.http.post<Answers>(this.host + '/answer/addAnswerToQuestion', answer);
   }
 
   upvoteAnswer(answerId: number, userId: AddupvoteQa): Observable<{}> {
-    return this.http.post<{}>(`http://localhost:8080/upvote/answer/${answerId}`, userId);
+    return this.http.post<{}>(this.host + `/upvote/answer/${answerId}`, userId);
   }
 
   /** PUT: update the answer on the server. Returns the updated article upon success. */
   updateAnswer(answerId: number, answer: AddAnsObj): Observable<AddAnsObj> {
     console.log('idddd', answerId);
-    return this.http.put<AddAnsObj>(`http://localhost:8080/answer/updateAnswerToQuestion/${answerId}`, answer);
+    return this.http.put<AddAnsObj>(this.host + `/answer/updateAnswerToQuestion/${answerId}`, answer);
   }
 
   /** DELETE: delete the question from the server */
   deleteAnswer(answerId: number): Observable<{}> {
-    const url = `http://localhost:8080/answer/deleteAnswerToQuestion/${answerId}`;
+    const url = this.host + `/answer/deleteAnswerToQuestion/${answerId}`;
     return this.http.delete(url);
   }
 
@@ -124,22 +124,22 @@ export class QaService {
 
   /** tinhnx*/
   getTagSuggest(text: TextSearch): Observable<GetObjectTopTag> {
-    return this.http.post<GetObjectTopTag>(' http://localhost:8080/tag/searchTagsWhileTyping', text);
+    return this.http.post<GetObjectTopTag>(this.host + '/tag/searchTagsWhileTyping', text);
   }
 
   deleteQuestion(questionId: number) {
-    return this.http.delete(`http://localhost:8080/admin/deleteQuestion/${questionId}`);
+    return this.http.delete(this.host + `/admin/deleteQuestion/${questionId}`);
   }
 
   deleteAnswerByAdmin(answerId: number) {
-    return this.http.delete(`http://localhost:8080/admin/deleteAnswerToQuestion/${answerId}`);
+    return this.http.delete(this.host + `/admin/deleteAnswerToQuestion/${answerId}`);
   }
 
   getTagById(tagId: number): Observable<Tag> {
-    return this.http.get<Tag>(`http://localhost:8080/tag/findTagById/${tagId}`);
+    return this.http.get<Tag>(this.host + `/tag/findTagById/${tagId}`);
   }
 
   getAllInforUserRelate(questionId: number): Observable<UserRelate> {
-    return this.http.get<UserRelate>(`http://localhost:8080/question/viewRelatedUsersByQuestion/${questionId}`);
+    return this.http.get<UserRelate>(this.host + `/question/viewRelatedUsersByQuestion/${questionId}`);
   }
 }

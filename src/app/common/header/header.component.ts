@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
   notiUnseen = 0;
   currentPageNoti = 0;
   arrayNoti$: any[];
+  host = 'http://104.199.153.91:8080';
 
   constructor(private authService: AuthService,
               private headerService: HeaderService,
@@ -38,6 +39,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.getUserByIpAddress();
+    console.log(JSON.parse(localStorage.getItem(`currentAppUser`)));
     if (localStorage.getItem('currentAppUser')) {
       this.id = JSON.parse(localStorage.getItem('currentAppUser')).userId;
     }
@@ -61,7 +63,7 @@ export class HeaderComponent implements OnInit {
 
   getResponse(token: string): void {
     this.appUser$ = new AppUser();
-    this.http.post<AppUser>('http://localhost:8080/login',
+    this.http.post<AppUser>(this.host + '/login',
       {
         provider: this.user.provider,
         id: this.user.id,
@@ -102,7 +104,7 @@ export class HeaderComponent implements OnInit {
   sendToRestApiMethod(token: string): void {
     this.globals.loading = true;
     try {
-      this.http.post('http://localhost:8080/login',
+      this.http.post(this.host + '/login',
         {
           provider: this.user.provider,
           id: this.user.id,
@@ -232,10 +234,12 @@ export class HeaderComponent implements OnInit {
 
   // noinspection JSAnnotator
   getUnseenNoti() {
-    this.headerService.getUnseenNoti(JSON.parse(localStorage.getItem('currentAppUser')).userId).subscribe(noti => {
-      this.notiUnseen = noti;
-      console.log('noti', this.notiUnseen);
-    });
+    if (localStorage.getItem('currentAppUser')) {
+      this.headerService.getUnseenNoti(JSON.parse(localStorage.getItem('currentAppUser')).userId).subscribe(noti => {
+        this.notiUnseen = noti;
+        console.log('noti', this.notiUnseen);
+      });
+    }
   }
 
   viewMore() {

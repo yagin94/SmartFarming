@@ -21,60 +21,61 @@ import {
 @Injectable()
 
 export class ManagerService {
+  host = 'http://104.199.153.91:8080';
   constructor(private http: HttpClient) {
   }
 
   getReport(pageIndex: number): Observable<GetReportUser> {
-    return this.http.get<GetReportUser>(`http://localhost:8080/report/findListUsersAndReportTime/${pageIndex}`);
+    return this.http.get<GetReportUser>(this.host + `/report/findListUsersAndReportTime/${pageIndex}`);
   }
 
   getAllTag(type: string, pageNumber: number): Observable<GetObjectTag> {
-    return this.http.get<GetObjectTag>(`http://localhost:8080/tag/findAllTags/${type}/${pageNumber}`);
+    return this.http.get<GetObjectTag>(this.host + `/tag/findAllTags/${type}/${pageNumber}`);
   }
 
   getSearchTag(type: string, pageNumber: number, textSearch: string): Observable<GetObjectTag> {
     const params = {textSearch};
-    return this.http.post<GetObjectTag>(`http://localhost:8080/admin/searchTagsByPageIndex/${type}/${pageNumber}`, params);
+    return this.http.post<GetObjectTag>(this.host + `/admin/searchTagsByPageIndex/${type}/${pageNumber}`, params);
   }
 
   getUserByTag(tagId: number): Observable<SearchUserByTag[]> {
-    return this.http.get<SearchUserByTag[]>(`http://localhost:8080/admin/searchTopUsersByTag/${tagId}`);
+    return this.http.get<SearchUserByTag[]>(this.host + `/admin/searchTopUsersByTag/${tagId}`);
   }
 
   getAllView(): Observable<number> {
-    return this.http.get<number>(`http://localhost:8080/admin/totalWebSiteViewCount`);
+    return this.http.get<number>(this.host + `/admin/totalWebSiteViewCount`);
   }
 
   getAllarticle(sortBy: string, pageNumber: number): Observable<GetAllArticle> {
-    return this.http.get<GetAllArticle>(`http://localhost:8080/article/viewArticles/${sortBy}/${pageNumber}`);
+    return this.http.get<GetAllArticle>(this.host + `/article/viewArticles/${sortBy}/${pageNumber}`);
   }
 
   getAllUser(pageNumber: number): Observable<GetAllUser> {
-    return this.http.get<GetAllUser>(`http://localhost:8080/userDetail/viewUsers/${pageNumber}`);
+    return this.http.get<GetAllUser>(this.host + `/userDetail/viewUsers/${pageNumber}`);
   }
 
   getReportDetail(userId: number, pageNumber: number): Observable<ReportUser> {
-    return this.http.get<ReportUser>(`http://localhost:8080/report/findListReportsByUser/${userId}/${pageNumber}`);
+    return this.http.get<ReportUser>(this.host + `/report/findListReportsByUser/${userId}/${pageNumber}`);
   }
 
   getChartInfor(type: string, body: BodyJsonDrawChart): Observable<DrawChart> {
-    return this.http.post<DrawChart>(`http://localhost:8080/admin/systemChartInfo/${type}`, body);
+    return this.http.post<DrawChart>(this.host + `/admin/systemChartInfo/${type}`, body);
   }
 
   searchArticle(pageIndex: number, textSearch: string): Observable<GetAllArticle> {
     const param = {textSearch};
-    return this.http.post<GetAllArticle>(`http://localhost:8080/article/searchArticles/date/${pageIndex}`, param);
+    return this.http.post<GetAllArticle>(this.host + `/article/searchArticles/date/${pageIndex}`, param);
   }
 
   searchQa(textSearch: string, type: string, pageIndex: number): Observable<GetObject> {
     const params = {textSearch};
 
-    return this.http.post<GetObject>(`http://localhost:8080/question/searchQuestions/${type}/${pageIndex}`, params);
+    return this.http.post<GetObject>(this.host + `/question/searchQuestions/${type}/${pageIndex}`, params);
   }
 
 
 
   deleteReport(reportId: number) {
-    return this.http.delete(`http://localhost:8080/admin/deleteReport/${reportId}`);
+    return this.http.delete(this.host + `/admin/deleteReport/${reportId}`);
   }
 }

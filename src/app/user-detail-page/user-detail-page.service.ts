@@ -18,24 +18,25 @@ import {catchError, last, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class UserDetailPageService {
-  QaUrl = 'http://localhost:8080/admin/userChartInfo';
+  host = 'http://104.199.153.91:8080';
+  QaUrl = 'http://104.199.153.91:8080/admin/userChartInfo';
 
   constructor(private http: HttpClient) {
   }
 
   // get Top tag of a user
   getTopTagOfUser(userId: number): Observable<GetTopTagOfUser> {
-    return this.http.get<GetTopTagOfUser>(`http://localhost:8080/userDetail/getTop5TagsOfUser/viewCount/${userId}`);
+    return this.http.get<GetTopTagOfUser>(this.host + `/userDetail/getTop5TagsOfUser/viewCount/${userId}`);
   }
 
   // get all tag of a user
   getAllTagOfUser(userId: number, pageNumber: number): Observable<GetAllTagOfUser> {
-    return this.http.get<GetAllTagOfUser>(`http://localhost:8080/userDetail/getAllTagsOfUser/${userId}/${pageNumber}`);
+    return this.http.get<GetAllTagOfUser>(this.host + `/userDetail/getAllTagsOfUser/${userId}/${pageNumber}`);
   }
 
   // get top question
   getTopQuestionOfUser(sortBy: string, userID: number): Observable<GetTopQuestionOfUser> {
-    return this.http.get<GetTopQuestionOfUser>(`http://localhost:8080/userDetail/getTop5QuestionsOfUser/${sortBy}/${userID}`);
+    return this.http.get<GetTopQuestionOfUser>(this.host + `/userDetail/getTop5QuestionsOfUser/${sortBy}/${userID}`);
   }
 
   // // get top question by time
@@ -44,24 +45,24 @@ export class UserDetailPageService {
   // }
   // get all question
   getAllQuestionOfUser(type: string, userId: number, pageNumber: number): Observable<GetAllQuestionOfUser> {
-    return this.http.get<GetAllQuestionOfUser>(`http://localhost:8080/userDetail/getAllQuestionsOfUser/${type}/${userId}/${pageNumber}`);
+    return this.http.get<GetAllQuestionOfUser>(this.host + `/userDetail/getAllQuestionsOfUser/${type}/${userId}/${pageNumber}`);
   }
 
   // get information of user (total information)
   getUserDetailInfor(userID: number): Observable<GetUserDetailInfor[]> {
-    return this.http.get<GetUserDetailInfor[]>(`http://localhost:8080/admin/userChartInfo/${userID}`);
+    return this.http.get<GetUserDetailInfor[]>(this.host + `/admin/userChartInfo/${userID}`);
   }
 
   getTotalTagOfUser(userID: number): Observable<GetTotalTagsOfUser> {
-    return this.http.get<GetTotalTagsOfUser>(`http://localhost:8080/userDetail/getTotalTagsOfUser/${userID}`);
+    return this.http.get<GetTotalTagsOfUser>(this.host + `/userDetail/getTotalTagsOfUser/${userID}`);
   }
 
   getViewUser(userID: number): Observable<AppUser> {
-    return this.http.get<AppUser>(`http://localhost:8080/userDetail/viewUser/${userID}`);
+    return this.http.get<AppUser>(this.host + `/userDetail/viewUser/${userID}`);
   }
 
   updateUser(userId: number, appuser: AppUser): Observable<AppUser> {
-    return this.http.post<AppUser>(`http://localhost:8080/userDetail/editProfile/${userId}`, appuser);
+    return this.http.post<AppUser>(this.host + `/userDetail/editProfile/${userId}`, appuser);
   }
 
 

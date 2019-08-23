@@ -9,12 +9,13 @@ import {Article} from '../article.model';
 @Injectable()
 
 export class ArticlePostService {
+  host = 'http://104.199.153.91:8080';
   constructor(private http: HttpClient) {
   }
   addArticle(addArticle: AddArticle): Observable<Article> {
-    return this.http.post<Article>('http://localhost:8080/article/addArticle', addArticle);
+    return this.http.post<Article>(this.host + `/article/addArticle`, addArticle);
   }
   updateArticle(id: number, updateArticle: AddArticle): Observable<Article> {
-    return this.http.put<Article>(`http://localhost:8080/article/updateArticle/${id}`, updateArticle);
+    return this.http.put<Article>(this.host + `/article/updateArticle/${id}`, updateArticle);
   }
 }

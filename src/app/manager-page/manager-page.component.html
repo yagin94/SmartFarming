@@ -201,7 +201,7 @@
                         <td>Lượt xem</td>
                         <td>Tông điểm</td>
                       </tr>
-                      <tr class="" *ngFor="let userAll of getAllUser$.appUsersByPageIndex | paginate: { itemsPerPage: 4, currentPage: pAllUser, totalItems: getAllUser$.numberOfContents } let i = index">
+                      <tr class="" *ngFor="let userAll of getAllUser$.appUsersByPageIndex | paginate: { itemsPerPage: 10, currentPage: pAllUser, totalItems: getAllUser$.numberOfContents } let i = index">
                         <td>{{i+1+allUserIndex*4}}</td>
 
                         <td class="" *ngIf="userAll.socialUser != null" style="text-align: left"><a

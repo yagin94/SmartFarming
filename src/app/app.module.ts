@@ -49,7 +49,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 export function getAuthServiceConfigs() {
   let configs = new SocialServiceConfig()
     .addFacebook('760042107748144')
-    .addGoogle('37814627490-8elc70ljgrbo34n0tn205o2afhrpef6h.apps.googleusercontent.com');
+    // .addGoogle('37814627490-8elc70ljgrbo34n0tn205o2afhrpef6h.apps.googleusercontent.com');
+    .addGoogle('37814627490-4dfosa0br2g50n2k99j3t8scurb7303u.apps.googleusercontent.com'); // production
   return configs;
 }
 
@@ -57,7 +58,8 @@ export function getAuthServiceConfigs() {
 const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('37814627490-8elc70ljgrbo34n0tn205o2afhrpef6h.apps.googleusercontent.com')
+    // provider: new GoogleLoginProvider('37814627490-8elc70ljgrbo34n0tn205o2afhrpef6h.apps.googleusercontent.com')
+    provider: new GoogleLoginProvider('37814627490-4dfosa0br2g50n2k99j3t8scurb7303u.apps.googleusercontent.com') // production
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,

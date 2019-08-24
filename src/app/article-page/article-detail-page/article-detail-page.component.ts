@@ -82,7 +82,7 @@ export class ArticleDetailPageComponent implements OnInit {
     this.loading = true;
     // console.log(id);
     this.articleDelete$ = [];
-    if (confirm('are you sure to delete this article')) {
+    if (confirm('bạn muốn xóa bài viết này chứ')) {
       this.articleDelete$ = this.articleDelete$.filter(h => h !== id);
       this.articleDetailService.deleteArticle(id).subscribe(
         onSuccess => {
@@ -145,7 +145,7 @@ export class ArticleDetailPageComponent implements OnInit {
     this.ansContent = comment.content;
   }
   adminDeleteAnswer(commentId: number): void {
-    if (confirm('are you sure to delete this answer')) {
+    if (confirm('Bạn muốn xóa bình luận này chứ')) {
       // this.answer$ = this.answer$.filter(h => h !== answerId);
       this.articleDetailService.deleteAnswer(commentId).subscribe(onSuccess => {
           alert('Xóa câu thành công!!!');
@@ -157,7 +157,7 @@ export class ArticleDetailPageComponent implements OnInit {
     }
   }
   deleteComment(commentId: number): void {
-    if (confirm('are you sure to delete this answer')) {
+    if (confirm('Bạn muốn xóa bình luận này chứ')) {
       // this.answer$ = this.answer$.filter(h => h !== answerId);
       this.articleDetailService.deleteAnswer(commentId).subscribe(onSuccess => {
           alert('Xóa câu thành công!!!');

@@ -5,8 +5,8 @@
 <!-- ################################################################################################ -->
 <!-- Phan trang chu hien thi thong tin, background ....-->
 <div class="bgded overlay" style="background-image:url('../../assets/images/demo/backgrounds/01.png');">
-  <!--<ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, fullScreenBackdrop: true}"-->
-               <!--[template]="loadingTemplate"></ngx-loading>-->
+  <ngx-loading [show]="loading" [config]="{fullScreenBackdrop: true}"
+               [template]="loadingTemplate"></ngx-loading>
   <!-- ################################################################################################ -->
   <div class="wrapper row1">
     <header id="header" class="hoc clear">
@@ -30,7 +30,7 @@
               <li><a href="article-page/app-trang-chinh" (click)="click()">Chủ đề nổi bật</a></li>
             </ul>
           </li>
-          <li><a  href="/qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
+          <li><a  href="qa-page" routerLinkActive="active"(click)="click()">Hỏi - Đáp</a></li>
           <li *ngIf="isLoggedIn()"><a (click)="userDetails()" style="cursor: pointer">Trang cá nhân</a></li>
 
 

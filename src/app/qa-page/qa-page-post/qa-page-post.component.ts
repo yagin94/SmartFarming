@@ -165,7 +165,7 @@ export class QaPagePostComponent implements OnInit {
             alert('Đăng câu hỏi thành công!');
             this.qa$.push(newQa);
             this.loadingPostQa = false;
-            location.replace(`/qa-page`);
+            //location.replace(`/qa-page`);
           },
           onFail => {
             alert('can not add question');

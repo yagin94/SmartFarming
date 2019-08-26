@@ -20,7 +20,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 
 export class QaService {
-  host = 'http://104.199.153.91:8080';
+  host = 'http://35.194.197.13:8080';
 
   constructor(private http: HttpClient) {
   }
